@@ -1,0 +1,71 @@
+Trabalho 1 Álgebra II
+Nome: Gustavo Estrela de Matos
+NUSP: 8536051
+
+/********************************************************************
+ep1.m
+
+Descrição:
+Carrega uma função que, dado um vetor x que representa uma permutação
+decompõe essa permutação em ciclos disjuntos (fatoração única).
+
+
+Chamada do programa:
+ep1(v)
+ou
+M = ep1(v), onde M é a matriz que representa os ciclos.
+
+Entrada:
+A entrada do programa é um vetor v de 1 a n, no qual é assumido que 
+na permutação P, P(i) = v[i]
+Exemplo: a permutação (0 1 2 3 4 5 6 7 8 9) -> (9 8 7 6 5 4 3 2 1)
+tem como entrada o vetor v:
+v =
+
+   9   8   7   6   5   4   3   2   1
+
+Resposta:
+Os ciclos são representados por uma matriz, de tamanho d x n, onde d
+é a quantidade de ciclos e n é o tamanho do maior dos ciclos. Cada
+linha contém um ciclo.
+Exemplo: a permutação (0 1 2 3 4 5 6 7 8 9) -> (9 8 7 6 5 4 3 2 1)
+dá como resposta:
+>>>>>>>>>>>>>>>>>>>
+Tempo de execucao: 0.00054 segundos
+ans =
+
+   9   1
+   8   2
+   7   3
+   6   4
+   5   0
+>>>>>>>>>>>>>>>>>>>
+OBS: O elemento zero da matriz significa "nulo", ou seja, o ciclo da
+linha i acaba onde aparece o primeiro zero da linha.
+Quando a função é chamada ela devolve tal matriz que representa os 
+ciclos. É possível obte-la ao chamar o programa com "M = ep1(v)"
+********************************************************************\
+
+/********************************************************************
+ep2.m
+
+Descrição:
+Recebe (n, d) onde n é a quantidade de elementos da permutação e d é
+o número de ciclos disjuntos que a permutação resultante deve possuir
+
+Chamada do programa:
+v = ep2(n, d), onde v é a permutação resultante, seguindo a mesma 
+"notação" usada no ep1.m
+
+Resposta:
+A resposta é o vetor que representa a permutação.
+Exemplo:
+>>>>>>>>>>>>>>>>>>>
+octave:52> x = ep2(10, 5)
+Tempo de execucao: 0.02735 segundos
+x =
+
+   3   4   1   2   7   6   5   9  10   8
+>>>>>>>>>>>>>>>>>>>
+OBS:
+No número d de ciclos foram considerados 1-ciclos

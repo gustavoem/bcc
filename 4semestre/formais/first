@@ -1,0 +1,59 @@
+MODULE main
+    VAR
+        b : boolean;
+        l : boolean;
+        r : boolean;
+        c : boolean;
+        flag : boolean;
+        s : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, fail};
+    ASSIGN
+        init(b) := TRUE;
+        init(l) := TRUE;
+        init(r) := TRUE;
+        init(c) := TRUE;
+        init(flag) := FALSE;
+        init(s) := 0;
+
+        next(s) := case
+                    s = 0 : {1, 2, 3, 4}; 
+                    s = 1 : {0, 5};
+                    s = 2 : fail;
+                    s = 3 : fail;
+                    s = 4 : fail;
+                    s = 5 : {1, 8, 9};
+                    s = 6 : {2, 8, 10};
+                    s = 7 : {3, 9, 10};
+                    s = 8 : {5, 6, 11};
+                    s = 9 : {5, 7, 12};
+                    s = 10 : {6, 7, 13};
+                    s = 11 : fail;
+                    s = 12 : fail;
+                    s = 13 : {10,  14};
+                    s = 14 : {11, 12, 13, 15};
+                    s = 15 : fail;
+                    s = fail : fail;
+                   esac;
+    
+        next(b) := case 
+                    next(s) = 0 | next(s) = 5 | next(s) = 6 | next (s) = 7 | next(s) = 11 | next(s) = 12 | next(s) = 13 | next(s) = 15 : TRUE;
+                    TRUE : FALSE;
+                   esac;
+        next(l) := case
+                    next(s) = 0 | next(s) = 1 | next(s) = 2 | next(s) = 4 | next(s) = 5 | next(s) = 6 | next(s) = 8 | next(s) = 11 : TRUE;
+                    TRUE : FALSE;     
+                   esac;
+        next(r) := case
+                    next(s) = 0 | next(s) = 1 | next(s) = 3 | next(s) = 4 | next(s) = 5 | next(s) = 7 | next(s) = 9 | next(s) = 12 : TRUE;
+                    TRUE : FALSE;
+                   esac;
+        next(c) := case
+                    next(s) = 0 | next(s) = 2 | next(s) = 3 | next(s) = 4 | next(s) = 6 | next(s) = 7 | next(s) = 10 | next(s) = 13 : TRUE;
+                    TRUE : FALSE;
+                   esac;
+        next(flag) := case
+                        next(s) = fail : TRUE;
+                        TRUE : FALSE;
+                      esac;
+-- LTLSPEC F(!l & !r & !c & !b & !flag)
+LTLSPEC !F(!l & !r & !c & !b & !flag)
+

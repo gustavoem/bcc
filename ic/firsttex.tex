@@ -1,5 +1,4 @@
 \documentclass[12pt]{article}
-
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
@@ -14,35 +13,61 @@
 \definecolor{myblue}{RGB}{80,80,160}
 \definecolor{mygreen}{RGB}{80,160,80}
 
-\begin{document} % Aqui começa o documento
-\title{Estudo de estruturas de dados eficientes para o problema de otimização U-curve} % título
-\author{Gustavo Estrela de Matos \\ estrela.gustavo.matos@usp.br} % quem escreveu
-\date{outubro de 2014} %data
+\begin{document}
+\title{Estudo de estruturas de dados eficientes para o problema de otimização U-curve} 
+\author{Gustavo Estrela de Matos \\ estrela.gustavo.matos@usp.br} 
+\date{outubro de 2014}
 
-\maketitle %cria o título
+\maketitle
 
-\def \negritovi {\textbf} %Criando comandos
+\def \negritovi {\textbf}
 
-\tableofcontents %índice
-\pagebreak % Quebra de página
+\tableofcontents 
+\pagebreak
 
-\section{Introdu\c{c}\~ao} %Cria uma seção
+\section{Introdução}
+\subsection{O problema U-Curve}
+Na área de reconhemento de padrões, o problema de seleção de características consiste em escolher um subconjunto ótimo de um conjunto de características para algum critério. Esse critério pode ser definido por uma função avaliadora \begin{math}c\end{math} que associa a cada subconjunto de características o seu custo. Supondo a escolha de tal função \begin{math}c\end{math}, podemos reduzir a seleção de características a um problema de busca em que, dado um conjunto finito de características \begin{math}S\end{math}, precisamos achar um subconjunto \begin{math}X\end{math} que minimiza uma função \begin{math}c\end{math}, definida de $\mathcal{P}$\begin{math}(S)\end{math}, o conjunto potência de \begin{math}S\end{math},  para $\mathbb{R_+}$.
 
-%\\Outros exemplos de caracteres especiais são \# \$ \%  \& \_ \{ \} que podem ser escritos com um ' $\backslash$ ' na frente.
-Na área de reconhemento de padrões, o problema de seleção de características trata de escolher um subconjunto ótimo de um conjunto segundo uma função \begin{math}c\end{math}. Mais formalmente, dado um conjunto finito de características 
-\begin{math}S\end{math}, precisamos achar um subconjunto \begin{math}X\end{math} que minimiza uma função \begin{math}c\end{math}, definida de $\mathcal{P}$\begin{math}(S)\end{math} para $\mathbb{R_+}$.
+Muitas dessas funções custos, que dependem da estimação de uma distribuição de probabilidade conjunta, descrevem uma "curva em U'' nas cadeias maximais do reticulado booleano. Esse é um fenômeno que ocorre devido a Maldição da Dimensionalidade, que é o nome dado aos fenômenos que ocorrem quando analizamos dados em muitas dimensões. No contexto de reconhecimento de padrões, o classificador melhora com o aumento de características consideradas, porém, depois de um certo ponto, o acréscimo de características torna necessário maior o número de amostras, causando maior erro de estimação e maior custo.
+
+O caso particular de seleção de características em que podemos ver o problema como a minimização de uma função custo cujas cadeias descrevem curvas em u é chamado "problema U-curve". Algoritmos que exploram esse problema como o algoritmo U-curve\cite{u-curve algorithm} podem ser utilizados para solucionar problemas de seleção de características como o projeto de W-operadores. Além do algoritmo "U-curve", outras soluções foram propostas para o "problema U-curve". Dentre eles, algoritmos \emph{branch-and-bound} como U-Curve-Branch-and-Bound (UBB), Poset-Forest-Search (PFS)\cite{msreis thesis} e o iUBB\cite{iubb}.
+
+\subsection{O algoritmo U-Curve-Search}
+O algoritmo U-curve mostrou-se não ser ótimo, e sim, sub-ótimo, isto é, o algoritmo pode não encontrar o subconjunto de características de custo mínimo\cite{msreis thesis, ucs paper}. Essa falha levou a elaboração do algoritmo U-Curve-Search (UCS), que é ótimo e se mostra muito promissor, pois em experimentos com instâncias artificiais e com dados práticos o UCS computou a função custo poucas vezes comparado aos outros algoritmos\cite{msreis thesis, ucs paper, math morph paper}.
+
+O U-Curve-Search faz a procura do subconjunto de custo mínimo com o auxílio de coleções de restrições inferiores e superiores do espaço de busca. Por conta disso, as rotinas que fazem consultas e atualizações das restrições inferiores e superiores são chamadas várias vezes durante a execução do algoritmo. Essas coleções de restrições foram implementados usando listas duplamente ligadas e, portanto, a busca por um elemento nessas coleções é \begin{math}O(n|\end{math}$\mathcal{R}$\begin{math}|)\end{math}, no qual \begin{math}n\end{math} é a cardinalidade do conjunto \begin{math}S\end{math} e $\mathcal{R}$ é a coleção de restrições inferior ou superior.
+
+
 
 \section{Objetivos}
 
 \section{Plano de estudos}
 
-\section{Materiais e m\'etodos}
+\section{Materiais e métodos}
 
-\section{Materiais e m\'etodos}
+\section{Formas de análise dos estudos}
 
-\section{Formas de an\'alise dos estudos}
+\begin{thebibliography}{9}
 
-\end{document} %fim do documento. O que vem depois daqui não é gerado
+\bibitem{u-curve algorithm}
+Ris, Marcelo, Junior Barrera, and David C. Martins Jr. \emph{U-curve: A branch-and-bound optimization algorithm for U-shaped cost functions on Boolean lattices applied to the feature selection problem}. Pattern Recognition, 43.3 (2010): 557-568.
 
-\section{Escondida}
-Essa seção não vai aparecer.
+\bibitem{msreis thesis}
+Reis, Marcelo S. "Minimization of decomposable in U-shaped curves functions defined on poset chains–algorithms and applications." PhD thesis, Institute of Mathematics and Statistics, University of São Paulo, Brazil, (2012).
+\bibitem{iubb}
+
+Atashpaz-Gargari, Esmaeil, Ulisses M. Braga-Neto, and Edward R. Dougherty. "Improved branch-and-bound algorithm for U-curve optimization." 2013 IEEE International Workshop on Genomic Signal Processing and Statistics (GENSIPS), (2013).
+
+\bibitem{ucs paper}
+Reis, Marcelo S., Carlos E. Ferreira, and Junior Barrera. "The U-curve optimization problem: improvements on the original algorithm and time complexity analysis." arXiv preprint arXiv:1407.6067, (2014). 
+
+\bibitem{math morph paper}
+Reis, Marcelo S., and Junior Barrera. "Solving Problems in Mathematical Morphology through Reductions to the U-Curve Problem." Mathematical Morphology and Its Applications to Signal and Image Processing. Springer Berlin Heidelberg, (2013): 49-60.
+
+\end{thebibliography}
+
+\end{document}
+
+
+

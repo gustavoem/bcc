@@ -1,0 +1,31 @@
+MODULE main
+    VAR
+        a : boolean;
+        b : boolean;
+        s : {q4, q3, q2, q1};
+        
+    ASSIGN
+        init(a) := TRUE;
+        init(b) := FALSE;
+        init(s) := q3;
+    
+        next(s) := case
+                    s = q4 : {q3};
+                    s = q3 : {q4, q2, q1};
+                    s = q2 : {q2};
+                    s = q1 : {q2};
+                   esac;
+        next(b) := case
+                    next(s) = q2 | next(s) = q4 : TRUE;
+                    TRUE : FALSE;
+                   esac;
+        next(a) := case
+                    next(s) = q3 | next(s) = q4 : TRUE;
+                    TRUE : FALSE;
+                   esac;
+
+--LTLSPEC G(a)
+--LTLSPEC a U b 
+--LTLSPEC a U X (a & !b)
+--LTLSPEC (X !b) & (!a | !b)
+LTLSPEC X(a & b) & F (!a & !b)

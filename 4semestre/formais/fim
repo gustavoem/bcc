@@ -1,0 +1,33 @@
+MODULE main
+VAR
+    ready : boolean;
+    req   : boolean;
+    -- ff = !req, busy;
+    -- ft = !req, ready;
+    -- tf =  req, busy;
+    -- tt =  req, ready;
+    s : {ff, ft, tf, tt};
+
+ASSIGN
+    init(s) := {ft, tt};
+    init(ready) := TRUE;
+    init(req) := case
+                    s = ft : FALSE;
+                    s = tt : TRUE;
+                 esac;
+    next(s) := case
+                s = ff : {tf, ft, tt};
+                s = ft : {ft, tf, tt, ff};
+                s = tf : {tf, ff};
+                s = tt : {tf, ff};
+               esac;
+    next(ready) := case
+                    next(s) = ft | next(s) = tt : TRUE;
+                    TRUE : FALSE;
+                   esac;
+    next(req)   := case
+                    next(s) = tf | next(s) = tt : TRUE;
+                    TRUE : FALSE;
+                   esac;
+
+LTLSPEC G(req -> F !ready) 

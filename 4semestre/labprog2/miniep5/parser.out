@@ -1,0 +1,194 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expr
+Rule 1     expr -> expr expr EQUAL
+Rule 2     expr -> expr expr PLUS
+Rule 3     expr -> expr expr MINUS
+Rule 4     expr -> expr expr TIMES
+Rule 5     expr -> expr expr DIVIDE
+Rule 6     expr -> NUMBER
+Rule 7     expr -> VAR
+
+Terminals, with rules where they appear
+
+DIVIDE               : 5
+EQUAL                : 1
+MINUS                : 3
+NUMBER               : 6
+PLUS                 : 2
+TIMES                : 4
+VAR                  : 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+expr                 : 1 1 2 2 3 3 4 4 5 5 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expr
+    (1) expr -> . expr expr EQUAL
+    (2) expr -> . expr expr PLUS
+    (3) expr -> . expr expr MINUS
+    (4) expr -> . expr expr TIMES
+    (5) expr -> . expr expr DIVIDE
+    (6) expr -> . NUMBER
+    (7) expr -> . VAR
+
+    NUMBER          shift and go to state 2
+    VAR             shift and go to state 1
+
+    expr                           shift and go to state 3
+
+state 1
+
+    (7) expr -> VAR .
+
+    NUMBER          reduce using rule 7 (expr -> VAR .)
+    VAR             reduce using rule 7 (expr -> VAR .)
+    $end            reduce using rule 7 (expr -> VAR .)
+    EQUAL           reduce using rule 7 (expr -> VAR .)
+    PLUS            reduce using rule 7 (expr -> VAR .)
+    MINUS           reduce using rule 7 (expr -> VAR .)
+    TIMES           reduce using rule 7 (expr -> VAR .)
+    DIVIDE          reduce using rule 7 (expr -> VAR .)
+
+
+state 2
+
+    (6) expr -> NUMBER .
+
+    NUMBER          reduce using rule 6 (expr -> NUMBER .)
+    VAR             reduce using rule 6 (expr -> NUMBER .)
+    $end            reduce using rule 6 (expr -> NUMBER .)
+    EQUAL           reduce using rule 6 (expr -> NUMBER .)
+    PLUS            reduce using rule 6 (expr -> NUMBER .)
+    MINUS           reduce using rule 6 (expr -> NUMBER .)
+    TIMES           reduce using rule 6 (expr -> NUMBER .)
+    DIVIDE          reduce using rule 6 (expr -> NUMBER .)
+
+
+state 3
+
+    (0) S' -> expr .
+    (1) expr -> expr . expr EQUAL
+    (2) expr -> expr . expr PLUS
+    (3) expr -> expr . expr MINUS
+    (4) expr -> expr . expr TIMES
+    (5) expr -> expr . expr DIVIDE
+    (1) expr -> . expr expr EQUAL
+    (2) expr -> . expr expr PLUS
+    (3) expr -> . expr expr MINUS
+    (4) expr -> . expr expr TIMES
+    (5) expr -> . expr expr DIVIDE
+    (6) expr -> . NUMBER
+    (7) expr -> . VAR
+
+    NUMBER          shift and go to state 2
+    VAR             shift and go to state 1
+
+    expr                           shift and go to state 4
+
+state 4
+
+    (1) expr -> expr expr . EQUAL
+    (2) expr -> expr expr . PLUS
+    (3) expr -> expr expr . MINUS
+    (4) expr -> expr expr . TIMES
+    (5) expr -> expr expr . DIVIDE
+    (1) expr -> expr . expr EQUAL
+    (2) expr -> expr . expr PLUS
+    (3) expr -> expr . expr MINUS
+    (4) expr -> expr . expr TIMES
+    (5) expr -> expr . expr DIVIDE
+    (1) expr -> . expr expr EQUAL
+    (2) expr -> . expr expr PLUS
+    (3) expr -> . expr expr MINUS
+    (4) expr -> . expr expr TIMES
+    (5) expr -> . expr expr DIVIDE
+    (6) expr -> . NUMBER
+    (7) expr -> . VAR
+
+    EQUAL           shift and go to state 5
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    TIMES           shift and go to state 8
+    DIVIDE          shift and go to state 6
+    NUMBER          shift and go to state 2
+    VAR             shift and go to state 1
+
+    expr                           shift and go to state 4
+
+state 5
+
+    (1) expr -> expr expr EQUAL .
+
+    NUMBER          reduce using rule 1 (expr -> expr expr EQUAL .)
+    VAR             reduce using rule 1 (expr -> expr expr EQUAL .)
+    $end            reduce using rule 1 (expr -> expr expr EQUAL .)
+    EQUAL           reduce using rule 1 (expr -> expr expr EQUAL .)
+    PLUS            reduce using rule 1 (expr -> expr expr EQUAL .)
+    MINUS           reduce using rule 1 (expr -> expr expr EQUAL .)
+    TIMES           reduce using rule 1 (expr -> expr expr EQUAL .)
+    DIVIDE          reduce using rule 1 (expr -> expr expr EQUAL .)
+
+
+state 6
+
+    (5) expr -> expr expr DIVIDE .
+
+    NUMBER          reduce using rule 5 (expr -> expr expr DIVIDE .)
+    VAR             reduce using rule 5 (expr -> expr expr DIVIDE .)
+    $end            reduce using rule 5 (expr -> expr expr DIVIDE .)
+    EQUAL           reduce using rule 5 (expr -> expr expr DIVIDE .)
+    PLUS            reduce using rule 5 (expr -> expr expr DIVIDE .)
+    MINUS           reduce using rule 5 (expr -> expr expr DIVIDE .)
+    TIMES           reduce using rule 5 (expr -> expr expr DIVIDE .)
+    DIVIDE          reduce using rule 5 (expr -> expr expr DIVIDE .)
+
+
+state 7
+
+    (2) expr -> expr expr PLUS .
+
+    NUMBER          reduce using rule 2 (expr -> expr expr PLUS .)
+    VAR             reduce using rule 2 (expr -> expr expr PLUS .)
+    $end            reduce using rule 2 (expr -> expr expr PLUS .)
+    EQUAL           reduce using rule 2 (expr -> expr expr PLUS .)
+    PLUS            reduce using rule 2 (expr -> expr expr PLUS .)
+    MINUS           reduce using rule 2 (expr -> expr expr PLUS .)
+    TIMES           reduce using rule 2 (expr -> expr expr PLUS .)
+    DIVIDE          reduce using rule 2 (expr -> expr expr PLUS .)
+
+
+state 8
+
+    (4) expr -> expr expr TIMES .
+
+    NUMBER          reduce using rule 4 (expr -> expr expr TIMES .)
+    VAR             reduce using rule 4 (expr -> expr expr TIMES .)
+    $end            reduce using rule 4 (expr -> expr expr TIMES .)
+    EQUAL           reduce using rule 4 (expr -> expr expr TIMES .)
+    PLUS            reduce using rule 4 (expr -> expr expr TIMES .)
+    MINUS           reduce using rule 4 (expr -> expr expr TIMES .)
+    TIMES           reduce using rule 4 (expr -> expr expr TIMES .)
+    DIVIDE          reduce using rule 4 (expr -> expr expr TIMES .)
+
+
+state 9
+
+    (3) expr -> expr expr MINUS .
+
+    NUMBER          reduce using rule 3 (expr -> expr expr MINUS .)
+    VAR             reduce using rule 3 (expr -> expr expr MINUS .)
+    $end            reduce using rule 3 (expr -> expr expr MINUS .)
+    EQUAL           reduce using rule 3 (expr -> expr expr MINUS .)
+    PLUS            reduce using rule 3 (expr -> expr expr MINUS .)
+    MINUS           reduce using rule 3 (expr -> expr expr MINUS .)
+    TIMES           reduce using rule 3 (expr -> expr expr MINUS .)
+    DIVIDE          reduce using rule 3 (expr -> expr expr MINUS .)
+

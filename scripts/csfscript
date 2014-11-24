@@ -1,0 +1,13 @@
+curl http://www.cienciasemfronteiras.gov.br/web/csf/graduacao_result > tmp1.txt
+while [ TRUE ];
+do
+    curl http://www.cienciasemfronteiras.gov.br/web/csf/graduacao_result > tmp2.txt
+    if [ tmp1.txt == tmp2.txt ]
+    then
+        while [ TRUE ];
+        do
+            echo 'saiu'
+        done
+    fi
+    cat tmp2.txt > tmp1.txt
+done

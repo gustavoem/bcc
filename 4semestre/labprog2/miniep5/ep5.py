@@ -35,6 +35,7 @@ def p_expr_equal(p):
     if type(p[1]) is not str:
         print("Atribuicao invalida")
     else:
+        p[2] = get_value(p[2])
         var[p[1]] = p[2]
         p[0] = p[1]
 
@@ -86,7 +87,7 @@ def p_error(p):
     print("Ops! Sintaxe invalida")
 
 # instancia o yacc. Os argumentos sao para evitar mensagens de debug
-yacc.yacc(debug = 1, write_tables = 1) 
+yacc.yacc(debug = 0, write_tables = 0) 
 s = 1
 while s == 1:
     try:

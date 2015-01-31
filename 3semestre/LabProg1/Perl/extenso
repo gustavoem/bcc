@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+
+my @unid   = qw(um dois três quatro cinco seis sete oito nove 
+                dez onze doze treze quatorze quinze dezesseis 
+                dezessete dezoito dezenove);
+my @dezen  = qw(dez vinte trinta quarenta cinquenta sessenta 
+                setenta oitenta noventa);
+my @centen = qw(cento duzentos trezentos quatrocentos quinhentos
+                seiscentos setecentos oitocentos novecentos);
+my @mils   = ('', qw( mil milhão bilhão trilhão quatrilhão));
+my @milss   = ('', qw( mil milhões bilhões trilhões quatrilhões));
+
+sub dezena {
+    my $c = shift;
+    $c = substr($c, length($c)-2, 2);
+    return "" unless $c > 0;
+    return $unid[$c-1] if $c < 20;
+  
+    my ($u, $d, $res);
+    $u = substr($c, length($c)-1, 1);
+    $d = substr($c, length($c)-2, 1);
+    $res = $dezen[$d-1];
+    $res .= " e $unid[$u-1]" if $u;
+    return $res;
+}
+
+sub centena {
+    my $c = shift; 
+    return "cem" if $c == 100;
+
+    my $d = dezena($c);
+    return $d if $c < 100;
+
+    # $c está entre 100 e 999.
+    my $res;
+    $res = $centen[substr($c,0,1)-1];
+    $res .= " e $d" if $d;
+    return $res;
+}
+
+
+sub extenso {
+    my $n = shift;				# número
+    my $m;						# milhar
+    my $res = '';
+    my $l = 0;
+    my @e = ('', ' e ', ', ');
+    my $ie = 0;
+
+    $n =~ tr/0-9//scd;         # elimina não dígito
+
+    while ($n =~ s/(\d{3})$//) {# separa um milhar
+        $m = $1;
+        next unless $m > 0;
+        $res = centena($m) . 
+	    ($m > 1 ? " $milss[$l]":" $mils[$l]") . $e[$ie] . $res;
+	$ie++ unless $ie == 2;
+	
+    } continue {
+        $l++;
+    }
+    if ($n > 0) {
+        $res = centena($n) .
+	    ($n > 1 ?" $milss[$l]":" $mils[$l]"). $e[$ie] . $res;
+#	$ie++ unless $ie == 2;
+    }
+    
+    $res =~ s/\s*,?\s*$//;
+    return $res;
+}
+
+
+while(<>) { print extenso($_) . "\n"; }

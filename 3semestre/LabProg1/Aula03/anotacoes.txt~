@@ -1,0 +1,23 @@
+-> Analisador lexico
+
+
+Calculadora infixa
+    Vamos fazer um calculadora que resolva coisas do tipo 
+    (2*(3+4)*3)
+    3+k[17] := 5;
+
+    Vamos precisar de:
+    -alanizador lexico
+    -parser verifica a sintaxe
+    -main é a calculadora em si
+
+    >Permissões
+    u -> só usuario
+    g -> pessoas do grupo
+    0 -> outros
+    
+    r -> ler
+    w -> escrever
+    x -> rodar
+
+    Pra calcular a expressão, temos que começar identificando o que são cada coisa. Números, parenteses, etc.

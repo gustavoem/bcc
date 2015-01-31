@@ -1,0 +1,16 @@
+#!/usr/bin/perl 
+while (<>) {
+	s/\t+/ /g;
+	s/ +$//g;
+	%wordts = ();
+	$, = " ";
+	while  (s/(\s?[^ ]+\s?)//) {
+		#print $1;
+		wordts->{$1} = wordts->{$1}+1;
+	}
+	print %wordts;
+}
+
+# foreach my $key (keys %$ad_grp_ref) {
+#     ...
+# }

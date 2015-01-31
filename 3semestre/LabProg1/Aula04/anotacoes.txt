@@ -1,0 +1,9 @@
+O objetivo da aula hoje é debug
+
+-> Computer Language
+-> Dr. Dobbs Journal of Software Tools for the Professional Programmer
+
+The original bug:
+Antigamente se programava na máquina, e uma mariposa caiu na máquina e zuou o programa.
+
+Como faze um programa que imprime uma curva de nível?

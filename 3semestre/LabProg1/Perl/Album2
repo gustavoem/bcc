@@ -1,0 +1,262 @@
+#!/usr/bin/perl -- -*- mode:cperl -*-
+ $Versao="2.1b";
+
+while ($legendas = shift) {
+  if ($legendas =~/^-[h?]/) {
+    print <<USO;
+Uso: Album2 [opções|legendas]+ >index.html
+
+OPÇÕES:
+
+ -h ou -? : esta ajuda
+ -f [num] : força a largura da tabela de fotos
+ -v [num] : força a largura da tabela de vídeos
+
+No caso de aparecer mais de um '-f' ou um '-v', valerá o último.
+
+Os arquivos de imagens (thumbnails) são colocados no subdiretório tn,
+para refazer as páginas, basta apagar este diretório e seu conteúdo.
+Imagens já criadas são reutilizadas, mas os arquivos html são gerados
+novamente a cada vez.
+
+LEGENDAS:
+
+O arquivo de legendas é separado por linhas.  Cada linha deve conter o nome do
+arquivo seguido de sua descrição.  O arquivo pode aparecer mais de uma vez,
+neste caso a descrição será adicionada à anterior.
+
+Linhas começando com '#' são ignoradas, assim como as linhas em branco.
+
+Ponteiros para outras páginas podem ser indicados colocando o símbolo '*'
+no lugar do nome do arquivo.
+
+DEPENDÊNCIAS:
+
+Este programa utiliza o imagemagick (programa convert) e o mplayer.
+
+VERSÃO: $Versao
+USO
+    exit 0;
+  }
+  if ($legendas =~/^-f/) {	# Largura da tabela das fotos
+    $larguraf = shift;
+    next;
+  }
+  if ($legendas =~/^-v/) {	# largura da tabela dos vídeo
+    $largurav = shift;
+    next;
+  }
+  open LEG, "<$legendas" if $legendas; # arquivo de legendas
+  while ($l = <LEG>) {
+    next unless $l =~ /\S/;
+    next if $l =~/^#/;		# comentários
+    if ($l =~ /^[*]/) {		# link adicional
+      ($nada, $f, $txt) = split /\s+/, $l, 3;
+      push @links, <<HTML;
+<li> <a href="$f">$txt</a>
+HTML
+    }
+    else {
+      ($f, $txt) = split /\s+/, $l, 2;
+      $leg{$f} .= $txt;
+    }
+  }
+  close LEG;
+}
+
+
+# Tipos de fotos
+$FOTOS = "{jpg,JPG,jpeg,JPEG,gif,GIF,bmp,BMP}";
+# Tipos de videos
+$VIDEOS = "{avi,mpg,mpeg,AVI,MPG,MPEG,wmv,WMV,flv,FLV,mp4,MP4}";
+
+@fotos = <*.$FOTOS>;
+@fotos = sort {$a<=>$b} @fotos;
+
+@videos = <*.$VIDEOS>;
+@videos = sort {$a<=>$b} @videos;
+
+$max = $#fotos;
+
+mkdir 'tn' if (! -e  'tn');
+
+for (@fotos) {
+  if ((-M $_ < -M "tn/m$_") || ! -e "tn/m$_") {
+    print STDERR "Generating tn/m$_\n";
+    system "convert -thumbnail 100x100! $_ tn/m$_\n";
+  }
+  $ht = $me + 0;		# force numeric
+  print STDERR "Generating $ht\n";
+
+  ($prev) = $ht == 0 ? $max : $ht - 1;
+  ($next) = $ht == $max ? 0 : $ht + 1;
+  open HT, ">$ht.html" or die "Unable to create $ht.html ($!)\n";
+  $nome = $_;
+#  $nome =~s/[.](jpe?g|gif|bmp)$//i;
+  $nome =~s/[.]\w+$//i;
+  $nome =~ y/_/ /;		# troca '_' por espaço
+  print HT <<HTML;
+<html>
+<head>
+<title>$nome</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000FF" vlink="#800080" >
+<table border=3>
+<tr>
+   <td><a href=$prev.html>Ant.</a>
+   <td><a href=index.html>Menu</a>
+   <td><a href=$next.html>Próx.</a>
+</tr>
+</table><p>
+<center>
+<img src=$_ height=600><br>
+<i>$nome</i><br>
+$leg{$_}
+</center>
+</body>
+</html>
+HTML
+  close HT;
+  $me++;
+}
+
+$vmax = $max + @videos;
+for (@videos) {
+  $vid = $_;
+#  $vid =~ s/[.](avi|mpe?g)$/.jpg/;
+  $vid =~ s/[.]\w+$/.jpg/;
+  $vid = "v$vid";
+  if ((-M $_ < -M "tn/m$vid") || ! -e "tn/m$vid") {
+    print STDERR "Generating tn/m$vid\n";
+    system <<FIM;
+mplayer $_ -nosound -vo jpeg -frames 2 >/dev/null
+mv 00000001.jpg tn/$vid;
+rm -f 0000000*.jpg
+convert -thumbnail 100x100! tn/$vid tn/m$vid
+FIM
+  }
+  push @ivideos, "tn/m$vid";
+  $ht = $me + 0;		# force numeric
+#  if (! -e "$ht.html") {
+    print STDERR "Generating $ht\n";
+
+    ($prev) = $ht == $max + 1  ? $vmax  : $ht - 1;
+    ($next) = $ht == $vmax     ? $max+1 : $ht + 1;
+    open HT, ">$ht.html" or die "Unable to create $ht.html ($!)\n";
+    $nome=$_;
+    $nome=~s/[.]jpg//;
+    $nome =~ y/_/ /;
+    print HT <<HTML;
+<html>
+<head>
+<title>$nome</title>
+</head>
+
+<body bgcolor="#FFFFFF" link="#0000FF" vlink="#800080" >
+<table border=3>
+<tr>
+   <td><a href=$prev.html>Ant.</a>
+   <td><a href=index.html>Menu</a>
+   <td><a href=$next.html>Próx.</a>
+</tr>
+</table><p>
+<center>
+<a href=$_><img src=tn/$vid></a><br>
+<i>$nome</i><br>
+$leg{$nome}
+</center>
+</body>
+</html>
+HTML
+  close HT;
+  $me++;
+}
+
+print <<'HTML';
+<html>
+<body bgcolor="#FFFFFF" link="#0000FF" vlink="#800080" >
+<center>
+HTML
+
+$ht=0;
+if (@fotos) {
+
+  print <<'HTML';
+<h1>FOTOS</h1>
+<table border=3>
+HTML
+
+  $larguraf = Largura(scalar @fotos) unless $larguraf;
+  while (@trio = splice(@fotos,0,$larguraf)) {
+    print "<tr>\n";
+    map {
+      print "   <td><a href=./$ht.html target=PHOTO><img src=tn/m$_></a></td>\n";
+      $ht++;
+    } @trio;
+    print "</tr>\n";
+  }
+}
+
+if (@videos) {
+  print <<'HTML';
+</table><p>
+<h1>VÍDEOS</h1>
+<table>
+HTML
+  $largurav = Largura(scalar @ivideos) unless $largurav;
+  while (@trio = splice(@ivideos,0,$largurav)) {
+    print "<tr>\n";
+    map {
+      print "   <td><a href=./$ht.html target=PHOTO><img src=$_></a></td>\n";
+      $ht++;
+    } @trio;
+    print "</tr>\n";
+  }
+}
+print <<'HTML';
+</table><p>
+</center>
+HTML
+
+if (@links) {
+  print <<HTML;
+<hr>
+<center>
+<h1>Outras páginas</h1>
+</center>
+<ul>
+HTML
+
+  print for (@links);
+
+  print <<HTML;
+</ul>
+HTML
+}
+print <<'HTML';
+</body>
+</html>
+HTML
+
+# calcula a largura da tabela para deixar a menor porcentagem da última
+# linha vazia.  Dá preferência para largura 5.
+
+sub Largura {
+  my $itens = shift;
+  my $resto = 0;
+  my ($temp, $r2, $resp, $rate);
+
+  for $temp (qw/5 7 6 4 3/) {
+    $r2 = $itens % $temp;
+
+    return $temp unless $r2;
+
+    $rate = $r2/$temp;
+
+    if ($rate > $resto) {
+      $resto = $rate;
+      $resp  = $temp;
+    }
+  }
+  return $resp;
+}

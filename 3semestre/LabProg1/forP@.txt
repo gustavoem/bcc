@@ -1,0 +1,164 @@
+AWK
+
+Padrão			Ação
+BEGIN
+END
+function algo(x,__i,J)
+Todas as variáveis são globais
+sub(regex, subs, opcional(string));
+Vamos fazer uma tabela de resultados da copa em awk
+Não tem struct em awk
+
+/^[A-Z]{3} [0-9]+ x [0-9]+ [A-Z]{3}/ {
+	gols[$1] += $2
+	gols[$5] += $4
+	saldo[$1] += $2 - $4
+	saldo[$5] += $4 - $2
+	
+}
+
+
+_______________________________________________________________________________
+
+
+PEARL
+> As duas podem usar a mesma máquina virtual
+> Comentário: susto: mudar de linguagem no meio do código???
+> Tipos de variáveis: não tem! tem classes, coisas que são escalares
+
+		|	- escalares			$
+		|	- arrays			@
+glob -->|	- hashes			%
+		|	- subrotines		&
+		|	- FH (file handle)  nada
+
+Pearl é tão livre que dá pra seguir a intuição.
+Tudo tem que estar entre chaves
+Uma coisa muito legal em pearl: REGEX
+O escalar é o mais rico de todos os tipos.
+	Um escalar
+	> pode ser um número
+	> string
+	> referência - um ponteiro que você não pode mexer
+	Strings:
+		> se quiser printar aspas duplas, use qq
+		exemplo:
+			"com \" s"
+			qq/ com "s/;
+			qq/ asduasodhaisdjads /    -> dá pra usar outras coisas como : ; ( {  afvsalsdabla})
+	
+	Arrays:
+		> @a = (1,2,3,"quarto");
+		> $a[1]
+		> @b = @a[1,3,2
+		> ($x, $y) = ($y, $x)
+
+	Hash:
+		> %h =  (k1, v1, l2, v2)
+		> $h {k2}
+		> exists $h{k2}
+		> $n{"algo"}
+		exemplo:
+		%trad = (red => "vermelho, blue => "azul", green => "verde", two => "dois")
+
+	Data:
+		> $txt = 'cat  sapos.txt';
+Variáveis especiais
+> $, - separador
+
+
+
+
+
+Continuação PERL
+
+for (e1; e2; e3) { bloco }
+for $v (lista) { bloco }
+while (cond) { bloco }
+
+if (cond) { bloco }
+elsif (condi) { bloco }
+else { bloco }
+
+if ($x != 0) { $a = 3 / $x;}
+$a = 3 / $x if $x != 0;
+
+Label:
+while (cond) {
+    redo [label];  
+    last [label];
+    next [label];
+}
+
+Expressões regulares
+\s -> espaço
+\S -> diferente de espaço
+\w -> alfanumérico
+\W -> não alfanumérico
+\B
+\d
+\D
+
+Variáveis padrão
+prog arg1 arg2 ...
+> super entrada: <>
+  exemplos:
+    $l = <>;
+    while (<>) {
+
+    }
+> área de trabalho padrão:              $_ 
+> separador para imprimir @:            $,
+> separador para inserção de @ss em $:  ->
+
+Arquvios
+open ARQ, "arquivo"
+open A1,  "< entrada.txt"
+          "> saida.txt"
+          ">> log.txt"
+          "| prog"
+          "prog |"
+
+Expressões condicionais/comparadores
+"a" x "b"
+"1" x "10"
+ 1  x  10
+"20 mais 22" + 22 -> vai dar 42
+|número | string|
+|  ==       eq  |
+|  !=       ne  |
+|  <        lt  |
+|  <=       le  |
+|  >        gt  | 
+|  >=       ge  |
+|  <=>      cmp |
+
+Subrotinas
+sub nome { code }
+> argumentos:   @_
+> declare com my 
+> local $m
+
+REGEX
+m/____/ opções
+m stands for match      => pra que o m se eu posso não usar o m? pra poder usar outro delimitador:  m!\d\d/\d\d/\d{4}! <= pega datas
+/____/ == m/_____/
+expre =~ /_____/
+expre !~ /_____/
+i -> ignora case
+g -> global
+s -> linha simples
+m -> multiplas linhas
+x -> depois ele mostra 
+
+referência simbólica: *a = *b 
+
+AWK
+use Tk -> fazer janelas
+
+my $grupo = shift;
+my @times = @{$Grupos{$grupo}}    -> pega uma lista com os times do grupo $grupo
+
+
+s/#.*$//; -> descarta comentários
+

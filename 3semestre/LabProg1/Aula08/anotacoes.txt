@@ -1,0 +1,15 @@
+Vamos falar de OpenGL
+-> Free GLUT
+
+Objetos: são coleção de vértices
+>CallBack
+
+exemplinhos
+primeira coisa:
+glutInit();
+glutInitDisplayMode(2d ou 3d | buffer | RGBA ou RGBA);
+
+
+render scene
+glClear(); ->limpa tela
+glBegin(GL_TRIANGLES);

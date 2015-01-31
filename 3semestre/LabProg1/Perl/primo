@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+while (<>) {
+  if (/p/) {
+    print "::: $val\n";
+    next;
+  }
+  if (/r/) {
+    reset 'val';
+    next;
+  }
+  $val = 1 x $_;
+  print "y\n" unless ($val =~ /^(11+)\1+$/);
+}

@@ -1,0 +1,42 @@
+08/04
+
+Vamos fazer um programinha para achar um string, parecido com o find.
+Vamos aprender a brincar com o make.
+
+
+Encapsulamento
+
+Teremos um linha.c e um find.c. O find.c usa uma funão do linha.c, então ele precisa
+Junto ao linha.c teremos o linha.h. h stands for header. The .h file shows how you
+should use and see the functions of its .c file.  Why? Because the, if you want to 
+change your code you only will change the .c file.
+Thiago asked > "What about the struct files?" -> to the .c
+
+Compilando com mais arquivos
+gcc -o meuprograma meuprograma.c auxiliares.c
+Mas e se eu modificar    um dos arquivos, precisa recompilar tudo de novo?
+linha.c                find.c
+   |         gcc         |
+linha.o                find.o
+    \                   /
+     \______  ld  _____/        
+            \find/
+Gera então os .o e coloca num obj.  
+/*ls -l descriçao completa*/
+Compile um abc.c só se o abc.o for mais velho que o abc.c. O make faz isso. E dá pra
+ser mais geral! 
+
+Make
+
+target: dependencias
+    receita (como compilar)
+all: find
+
+find: find.o linha.o
+    gcc -g -o find find.o linha.o
+linha.o: linha.c
+    gcc -g -c linha.c
+
+Calculadora reversa polonesa shit again            
+Static: a coisa só são vistas ali.
+Extern: em algum essa variavel foi definida

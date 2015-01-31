@@ -1,0 +1,9 @@
+AWK
+use Tk -> fazer janelas
+
+my $grupo = shift;
+my @times = @{$Grupos{$grupo}}    -> pega uma lista com os times do grupo $grupo
+
+
+s/#.*$//; -> descarta comentários
+

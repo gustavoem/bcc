@@ -1,0 +1,43 @@
+//  Manual
+//  
+//  Para compilar:
+//  javac nCardsProblem
+//  
+//  Para rodar:
+//  java nCardsProblem [Tipo do teste] [Número de testes]
+//  [Quantidade de cartas no pacote]
+//
+/***************************************************************/
+//  Tipo do teste
+//
+//  a - completa [Número de testes] vezes 1 album com pacotes de
+//  [Numero de figurinhas em cada pacote] figurinhas.
+//  Para rodar esse modo é necessário passar como argumentos o 
+//  número de testes e o número de figurinhas em cada pacote.
+//
+//  b - completa [Número de testes] vezes 5 albuns considerando 
+//  que cada pacote tem 5 figurinhas em que a i-ésima
+//  figurinha vai sempre para o i-ésimo album. 1<=i<=5
+//  Para rodar esse modo é necessário passar como argumento o 
+//  número de testes
+//  
+//  c - completa [Número de testes] vezes 5 albuns considerando 
+//  que cada pacote tem 5 figurinhas em que cada figurinha 
+//  sorteada vai para o primeiro albúm que ainda não tem essa
+//  figurinha.
+//  Para rodar esse modo é necessário passar como argumento o 
+//  número de testes
+//  
+//  t - testa o gerador de numeros aleatórios
+/***************************************************************/
+//  Número de testes
+//  
+//  Um numero inteiro que define quantas vezes o programa
+//  resolverá o mesmo problema
+/***************************************************************/
+//  Quantidade de figurinhas em um pacote
+//
+//  Um numero inteiro que define quantas cartas vem em um pacote
+//  Esse argumento só é necessário se estiver sendo rodado com 
+//  [Tipo do teste] sendo "a".
+/////////////////////////////////////////////////////////////////

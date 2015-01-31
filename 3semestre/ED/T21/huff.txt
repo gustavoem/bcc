@@ -1,0 +1,96 @@
+// DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA. 
+// TODAS AS PARTES DO PROGRAMA (EXCETO AS QUE FORAM FORNECIDAS 
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DA BIBLIOTECA DE 
+// SEDGEWICK E WAYNE) FORAM DESENVOLVIDAS POR MIM.  DECLARO 
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS. 
+//
+// Nome: Gustavo Estrela de Matos
+// NUSP: 8536051
+// Sigla: GUEM
+//
+// Data: 2014-06-19
+// Disciplina: MAC0323
+// Este arquivo faz parte da tarefa T21
+/////////////////////////////////////////////////////////////////
+
+Texto:
+"ABRACADABRA!"
+
+Original:
+01000001 01000010 01010010 01000001 01000011 01000001 01000100 01000001
+01000010 01010010 01000001 00100001 
+96 bits
+
+Huffman:
+01010000 01001010 00100010 01000011 01000011 01010100 10101000 01000000
+00000000 00000000 00000001 10001111 10010110 10001111 10010100 
+120 bits
+
+Taxa de compressão: 120 / 96 = 1.25
+
+-----------------------------------------------------------------------
+Texto:
+"it was the best of times it was the worst of times
+"
+
+Original:
+01101001 01110100 00100000 01110111 01100001 01110011 00100000 01110100
+01101000 01100101 00100000 01100010 01100101 01110011 01110100 00100000
+01101111 01100110 00100000 01110100 01101001 01101101 01100101 01110011
+00100000 01101001 01110100 00100000 01110111 01100001 01110011 00100000
+01110100 01101000 01100101 00100000 01110111 01101111 01110010 01110011
+01110100 00100000 01101111 01100110 00100000 01110100 01101001 01101101
+01100101 01110011 00001010
+408 bits
+
+Huffman:
+00010110 01010101 11011110 11011111 00100000 00101110 01100101 11001001
+00001010 10110001 01011010 01000101 10011010 11010000 10110110 11011000
+01101110 10000000 00000000 00000000 00000110 01110111 11010010 11011100
+01111110 01000011 01011000 10011101 00111100 00111110 11110100 00100011
+01111101 00101101 11000111 11100100 00100100 01110100 10011101 00111100
+00111110 11110100 00100101 01000000
+352 bits
+
+Taxa de compressão: 352 / 408 ~ 0.862
+
+-----------------------------------------------------------------------
+A trie de Huffman não é única, pois letras com a mesma frequência
+podem ser filho esquerdo e direito de um pai. Isso dependerá de como
+essas letas de mesma frequência foram montadas na MinPQ.
+Exemplo de duas tries de Huffman diferentes para "ABRACADABRA!".
+
+        
+         ( root ) 
+         /      \
+        /        \
+       (A)      (  )
+                /  \
+               /    \
+              /      \
+             /        \
+          (  )        (  )
+          /  \        /  \
+         /    \      /    \
+       (C)  (  )    (B)   (R)
+            /  \  
+           /    \
+          (D)   (!)
+
+         ( root ) 
+         /      \
+        /        \
+       (A)      (  )
+                /  \
+               /    \
+              /      \
+             /        \
+          (  )        (  )
+          /  \        /  \
+         /    \      /    \
+       (D)  (  )    (R)   (B)
+            /  \  
+           /    \
+          (!)   (C)
+

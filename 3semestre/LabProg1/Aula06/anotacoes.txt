@@ -1,0 +1,31 @@
+Expressões regulares
+
+Uma expressão regular é uma descrição de um conjunto de strings.
+ .  -> qualquer caractere
+ [] -> uma classe. 				Exemplo: [aeiou] qualquer vcogal. [0-9] de zero a nove.
+[^] -> complemento da classe. 	Exemplo: [^0-9] qualquer coisa que nao seja digito
+ ^  -> início da string
+ $  -> final da cadeia			Exemplo: ^s[aou]l$  ==> sal, sol, sul
+
+Se r1 e r2 são regex
+r1|r2 	-> r1 ou r2
+(r1)  	-> 
+r1*  	-> 0 ou + vezes
+r1+   	-> r1 ou +vezes
+r1?   	-> 0 ou 1 vez
+r1{n,m} -> de n a m vezes
+r1{n, } -> pelo menos n vezes
+r1{n}   -> extamente n vezes
+
+Usos:
+^[A-Z]{3} +([0-9])[xX]\1 +[A-Z]{3}$   ==> BRA 42 x 42 ARG
+
+^(US|AU)\$[-+]?[ ][0-9]+\.[0-9]{2}
+
+US$ 1.12
+AU$ 11.42	
+
+Dada uma expressão regular, quantas cadeias ela acha?
+
+AWK
+Leve, rápido. Simples e poderoso.

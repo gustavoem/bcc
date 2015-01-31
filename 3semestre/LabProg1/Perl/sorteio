@@ -1,0 +1,123 @@
+#!/usr/local/bin/perl
+
+use Getopt::Std;
+
+srand;
+
+getopts('thp:');
+
+print <<USO if $opt_h;
+Uso:
+    sorteio [opções] <arquivo de nomes>
+
+Opções:
+    -t       : Apenas mostra um sorteio.
+               Não gera mensagens.
+
+    -p <val> : <val> é o valor mínimo para um ciclo (partição).
+               Colocando-se a palavra "max" no lugar de <val>
+               eliminam-se os ciclos.
+	       O default é 5.
+
+    -h       : help
+
+As opções podem ser agrupadas, por exemplo:
+    sorteio -thp 4 nomes
+neste caso, p deve ser a última opção.
+
+O arquivo de nomes consiste de várias linhas onde cada
+linha tem um nome seguido pelo endereço eletrônico.
+
+Atenção: O nome deve constar apenas de uma palavra.
+
+USO
+
+
+undef $/;
+
+$_= <>;
+my %nomes  = split;		# terse, heh?
+
+# nomes e parceiros
+my @aux = keys %nomes;
+my @p;
+my @n = ();
+
+my $pmin = $opt_p >  1 ? $opt_p : 5; # tamanho minimo de ciclo
+$pmin = @aux if $opt_p eq 'max';
+
+# sorteia 
+while (@aux) {
+    push @n, splice @aux, @aux * rand,1;
+}
+
+# particoes
+$num = @n;			# numero de pessoas restantes
+$npart = int(($num/$pmin)*rand()) + 1; # tamanho da particao
+
+while ($npart > 1) {
+  # pelo menos $pmin, sobrando o suficiente para as 
+  # outras particoes
+  $ps = int(rand() * ($num - $npart*$pmin))+$pmin;
+  push @part, $ps;
+  $npart--;
+  $num -= $ps;
+} 
+# ultima particao
+push @part, $num;
+
+# permutacao ciclica por partes para definir parceiros
+@aux = @n;
+@p = ();
+
+for $ps (@part) {
+  @tmp = splice @aux, 0, $ps;
+  push @p, pop @tmp;
+  push @p, @tmp;
+}
+
+# manda as mensagens
+my @lt;
+my $tab = 'klsjalkdasldnaoasoidasoidasfnsdrgasdfnbjafsdafdfjasdldshfasdljflfklnmvnmcnortywqutoeusdklnmweputqwnmsfnasdlopipeieipdkfopewwereopsdasadasd';
+my $tt = length($tab) - 15;
+my $partner;
+
+format =
+ @<<<<<<<<<<<< : @<<<<<<<<<<<<<<<
+  $n[$i], $p[$i]
+.
+ 
+for $i (0 .. $#n) {
+  write if $opt_t;
+  $partner = lc $p[$i];
+  $partner =~ tr/áéíóúõãàâôêç/aeiouoaaaoec/;
+  @lt = split('', $partner);
+  $as = '';
+  $num = int(6*rand) + 4;
+  for $k (0 .. $#lt) {
+    $as .= substr($tab, $tt*rand, $num) . $lt[$k];
+  }
+  $as .= $tab;
+  $as = substr($as,0,80);
+  $num++;
+  next if $opt_t;
+
+  open (M, "| mail $nomes{$n[$i]}");
+#  open (M, "| less");
+  print M <<L ;
+Subject: Amigo secreto de $n[$i].
+Oi $n[$i], para saber seu amigo secreto (ou amiga secreta), 
+olhe a cada $num letras  e descarte o que  sobrar depois do 
+nome:
+$as
+
+Exemplo, para olhar a cada 5 letras:
+    msdnaasddmsadsiasdagdasagasdaodasa
+    ....^....^....^....^....^....^....
+	(seria "amigo")
+.
+L
+    close M;
+}
+
+    

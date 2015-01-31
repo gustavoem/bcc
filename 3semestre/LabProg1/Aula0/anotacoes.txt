@@ -1,0 +1,8 @@
+03/04
+Como retornar um código de erro? Qual valor???
+	Não tem como retornar! Seria possível se estivessemos recebendo um ponteiro para o inteiro de resposta e a função poderia responder 0 ou 1.
+
+Fazemos o itoc. Converter inteiros em string.
+	Como escrever o numero 1234? 
+	> escreve tudo o que vem antes do 1 e depois escreve o um. 
+getchar() devolve um inteiro porque precisa devolver o conjunto dos caracteres + o EOF. 

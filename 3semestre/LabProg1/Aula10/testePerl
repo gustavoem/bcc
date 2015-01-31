@@ -1,0 +1,9 @@
+$x = "bla";
+$o = 29;
+$v <<'FIM';
+11123123
+FIM
+
+print "$v\n"
+
+print qq:$o $v $x:."s\n";

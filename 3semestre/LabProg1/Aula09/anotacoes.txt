@@ -1,0 +1,8 @@
+inicialização:
+glutInit();
+glutInitDisplayMode(GLUT_DOUBLE | GLUT RGBA | GLUT DEPTH);
+glutWindowSize(a,b);
+
+gluLookAt(x,y,z  /*posição do olho*/
+		  x,y,z  /*centro*/
+		  x,y,z) /*orientação da sua cabeça*/

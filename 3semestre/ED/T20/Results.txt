@@ -1,0 +1,79 @@
+// DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA. 
+// TODAS AS PARTES DO PROGRAMA (EXCETO AS QUE FORAM FORNECIDAS 
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DA BIBLIOTECA DE 
+// SEDGEWICK E WAYNE) FORAM DESENVOLVIDAS POR MIM.  DECLARO 
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS. 
+//
+// Nome: Gustavo Estrela de Matos	
+// NUSP: 8536051
+// Sigla: GUEM
+//
+// Data: 2014-06-12
+// Disciplina: MAC0323
+// Este arquivo faz parte da tarefa T20
+/////////////////////////////////////////////////////////////////
+
+Para representar um texto com N repetições de "ab", sem compressão,
+precisamos de N * 2 * 8 = 16 * N bits.
+Para contar quantos bits precisamos para representar N * ab de maneira 
+codificada, precisamos contar quantas vezes ocorrem sequencias de bits 
+iguais na representação em bits de "ab".
+
+-----------------------------------------------------------------------
+O caso mais simples (N = 1):
+a.txt é "ab"
+
+BinaryDump 64 < a.txt 
+01100001 01100010
+16 bits
+
+java T20 < a.txt | java BinaryDump 64
+00000001 00000010 00000100 00000001 00000001 00000010 00000011 00000001
+00000001
+72 bits
+-----------------------------------------------------------------------
+
+Contando quantas mudanças de bits ocorrem na representação codificada 
+de ab, vemos que ocorrem 9 sequencias de bits iguais
+0*11*0000*1 *0*11*000*1*0
+Para cada uma dessas sequencias, separadas por estrela, teremos 1 byte
+para guardar qual o tamanho dessa sequência. Logo, precisamos de 
+9 * 8 = 72 bits para representar ab.
+
+-----------------------------------------------------------------------
+Com N = 2:
+a.txt é "abab"
+java BinaryDump 64 < a.txt 
+01100001 01100010 01100001 01100010
+32 bits
+
+java T20 < a.txt | java BinaryDump 64
+00000001 00000010 00000100 00000001 00000001 00000010 00000011 00000001
+00000010 00000010 00000100 00000001 00000001 00000010 00000011 00000001
+00000001 
+136 bits
+-----------------------------------------------------------------------
+
+Contando a quantidades de sequências de bits iguais:
+0*11*0000*1 *0*11*000*1*0 0*11*0000*1 *0*11*000*1*0
+São 17 sequências.
+Equivale a 17 * 8 = 136 bits
+
+Se observarmos novamente o caso em que N = 1, vemos que a quantidade de
+sequências não dobra em N = 2 porque o ultimo bit de "a" casa com o 
+primeiro bit de "b" fazendo com que ocorram 2*N - 1 sequências de bits. 
+Então, precisamos subtrair N - 1 da quantidade de sequencias, para não 
+contar esses casamentos como 2 sequências de bits.
+
+Então, a quantidade de sequencias de bits iguais em um texto com N
+repetições de "ab" é (9 * N) - (N - 1). Simplificando: 8 * N + 1
+Logo, a quantidade de bits necessária para representar esse texto de
+maneira comprimida é 8 * [8 * N + 1]. 
+
+Assim sendo, a taxa de compressão 
+|C(B)| / |B| = (8 * [8 * N + 1]) / (16 * N) 
+			 = (8 * N + 1) / (2 * N)
+
+
+

@@ -1,0 +1,5 @@
+Makefiles
+$@ : alvo
+$< : primeira dependencia
+$? : deps + novas que o $@
+

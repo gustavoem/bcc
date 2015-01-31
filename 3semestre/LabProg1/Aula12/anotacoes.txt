@@ -1,0 +1,14 @@
+GNU PLOT
+plot sin(x)
+
+
+Select:
+
+
+$|: flush automático
+
+y/ \t\nn//d                 -> tira os brancos    
+y/____/-----/ (c | d | f)   -> troca __ por --
+s/^([+-]?(((\d*[.]?\d+\*)?x(\^\dd+)?)|\d+))
+
+splice @a, @b, $c:

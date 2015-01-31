@@ -1,0 +1,44 @@
+PEARL
+> As duas podem usar a mesma máquina virtual
+> Comentário: susto: mudar de linguagem no meio do código???
+> Tipos de variáveis: não tem! tem classes, coisas que são escalares
+
+		|	- escalares			$
+		|	- arrays			@
+glob -->|	- hashes			%
+		|	- subrotines		&
+		|	- FH (file handle)  nada
+
+Pearl é tão livre que dá pra seguir a intuição.
+Tudo tem que estar entre chaves
+Uma coisa muito legal em pearl: REGEX
+O escalar é o mais rico de todos os tipos.
+	Um escalar
+	> pode ser um número
+	> string
+	> referência - um ponteiro que você não pode mexer
+	Strings:
+		> se quiser printar aspas duplas, use qq
+		exemplo:
+			"com \" s"
+			qq/ com "s/;
+			qq/ asduasodhaisdjads /    -> dá pra usar outras coisas como : ; ( {  afvsalsdabla})
+	
+	Arrays:
+		> @a = (1,2,3,"quarto");
+		> $a[1]
+		> @b = @a[1,3,2
+		> ($x, $y) = ($y, $x)
+
+	Hash:
+		> %h =  (k1, v1, l2, v2)
+		> $h {k2}
+		> exists $h{k2}
+		> $n{"algo"}
+		exemplo:
+		%trad = (red => "vermelho, blue => "azul", green => "verde", two => "dois")
+
+	Data:
+		> $txt = 'cat  sapos.txt';
+Variáveis especiais
+> $, - separador

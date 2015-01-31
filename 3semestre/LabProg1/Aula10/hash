@@ -1,0 +1,3 @@
+%trad = (red => "vermelho", blue => "azul", green => "verde", two => "dois");
+@a = values %trad;
+print "@a\n"

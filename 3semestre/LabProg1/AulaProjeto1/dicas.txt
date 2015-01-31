@@ -1,0 +1,14 @@
+Vai pensando no desenho da nave
+pode ser umm  negocio que se você esbarrar você morre
+alalala eu preciso aprender a digitar lalalalal eu vou reaprender A a digitar kakkaaka
+o tiro é uma mini nave
+se ele atingir alguma coisa ele explode 
+se quiser pode fazer o tiro desviar em busca da nave e taks
+o tiro é isso
+projetil.c
+pra calcular a colisao a gente faz isso
+
+
+
+a velocidade do tiro é em 3d
+o tiro nao recebe comando

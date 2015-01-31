@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+use Term::ReadLine;
+
+my  $term = new Term::ReadLine 'Perl Interpreter';
+$prompt = "Expressão: ";
+
+$OUT = $term->OUT || STDOUT;
+select $OUT;
+while (defined ($_ = $term->readline($prompt)) ) {
+  eval($_);
+  warn $@ if $@;
+  $term->addhistory($_) if /\S/;
+  print "\n";
+}
+

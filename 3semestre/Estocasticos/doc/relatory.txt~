@@ -1,0 +1,25 @@
+19/05
+Teste do Gerador de números aletórios do java feito. Média boa, variância alta.
+
+26/05
+Como calcular o sistema
+A = array(1:422550, dim=c(650,650))
+for (i in 1:650)
+for (j in 1:650)
+A[i,j] = 0
+for (i in 1:650)
+A[i,i] = 1 - dhyper(0, 650 - i, i - 1, 5)
+A[650,650] = 1
+
+for (i in 1:650) {
+j = i+1
+while (j < 650 & j < i + 6) {
+A[i,j] = dhyper(j-i, 650 - i, i - 1, 5)*-1
+j = j + 1
+}
+}
+
+B = A
+for (i in 1:650)
+B[i,1] = 1
+B[650,1] = 0

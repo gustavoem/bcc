@@ -1,0 +1,92 @@
+Continuação PERL
+
+for (e1; e2; e3) { bloco }
+for $v (lista) { bloco }
+while (cond) { bloco }
+
+if (cond) { bloco }
+elsif (condi) { bloco }
+else { bloco }
+
+if ($x != 0) { $a = 3 / $x;}
+$a = 3 / $x if $x != 0;
+
+Label:
+while (cond) {
+    redo [label];  
+    last [label];
+    next [label];
+}
+
+Expressões regulares
+\s -> espaço
+\S -> diferente de espaço
+\w -> alfanumérico
+\W -> não alfanumérico
+\B
+\d
+\D
+
+Variáveis padrão
+prog arg1 arg2 ...
+> super entrada: <>
+  exemplos:
+    $l = <>;
+    while (<>) {
+
+    }
+> área de trabalho padrão:              $_ 
+> separador para imprimir @:            $,
+> separador para inserção de @ss em $:  ->
+
+Arquvios
+open ARQ, "arquivo"
+open A1,  "< entrada.txt"
+          "> saida.txt"
+          ">> log.txt"
+          "| prog"
+          "prog |"
+
+Expressões condicionais/comparadores
+"a" x "b"
+"1" x "10"
+ 1  x  10
+"20 mais 22" + 22 -> vai dar 42
+|número | string|
+|  ==       eq  |
+|  !=       ne  |
+|  <        lt  |
+|  <=       le  |
+|  >        gt  | 
+|  >=       ge  |
+|  <=>      cmp |
+
+Subrotinas
+sub nome { code }
+> argumentos:   @_
+> declare com my 
+> local $m
+
+REGEX
+m/____/ opções
+m stands for match      => pra que o m se eu posso não usar o m? pra poder usar outro delimitador:  m!\d\d/\d\d/\d{4}! <= pega datas
+/____/ == m/_____/
+expre =~ /_____/
+expre !~ /_____/
+i -> ignora case
+g -> global
+s -> linha simples
+m -> multiplas linhas
+x -> depois ele mostra 
+
+referência simbólica: *a = *b 
+
+AWK
+use Tk -> fazer janelas
+
+my $grupo = shift;
+my @times = @{$Grupos{$grupo}}    -> pega uma lista com os times do grupo $grupo
+
+
+s/#.*$//; -> descarta comentários
+

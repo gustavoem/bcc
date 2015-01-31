@@ -1,0 +1,16 @@
+Padrão			Ação
+BEGIN
+END
+function algo(x,__i,J)
+Todas as variáveis são globais
+sub(regex, subs, opcional(string));
+Vamos fazer uma tabela de resultados da copa em awk
+Não tem struct em awk
+
+/^[A-Z]{3} [0-9]+ x [0-9]+ [A-Z]{3}/ {
+	gols[$1] += $2
+	gols[$5] += $4
+	saldo[$1] += $2 - $4
+	saldo[$5] += $4 - $2
+	
+}

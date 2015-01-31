@@ -1,0 +1,28 @@
+|Kernel|
+---\/---
+|App   |
+---\/---
+|Shell |
+--------
+
+O shell é programável :)
+
+|Bash|
+
+Script Language
+> interpretada
+> flexível
+> interativa
+> exemplos: python; pearl; ruby; awk;	
+
+>chmod +x prog << prog torna-se executável para você, grupo e resto
+>você pode mudar o intepretador de arquivos do shell
+
+>.bashrc thing
+>alias
+
+>algo[0-9]
+
+>> for a in *.jpg;
+do mv $a ${a/jpg/jpeg};
+done;

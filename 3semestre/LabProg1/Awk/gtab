@@ -1,0 +1,60 @@
+#!/usr/bin/gawk   -f 
+
+/^GRUPO/ {grupo[$2] = $3 ":" $4 ":" $5 ":" $6}
+
+#/^[A-Z]{3} [0-9]+ x [0-9]+ [A-Z]{3}/ {
+/^[A-Z][A-Z][A-Z] +[0-9]+ +x +[0-9]+ +[A-Z]/ {
+	gols[$1] += $2
+	gols[$5] += $4
+	saldo[$1] += $2 - $4
+	saldo[$5] += $4 - $2
+	if ($2 > $4) pontos[$1] += 3
+	else if ($4 > $2) pontos[$5] += 3
+	else {pontos[$1]++; pontos[$5]++}
+}
+
+function compara(a, b)
+{
+	if (a in pontos && b in pontos) {
+		if (pontos[a] > pontos[b]) return -1
+		if (pontos[a] < pontos[b]) return  1
+		if (saldo[a]  > saldo[b])  return -1
+		if (saldo[a]  < saldo[b])  return  1
+		if (gols[a]   > gols[b])   return -1
+		if (gols[a]   < gols[b])   return  1
+	}
+	if (a in pontos) return -1
+	if (b in pontos) return  1
+	return 0;
+}
+
+function pontuacao(n)
+{
+	return substr("XXXXXXXXX",1, n) substr(".........",1,9-n)
+}
+
+END {
+	print "TABELA"
+	for (g in grupo) {
+
+		print "    GRUPO  "g
+		print "+---+---------+"
+		split(grupo[g],times,":")
+
+		for (i = 1; i < 4; i++) {
+			for (j = i; j <= 4; j++) {
+				if (compara(times[i], times[j]) ==1) {
+					aux = times[i]
+					times[i] = times[j]
+					times[j] = aux
+				}
+			}
+		}
+
+
+		for (t=1 ; t <= 4; t++) {
+			print "|"times[t] "|" pontuacao(pontos[times[t]]) "|"
+		}
+		print "+---+---------+"
+	}
+}

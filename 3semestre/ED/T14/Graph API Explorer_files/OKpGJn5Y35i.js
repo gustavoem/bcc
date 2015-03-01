@@ -1,8 +1,0 @@
-/*!CK:3541491356!*//*1398680666,178171215*/
-
-if (self.CavalryLogger) { CavalryLogger.start_js(["5scFN"]); }
-
-__d("DeveloperAppReviewStatus",["AsyncRequest","DOM","Event"],function(a,b,c,d,e,f,g,h,i){var j={registerDevModeToggle:function(k,l){i.listen(k,'change',function(m){m.getTarget().disabled=true;new g(l).setMethod("POST").setData({is_live:m.target.checked}).setServerDialogCancelHandler(function(){var n=h.find(k,'input');n.disabled=false;n.checked=!n.checked;}).send();});}};e.exports=j;});
-__d("DevsiteNavigationCard",["CSS","DOMQuery","Event","csx"],function(a,b,c,d,e,f,g,h,i,j){function k(l){"use strict";this.$DevsiteNavigationCard0=l;h.scry(this.$DevsiteNavigationCard0,"._5auw a").forEach(function(m){i.listen(m,'click',function(){g.show('spinner-'+m.id);});});}e.exports=k;});
-__d("XDeveloperSearchControllerURIBuilder",["XControllerURIBuilder"],function(a,b,c,d,e,f,g){e.exports=g.create("\/search\/",{q:{type:"String"}});});
-__d("DevsiteBingSearchForm",["Event","Form","goURI","XDeveloperSearchControllerURIBuilder"],function(a,b,c,d,e,f,g,h,i,j){function k(l){"use strict";this.$DevsiteBingSearchForm0=l;g.listen(this.$DevsiteBingSearchForm0.getRoot(),'submit',this.$DevsiteBingSearchForm1.bind(this));}k.prototype.$DevsiteBingSearchForm1=function(){"use strict";var l=h.serialize(this.$DevsiteBingSearchForm0.getRoot()),m=l.query;if(!m)return false;var n=(new j()).setString('q',m).getURI();i(n);return false;};e.exports=k;});

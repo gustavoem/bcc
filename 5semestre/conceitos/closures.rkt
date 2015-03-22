@@ -13,13 +13,13 @@
   [plusC (l : ExprC) (r : ExprC)]
   [multC (l : ExprC) (r : ExprC)]
   [ifC (c : ExprC) (s : ExprC) (n : ExprC)]
-  [fdC (name : symbol) (arg : symbol) (body : ExprC)]
+  [lamC (arg : symbol) (body : ExprC)]
   [appC (fun : ExprC) (arg : ExprC)])
 
 (define-type ExprS
   [numS (n : number)]
   [idS (s : symbol)]
-  [fdS (name : symbol) (arg : symbol) (body : ExprS)]
+  [lamS (arg : symbol) (body : ExprS)]
   [appS (fun : ExprS) (arg : ExprS)]
   [plusS (l : ExprS) (r : ExprS)]
   [multS (l : ExprS) (r : ExprS)]
@@ -27,10 +27,9 @@
   [uminusS (e : ExprS)]
   [ifS (c : ExprS) (s : ExprS) (n : ExprS)])
 
-
 (define-type Value
   [numV (n : number)]
-  [funV (name : symbol) (arg : symbol) (body : ExprC)])
+  [closV (arg : symbol) (body : ExprC) (env : Env)])
 
 (define (num+ [l : Value] [r : Value]) : Value
   (cond
@@ -46,7 +45,7 @@
   (type-case ExprS as
     [numS (n) (numC n)]
     [idS (s) (idC s)]
-    [fdS (n a b) (fdC n a (desugar b))]
+    [lamS (a b) (lamC a (desugar b))]
     [appS (fun arg) (appC (desugar fun) (desugar arg))]
     [plusS (l r) (plusC (desugar l) (desugar r))]
     [multS (l r) (multC (desugar l) (desugar r))]
@@ -61,9 +60,9 @@
     [plusC (l r) (num+ (interp l env) (interp r env))]
     [multC (l r) (num* (interp l env) (interp r env))]
     [ifC (c s n) (cond [(zero? (numV-n (interp c env))) (interp n env)] [else (interp s env)])]
-    [fdC (n a b) (funV n a b)]
-    [appC (f a) (local ([define fd f])
-                       (interp (fdC-body fd) (extend-env (bind (fdC-arg fd) (interp a env)) mt-env)))]))
+    [lamC (a b) (closV a b env)]
+    [appC (f a) (local ([define fd (interp f env)])
+                       (interp (closV-body fd) (extend-env (bind (closV-arg fd) (interp a env)) (closV-env fd))))]))
 
 (define (lookup [s : symbol] [env : Env]) : Value
   (cond 
@@ -86,9 +85,8 @@
          [(-) (cond 
                 [(equal? (length s1) 3) (bminusS (parse (second s1)) (parse (third s1)))]
                 [(equal? (length s1) 2) (uminusS (parse (second s1)))]
-                [else (error 'parse "invalid minus")])
-         ]
-         [(func) (fdS (s-exp->symbol (second s1)) (s-exp->symbol (third s1)) (parse (fourth s1)))]
+                [else (error 'parse "invalid minus")])]
+         [(lam) (lamS (s-exp->symbol (second s1)) (parse (third s1)))]
          [(call) (appS (parse (second s1)) (parse (third s1)))]
          [(if) (ifS (parse (second s1)) (parse (third s1)) (parse (fourth s1)))]
          [else (error 'parse "invalid list input")]))]
@@ -97,7 +95,4 @@
 (define (interpS [s : s-expression]) : Value
   (interp (desugar (parse s)) mt-env))
 
-(test (interpS '(+ 10 (call (func dobra x (+ x x)) 16))) (numV 42))
-
-(interpS '(func f1 x (func f2 x (+ x x))))
-(interpS '(call (func f1 x (func f2 x (+ x x)))4))
+(test (interpS '(+ 10 (call (lam x (+ x x)) 16))) (numV 42))

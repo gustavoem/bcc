@@ -40,8 +40,11 @@
     [plusS (l r) (plusC (desugar l) (desugar r))]
     [multS (l r) (multC (desugar l) (desugar r))]
     [bminusS (l r) (plusC (desugar l) (multC (numC -1) (desugar r)))]
-    [uminusS (e) (desugar (bminusS (numS 0) e))]))
+    [uminusS (e) (multC (numC -1) (desugar e))]))
 
 (define (interpS [s : ArithS]) : number
   (interp (desugar s)))
 
+
+
+(test (interpS (parseS '(- 1))) -1)

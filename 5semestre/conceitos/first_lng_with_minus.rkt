@@ -45,3 +45,6 @@
 (define (interpS [s : ArithS]) : number
   (interp (desugar s)))
 
+
+
+(test (interpS (parseS '(- 1))) -1)

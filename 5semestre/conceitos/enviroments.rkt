@@ -2,6 +2,13 @@
 (define-type FunDefC
   [fdC (name : symbol) (arg : symbol) (body : ExprC)])
 
+(define-type Binding
+  [bind (name : symbol)  (val : number)])
+
+(define-type-alias Env (listof Binding))
+(define mt-env empty)
+(define extend-env cons)
+
 (define-type ExprC
   [numC (n : number)]
   [idC (s : symbol)]
@@ -31,32 +38,31 @@
     [uminusS (e) (multC (numC -1) (desugar e))]
     [ifS (c s n) (ifC (desugar c) (desugar s) (desugar n))]))
 
-(define (subst [valor : ExprC] [isso : symbol] [em : ExprC]) : ExprC
-   (type-case ExprC em
-     [numC (n) em]
-     [plusC (l r) (plusC (subst valor isso l) (subst valor isso r))]
-     [multC (l r) (multC (subst valor isso l) (subst valor isso r))]
-     [ifC (c s n) (ifC (subst valor isso c) (subst valor isso s) (subst valor isso n))]
-     [appC (f a) (appC f (subst valor isso a))]
-     [idC (s) (cond [(symbol=? s isso) valor]
-                    [else em])]))
 
-(define (interpC [a : ExprC] [fds : (listof FunDefC)]) : number
+(define (interpC [a : ExprC] [env : Env] [fds : (listof FunDefC)]) : number
   (type-case ExprC a
     [numC (n) n]
-    [plusC (l r) (+ (interpC l fds) (interpC r fds))]
-    [multC (l r) (* (interpC l fds) (interpC r fds))]
-    [ifC (c s n) (cond [(zero? (interpC c fds)) (interpC n fds)] [else (interpC s fds)])]
-    [appC (f a) (local ([define fd (get-fundef f fds)])
-                        (interpC (subst a (fdC-arg fd) (fdC-body fd)) fds))]
-    [idC (s) (error 'interpC "Nao devia ocorrer isso")]))
+    [plusC (l r) (+ (interpC l env fds) (interpC r env fds))]
+    [multC (l r) (* (interpC l env fds) (interpC r env fds))]
+    [ifC (c s n) (cond [(zero? (interpC c env fds)) (interpC n env fds)] [else (interpC s env fds)])]
+    [appC (f a) (local ([define fd (get-fun-def f fds)])
+                       (interpC (fdC-body fd) (extend-env (bind (fdC-arg fd) (interpC a env fds)) env) fds))]
+    [idC (n) (lookup n env)]))
 
-(define (get-fundef [f : symbol] [fds : (listof FunDefC)]) : FunDefC
-  (cond
-    [(empty? fds) (error 'get-fundef "Biblioteca de funcoes vazia")]
+(define (get-fun-def [f : symbol] [fds : (listof FunDefC)]) : FunDefC
+  (cond 
+    [(empty? fds) (error 'get-fun-def "Lista de funções vazia!")]
     [(cons? fds) (cond
-                   [(equal? f (fdC-name (first fds))) (first fds)]
-                   [else (get-fundef f (rest fds))])]))
+                   [(equal? (fdC-name (first fds)) f) (first fds)]
+                   [else (get-fun-def f (rest fds))])]))
+
+(define (lookup [s : symbol] [env : Env]) : number
+  (cond 
+    [(empty? env) (error 'lookup "Env vazio!")]
+    [else (cond
+            [(equal? (bind-name (first env)) s) (bind-val (first env))]
+            [else (lookup s (rest env))])])) 
+    
 
 (define (parseS [s : s-expression]) : ExprS
   (cond
@@ -78,19 +84,9 @@
     [else (error 'parseS "invalid input")]))
 
 
-(define-type Binding
-  [bind (name : symbol) (val : number)])
-
 
 (define (interpS [s : ExprS] [fds : (listof FunDefC)]) : number
-  (interpC (desugar s) fds))
-
-;copiei do livro
-(fdC 'double 'x (plusC(idC 'x) (idC 'x)))
-(fdC 'quadruple 'x ( appC ' double ( appC ' double ( idC 'x ) ) ) )
-(fdC 'const5 '_ ( numC 5) )
-;;
-
+  (interpC (desugar s) mt-env fds))
 
 ;;;;;;testesssss
 (define biblioteca (list 
@@ -99,5 +95,6 @@
                     [fdC 'narciso  'narciso (multC (idC 'narciso) (numC 1000))]
                     ))
 
-(interpS (parseS '(+ -1400 (call dobro 7))) biblioteca)
+
+(test (interpS (parseS '(+ -1400 (call dobro 7))) biblioteca) -1386)
 (test (interpS (parseS '(call narciso (call dobro 7))) biblioteca) 14000)

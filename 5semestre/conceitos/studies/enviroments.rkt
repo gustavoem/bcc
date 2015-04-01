@@ -38,6 +38,7 @@
     [uminusS (e) (multC (numC -1) (desugar e))]
     [ifS (c s n) (ifC (desugar c) (desugar s) (desugar n))]))
 
+
 (define (interpC [a : ExprC] [env : Env] [fds : (listof FunDefC)]) : number
   (type-case ExprC a
     [numC (n) n]
@@ -62,6 +63,7 @@
             [(equal? (bind-name (first env)) s) (bind-val (first env))]
             [else (lookup s (rest env))])])) 
     
+
 (define (parseS [s : s-expression]) : ExprS
   (cond
     [(s-exp-number? s)
@@ -82,6 +84,7 @@
     [else (error 'parseS "invalid input")]))
 
 
+
 (define (interpS [s : ExprS] [fds : (listof FunDefC)]) : number
   (interpC (desugar s) mt-env fds))
 
@@ -91,6 +94,7 @@
                     [fdC 'quadrado 'y (multC (idC 'y) (idC 'y))]
                     [fdC 'narciso  'narciso (multC (idC 'narciso) (numC 1000))]
                     ))
+
 
 (test (interpS (parseS '(+ -1400 (call dobro 7))) biblioteca) -1386)
 (test (interpS (parseS '(call narciso (call dobro 7))) biblioteca) 14000)

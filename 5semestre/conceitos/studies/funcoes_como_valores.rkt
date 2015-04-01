@@ -62,8 +62,8 @@
     [multC (l r) (num* (interp l env) (interp r env))]
     [ifC (c s n) (cond [(zero? (numV-n (interp c env))) (interp n env)] [else (interp s env)])]
     [fdC (n a b) (funV n a b)]
-    [appC (f a) (local ([define fd f])
-                       (interp (fdC-body fd) (extend-env (bind (fdC-arg fd) (interp a env)) mt-env)))]))
+    [appC (f a) (local ([define fd (interp f env)])
+                       (interp (funV-body fd) (extend-env (bind (funV-arg fd) (interp a env)) mt-env)))]))
 
 (define (lookup [s : symbol] [env : Env]) : Value
   (cond 

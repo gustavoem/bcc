@@ -255,3 +255,4 @@
 ; funcoes
 (test (interpS '(call (func a b (+ a b)) 1 2)) (numV 3))
 (test (interpS '(call (func a b (* a (+ a b))) 1 2)) (numV 3))
+(test (interpS '(call (func a b (call (func c (+ a c)) 3)) 1 2)) (numV 4))

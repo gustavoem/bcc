@@ -52,9 +52,9 @@
     [numS    (n) (numC n)]
     [idS     (s) (idC s)]
     [lamS1   (a b)  (lamC a (desugar b))] ; idem
-    [lamS2   (a1 a2 b) (lamC a1 (lamC a2 (desugar b)))]
     [appS1   (fun arg) (appC (desugar fun) (desugar arg))]
-    [appS2   (fun arg1 arg2) (appC (appC (desugar fun) (desugar arg2)) (desugar arg1))]
+    [lamS2   (a1 a2 b) (lamC a1 (lamC a2 (desugar b)))]
+    [appS2   (fun arg1 arg2) (appC (appC (desugar fun) (desugar arg1)) (desugar arg2))]
     [plusS   (l r) (plusC (desugar l) (desugar r))] 
     [multS   (l r) (multC (desugar l) (desugar r))]
     [bminusS (l r) (plusC (desugar l) (multC (numC -1) (desugar r)))]
@@ -252,3 +252,6 @@
 (test (interpS '(<< 2 1)) (numV 0))
 (test (interpS '(<<= (+ 1 2) 3)) (numV 1))
 (test (interpS '(! (== 1 1))) (numV 0))
+; funcoes
+(test (interpS '(call (func a b (+ a b)) 1 2)) (numV 3))
+(test (interpS '(call (func a b (* a (+ a b))) 1 2)) (numV 3))

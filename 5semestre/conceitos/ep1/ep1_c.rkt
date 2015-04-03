@@ -11,8 +11,10 @@
   [multC (l : ExprC) (r : ExprC)]
   [divC  (l : ExprC) (r : ExprC)]
   [expC  (b : ExprC) (p : ExprC)]
-  [lamC  (arg : symbol) (body : ExprC)] ; nomes não são mais necessários
-  [appC  (fun : ExprC) (arg : ExprC)]
+  [lamC1 (arg : symbol) (body : ExprC)] ; nomes não são mais necessários
+  [lamC2 (arg1 : symbol) (arg2 : symbol) (body : ExprC)]
+  [appC1  (fun : ExprC) (arg : ExprC)]
+  [appC2  (fun : ExprC) (arg1 : ExprC) (arg2 : ExprC)]
   [ifC   (condição : ExprC) (sim : ExprC) (não : ExprC)]
   [greqC  (l : ExprC) (r : ExprC)] 
   [greC   (l : ExprC) (r : ExprC)]
@@ -26,8 +28,10 @@
 (define-type ExprS
   [numS    (n : number)]
   [idS     (s : symbol)] 
-  [lamS    (arg : symbol) (body : ExprS)] ; muda de acordo
-  [appS    (fun : ExprS) (arg : ExprS)] 
+  [lamS1   (arg : symbol) (body : ExprS)] ; muda de acordo
+  [lamS2   (arg1 : symbol) (arg2 : symbol) (body : ExprS)]
+  [appS1   (fun : ExprS) (arg : ExprS)] 
+  [appS2   (fun : ExprS) (arg1 : ExprS) (arg2 : ExprS)] 
   [plusS   (l : ExprS) (r : ExprS)]
   [bminusS (l : ExprS) (r : ExprS)]
   [uminusS (e : ExprS)]
@@ -49,8 +53,10 @@
   (type-case ExprS as
     [numS    (n) (numC n)]
     [idS     (s) (idC s)]
-    [lamS    (a b)  (lamC a (desugar b))] ; idem
-    [appS    (fun arg) (appC (desugar fun) (desugar arg))] 
+    [lamS1   (a b)  (lamC1 a (desugar b))] ; idem
+    [lamS2   (a1 a2 b) (lamC2 a1 a2 (desugar b))]
+    [appS1    (fun arg) (appC1 (desugar fun) (desugar arg))] 
+    [appS2    (fun arg1 arg2) (appC2 (desugar fun) (desugar arg1) (desugar arg2))] 
     [plusS   (l r) (plusC (desugar l) (desugar r))] 
     [multS   (l r) (multC (desugar l) (desugar r))]
     [bminusS (l r) (plusC (desugar l) (multC (numC -1) (desugar r)))]
@@ -73,7 +79,8 @@
 
 (define-type Value
   [numV  (n : number)]
-  [closV (arg : symbol) (body : ExprC) (env : Env)])
+  [closV1 (arg : symbol) (body : ExprC) (env : Env)]
+  [closV2 (arg1 : symbol) (arg2 : symbol) (body : ExprC) (env : Env)])
 
 ; símbolos devem se associar ao número (ou a Value?)
 (define-type Binding
@@ -154,14 +161,20 @@
   (type-case ExprC a
     [numC (n) (numV n)] 
     [idC (n) (lookup n env)]
-    [lamC (a b) (closV a b env)] ; definição de função captura o environment
-    [appC (f a)
+    [lamC1 (a b) (closV1 a b env)] ; definição de função captura o environment
+    [appC1 (f a)
           (local ([define f-value (interp f env)]) ; f-value descreve melhor a ideia
-            (interp (closV-body f-value)
+            (interp (closV1-body f-value)
                     (extend-env 
-                        (bind (closV-arg f-value) (interp a env))
-                        (closV-env f-value) ; não mais mt-env
+                        (bind (closV1-arg f-value) (interp a env))
+                        (closV1-env f-value) ; não mais mt-env
                         )))]
+    [lamC2 (a1 a2 b) (closV2 a1 a2 b env)]
+    [appC2 (f a1 a2)
+           (local ([define f-value (interp f env)])
+             (interp (closV2-body f-value)
+                     (extend-env (bind (closV2-arg1 f-value) (interp a1 env))
+                                  (extend-env (bind (closV2-arg2 f-value) (interp a2 env)) env))))]
     [plusC (l r) (num+ (interp l env) (interp r env))]
     [multC (l r) (num* (interp l env) (interp r env))]
     [divC  (l r) (num/ (interp l env) (interp r env))]
@@ -190,7 +203,6 @@
                                  (bind-val (first env))]
                   [else (lookup for (rest env))])]))        ; vê no resto
 
-; o parser permite definir funções...
 (define (parse [s : s-expression]) : ExprS
   (cond
     [(s-exp-number? s) (numS (s-exp->number s))]
@@ -204,8 +216,18 @@
          [(~) (uminusS (parse (second sl)))]
          [(/) (divS (parse (second sl)) (parse (third sl)))]
          [(^) (expS (parse (second sl)) (parse (third sl)))]
-         [(func) (lamS (s-exp->symbol (second sl)) (parse (third sl)))] ; definição
-         [(call) (appS (parse (second sl)) (parse (third sl)))]
+         [(func) (cond
+                   [(equal? (length sl) 3) 
+                    (lamS1 (s-exp->symbol (second sl)) (parse (third sl)))]
+                   [(equal? (length sl) 4) 
+                    (lamS2 (s-exp->symbol (second sl)) (s-exp->symbol (third sl)) (parse (fourth sl)))]
+                   [else (error 'parse "Numbero invalido de argumentos")])]; definição
+         [(call) (cond
+                   [(equal? (length sl) 3)
+                    (appS1 (parse (second sl)) (parse (third sl)))]
+                   [(equal? (length sl) 4)
+                    (appS2 (parse (second sl)) (parse (third sl)) (parse (fourth sl)))]
+                   [else (error 'parse "Numero invalido de argumentos")])]
          [(if) (ifS (parse (second sl)) (parse (third sl)) (parse (fourth sl)))]
          [(>>=) (greqS (parse (second sl)) (parse (third sl)))]
          [(>>)  (greS  (parse (second sl)) (parse (third sl)))]
@@ -238,3 +260,6 @@
 (test (interpS '(<< 2 1)) (numV 0))
 (test (interpS '(<<= (+ 1 2) 3)) (numV 1))
 (test (interpS '(! (== 1 1))) (numV 0))
+; funcoes
+(test (interpS '(call (func a b (+ a b)) 1 2)) (numV 3))
+(test (interpS '(call (func a b (* a (+ a b))) 1 2)) (numV 3))

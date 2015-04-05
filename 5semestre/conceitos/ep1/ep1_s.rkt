@@ -1,3 +1,13 @@
+; Nome: Gustavo Estrela de Matos
+; NUSP: 8536051
+; EP1
+; Arquivo com funcoes de dois argumentos feito com sugar
+
+; Vale a pena definir um novo tipo para Booleanos?
+; Não. Não vi motivo para implementar, mesmo que houvesse, seria necessario mudar
+; os operadores relacionais para trabalhar com um tipo novo de Value que seria o 
+; booleano.
+
 #lang plai-typed
 
 #|
@@ -236,14 +246,17 @@
 ; Testes
 ; divisao
 (test (interpS '(/ 1 2)) (numV 1/2))
-(test (interpS '(+ (/ 1 2) (/ 1 2))) (numV 1))
+(test (interpS '(+ (/ 5 10) (/ 5 10))) (numV 1))
 ; exponenciacao
 (test (interpS '(^ 1 2)) (numV 1))
 (test (interpS '(^ 2 3)) (numV 8))
 (test (interpS '(^ 2 -1)) (numV 1/2))
 (test (interpS '(^ (+ 1 2) (- 3 2))) (numV 3))
+(test (interpS '(^ 123 0))(numV 1))
+(test (interpS '(^ 3 -3)) (numV 1/27))
 ; relacoes
 (test (interpS '(>>= (+ 1 2) 3)) (numV 1))
+(test (interpS '(>>= 1 2)) (numV 0))
 (test (interpS '(>> 2 1)) (numV 1))
 (test (interpS '(>> 1 2)) (numV 0))
 (test (interpS '(== 1 1)) (numV 1))
@@ -251,6 +264,8 @@
 (test (interpS '(<< 1 2)) (numV 1))
 (test (interpS '(<< 2 1)) (numV 0))
 (test (interpS '(<<= (+ 1 2) 3)) (numV 1))
+(test (interpS '(<<= 2 1)) (numV 0))
+(test (interpS '(! 0)) (numV 1))
 (test (interpS '(! (== 1 1))) (numV 0))
 ; funcoes
 (test (interpS '(call (func a b (+ a b)) 1 2)) (numV 3))

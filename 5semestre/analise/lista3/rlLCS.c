@@ -26,6 +26,7 @@ int * lLCS (char * x, int n, char * y, int m)
 
     for (j = m - 1; j > 0; j--)
     {
+        int * aux;
         // C1 e a j-esima coluna da matriz opt
         // C2 e a j-esima+1 
         // lLCS (xnn, yjm) = 1 se yjm in xnn; 0 c.c.
@@ -38,12 +39,15 @@ int * lLCS (char * x, int n, char * y, int m)
                 if (C2[i] >= C1[i + 1])
                     C1[i] = C2[i];
                 else
-                    C1[i] = opt[i + 1][j];
+                    C1[i] = C1[i + 1];
         }
+        aux = C2;
+        C2 = C1;
+        C1 = aux;
     }
 
     for (i = n; i > 0; i--)
-        L[i] = opt[i][1];
+        L[i] = C2[i];
     return L;
 } 
 

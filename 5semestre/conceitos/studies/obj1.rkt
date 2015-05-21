@@ -29,7 +29,8 @@
   [uminusS (e : ExprS)]
   [ifS (c : ExprS) (s : ExprS) (n : ExprS)]
   [objS (ns : (listof symbol)) (es : (listof ExprS))]
-  [msgS (o : ExprS) (n : symbol) (a : ExprS)])
+  [msgS (o : ExprS) (n : symbol) (a : ExprS)]
+  [letS (id : symbol) (val : ExprS) (expr : ExprS)])
 
 (define-type Value
   [numV (n : number)]
@@ -58,7 +59,9 @@
     [uminusS (e) (multC (numC -1) (desugar e))]
     [ifS (c s n) (ifC (desugar c) (desugar s) (desugar n))]
     [objS (ns es) (objC ns (map (lambda (e) (desugar e)) es))]
-    [msgS (o n a) (appC (msgC (desugar o) n) (desugar a))]))
+    [msgS (o n a) (appC (msgC (desugar o) n) (desugar a))]
+    [letS (id val expr) (appC (lamC id (desugar expr)) (desugar val))]
+    ))
 
 (define (lookup-msg [n : symbol] [o : Value]) : Value
   (type-case Value o
@@ -111,10 +114,11 @@
          [(call) (appS (parse (second sl)) (parse (third sl)))]
          [(if) (ifS (parse (second sl)) (parse (third sl)) (parse (fourth sl)))]
          [(obj) (cond
-                  [(and (s-exp-list? (second sl)) (s-exp-list? (second sl)))
+                  [(and (s-exp-list? (second sl)) (s-exp-list? (third sl)))
                         (objS (map (lambda (s) (s-exp->symbol s)) (s-exp->list (second sl)))
                               (map (lambda (e) (parse e)) (s-exp->list (third sl))))]
                   [else (error 'parse "Objeto mal definido")])]
+         [(:=) (letS (s-exp->symbol (second sl)) (parse (third sl)) (parse (fourth sl)))] 
          [(->) (msgS (parse (second sl)) (s-exp->symbol (third sl)) (parse (fourth sl)))]
          [else (error 'parse "invalid list input")]))]
     [else (error 'parse "invalid input")]))
@@ -122,4 +126,13 @@
 (define (interpS [s : s-expression]) : Value
   (interp (desugar (parse s)) mt-env))
 
-(test (interpS '(-> (obj (list ('soma1 'subtrai1)) (list ((func 'x (+ 'x 1)) (func 'x (- 'x 1)))) subtrai1 (+ 1 2)))) (numV 2))
+(test (interpS '(:= leke (obj (soma1 subtrai1) 
+                         ((lam x (+ x 1)) (lam x (- x 1)))) 
+                    (-> leke subtrai1 (+ 1 2))
+                )
+      )(numV 2))
+
+;(interp(parse (letS 'o (objS (list 'add1 'sub1)
+;                             (list (lamS 'x (plusS (idS 'x) (numS 1)))
+;                                   (lamS 'x (plusS (idS 'x) (numS -1)))))
+;(msgS (idS 'o) 'add1 (numS 3)))))

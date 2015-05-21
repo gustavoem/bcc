@@ -57,7 +57,7 @@
     [bminusS (l r) (plusC (desugar l) (multC (numC -1) (desugar r)))]
     [uminusS (e) (multC (numC -1) (desugar e))]
     [ifS (c s n) (ifC (desugar c) (desugar s) (desugar n))]
-    [objS (ns es) (objC ns (map (lambda (e) (parse e)) es))]
+    [objS (ns es) (objC ns (map (lambda (e) (desugar e)) es))]
     [msgS (o n a) (appC (msgC (desugar o) n) (desugar a))]))
 
 (define (lookup-msg [n : symbol] [o : Value]) : Value
@@ -83,7 +83,7 @@
                        (interp (closV-body fd) (extend-env (bind (closV-arg fd) (interp a env)) (closV-env fd))))]
     [objC (ns es) (objV ns (map (lambda (e) 
                                   (interp e env)) es))]
-    [msgC (o n) (lookup-msg n (interpo env))]))
+    [msgC (o n) (lookup-msg n (interp o env))]))
 
 (define (lookup [s : symbol] [env : Env]) : Value
   (cond 
@@ -99,21 +99,27 @@
     [(s-exp-symbol? s)
      (idS (s-exp->symbol s))]
     [(s-exp-list? s)
-     (let ([s1 (s-exp->list s)])
-       (case (s-exp->symbol (first s1))
-         [(+) (plusS (parse (second s1)) (parse (third s1)))]
-         [(*) (multS (parse (second s1)) (parse (third s1)))]
+     (let ([sl (s-exp->list s)])
+       (case (s-exp->symbol (first sl))
+         [(+) (plusS (parse (second sl)) (parse (third sl)))]
+         [(*) (multS (parse (second sl)) (parse (third sl)))]
          [(-) (cond 
-                [(equal? (length s1) 3) (bminusS (parse (second s1)) (parse (third s1)))]
-                [(equal? (length s1) 2) (uminusS (parse (second s1)))]
+                [(equal? (length sl) 3) (bminusS (parse (second sl)) (parse (third sl)))]
+                [(equal? (length sl) 2) (uminusS (parse (second sl)))]
                 [else (error 'parse "invalid minus")])]
-         [(lam) (lamS (s-exp->symbol (second s1)) (parse (third s1)))]
-         [(call) (appS (parse (second s1)) (parse (third s1)))]
-         [(if) (ifS (parse (second s1)) (parse (third s1)) (parse (fourth s1)))]
+         [(lam) (lamS (s-exp->symbol (second sl)) (parse (third sl)))]
+         [(call) (appS (parse (second sl)) (parse (third sl)))]
+         [(if) (ifS (parse (second sl)) (parse (third sl)) (parse (fourth sl)))]
+         [(obj) (cond
+                  [(and (s-exp-list? (second sl)) (s-exp-list? (second sl)))
+                        (objS (map (lambda (s) (s-exp->symbol s)) (s-exp->list (second sl)))
+                              (map (lambda (e) (parse e)) (s-exp->list (third sl))))]
+                  [else (error 'parse "Objeto mal definido")])]
+         [(->) (msgS (parse (second sl)) (s-exp->symbol (third sl)) (parse (fourth sl)))]
          [else (error 'parse "invalid list input")]))]
     [else (error 'parse "invalid input")]))
 
 (define (interpS [s : s-expression]) : Value
   (interp (desugar (parse s)) mt-env))
 
-(test (interpS '(+ 10 (call (lam x (+ x x)) 16))) (numV 42))
+(test (interpS '(-> (obj (list ('soma1 'subtrai1)) (list ((func 'x (+ 'x 1)) (func 'x (- 'x 1)))) subtrai1 (+ 1 2)))) (numV 2))

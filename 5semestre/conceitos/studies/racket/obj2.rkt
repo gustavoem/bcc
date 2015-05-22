@@ -57,13 +57,28 @@
 
 ; Objetos com Auto-referencia usando let
 
-(define o-self!
-  (let ([self 'dummy])
-    (begin 
-      (set! self
-        (lambda (m)
-          (case m
-            [(add1) (lambda (x) (+ ((self 'one)) x))]
-            [(one) (lambda () 1)]))) self)))
+;(define o-self!
+;  (let ([self 'dummy])
+;    (begin 
+;      (set! self
+;        (lambda (m)
+;          (case m
+;            [(add1) (lambda (x) (+ ((self 'one)) x))]
+;            [(one) (lambda () 1)]))) self)))
+;
+;(test ((o-self! 'add1) 10) 11)
 
-(test ((o-self! 'add1) 10) 11)
+
+; Usando combinador Y :(
+;
+(define o-self-no!
+  (lambda (m)
+    (case m
+      [(add1) (lambda (self x) (msg/self self 'addx x))]
+      [(addx) (lambda (self x)  (+ x 1))])))
+
+(define (msg/self o m . a)
+    (apply (o m) o a))
+
+(test (msg/self o-self-no! 'first 5) 7)
+

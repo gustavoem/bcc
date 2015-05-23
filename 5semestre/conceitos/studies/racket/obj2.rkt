@@ -71,14 +71,31 @@
 
 ; Usando combinador Y :(
 ;
-(define o-self-no!
-  (lambda (m)
-    (case m
-      [(add1) (lambda (self x) (msg/self self 'addx x))]
-      [(addx) (lambda (self x)  (+ x 1))])))
+;(define o-self-no!
+;  (lambda (m)
+;    (case m
+;      [(add1) (lambda (self x) (msg/self self 'addx x))]
+;      [(addx) (lambda (self x)  (+ x 1))])))
+;
+;(define (msg/self o m . a)
+;    (apply (o m) o a))
+;
+;(test (msg/self o-self-no! 'add1 5) 6)
 
-(define (msg/self o m . a)
-    (apply (o m) o a))
+; Chamada definida em tempo de execução:
+; objetos podem invocar funções em outros objetos (?). Isso permite flexibilidade
+; e é um dos conceitos mais importantes de o.o.
 
-(test (msg/self o-self-no! 'add1 5) 6)
+
+; Exemplo de árvore binária
+;
+; folha
+(define (mt)
+  (let [self 'dummy]
+    (begin
+      (set! self
+        (lambda (m)
+          (case m
+            [(add) (lambda () 0)]))) self)))
+
 

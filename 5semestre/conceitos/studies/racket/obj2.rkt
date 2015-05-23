@@ -80,5 +80,5 @@
 (define (msg/self o m . a)
     (apply (o m) o a))
 
-(test (msg/self o-self-no! 'first 5) 7)
+(test (msg/self o-self-no! 'add1 5) 6)
 

@@ -91,11 +91,19 @@
 ;
 ; folha
 (define (mt)
-  (let [self 'dummy]
+  (let ([self 'dummy])
     (begin
       (set! self
         (lambda (m)
           (case m
             [(add) (lambda () 0)]))) self)))
-
-
+; no interno
+(define (node v l r)
+  (let ([self 'dummy])
+    (begin 
+      (set! self 
+        (lambda(m)
+          (case m
+            [(add) (lambda () (+  v (msg l 'add) (msg r 'add)))]))) self)))
+;testee
+(test (msg (node 10 (node 9 (mt) (node -1 (mt) (mt))) (mt)) 'add) 18)

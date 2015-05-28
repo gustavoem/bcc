@@ -109,4 +109,6 @@
 
 ;testee
 (test (msg (node 10 (node 9 (mt) (node -1 (mt) (mt))) (mt)) 'add) 18)
-((node 10 (node 9 (mt) (node -1 (mt) (mt)))) 'add)
+(test (((node 10 (node 9 (mt) (node -1 (mt) (mt))) (mt)) 'add)) 18)  
+; ele interpreta primeiro l e r, que são lambdas, logo, quando eu interpretar lambda,
+; vai existir l e r no environment, e tudo vai funcionar.

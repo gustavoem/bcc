@@ -1,0 +1,65 @@
+#!/usr/bin/php5
+<?php
+
+trait A
+{
+    public function small_talk ()
+    {
+        echo 'a';
+    } 
+
+    public function big_talk ()
+    {
+        echo 'A';
+    }
+}
+
+
+trait B
+{
+    public function small_talk ()
+    {
+        echo 'b';
+    }        
+
+    public function big_talk ()
+    {
+        echo 'B';
+    }
+}
+
+trait C
+{
+    
+    public function small_c ()
+    {
+        echo 'c';
+    }
+
+    public function big_talk ()
+    {
+        echo 'C';
+    }
+}
+
+
+class Talker 
+{
+    use A, B, C
+    {
+        B::small_talk insteadof A;
+        C::big_talk insteadof B, A; 
+        C::small_c as s;
+    }
+}
+
+$obj = new Talker;
+$obj->small_talk ();
+$obj->big_talk ();
+$obj->s ();
+
+echo "\nNome da classe do objeto: ".get_class ($obj);
+echo "\nNome da classe mãe: ".get_parent_class ($obj);
+echo "\nNome dos traits: ".implode (class_uses ($obj))."\n";
+
+?>

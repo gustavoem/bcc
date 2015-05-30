@@ -1,0 +1,40 @@
+#!/usr/bin/php5
+<?php
+class Base 
+{
+
+    public function say_hello ()
+    {
+        echo "Hello";
+    }
+
+}
+
+
+trait SayWorld
+{
+    public function say_hello ()        
+    {
+        parent::say_hello ();
+        echo "World\n";
+    }
+}
+
+
+class MyHelloWorld extends Base {
+    use SayWorld;
+
+    public function say_hi ()
+    {
+        echo "hi\n";
+    }
+
+}
+
+$obj = new MyHelloWorld ();
+$obj->say_hello ();
+echo "\nNome da classe do objeto: ".get_class ($obj);
+echo "\nNome da classe mãe: ".get_parent_class ($obj);
+echo "\nNome dos traits: ".implode (class_uses ($obj))."\n";
+
+?>

@@ -3,9 +3,14 @@
 (define-type Binding
   [bind (name : symbol)  (val : Value)])
 
-(define-type-alias Env (listof Binding))
-(define mt-env empty)
-(define extend-env cons)
+(define-type-alias Env (symbol -> Value))
+(define (mt-env [name : symbol])
+  (error 'lookup "name not found"))
+(define (extend-env [b : Binding] [e : Env])
+  (lambda ([name : symbol]) : Value
+    (if (symbol=? name (bind-name b)) 
+        (bind-val b)
+        (lookup name e))))
 
 (define-type ExprC
   [numC (n : number)]
@@ -90,11 +95,7 @@
     [msgC (o n) (lookup-msg n (interp o env))]))
 
 (define (lookup [s : symbol] [env : Env]) : Value
-  (cond 
-    [(empty? env) (error 'lookup "Env vazio!")]
-    [else (cond
-            [(equal? (bind-name (first env)) s) (bind-val (first env))]
-            [else (lookup s (rest env))])]))
+  (env s))
 
 (define (parse [s : s-expression]) : ExprS
   (cond

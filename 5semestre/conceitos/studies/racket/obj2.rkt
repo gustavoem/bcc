@@ -91,10 +91,66 @@
 ;
 ; folha
 (define (mt)
-  (let [self 'dummy]
+  (let ([self 'dummy])
     (begin
       (set! self
         (lambda (m)
           (case m
             [(add) (lambda () 0)]))) self)))
 
+; no interno
+(define (node v l r)
+  (let ([self 'dummy])
+    (begin 
+      (set! self 
+        (lambda (m)
+          (case m
+            [(add) (lambda () (+  v ((l 'add)) (msg r 'add)))]))) self)))
+
+;testee
+;(test (msg (node 10 (node 9 (mt) (node -1 (mt) (mt))) (mt)) 'add) 18)
+;(test (((node 10 (node 9 (mt) (node -1 (mt) (mt))) (mt)) 'add)) 18)  
+; ele interpreta primeiro l e r, que são lambdas, logo, quando eu interpretar lambda,
+; vai existir l e r no environment, e tudo vai funcionar.
+
+; Utilização de herança
+; Vamos criar um objeto que herda de node
+(define (node/size parent-maker v l r)
+  (let ([self 'dummy]
+        [parent (parent-maker v l r)])
+    (begin
+      (set! self 
+        (lambda (m)
+          (case m
+            [(size) (lambda () (+ 1 ((l 'size)) ((r 'size)) ))]
+            [else ((parent m))]))) self)))
+
+(define (mt/size parent-maker)
+  (let ([self 'dummy]
+        [parent (parent-maker)])
+    (begin
+      (set! self 
+        (lambda (m)
+          (case m
+            [(size) (lambda () 0)]
+            [else ((parent m))]))) self)))
+
+(test (((node/size node 10 
+                   (node/size node 9 
+                              (mt/size mt) 
+                              (node/size node -1 (mt/size mt) (mt/size mt))) 
+                   (mt/size mt)) 'size)) 3)
+
+; Protótipos
+; Ao invés de passarmos o construtor do pai, poderiamos passar o objeto pai já criado.
+; Para isso usariamos um objeto protótipo, que é uma instancia do objeto pai que esta
+; compartilhada pra quem quiser usar.
+
+; Subir ou descer?
+; Até agora sempre olhamos para os métodos da classe mais "baixa" e se ela não tem o
+; método procurado, subimos na hierarquia, ou seja, nossa preferência é por utilizar
+; os métodos das classes mais baixas, e só poderíamos acessar os métodos da classe
+; mãe utilizando "super".
+; Existe outra abordagem que desce ao invés de subir. Isso acontece porque a 
+; preferência está nas classes mais altas, e só permite acessar os métodos das 
+; classes mais baixas com a utilização de "inner".

@@ -1,4 +1,4 @@
-#lang plai
+#lang plai-typed
 
 (define new-label
   (let ([n (box 0)])
@@ -8,8 +8,9 @@
         (unbox n)))))
 
 (define table (make-hash empty))
+(define-type-alias label number)
 
-(define (read-number/suspend prompt rest)
+(define (read-number/suspend [prompt : string] rest)
   (let ([g (new-label)])
     (begin
         (hash-set! table g rest)
@@ -17,11 +18,21 @@
         (display "Para continuar, use a label:")
         (display g))))
 
-(define (resume g n)
+(define (resume [g : label] [n : number])
   (begin
   (display "\nVoce digitou: ")
-  ((hash-ref table g) n)))
+  ((some-v (hash-ref table g)) n)))
 
 ; Como ler um número, então?
-(read-number/suspend "Digite o numero" (lambda (x) (+ x 1)))
+(read-number/suspend "Digite o numero" (lambda (x) x))
 (resume 1 10)
+
+; usando cookies
+(define cookie '-100)
+(read-number/suspend "\nFirst number (cookie)"
+    (lambda (v1)
+      (begin
+        (set! cookie v1)
+        (read-number/suspend "\nSecond number (cookie)"
+            (lambda (v2)
+              (display (+ cookie v2)))))))

@@ -5,15 +5,15 @@
     (with-syntax ([self (datum->syntax x 'self)])
       #'(let ([self (lambda (msg) (error 'object/self "Objeto vazio"))])
         (begin
-          (set! self
-            (let [LC (list)]
-                (lambda (msg)
-                    (case msg
-                        [(queue) lambda () (LC)]
-                        [(dispara lambda () (0))]
-                        [(mtd-name) (lambda (var) val)] 
+            (set! self
+                (let ([LC (list 1 2)])
+                    (lambda (msg)
+                        (case msg
+                            [(queue) (lambda () (display LC))]
+                            [(dispara) (lambda () (0))]
+                            [(mtd-name) (lambda (var) val)] 
                         ...))))
-                        self)))]))
+            self)))]))
 
 (define obj1
   (object/self

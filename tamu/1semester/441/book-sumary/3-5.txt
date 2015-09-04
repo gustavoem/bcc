@@ -1,0 +1,68 @@
+Basic Syntax
+- Functions start with gl
+- Constants are define GL_LIKE_THIS
+- Types are defined GLLikeThis
+
+
+Related Libraries
+- OpenGL Utilities (GLU) provides more complex functions. All GLU functions starts with
+glu.
+- Open Inventor is a library in C++ with OO that has some functions for 3d drawing
+- OpenGL does not create windows. To create a window. To create windows you can use
+    - GLX for X Window Systems
+    - AGL for Apple
+    - WGL for Microsoft
+    - PGL for IBM(?)
+    - GLUT for any window system =)
+
+
+Header Files
+If we were using Windows without glut:
+- windows.h
+- GL/gl.h
+- GL/glu.h
+Instead of this, we include only the GLUT library. 
+- GL/glut.h     <- The location of the GLUT library can vary depending on the system.
+                   For Apple this would be GLUT/glut.h
+Also, GLUT ensures that gl.h and glu.h are included (we can include but it would be
+redundant).
+
+
+Display-Window Management unsing GLUT
+Initializing
+- glutInit (&argc, argv);
+Creating the window
+- glutCreateWindow ("Window Title");
+Setting callback for drawing
+- glutDisplayFunc (funcname);
+"Activating" windows: this is what sets glut to look for user interactions in a loop.
+- glutMainLoop ();
+
+
+Other functions
+glutInitWindowPosition (x, y)
+glutInitWindowSize (x, y)
+The coordinates here are v > and the origin is the upper left corner
+
+
+OpenGL functions
+glClearColor (r, g, b, a) - sets the color for cleaning (GL_COLOR_BUFFER_BIT)
+glClear () - clears screen with the color
+glColor3f (r, g, b) - sets a color
+
+
+GLU Functions
+glOrtho2D (xi, xf, yi, yf) - sets the coordinates of our drawing. The origin is the 
+bottom left and the axis are ^ >
+
+
+Error Handling
+OpenGL records one error at time. Once an error occours, no other error will be recorded
+until you get the present error.
+    GLenum code;
+    code = glGetError ();
+We can also get a string description for each error:
+    code = glGetError ();
+    string = gluErrorString (code);
+    fprintf( stderr, "OpenGL error: %s\n", string);
+

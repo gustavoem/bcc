@@ -1,0 +1,25 @@
+Professor Choe
+
+Code Construction
+- System Specification
+
+Topics
+- Programming techniques and styles
+- Software designs and principles
+- Basic collaborative programming skills
+- Programming tools
+- Project-specific subjects
+
+Projects
+- Each 1 month long
+
+Lab times
+- Code reviews
+- Q and As
+
+Code reviews
+- We judge ourselves
+
+Todo
+- Read Don Knuth's Turing Award Lecture
+- Read the textbook chapter (see weekly schedule for chapters)

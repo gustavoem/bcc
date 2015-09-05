@@ -1,0 +1,19 @@
+What is a good design
+- A design is good if it fulfills the requirements in a meaningful way
+- Every design decision must have a reason, and this reason must be documented
+- Its important to document benefits that results from a design decision
+- Associated risks must be documented
+
+Writing for a Peer Developer
+- The goal of a peer developer design document is to make sure that your ideas are valid an that approach works with what others are doing. 
+Sections of the document:
+- Section 1: State the purpose of your project/sub-system
+- Section 2: Define the high level entities in your design
+- Section 3: For each entity, define low level design.
+    - Usage: why do you need the object and what it does
+    - Configuration: if your object needs any special initialization
+    - Model: kinda of uml
+    - Interaction: another kind of uml (flux diagram)
+-Section 4: Benefits, assumptions, risks/issues
+
+

@@ -1,5 +1,6 @@
+#define GLEW_STATIC
+# include <GL/glew.h>
 # include <GL/glut.h>
-
 void init (void)
 {
     // Set display-window color to white.
@@ -24,7 +25,7 @@ void lineSegment (void)
 }
 
 
-void main (int argc, char** argv)
+int main (int argc, char** argv)
 {
     // Initialize glut
     glutInit (&argc, argv);
@@ -41,4 +42,5 @@ void main (int argc, char** argv)
 
     // Starts glut app
     glutMainLoop ( );
+    return 0;
 }

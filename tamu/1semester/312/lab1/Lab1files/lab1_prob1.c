@@ -36,14 +36,14 @@ int main()
 	time_stamp = this_instant.tv_sec;
 
 	//Code segment for file I/O
-	fprintf(my_file_pointer, "This program was executed at time : %d secs\n", time_stamp);
+	fprintf(my_file_pointer, "This program was executed at time : %d secs\n", (int) time_stamp);
 
 	fprintf(my_file_pointer, "The sizes of different data type for this machine and compiler are -\n");
 	fprintf(my_file_pointer, "int data type is %d bytes or %d bits long\n",sizeof(int_var), sizeof(int_var)*8 ); 
     fprintf(my_file_pointer, "double data type is %d bytes or %d bits long\n",sizeof(double), sizeof(double)*8 );
 
 	//Code segment for console I/O, this can be used instead of the file I/O
-	printf("This program was executed at time : %d secs\n", time_stamp);
+	printf("This program was executed at time : %d secs\n", (int) time_stamp);
 
 	printf("The sizes of different data type for this machine and compiler are -\n");
 	printf("int data type is %d bytes or %d bits long\n",sizeof(int_var), sizeof(int_var)*8 );  //Tag 2

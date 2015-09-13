@@ -1,0 +1,1 @@
+The sizes of different data type for this machine and compiler are -

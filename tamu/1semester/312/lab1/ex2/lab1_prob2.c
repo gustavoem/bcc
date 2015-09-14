@@ -11,6 +11,7 @@ int main()
         printf ("Error opening the file, so exiting\n");
         return 1;
     }
+
     fprintf (my_file_pointer, "The sizes of different data type for this machine and compiler are -\n");
     fprintf (my_file_pointer, "unsigned int data type is %lu bytes or %lu bits long\n", sizeof (unsigned int), sizeof (unsigned int) * 8);
     fprintf (my_file_pointer, "double data type is %lu bytes or %lu bits long\n", sizeof (double), sizeof (double) * 8);

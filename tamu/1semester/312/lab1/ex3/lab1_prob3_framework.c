@@ -24,6 +24,7 @@ run this file as : gcc filename.c -o executableName
 unsigned int engine_running;
 unsigned int driver_seat_belt;
 unsigned int doors_closed;
+unsigned int door_lock_lever;
 unsigned int key_inside;
 unsigned int driver_on_seat;
 unsigned int brake_pedal;
@@ -33,13 +34,13 @@ unsigned int dla;
 unsigned int ba;
 
 void read_inputs_from_ip_if(){
-    scanf ("%u %u %u %u %u", engine_running, driver_seat_belt, doors_closed)
+    scanf ("%u %u %u %u %u %u %u %u", &engine_running, &driver_seat_belt, &doors_closed,
+            &door_lock_lever, &key_inside, &driver_on_seat, &brake_pedal, &car_moving);
 }
 
 void write_output_to_op_if(){
-
-	//place your output code here
     //to display/print the state of the 3 actuators (DLA/BELL/BA)
+    printf ("%u %u %u\n", dla, bell, ba);
 }
 
 
@@ -52,9 +53,30 @@ void control_action(){
  	Replace this code segment with your own code to do problems 3 and 4.
 	*/
 
-	if (driver_on_seat && !doors_closed)
-		bell = 1;
-	else bell = 0;
+	if (!engine_running)
+	    bell = 0;
+	else if (!driver_seat_belt)
+            bell = 1;
+        else if (!doors_closed)
+            bell = 1;
+        else
+            bell = 0;
+
+        if (!door_lock_lever)
+            dla = 0;
+        else if (!key_inside)
+            dla = 1;
+        else if (!driver_on_seat)
+            dla = 0;
+        else
+            dla = 1;
+
+        if (!brake_pedal)
+            ba = 0;
+        else if (!car_moving)
+            ba = 0;
+        else
+            ba = 1;
 
 }
 

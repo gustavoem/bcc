@@ -1,0 +1,1 @@
+I ran the program using streaming redirection. Because of this the program got in a infinite loop of scanfs. To run the program with the input file use the make and make run. You can also type the data using the keyboard as stdin. 

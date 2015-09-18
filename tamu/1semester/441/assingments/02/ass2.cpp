@@ -6,6 +6,7 @@
 #define WINDOWSY 500
 #define STD_SPIN_RATE 5
 #define STD_COLOR_INTENSITY .5
+#define PI 3.14159265
 
 static GLfloat spin = 0.0;
 static int hx;
@@ -33,7 +34,7 @@ void init (void)
 void drawPolygon ()
 {
     
-    //glPushMatrix ();
+    glPushMatrix ();
     glTranslatef (pol_x, pol_y, 1);
     switch (viewmode)
     {
@@ -50,8 +51,9 @@ void drawPolygon ()
     glVertex2f (-10.0, .0);
     glVertex2f (-20, 10.0);
     glVertex2f (10.0, 10.0);
-    //glPopMatrix ();
     glEnd ();
+    
+    glPopMatrix ();
 }
 
 
@@ -112,15 +114,11 @@ void mouse (int button, int state, int x, int y)
         case GLUT_LEFT_BUTTON:
             if (state == GLUT_DOWN) 
             { 
-                // glutIdleFunc (spinClockwise);
-                pol_x = (x / (float) WINDOWSX -.5) * 100;
-                pol_y = -((y / (float) WINDOWSY -.5) * 100);
+                glutIdleFunc (spinClockwise);
             }
             else 
-            {
                 glutIdleFunc (NULL);
-                std::cout << "new x: " << pol_x << std::endl;
-            }
+                
             break;
 
         case GLUT_RIGHT_BUTTON:
@@ -129,6 +127,30 @@ void mouse (int button, int state, int x, int y)
             else
                 glutIdleFunc (NULL);
             break;
+
+        case GLUT_MIDDLE_BUTTON:
+            if (state == GLUT_UP)
+            {
+                GLfloat dx = ((x - hx) / (float) WINDOWSX) * 100;
+                GLfloat dy = -((y - hy) / (float) WINDOWSY) * 100;
+                GLfloat norm = sqrt (dx * dx + dy * dy);
+                GLfloat angle;
+                if (dx < .1 && dx > -.1)
+                    if (dy < 0)
+                        angle = PI/2; 
+                    else
+                        angle = -PI/2;
+                else
+                    angle = atan2 (dy, dx);
+            
+
+                GLfloat new_dx = norm * cos ( -(spin * PI / 180.0) + angle);
+                GLfloat new_dy = norm * sin ( -(spin * PI / 180.0) + angle);
+                pol_x += new_dx;
+                pol_y += new_dy;
+            }
+            break;
+            
         default:
             break;
     }

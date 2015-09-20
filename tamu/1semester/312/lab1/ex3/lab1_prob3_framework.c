@@ -47,36 +47,26 @@ void write_output_to_op_if(){
 //The code segment which implements the decision logic
 void control_action(){
 
-	/*
-	The code given here sounds the bell when driver is on seat 
-	AND hasn't closed the doors. (Requirement-2)
- 	Replace this code segment with your own code to do problems 3 and 4.
-	*/
+    /*
+    The code given here sounds the bell when driver is on seat 
+    AND hasn't closed the doors. (Requirement-2)
+    Replace this code segment with your own code to do problems 3 and 4.
+    */
 
-	if (!engine_running)
-	    bell = 0;
-	else if (!driver_seat_belt)
-            bell = 1;
-        else if (!doors_closed)
-            bell = 1;
-        else
-            bell = 0;
+    if (engine_running && ((!driver_seat_belt) || (!doors_closed)))
+        bell = 1;
+    else
+        bell = 0;
 
-        if (!door_lock_lever)
-            dla = 0;
-        else if (!key_inside)
-            dla = 1;
-        else if (!driver_on_seat)
-            dla = 0;
-        else
-            dla = 1;
+    if (door_lock_lever && ((!key_inside) || (driver_on_seat)))
+        dla = 1;
+    else
+        dla = 0;
 
-        if (!brake_pedal)
-            ba = 0;
-        else if (!car_moving)
-            ba = 0;
-        else
-            ba = 1;
+    if (brake_pedal && car_moving)
+        ba = 1;
+    else
+        ba = 0;
 
 }
 
@@ -84,16 +74,16 @@ void control_action(){
 
 int main(int argc, char *argv[])
 {
-	
-	/*The main control loop which keeps the system alive and responsive for ever, 
-	until the system is powered off */
-	for (; ; )
-	{
-		read_inputs_from_ip_if();
-		control_action();
-		write_output_to_op_if();
+    
+    /*The main control loop which keeps the system alive and responsive for ever, 
+    until the system is powered off */
+    for (; ; )
+    {
+        read_inputs_from_ip_if();
+        control_action();
+        write_output_to_op_if();
 
-	}
-	
-	return 0;
+    }
+    
+    return 0;
 }

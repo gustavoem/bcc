@@ -26,34 +26,58 @@ run this file as: gcc FileName.c -o ExecutableName -lrt
     #define CLOCKNAME CLOCK_PROCESS_CPUTIME_ID
 #endif
 
+unsigned int input;
+unsigned int output;
+
+enum INMASKS {
+    DOSM  = 1, 
+    DSBFM = 2,   
+    ERM   = 4,
+    DCM   = 8,
+    KICM  = 16,
+    DLCM  = 32,
+    BPM   = 64,
+    CMM   = 128
+};
+
+enum OUTMASK {
+    BELLM = 1,
+    DLAM  = 2,
+    BAM   = 4
+};
+
+
+inline unsigned int mask (unsigned int x, unsigned int a)
+{
+    return (x & a);
+}
+
+
+void read_inputs_from_ip_if ()
+{
+    scanf ("%u", &input);
+}
+
+
+void write_output_to_op_if ()
+{
+    printf ("%u\n", output);
+}
+
 
 //The code segment which implements the decision logic
-inline void control_action(){
+void control_action(){
+    output = 0;
+    
+    if (mask (input, ERM) && (!(mask (input, DSBFM) && mask (input, DCM))))
+        output += BELLM;
 
-// Put your control/decision logic code segments inside this function
-// This is the actual code whose execution time which is being measure
-	
+    if (mask (input, DLCM) && ((!mask (input, KICM)) || mask (input, DOSM)))
+        output += DLAM;
 
-
+    if (mask (input, BPM) && mask (input, CMM))
+        output += BAM;
 }
-
-
-inline void read_inputs_from_ip_if(){
-
-	//place your input code here
-	//to read the current state of the available sensors
-	
-
-}
-
-inline void write_output_to_op_if(){
-
-	//place your output code here
-    //to display/print the state of the 3 actuators (DLA/BELL/BA)
-	
-
-}
-
 
 /* ---     You should not have to modify anything below this line ---------*/
 

@@ -1,0 +1,4 @@
+0 1 0
+Timer Resolution = 1 nanoseconds 
+ Calibrartion time = 0 seconds and 880 nanoseconds 
+ The measured code took 0 seconds and  4294966724 nano seconds to run 

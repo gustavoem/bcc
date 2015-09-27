@@ -16,7 +16,7 @@
 
 /*--------------------------------------------------------------------------*/
 /* DEFINES */
-#define LONG_INT_SIZE sizeof(long int)
+#define LONG_SIZE sizeof(long)
 #define FRAME_SIZE 4096
 /*--------------------------------------------------------------------------*/
 
@@ -70,6 +70,18 @@ private:
     unsigned long info_frame_n;
 
 
+    // Stores the location of the head_frame when this frame was instatiated. Then this
+    // frame becomes this head and allows us to create a linked list of frames.
+    //
+    FramePool * previous_frame;
+
+
+    // Stores the head of a linked list of frames
+    //
+    static FramePool * head_frame;
+
+
+
 public:
   
 
@@ -114,6 +126,8 @@ public:
       defined in the system, and it is unclear which one this frame belongs to.
       This function must first identify the correct frame pool and then call the frame
       pool's release_frame function. */
+
+
 
 };
 #endif

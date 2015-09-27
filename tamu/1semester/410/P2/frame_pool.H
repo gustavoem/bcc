@@ -16,6 +16,8 @@
 
 /*--------------------------------------------------------------------------*/
 /* DEFINES */
+#define LONG_INT_SIZE sizeof(long int)
+#define FRAME_SIZE 4096
 /*--------------------------------------------------------------------------*/
 
 /* -- (none) -- */
@@ -39,15 +41,42 @@
 class FramePool {
 
 private:
-     /* -- DEFINE YOUR FRAME POOL DATA STRUCTURE(s) HERE. */
-     
+
+    // Pointer to address of the frame that has the info of the frame pool
+    //
+    // frame_pool_info[0] contains bitmap for:
+    //  frames 0 to frame sizeof(unsigned long) * 8 - 1
+    // frame_pool_info[1] contains bitmap for:
+    //   frames from sizeof(unsigned long) * 8  - 1 to 2 * (sizeof(unsigned long) * 8 -1)
+    //
+    // bit mapping: bit 0 = free frame
+    //
+    unsigned long * free_frames;
+
+    
+    // Stores the base address of the frame pool
+    //
+    unsigned long base_n;
+
+
+    // Stores the number of frames in the frame pool
+    //
+    unsigned long frames_n;
+
+
+    // Stores the address of the frame which contains information about the frame.
+    // In our implementation, this is the begining of the free_frames vector
+    //
+    unsigned long info_frame_n;
+
+
 public:
   
-  
+
    FramePool(unsigned long _base_frame_no,
              unsigned long _nframes,
              unsigned long _info_frame_no);
-   /* Initializes the data structures needed for the management of this
+    /* Initializes the data structures needed for the management of this
       frame pool. This function must be called before the paging system
       is initialized.
       
@@ -67,20 +96,19 @@ public:
       */
 
 
-   unsigned long get_frame();
-   /* Allocates a frame from the frame pool. If successful, returns the frame
-    * number of the frame. If fails, returns 0. */
+    unsigned long get_frame();
+    /* Allocates a frame from the frame pool. If successful, returns the frame
+     * number of the frame. If fails, returns 0. */
 
 
-   void mark_inaccessible(unsigned long _base_frame_no,
-                          unsigned long _nframes);
-   /* Mark the area of physical memory as inaccessible. The arguments have the
+    void mark_inaccessible (unsigned long _base_frame_no, unsigned long _nframes);
+    /* Mark the area of physical memory as inaccessible. The arguments have the
     * same semanticas as in the constructor.
     */
 
 
-   static void release_frame(unsigned long _frame_no);
-   /* Releases frame back to the given frame pool.
+    static void release_frame (unsigned long _frame_no);
+    /* Releases frame back to the given frame pool.
       The frame is identified by the frame number. 
       NOTE: This function is static because there may be more than one frame pool
       defined in the system, and it is unclear which one this frame belongs to.

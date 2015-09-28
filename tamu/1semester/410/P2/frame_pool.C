@@ -76,16 +76,19 @@ void FramePool::release_frame (unsigned long _fram_no)
 {
     // First identify the currect frame
     FramePool * frame_pool = FramePool::head_frame;
-
     while (frame_pool != 0 && 
         (frame_pool->base_n > _fram_no || 
         ((frame_pool->base_n + frame_pool->frames_n) < _fram_no)))
         frame_pool = frame_pool->previous_frame;
 
 
-    // I think I should do smth more alarmous here but still not sure how. This happens
-    // when someone tries to release a frame with an index out of the possible range
-    if (frame_pool == 0) return; 
+    // This happens when someone tries to release a frame with an index out of the 
+    // possible range
+    if (frame_pool == 0) 
+    {
+        Console::puts ("Frame number out of rage... doing nothing\n");
+        return; 
+    }
 
     // Now, assuming that we found the frame_pool, free the frame
     unsigned long info_n = frame_pool->info_frame_n;

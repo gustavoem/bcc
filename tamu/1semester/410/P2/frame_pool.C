@@ -33,7 +33,18 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
     // Makes the info frame unavailable
     unsigned long j = info_frame_n / LONG_SIZE;
     unsigned long mask = 1 << (info_frame_n % LONG_SIZE);
+    
+    Console::puts ("\nBefore | After making info unaccessible: ");
+    Console::putui (free_frames[j]);
     free_frames[j] = mask;
+    Console::puts (" | ");
+    Console::putui (free_frames[j]);
+    Console::puts (" ...and after releasing it: ");
+    release_frame (info_frame_n);
+    Console::putui (free_frames[j]);
+
+
+
 }
 
 
@@ -61,15 +72,14 @@ void FramePool::mark_inaccessible (unsigned long _base_frame_no, unsigned long _
         unsigned long j = i / LONG_SIZE;
         unsigned long mask = 1 << (i % LONG_SIZE);
 
-        Console::puts ("\nBefore | After making unaccessible: ");
-        Console::putui (free_frames[j]);
+        // Console::puts ("\nBefore | After making unaccessible: ");
+        // Console::putui (free_frames[j]);
 
         free_frames[j] = free_frames[j] | mask;
 
-        Console::puts (" | ");
-        Console::putui (free_frames[j]);
+        // Console::puts (" | ");
+        // Console::putui (free_frames[j]);
     }
-	for (;;);
 }
 
 

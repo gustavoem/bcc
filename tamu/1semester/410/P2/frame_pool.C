@@ -61,7 +61,7 @@ void FramePool::mark_inaccessible (unsigned long _base_frame_no, unsigned long _
         unsigned long j = i / LONG_SIZE;
         unsigned long mask = 1 << (i % LONG_SIZE);
 
-        Console::puts ("Before | After making unaccessible: ");
+        Console::puts ("\nBefore | After making unaccessible: ");
         Console::putui (free_frames[j]);
 
         free_frames[j] = free_frames[j] | mask;
@@ -69,6 +69,7 @@ void FramePool::mark_inaccessible (unsigned long _base_frame_no, unsigned long _
         Console::puts (" | ");
         Console::putui (free_frames[j]);
     }
+	for (;;);
 }
 
 

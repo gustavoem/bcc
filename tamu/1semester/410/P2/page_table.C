@@ -9,7 +9,11 @@ PageTable::PageTable ()
 void PageTable::init_paging (FramePool * _kernel_mem_pool, FramePool * _process_mem_pool,
 	const unsigned long _shared_size)
 {
-	return;
+	kernel_mem_pool = _kernel_mem_pool;
+	process_mem_pool = _process_mem_pool;
+	shared_size = _shared_size;
+	paging_enabled = 0;
+
 }
 
 

@@ -1,0 +1,907 @@
+00000000000i[     ] Bochs x86 Emulator 2.4.6
+00000000000i[     ]   Build from CVS snapshot, on February 22, 2011
+00000000000i[     ] Compiled at Nov 11 2011, 09:31:18
+00000000000i[     ] System configuration
+00000000000i[     ]   processors: 1 (cores=1, HT threads=1)
+00000000000i[     ]   A20 line support: yes
+00000000000i[     ] CPU configuration
+00000000000i[     ]   level: 6
+00000000000i[     ]   SMP support: no
+00000000000i[     ]   APIC support: yes
+00000000000i[     ]   FPU support: yes
+00000000000i[     ]   MMX support: yes
+00000000000i[     ]   3dnow! support: no
+00000000000i[     ]   SEP support: yes
+00000000000i[     ]   SSE support: sse2
+00000000000i[     ]   XSAVE support: no
+00000000000i[     ]   AES support: no
+00000000000i[     ]   MOVBE support: no
+00000000000i[     ]   x86-64 support: yes
+00000000000i[     ]   1G paging support: no
+00000000000i[     ]   VMX support: no
+00000000000i[     ] Optimization configuration
+00000000000i[     ]   RepeatSpeedups support: yes
+00000000000i[     ]   Trace cache support: yes
+00000000000i[     ]   Fast function calls: yes
+00000000000i[     ] Devices configuration
+00000000000i[     ]   ACPI support: yes
+00000000000i[     ]   NE2000 support: yes
+00000000000i[     ]   PCI support: yes, enabled=yes
+00000000000i[     ]   SB16 support: yes
+00000000000i[     ]   USB support: yes
+00000000000i[     ]   VGA extension support: vbe 
+00000000000i[MEM0 ] allocated memory at 0x7f2dd35e2010. after alignment, vector=0x7f2dd35e3000
+00000000000i[MEM0 ] 32.00MB
+00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
+00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('BIOS-bochs-latest')
+00000000000i[MEM0 ] rom at 0xc0000/38400 ('VGABIOS-lgpl-latest')
+00000000000i[VTIME] using 'realtime pit' synchronization method
+00000000000i[     ] lt_dlhandle is 0x2738540
+00000000000i[PLGIN] loaded plugin libbx_cmos.so
+00000000000i[     ] lt_dlhandle is 0x2738f60
+00000000000i[PLGIN] loaded plugin libbx_dma.so
+00000000000i[     ] lt_dlhandle is 0x27399c0
+00000000000i[PLGIN] loaded plugin libbx_pic.so
+00000000000i[     ] lt_dlhandle is 0x273a200
+00000000000i[PLGIN] loaded plugin libbx_pit.so
+00000000000i[     ] lt_dlhandle is 0x273ab70
+00000000000i[PLGIN] loaded plugin libbx_vga.so
+00000000000i[     ] lt_dlhandle is 0x273b2a0
+00000000000i[PLGIN] loaded plugin libbx_hdimage.so
+00000000000i[     ] lt_dlhandle is 0x273bb60
+00000000000i[PLGIN] loaded plugin libbx_floppy.so
+00000000000i[     ] lt_dlhandle is 0x273c750
+00000000000i[PLGIN] loaded plugin libbx_soundmod.so
+00000000000i[     ] lt_dlhandle is 0x273dda0
+00000000000i[PLGIN] loaded plugin libbx_pci.so
+00000000000i[     ] lt_dlhandle is 0x273e9d0
+00000000000i[PLGIN] loaded plugin libbx_pci2isa.so
+00000000000i[     ] lt_dlhandle is 0x273f2b0
+00000000000i[PLGIN] loaded plugin libbx_usb_common.so
+00000000000i[     ] lt_dlhandle is 0x273fb10
+00000000000i[PLGIN] loaded plugin libbx_unmapped.so
+00000000000i[     ] lt_dlhandle is 0x2740380
+00000000000i[PLGIN] loaded plugin libbx_biosdev.so
+00000000000i[     ] lt_dlhandle is 0x2740cb0
+00000000000i[PLGIN] loaded plugin libbx_speaker.so
+00000000000i[     ] lt_dlhandle is 0x27414e0
+00000000000i[PLGIN] loaded plugin libbx_extfpuirq.so
+00000000000i[     ] lt_dlhandle is 0x2741d50
+00000000000i[PLGIN] loaded plugin libbx_gameport.so
+00000000000i[     ] lt_dlhandle is 0x27426c0
+00000000000i[PLGIN] loaded plugin libbx_pci_ide.so
+00000000000i[     ] lt_dlhandle is 0x2743090
+00000000000i[PLGIN] loaded plugin libbx_acpi.so
+00000000000i[     ] lt_dlhandle is 0x27439d0
+00000000000i[PLGIN] loaded plugin libbx_ioapic.so
+00000000000i[     ] lt_dlhandle is 0x2744380
+00000000000i[PLGIN] loaded plugin libbx_keyboard.so
+00000000000i[     ] lt_dlhandle is 0x2744b80
+00000000000i[PLGIN] loaded plugin libbx_harddrv.so
+00000000000i[     ] lt_dlhandle is 0x2756c50
+00000000000i[PLGIN] loaded plugin libbx_serial.so
+00000000000i[     ] lt_dlhandle is 0x2757ac0
+00000000000i[PLGIN] loaded plugin libbx_parallel.so
+00000000000i[CMOS ] Using specified time for initial clock
+00000000000i[CMOS ] Setting initial clock to: Fri Dec 31 17:00:00 1999 (time0=946681200)
+00000000000i[DMA  ] channel 4 used by cascade
+00000000000i[DMA  ] channel 2 used by Floppy Drive
+00000000000i[FDD  ] fd0: 'dev_kernel_grub.img' ro=0, h=2,t=80,spt=18
+00000000000i[PCI  ] 440FX Host bridge present at device 0, function 0
+00000000000i[PCI  ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
+00000000000i[VGA  ] interval=50000
+00000000000i[MEM0 ] Register memory access handlers: 0x00000000000a0000 - 0x00000000000bffff
+00000000000i[XGUI ] test_alloc_colors: 16 colors available out of 16 colors tried
+00000000000i[XGUI ] font 8 wide x 16 high, display depth = 24
+00000000000i[MEM0 ] Register memory access handlers: 0x00000000e0000000 - 0x00000000e0ffffff
+00000000000i[VGA  ] VBE Bochs Display Extension Enabled
+00000000000i[PLGIN] init_dev of 'unmapped' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'biosdev' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'speaker' plugin device by virtual method
+00000000000i[SPEAK] Failed to open /dev/console: Resource temporarily unavailable
+00000000000i[SPEAK] Deactivating beep on console
+00000000000i[PLGIN] init_dev of 'extfpuirq' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'gameport' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'pci_ide' plugin device by virtual method
+00000000000i[PCI  ] PIIX3 PCI IDE controller present at device 1, function 1
+00000000000i[PLGIN] init_dev of 'acpi' plugin device by virtual method
+00000000000i[PCI  ] ACPI Controller present at device 1, function 3
+00000000000i[PLGIN] init_dev of 'ioapic' plugin device by virtual method
+00000000000i[IOAP ] initializing I/O APIC
+00000000000i[MEM0 ] Register memory access handlers: 0x00000000fec00000 - 0x00000000fec00fff
+00000000000i[PLGIN] init_dev of 'keyboard' plugin device by virtual method
+00000000000i[KBD  ] will paste characters every 1000 keyboard ticks
+00000000000i[PLGIN] init_dev of 'harddrv' plugin device by virtual method
+00000000000i[HD   ] Using boot sequence floppy, none, none
+00000000000i[HD   ] Floppy boot signature check is enabled
+00000000000i[PLGIN] init_dev of 'serial' plugin device by virtual method
+00000000000i[SER  ] com1 at 0x03f8 irq 4
+00000000000i[PLGIN] init_dev of 'parallel' plugin device by virtual method
+00000000000i[PAR  ] parallel port 1 at 0x0378 irq 7
+00000000000i[PLGIN] register state of 'unmapped' plugin device by virtual method
+00000000000i[PLGIN] register state of 'biosdev' plugin device by virtual method
+00000000000i[PLGIN] register state of 'speaker' plugin device by virtual method
+00000000000i[PLGIN] register state of 'extfpuirq' plugin device by virtual method
+00000000000i[PLGIN] register state of 'gameport' plugin device by virtual method
+00000000000i[PLGIN] register state of 'pci_ide' plugin device by virtual method
+00000000000i[PLGIN] register state of 'acpi' plugin device by virtual method
+00000000000i[PLGIN] register state of 'ioapic' plugin device by virtual method
+00000000000i[PLGIN] register state of 'keyboard' plugin device by virtual method
+00000000000i[PLGIN] register state of 'harddrv' plugin device by virtual method
+00000000000i[PLGIN] register state of 'serial' plugin device by virtual method
+00000000000i[PLGIN] register state of 'parallel' plugin device by virtual method
+00000000000i[SYS  ] bx_pc_system_c::Reset(HARDWARE) called
+00000000000i[CPU0 ] cpu hardware reset
+00000000000i[APIC0] allocate APIC id=0 (MMIO enabled) to 0x00000000fee00000
+00000000000i[CPU0 ] CPUID[0x00000000]: 00000003 756e6547 6c65746e 49656e69
+00000000000i[CPU0 ] CPUID[0x00000001]: 00000f23 00000800 00002000 07cbfbff
+00000000000i[CPU0 ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000007]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000000]: 80000008 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000001]: 00000000 00000000 00000001 2a100800
+00000000000i[CPU0 ] CPUID[0x80000002]: 20202020 20202020 20202020 6e492020
+00000000000i[CPU0 ] CPUID[0x80000003]: 286c6574 50202952 69746e65 52286d75
+00000000000i[CPU0 ] CPUID[0x80000004]: 20342029 20555043 20202020 00202020
+00000000000i[CPU0 ] CPUID[0x80000006]: 00000000 42004200 02008140 00000000
+00000000000i[CPU0 ] CPUID[0x80000007]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000008]: 00003028 00000000 00000000 00000000
+00000000000i[PLGIN] reset of 'unmapped' plugin device by virtual method
+00000000000i[PLGIN] reset of 'biosdev' plugin device by virtual method
+00000000000i[PLGIN] reset of 'speaker' plugin device by virtual method
+00000000000i[PLGIN] reset of 'extfpuirq' plugin device by virtual method
+00000000000i[PLGIN] reset of 'gameport' plugin device by virtual method
+00000000000i[PLGIN] reset of 'pci_ide' plugin device by virtual method
+00000000000i[PLGIN] reset of 'acpi' plugin device by virtual method
+00000000000i[PLGIN] reset of 'ioapic' plugin device by virtual method
+00000000000i[PLGIN] reset of 'keyboard' plugin device by virtual method
+00000000000i[PLGIN] reset of 'harddrv' plugin device by virtual method
+00000000000i[PLGIN] reset of 'serial' plugin device by virtual method
+00000000000i[PLGIN] reset of 'parallel' plugin device by virtual method
+00000000000i[XGUI ] [x] Mouse off
+00000003302i[BIOS ] $Revision: 1.209 $ $Date: 2008/06/02 20:08:10 $
+00000318057i[KBD  ] reset-disable command received
+00000438667i[VBIOS] VGABios $Id: vgabios.c,v 1.67 2008/01/27 09:44:12 vruppert Exp $
+00000438738i[VGA  ] VBE known Display Interface b0c0
+00000438770i[VGA  ] VBE known Display Interface b0c4
+00000441695i[VBIOS] VBE Bios $Id: vbe.c,v 1.60 2008/03/02 07:47:21 vruppert Exp $
+00000600000i[XGUI ] charmap update. Font Height is 16
+00000764696i[BIOS ] Starting rombios32
+00000765523i[BIOS ] ram_size=0x02000000
+00000776783i[BIOS ] Found 1 cpu(s)
+00000793084i[BIOS ] bios_table_addr: 0x000fb778 end=0x000fcc00
+00000793151i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
+00001251958i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
+00001711445i[P2I  ] PCI IRQ routing: PIRQA# set to 0x0b
+00001711492i[P2I  ] PCI IRQ routing: PIRQB# set to 0x09
+00001711539i[P2I  ] PCI IRQ routing: PIRQC# set to 0x0b
+00001711586i[P2I  ] PCI IRQ routing: PIRQD# set to 0x09
+00001711602i[P2I  ] write: ELCR2 = 0x0a
+00001712539i[BIOS ] PIIX3 init: elcr=00 0a
+00001732794i[BIOS ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237
+00001736031i[BIOS ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000
+00001738764i[BIOS ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010
+00001739225i[PIDE ] new BM-DMA address: 0xc000
+00001740108i[BIOS ] region 4: 0x0000c000
+00001742684i[BIOS ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113
+00001743184i[ACPI ] new irq line = 11
+00001743221i[ACPI ] new PM base address: 0xb000
+00001743283i[ACPI ] new SM base address: 0xb100
+00001743751i[CPU0 ] Enter to System Management Mode
+00001743761i[CPU0 ] RSM: Resuming from System Management Mode
+00001743795i[PCI  ] setting SMRAM control register to 0x4a
+00001744077i[PCI  ] setting SMRAM control register to 0x0a
+00001767358i[BIOS ] MP table addr=0x000fb850 MPC table addr=0x000fb780 size=0xd0
+00001769561i[BIOS ] SMBIOS table addr=0x000fb860
+00001772605i[BIOS ] ACPI tables: RSDP addr=0x000fb970 ACPI DATA addr=0x01ff0000 size=0x9d8
+00001792138i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
+00001793150i[BIOS ] bios_table_cur_addr: 0x000fb994
+00190419118i[BIOS ] Booting from 0000:7c00
+00200200000i[XGUI ] charmap update. Font Height is 16
+00200400000i[XGUI ] charmap update. Font Height is 16
+00202800000i[XGUI ] charmap update. Font Height is 16
+00211200000i[XGUI ] charmap update. Font Height is 16
+00211400000i[XGUI ] charmap update. Font Height is 16
+00220800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00220800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00221792000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00221792000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00223036000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00223036000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00224392000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00224392000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00225332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00225332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00226400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00226400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00227600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00227600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00228752000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00228752000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00230000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00230000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00231340000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00231340000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00232700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00232700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00234604000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00234604000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00236000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00236000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00237692000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00237692000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00238580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00238580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00240436000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00240436000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00241916000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00241916000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00243200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00243200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00244908000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00244908000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00245880000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00245880000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00247276000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00247276000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00248580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00248580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00250400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00250400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00251848000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00251848000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00253180000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00253180000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00254640000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00254640000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00256388000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00256388000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00257600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00257600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00259028000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00259028000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00260332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00260332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00261796000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00261796000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00263600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00263600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00264848000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00264848000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00266136000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00266136000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00267692000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00267692000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00268892000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00268892000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00270224000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00270224000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00271652000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00271652000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00273200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00273200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00274536000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00274536000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00275900000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00275900000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00277164000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00277164000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00279116000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00279116000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00280400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00280400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00281716000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00281716000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00283128000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00283128000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00284400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00284400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00285824000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00285824000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00287600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00287600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00288924000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00288924000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00290352000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00290352000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00291912000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00291912000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00293384000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00293384000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00294800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00294800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00296000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00296000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00297200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00297200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00298556000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00298556000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00299964000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00299964000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00301296000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00301296000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00302652000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00302652000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00304108000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00304108000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00305512000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00305512000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00306800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00306800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00308524000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00308524000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00309948000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00309948000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00311480000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00311480000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00312800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00312800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00314200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00314200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00315912000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00315912000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00317248000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00317248000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00318700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00318700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00320000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00320000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00321772000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00321772000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00322988000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00322988000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00324424000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00324424000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00326000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00326000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00327200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00327200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00328900000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00328900000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00330792000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00330792000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00332252000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00332252000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00333932000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00333932000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00335420000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00335420000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00336796000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00336796000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00338000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00338000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00339700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00339700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00341020000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00341020000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00342452000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00342452000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00344000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00344000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00345552000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00345552000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00346972000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00346972000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00348516000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00348516000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00350236000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00350236000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00352200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00352200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00353560000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00353560000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00354948000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00354948000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00356440000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00356440000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00357992000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00357992000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00359344000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00359344000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00360600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00360600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00362496000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00362496000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00363872000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00363872000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00365376000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00365376000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00366972000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00366972000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00368268000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00368268000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00369704000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00369704000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00371048000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00371048000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00372476000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00372476000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00373800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00373800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00375168000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00375168000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00376528000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00376528000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00378032000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00378032000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00379548000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00379548000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00381000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00381000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00382408000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00382408000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00384184000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00384184000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00385660000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00385660000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00387000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00387000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00388412000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00388412000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00390020000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00390020000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00391428000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00391428000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00392780000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00392780000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00394200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00394200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00395884000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00395884000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00397176000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00397176000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00398648000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00398648000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00400200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00400200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00402252000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00402252000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00403512000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00403512000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00405000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00405000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00406400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00406400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00407904000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00407904000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00409440000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00409440000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00410812000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00410812000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00412200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00412200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00413816000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00413816000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00415120000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00415120000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00417000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00417000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00418200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00418200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00419700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00419700000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00421012000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00421012000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00422528000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00422528000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00424016000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00424016000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00425400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00425400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00426600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00426600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00428220000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00428220000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00429976000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00429976000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00431400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00431400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00433252000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00433252000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00434580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00434580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00436068000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00436068000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00437400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00437400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00438752000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00438752000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00440156000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00440156000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00441824000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00441824000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00443256000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00443256000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00444600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00444600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00445800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00445800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00447172000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00447172000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00448804000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00448804000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00450120000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00450120000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00451736000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00451736000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00453408000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00453408000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00455204000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00455204000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00456600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00456600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00458364000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00458364000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00459644000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00459644000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00461304000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00461304000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00462600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00462600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00463980000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00463980000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00465272000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00465272000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00466816000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00466816000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00468332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00468332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00469716000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00469716000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00471000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00471000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00472328000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00472328000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00474172000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00474172000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00475800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00475800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00477000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00477000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00478712000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00478712000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00479900000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00479900000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00481460000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00481460000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00483000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00483000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00484576000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00484576000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00485852000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00485852000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00487284000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00487284000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00488640000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00488640000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00490200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00490200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00491400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00491400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00493072000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00493072000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00494348000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00494348000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00495732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00495732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00497244000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00497244000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00498600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00498600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00500280000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00500280000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00501644000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00501644000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00503760000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00503760000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00505180000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00505180000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00506704000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00506704000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00508200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00508200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00509736000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00509736000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00511292000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00511292000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00512600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00512600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00514200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00514200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00515832000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00515832000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00517036000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00517036000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00518724000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00518724000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00520124000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00520124000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00521496000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00521496000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00523160000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00523160000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00524600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00524600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00526000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00526000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00527356000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00527356000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00528768000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00528768000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00530584000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00530584000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00532000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00532000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00533304000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00533304000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00534720000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00534720000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00536064000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00536064000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00537416000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00537416000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00538740000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00538740000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00540388000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00540388000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00541600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00541600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00542896000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00542896000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00544248000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00544248000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00545520000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00545520000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00546852000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00546852000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00548740000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00548740000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00550000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00550000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00551400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00551400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00552760000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00552760000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00554176000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00554176000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00555620000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00555620000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00557004000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00557004000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00558400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00558400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00559732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00559732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00561320000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00561320000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00562872000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00562872000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00564400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00564400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00565992000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00565992000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00567356000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00567356000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00569192000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00569192000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00570400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00570400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00571804000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00571804000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00573216000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00573216000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00574588000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00574588000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00576376000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00576376000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00577620000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00577620000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00579100000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00579100000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00580844000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00580844000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00582300000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00582300000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00583576000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00583576000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00585456000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00585456000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00586720000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00586720000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00588380000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00588380000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00589600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00589600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00591100000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00591100000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00592444000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00592444000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00593952000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00593952000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00595420000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00595420000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00596800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00596800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00598144000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00598144000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00599508000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00599508000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00601036000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00601036000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00602528000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00602528000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00604000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00604000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00605344000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00605344000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00606676000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00606676000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00607976000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00607976000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00609800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00609800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00611200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00611200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00612560000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00612560000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00614040000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00614040000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00615236000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00615236000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00616496000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00616496000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00617824000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00617824000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00619072000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00619072000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00620476000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00620476000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00621812000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00621812000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00623136000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00623136000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00624400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00624400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00626032000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00626032000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00627104000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00627104000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00628352000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00628352000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00630136000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00630136000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00631392000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00631392000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00632732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00632732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00633984000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00633984000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00635200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00635200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00636400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00636400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00637600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00637600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00638800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00638800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00640000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00640000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00641604000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00641604000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00642764000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00642764000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00644580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00644580000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00646000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00646000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00647200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00647200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00648400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00648400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00649872000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00649872000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00651456000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00651456000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00652908000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00652908000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00654108000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00654108000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00656304000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00656304000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00657548000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00657548000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00658648000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00658648000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00660128000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00660128000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00661156000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00661156000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00662672000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00662672000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00664000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00664000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00665240000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00665240000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00666612000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00666612000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00667860000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00667860000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00669484000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00669484000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00671200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00671200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00672400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00672400000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00673848000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00673848000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00675176000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00675176000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00676992000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00676992000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00678332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00678332000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00679600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00679600000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00680800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00680800000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00682000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00682000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00683340000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00683340000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00684984000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00684984000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00686512000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00686512000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00687924000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00687924000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00689200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00689200000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00691000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00691000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00692204000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00692204000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00694000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00694000000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00695340000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00695340000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00696732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00696732000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00697892000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00697892000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00699324000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00699324000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00700808000i[KBD  ] internal keyboard buffer full, ignoring scancode.(9c)
+00700808000i[KBD  ] internal keyboard buffer full, ignoring scancode.(1c)
+00701568000i[     ] cpu loop quit, shutting down simulator
+00701568000i[CPU0 ] CPU is in protected mode (active)
+00701568000i[CPU0 ] CS.d_b = 32 bit
+00701568000i[CPU0 ] SS.d_b = 32 bit
+00701568000i[CPU0 ] EFER   = 0x00000000
+00701568000i[CPU0 ] | RAX=0000000000001000  RBX=0000000000000008
+00701568000i[CPU0 ] | RCX=00000000000b8000  RDX=0000000000000f00
+00701568000i[CPU0 ] | RSP=0000000000105f60  RBP=0000000000105f88
+00701568000i[CPU0 ] | RSI=00000000000263d3  RDI=00000000000263df
+00701568000i[CPU0 ] |  R8=0000000000000000   R9=0000000000000000
+00701568000i[CPU0 ] | R10=0000000000000000  R11=0000000000000000
+00701568000i[CPU0 ] | R12=0000000000000000  R13=0000000000000000
+00701568000i[CPU0 ] | R14=0000000000000000  R15=0000000000000000
+00701568000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf ZF af PF cf
+00701568000i[CPU0 ] | SEG selector     base    limit G D
+00701568000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00701568000i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00701568000i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00701568000i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00701568000i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00701568000i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00701568000i[CPU0 ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00701568000i[CPU0 ] |  MSR_FS_BASE:0000000000000000
+00701568000i[CPU0 ] |  MSR_GS_BASE:0000000000000000
+00701568000i[CPU0 ] | RIP=0000000000101de0 (0000000000101de0)
+00701568000i[CPU0 ] | CR0=0x60000011 CR2=0x0000000000000000
+00701568000i[CPU0 ] | CR3=0x00000000 CR4=0x00000000
+00701568000i[CPU0 ] 0x0000000000101de0>> jmp .-2 (0x00101de0) : EBFE
+00701568000i[CMOS ] Last time is 946681375 (Fri Dec 31 17:02:55 1999)
+00701568000i[XGUI ] Exit
+00701568000i[     ] restoring default signal behavior
+00701568000i[CTRL ] quit_sim called with exit code 1

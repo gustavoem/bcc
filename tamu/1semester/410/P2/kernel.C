@@ -148,12 +148,12 @@ int main() {
           break;
        }
     }
+    for(;;);
     if(i == NACCESS) {
        Console::puts("TEST PASSED\n");
     }
 
     /* -- NOW LOOP FOREVER */
-    for(;;);
 
     /* -- WE DO THE FOLLOWING TO KEEP THE COMPILER HAPPY. */
     return 1;

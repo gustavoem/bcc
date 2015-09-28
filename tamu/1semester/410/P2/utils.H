@@ -81,6 +81,7 @@ void outportb (unsigned short _port, char _data);
 void outportw (unsigned short _port, unsigned short _data);
 /* Write _data to output port _port.*/
 
+void debug_out_E9(char *_string);
 
 #endif
 

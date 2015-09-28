@@ -165,3 +165,16 @@ void outportb (unsigned short _port, char _data) {
 void outportw (unsigned short _port, unsigned short _data) {
     __asm__ __volatile__ ("outw %1, %0" : : "dN" (_port), "a" (_data));
 }
+
+
+/* debug_out_E9: output to stdout, using bochs 0xE9 hack, a string (up to the initial 255 characters) */
+void debug_out_E9(char *_string) {
+     int string_size = strlen(_string);
+     if (string_size > 255) {
+          // will print only first 255 characters
+          string_size = 255;
+     }
+     for (int i=0; i < string_size; i++) {
+          outportb(0xE9, _string[i]);
+     }
+}

@@ -41,7 +41,7 @@ unsigned long FramePool::get_frame ()
 {
     for (unsigned long i = 0; i < frames_n; i++)
     {
-        unsigned long j = i / LONG_SIZE + 2;
+        unsigned long j = i / LONG_SIZE;
         unsigned long mask = 1 << (i % LONG_SIZE);
         if (!(free_frames[j] & mask))
         {
@@ -58,7 +58,7 @@ void FramePool::mark_inaccessible (unsigned long _base_frame_no, unsigned long _
 {
     for (unsigned long i = _base_frame_no; i < _base_frame_no + _nframes; i++)
     {
-        unsigned long j = i / LONG_SIZE + 2;
+        unsigned long j = i / LONG_SIZE;
         unsigned long mask = 1 << (i % LONG_SIZE);
         free_frames[j] = free_frames[j] | mask;
     }
@@ -83,7 +83,21 @@ void FramePool::release_frame (unsigned long _fram_no)
     // Now, assuming that we found the frame_pool, free the frame
     unsigned long info_n = frame_pool->info_frame_n;
     unsigned long * free_frames = (unsigned long *) (info_n * (FRAME_SIZE / LONG_SIZE));
-    unsigned long j = _fram_no / LONG_SIZE + 2;
+    unsigned long j = _fram_no / LONG_SIZE;
     unsigned long mask = ~(1 << (_fram_no % LONG_SIZE));
     free_frames[j] = free_frames[j] & mask;
+}
+
+
+void FramePool::showFramesStates ()
+{
+    for (unsigned long i = 0; i < frames_n; i++)
+    {
+        unsigned long j = i / LONG_SIZE;
+        unsigned long mask = 1 << (i % LONG_SIZE);
+        Console::puts ("Frames states from frame pool ");
+        Console::putui ((unsigned int) this);
+        Console::puts ("\n");
+        Console::putui (free_frames[j] & mask);
+    }
 }

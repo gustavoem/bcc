@@ -26,7 +26,7 @@
 /* INCLUDES */
 /*--------------------------------------------------------------------------*/
 
-/* -- (none) -- */
+#include "console.H"
 
 /*--------------------------------------------------------------------------*/
 /* DATA STRUCTURES */
@@ -128,6 +128,9 @@ public:
       pool's release_frame function. */
 
 
+    // Shows the state of every frame inside a frame pool
+    //
+    void showFramesStates ();
 
 };
 #endif

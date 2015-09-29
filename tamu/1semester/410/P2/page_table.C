@@ -138,6 +138,7 @@ void PageTable::handle_fault (REGS * _r)
         // Protection fault
         Console::puts ("Protection Fault!\n");
         while (true);
+	return;
     }
     else
     {
@@ -164,7 +165,7 @@ void PageTable::handle_fault (REGS * _r)
                 pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
             //}   
             // how should I initialize this page table?
-            // every page points to address 0 being usr, r and not present
+            // every page points to address 0 being usr, r/w and not present
             for (unsigned long i = 0; i < 1024; i++)
                 page_table [i] = 0x2;
         }
@@ -187,9 +188,9 @@ void PageTable::handle_fault (REGS * _r)
         // else
         // {
         //   // kernel
-            unsigned long new_frame = kernel_mem_pool->get_frame () * FRAME_SIZE;
+            unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
             // Set new frame on page as sup., r/w and present
-            page_table[pg_table_i] = new_frame | 3;
+            page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
         // }
     }
     return;

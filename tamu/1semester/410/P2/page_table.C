@@ -98,8 +98,8 @@ void PageTable::handle_fault (REGS * _r)
     unsigned int er_is_user = er_code & user_mask;
     
     unsigned long * pg_directory = (unsigned long *) read_cr3 ();
-	Console::puts ("\nPage fault:\npg_directory: ");
-	Console::putui ((unsigned int) pg_directory);
+    Console::puts ("\nPage fault:\npg_directory: ");
+    Console::putui ((unsigned int) pg_directory);
     unsigned long cr2_read;
     cr2_read = read_cr2 ();
     // cr2 address structure:
@@ -114,31 +114,31 @@ void PageTable::handle_fault (REGS * _r)
     // takes us to a pg. table
     unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
 
-	Console::puts ("\nPage Fault on page table: ");
-	Console::putui (pg_directory_i);
-	Console::puts ("\nOn frame: ");
-	Console::putui (pg_table_i);
-	
+    Console::puts ("\nPage Fault on page table: ");
+    Console::putui (pg_directory_i);
+    Console::puts ("\nOn frame: ");
+    Console::putui (pg_table_i);
+    
 
     if (pg_directory_i >= 1024)
     {
         Console::puts ("Page directory index out of bounds!\n");
-	while (true);
+        while (true);
         return;
     }
     if (pg_table_i >= 1024)
     {
         Console::puts ("Page table index out of bounds!\n");
-	while(true);
+        while(true);
         return;
     }
         
     if (er_is_present)
-	{
+    {
         // Protection fault
         Console::puts ("Protection Fault!\n");
-	while (true);
-}
+        while (true);
+    }
     else
     {
         // Non present page
@@ -147,27 +147,26 @@ void PageTable::handle_fault (REGS * _r)
         // luckly this mask works here too, caution with the others
         {
             // Non present page_table
-	while (true);
             // Creates a new page and put it on the appropriate index of the page dir.
             Console::puts ("\nFault in a non-existant page_table");
-            if (er_is_user)
-            {
-                // set as user, r/w and present
-                page_table = (unsigned long *) 
-                    (process_mem_pool->get_frame () * FRAME_SIZE);
-                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 7;
-            }
-            else
-            {
+            // if (er_is_user)
+            // {
+            //     // set as user, r/w and present
+            //     page_table = (unsigned long *) 
+            //         (process_mem_pool->get_frame () * FRAME_SIZE);
+            //     pg_directory[pg_directory_i] = ((unsigned long)page_table) | 7;
+            // }
+            // else
+            // {
                 // set as sup, r/w and present
                 page_table = (unsigned long *) 
                     (kernel_mem_pool->get_frame () * FRAME_SIZE);
                 pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
-            }   
+            //}   
             // how should I initialize this page table?
             // every page points to address 0 being usr, r and not present
             for (unsigned long i = 0; i < 1024; i++)
-                page_table [i] = user_mask;
+                page_table [i] = 0x2;
         }
         else
         {
@@ -178,20 +177,20 @@ void PageTable::handle_fault (REGS * _r)
         }
         
         // Page is still not present
-        if (er_is_user)
-        {
-            // user
-            unsigned long new_frame = process_mem_pool->get_frame () * FRAME_SIZE;
-            // Set new frame on page as user, r/w and present
-            page_table[pg_table_i] = new_frame | 7;
-        }
-        else
-        {
-            // kernel
+        // if (er_is_user)
+        // {
+        //     // user
+        //     unsigned long new_frame = process_mem_pool->get_frame () * FRAME_SIZE;
+        //     // Set new frame on page as user, r/w and present
+        //     page_table[pg_table_i] = new_frame | 7;
+        // }
+        // else
+        // {
+        //   // kernel
             unsigned long new_frame = kernel_mem_pool->get_frame () * FRAME_SIZE;
             // Set new frame on page as sup., r/w and present
             page_table[pg_table_i] = new_frame | 3;
-        }
+        // }
     }
     return;
 }   

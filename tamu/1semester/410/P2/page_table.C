@@ -121,15 +121,19 @@ void PageTable::handle_fault (REGS * _r)
 	
 
     if (pg_directory_i >= 1024)
+    {
         Console::puts ("Page directory index out of bounds!\n");
+        return;
+    }
     if (pg_table_i >= 1024)
+    {
         Console::puts ("Page table index out of bounds!\n");
+        return;
+    }
         
     if (er_is_present)
-    {
         // Protection fault
         Console::puts ("Protection Fault!\n");
-    }
     else
     {
         // Non present page
@@ -139,12 +143,13 @@ void PageTable::handle_fault (REGS * _r)
         {
             // Non present page_table
             // Creates a new page and put it on the appropriate index of the page dir.
+            Console::puts ("\nFault in a non-existant page_table");
             if (er_is_user)
             {
                 // set as user, r/w and present
                 page_table = (unsigned long *) 
                     (process_mem_pool->get_frame () * FRAME_SIZE);
-                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 7;
+                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
             }
             else
             {
@@ -161,6 +166,7 @@ void PageTable::handle_fault (REGS * _r)
         else
         {
             // Page_table exists. Its an entry of pg_directory
+            Console::puts ("\nFault in a pre-existant page_table");
             page_table = (unsigned long *)
                 (pg_directory[pg_directory_i] & (0xFFF8));
         }

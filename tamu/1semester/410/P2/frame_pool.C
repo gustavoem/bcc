@@ -13,7 +13,7 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
 
     // Sets the free_frame address
     free_frames = (unsigned long *) 
-        ((info_frame_n) * (FRAME_SIZE / LONG_SIZE));
+        ((info_frame_n) * (FRAME_SIZE));
 
     // Saves parameters
     base_n = _base_frame_no;
@@ -58,6 +58,7 @@ unsigned long FramePool::get_frame ()
             return i + base_n;
         }
     }
+	Console::puts ("\nCouldn't find a free frame"); 
     return 0;
 }
 
@@ -100,7 +101,7 @@ void FramePool::release_frame (unsigned long _fram_no)
 
     // Now, assuming that we found the frame_pool, free the frame
     unsigned long info_n = frame_pool->info_frame_n;
-    unsigned long * free_frames = (unsigned long *) (info_n * (FRAME_SIZE / LONG_SIZE));
+    unsigned long * free_frames = (unsigned long *) (info_n * (FRAME_SIZE));
     unsigned long j = _fram_no / LONG_SIZE;
     unsigned long mask = ~(1 << (_fram_no % LONG_SIZE));
     free_frames[j] = free_frames[j] & mask;

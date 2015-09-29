@@ -105,12 +105,18 @@ void PageTable::handle_fault (REGS * _r)
     // bit 12:21 - page table index
     // bit 22:31 - page directory index
     
-    // takes us to a frame 
+    // takes us to a place in the frame 
     unsigned long page_offset = cr2_read & (0xFFF);
-    // takes us to a fr. pool
+    // takes us to a frame
     unsigned long pg_table_i = (cr2_read >> 12) & (0x3FF);
     // takes us to a pg. table
     unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
+
+	Console::puts ("\nPage Fault on page: ");
+	Console::putui (pg_directory_i);
+	Console::puts ("\nFault on page: ");
+	Console::putui (pg_table_i);
+	
 
     if (pg_directory_i >= 1024)
         Console::puts ("Page directory index out of bounds!\n");

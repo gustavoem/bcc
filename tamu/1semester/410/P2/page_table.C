@@ -32,14 +32,13 @@ PageTable::PageTable ()
     // from 0MB to 4MB
     unsigned long * first_page_table = (unsigned long *) 
         (kernel_mem_pool->get_frame () * FRAME_SIZE);
-    Console::puts ("Created first Page Directory at ");
+    Console::puts ("Created first Page Table at ");
     Console::putui ((unsigned long) first_page_table);
     Console::puts ("\n");
 
     // Now we map addresses from 0MB to 4MB
     // Holds the physical address of where a page is
     unsigned long address = 0;
-
     // Maps the first 4MB of memory (i is the frame number)
     unsigned int i;
     for (i = 0; i < 1024; i++)
@@ -76,17 +75,25 @@ void PageTable::init_paging (FramePool * _kernel_mem_pool, FramePool * _process_
 
 void PageTable::load ()
 {
-    return;
+    current_page_table = this;
+    write_cr3 (page_directory);
 }
 
 
 void PageTable::enable_paging ()
 {
-    //paging_enabled = TRUE;
-    //write_cr0(read_cr0() | 0x80000000); // set the paging bit in CR0 to 1
+    paging_enabled = TRUE;
+    write_cr0(read_cr0() | 0x80000000); // set the paging bit in CR0 to 1
 }
 
 void PageTable::handle_fault (REGS * _r)
 {
+    unsigned int er_code = _r->err_code;
+    unsigned int is_present = err_code & (0x1);
+    unsigned int is_rw = err_code & (0x2);
+    unsigned int mask2 = 1 << 2;
+    unsigned long address_of_fault;
+    address_of_fault = read_cr2 ();
+    PageTable * pg_directory = read_cr3 ();
     return;
-}
+}   

@@ -98,6 +98,9 @@ void PageTable::handle_fault (REGS * _r)
     unsigned int er_is_user = er_code & user_mask;
     
     unsigned long * pg_directory = (unsigned long *) read_cr3 ();
+	Console::puts ("\nPage fault:\npg_directory: ");
+	Console::putui ((unsigned int) pg_directory);
+	while (true);
     unsigned long cr2_read;
     cr2_read = read_cr2 ();
     // cr2 address structure:
@@ -110,11 +113,11 @@ void PageTable::handle_fault (REGS * _r)
     // takes us to a frame
     unsigned long pg_table_i = (cr2_read >> 12) & (0x3FF);
     // takes us to a pg. table
-    unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
+    unsigned long pg_directory_i = (cr2_read >> 22); // & (0x3FF);
 
-	Console::puts ("\nPage Fault on page: ");
+	Console::puts ("\nPage Fault on page table: ");
 	Console::putui (pg_directory_i);
-	Console::puts ("\nFault on page: ");
+	Console::puts ("\nOn frame: ");
 	Console::putui (pg_table_i);
 	
 

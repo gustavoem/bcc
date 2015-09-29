@@ -58,7 +58,8 @@ unsigned long FramePool::get_frame ()
             return i + base_n;
         }
     }
-	Console::puts ("\nCouldn't find a free frame"); 
+	Console::puts ("\nCouldn't find a free frame");
+	while(true); 
     return 0;
 }
 

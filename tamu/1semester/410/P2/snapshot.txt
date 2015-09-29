@@ -1,0 +1,25 @@
+ß
+Page fault:
+pg_directory: <2097152>
+Page Fault on page table: <1>
+On frame: <0>
+Fault in a pre-existant page_tableEXCEPTION DISPATCHER: exc_no = <14>
+
+Page fault:
+pg_directory: <2097152>
+Page Fault on page table: <1>
+On frame: <0>
+Fault in a pre-existant page_tableEXCEPTION DISPATCHER: exc_no = <14>
+
+Page fault:
+pg_directory: <2097152>
+Page Fault on page table: <1>
+On frame: <0>
+Fault in a pre-existant page_tableEXCEPTION DISPATCHER: exc_no = <14>
+
+Page fault:
+pg_directory: <2097152>
+Page Fault on page table: <1>
+On frame: <0>
+Fault in a pre-existant page_table
+Couldn't find a free frame

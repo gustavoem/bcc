@@ -112,7 +112,7 @@ void PageTable::handle_fault (REGS * _r)
     // takes us to a frame
     unsigned long pg_table_i = (cr2_read >> 12) & (0x3FF);
     // takes us to a pg. table
-    unsigned long pg_directory_i = (cr2_read >> 22); // & (0x3FF);
+    unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
 
 	Console::puts ("\nPage Fault on page table: ");
 	Console::putui (pg_directory_i);
@@ -123,17 +123,22 @@ void PageTable::handle_fault (REGS * _r)
     if (pg_directory_i >= 1024)
     {
         Console::puts ("Page directory index out of bounds!\n");
+	while (true);
         return;
     }
     if (pg_table_i >= 1024)
     {
         Console::puts ("Page table index out of bounds!\n");
+	while(true);
         return;
     }
         
     if (er_is_present)
+	{
         // Protection fault
         Console::puts ("Protection Fault!\n");
+	while (true);
+}
     else
     {
         // Non present page
@@ -142,9 +147,9 @@ void PageTable::handle_fault (REGS * _r)
         // luckly this mask works here too, caution with the others
         {
             // Non present page_table
+	while (true);
             // Creates a new page and put it on the appropriate index of the page dir.
             Console::puts ("\nFault in a non-existant page_table");
-	    while (true);
             if (er_is_user)
             {
                 // set as user, r/w and present

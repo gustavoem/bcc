@@ -32,9 +32,9 @@ PageTable::PageTable ()
     // from 0MB to 4MB
     unsigned long * first_page_table = (unsigned long *) 
         (kernel_mem_pool->get_frame () * FRAME_SIZE);
-    Console::puts ("Created first Page Table at ");
-    Console::putui ((unsigned long) first_page_table);
-    Console::puts ("\n");
+    // Console::puts ("Created first Page Table at ");
+    // Console::putui ((unsigned long) first_page_table);
+    // Console::puts ("\n");
 
     // Now we map addresses from 0MB to 4MB
     // Holds the physical address of where a page is
@@ -89,11 +89,76 @@ void PageTable::enable_paging ()
 void PageTable::handle_fault (REGS * _r)
 {
     unsigned int er_code = _r->err_code;
-    unsigned int is_present = err_code & (0x1);
-    unsigned int is_rw = err_code & (0x2);
-    unsigned int mask2 = 1 << 2;
-    unsigned long address_of_fault;
-    address_of_fault = read_cr2 ();
+    unsigned int present_mask = 0x1;
+    unsigned int rw_mask = 0x2;
+    unsigned int user_mask = 0x4;
+
+    unsigned int er_is_present = err_code & present_mask;
+    unsigned int er_is_rw = err_code & rw_mask;
+    unsigned int er_is_user = err_code & user_mask;
+    
     PageTable * pg_directory = read_cr3 ();
+    unsigned long cr2_read;
+    cr2_read = read_cr2 ();
+    // cr2 address structure:
+    // bit  0:11 - page offset; frame index
+    // bit 12:21 - page table index
+    // bit 22:31 - page directory index
+    unsigned long page_offset = cr2_read & (0xFFF);
+    unsigned long pg_table_i = (cr2_read >> 12) & (0x3FF);
+    unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
+
+    /** ESTAVA PENSANDO NESSES INDICES AI, TO MEIO PERDIDO, TEM QUE VER **/
+
+    if (pg_directory_i >= 1024)
+        Console::puts ("Page directory index out of bounds!\n");
+    if (pg_table_i >= 1024)
+        Console::puts ("Page table index out of bounds!\n");
+        
+
+    if (er_is_present)
+    {
+        // Protection fault
+        Console::puts ("Protection Fault!\n");
+    }
+    else
+    {
+        // Non present page
+        unsigned int * page_table;
+        if (pg_directory [pg_directory_i] & present_mask) 
+        // luckly this mask works here too, caution with the others
+        {
+            // Non present page_table
+            // Creates a new page and put it on the appropriate index of the page dir.
+            if (er_is_user)
+            {
+                // set as user, r/w and present
+                page_table = (unsigned long *) (process_mem_pool->get_frame () * FRAME_SIZE);
+                pg_directory[pg_directory_i] = page_table | 7;
+            }
+            else
+            {
+                // set as sup, r/w and present
+                page_table = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
+                pg_directory[pg_directory_i] = page_table | 3;
+            }
+            // how should I initialize this page table?
+            for (i = 0; i < 1024; i++)
+                page_table [i] = 0;
+        }
+        else
+        {
+            // page_table exists
+            page_table = pg_directory[pg_directory_i & (0xFFF8)];
+        }
+        else
+        {
+            // page doesn't exist
+
+        }
+
+    }
     return;
 }   
+
+// 0xFF = 1111 1111 1111

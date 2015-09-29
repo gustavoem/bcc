@@ -89,9 +89,9 @@ void PageTable::enable_paging ()
 void PageTable::handle_fault (REGS * _r)
 {
     unsigned int er_code = _r->err_code;
-    unsigned int present_mask = 0x1;
-    unsigned int rw_mask = 0x2;
-    unsigned int user_mask = 0x4;
+    unsigned int present_mask = 0x01;
+    unsigned int rw_mask = 0x02;
+    unsigned int user_mask = 0x04;
 
     unsigned int er_is_present = er_code & present_mask;
     unsigned int er_is_rw = er_code & rw_mask;
@@ -150,7 +150,7 @@ void PageTable::handle_fault (REGS * _r)
                 // set as user, r/w and present
                 page_table = (unsigned long *) 
                     (process_mem_pool->get_frame () * FRAME_SIZE);
-                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
+                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 7;
             }
             else
             {

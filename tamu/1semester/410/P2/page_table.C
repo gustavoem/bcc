@@ -76,7 +76,7 @@ void PageTable::init_paging (FramePool * _kernel_mem_pool, FramePool * _process_
 void PageTable::load ()
 {
     current_page_table = this;
-    write_cr3 (page_directory);
+    write_cr3 ((unsigned long) page_directory);
 }
 
 
@@ -93,29 +93,30 @@ void PageTable::handle_fault (REGS * _r)
     unsigned int rw_mask = 0x2;
     unsigned int user_mask = 0x4;
 
-    unsigned int er_is_present = err_code & present_mask;
-    unsigned int er_is_rw = err_code & rw_mask;
-    unsigned int er_is_user = err_code & user_mask;
+    unsigned int er_is_present = er_code & present_mask;
+    unsigned int er_is_rw = er_code & rw_mask;
+    unsigned int er_is_user = er_code & user_mask;
     
-    PageTable * pg_directory = read_cr3 ();
+    unsigned long * pg_directory = (unsigned long *) read_cr3 ();
     unsigned long cr2_read;
     cr2_read = read_cr2 ();
     // cr2 address structure:
     // bit  0:11 - page offset; frame index
     // bit 12:21 - page table index
     // bit 22:31 - page directory index
+    
+    // takes us to a frame 
     unsigned long page_offset = cr2_read & (0xFFF);
+    // takes us to a fr. pool
     unsigned long pg_table_i = (cr2_read >> 12) & (0x3FF);
+    // takes us to a pg. table
     unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
-
-    /** ESTAVA PENSANDO NESSES INDICES AI, TO MEIO PERDIDO, TEM QUE VER **/
 
     if (pg_directory_i >= 1024)
         Console::puts ("Page directory index out of bounds!\n");
     if (pg_table_i >= 1024)
         Console::puts ("Page table index out of bounds!\n");
         
-
     if (er_is_present)
     {
         // Protection fault
@@ -124,7 +125,7 @@ void PageTable::handle_fault (REGS * _r)
     else
     {
         // Non present page
-        unsigned int * page_table;
+        unsigned long * page_table;
         if (pg_directory [pg_directory_i] & present_mask) 
         // luckly this mask works here too, caution with the others
         {
@@ -133,32 +134,44 @@ void PageTable::handle_fault (REGS * _r)
             if (er_is_user)
             {
                 // set as user, r/w and present
-                page_table = (unsigned long *) (process_mem_pool->get_frame () * FRAME_SIZE);
-                pg_directory[pg_directory_i] = page_table | 7;
+                page_table = (unsigned long *) 
+                    (process_mem_pool->get_frame () * FRAME_SIZE);
+                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 7;
             }
             else
             {
                 // set as sup, r/w and present
-                page_table = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
-                pg_directory[pg_directory_i] = page_table | 3;
-            }
+                page_table = (unsigned long *) 
+                    (kernel_mem_pool->get_frame () * FRAME_SIZE);
+                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
+            }   
             // how should I initialize this page table?
-            for (i = 0; i < 1024; i++)
-                page_table [i] = 0;
+            // every page points to address 0 being usr, r and not present
+            for (unsigned long i = 0; i < 1024; i++)
+                page_table [i] = user_mask;
         }
         else
         {
-            // page_table exists
-            page_table = pg_directory[pg_directory_i & (0xFFF8)];
+            // Page_table exists. Its an entry of pg_directory
+            page_table = (unsigned long *)
+                pg_directory[pg_directory_i & (0xFFF8)];
+        }
+        
+        // Page is still not present
+        if (er_is_user)
+        {
+            // user
+            unsigned long new_frame = process_mem_pool->get_frame () * FRAME_SIZE;
+            // Set new frame on page as user, r/w and present
+            page_table[pg_table_i] = new_frame | 7;
         }
         else
         {
-            // page doesn't exist
-
+            // kernel
+            unsigned long new_frame = kernel_mem_pool->get_frame () * FRAME_SIZE;
+            // Set new frame on page as sup., r/w and present
+            page_table[pg_table_i] = new_frame | 3;
         }
-
     }
     return;
 }   
-
-// 0xFF = 1111 1111 1111

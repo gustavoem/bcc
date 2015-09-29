@@ -144,6 +144,7 @@ void PageTable::handle_fault (REGS * _r)
             // Non present page_table
             // Creates a new page and put it on the appropriate index of the page dir.
             Console::puts ("\nFault in a non-existant page_table");
+	    while (true);
             if (er_is_user)
             {
                 // set as user, r/w and present

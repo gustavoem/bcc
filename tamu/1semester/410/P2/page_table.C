@@ -100,7 +100,6 @@ void PageTable::handle_fault (REGS * _r)
     unsigned long * pg_directory = (unsigned long *) read_cr3 ();
 	Console::puts ("\nPage fault:\npg_directory: ");
 	Console::putui ((unsigned int) pg_directory);
-	while (true);
     unsigned long cr2_read;
     cr2_read = read_cr2 ();
     // cr2 address structure:
@@ -163,7 +162,7 @@ void PageTable::handle_fault (REGS * _r)
         {
             // Page_table exists. Its an entry of pg_directory
             page_table = (unsigned long *)
-                pg_directory[pg_directory_i & (0xFFF8)];
+                (pg_directory[pg_directory_i] & (0xFFF8));
         }
         
         // Page is still not present

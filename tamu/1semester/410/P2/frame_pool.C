@@ -12,8 +12,7 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
         info_frame_n = _base_frame_no;
 
     // Sets the free_frame address
-    free_frames = (unsigned long *) 
-        ((info_frame_n) * (FRAME_SIZE));
+    free_frames = (unsigned long *) ((info_frame_n) * (FRAME_SIZE));
 
     // Saves parameters
     base_n = _base_frame_no;
@@ -34,14 +33,15 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
     unsigned long j = info_frame_n / LONG_SIZE;
     unsigned long mask = 1 << (info_frame_n % LONG_SIZE);
     
-    // Console::puts ("\nBefore | After making info unaccessible: ");
-    // Console::putui (free_frames[j]);
+    Console::puts ("\nBefore | After making info unaccessible: ");
+    Console::putui (free_frames[j]);
     free_frames[j] = mask;
-    // Console::puts (" | ");
-    // Console::putui (free_frames[j]);
-    // Console::puts (" ...and after releasing it: ");
-    // release_frame (info_frame_n);
-    // Console::putui (free_frames[j]);
+    Console::puts (" | ");
+    Console::putui (free_frames[j]);
+    Console::puts (" ...and after releasing it: ");
+    release_frame (info_frame_n);
+    Console::putui (free_frames[j]);
+    while (true);
 }
 
 

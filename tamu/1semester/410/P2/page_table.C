@@ -98,8 +98,6 @@ void PageTable::handle_fault (REGS * _r)
     unsigned int er_is_user = er_code & user_mask;
     
     unsigned long * pg_directory = (unsigned long *) read_cr3 ();
-    Console::puts ("\nPage fault:\npg_directory: ");
-    Console::putui ((unsigned int) pg_directory);
     unsigned long cr2_read;
     cr2_read = read_cr2 ();
     // cr2 address structure:
@@ -107,8 +105,6 @@ void PageTable::handle_fault (REGS * _r)
     // bit 12:21 - page table index
     // bit 22:31 - page directory index
     
-    // takes us to a place in the frame 
-    unsigned long page_offset = cr2_read & (0xFFF);
     // takes us to a frame
     unsigned long pg_table_i = (cr2_read >> 12) & (0x3FF);
     // takes us to a pg. table
@@ -160,9 +156,9 @@ void PageTable::handle_fault (REGS * _r)
             // else
             // {
                 // set as sup, r/w and present
-                page_table = (unsigned long *) 
-                    (kernel_mem_pool->get_frame () * FRAME_SIZE);
-                pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
+            page_table = (unsigned long *) 
+                (kernel_mem_pool->get_frame () * FRAME_SIZE);
+            pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
             //}   
             // how should I initialize this page table?
             // every page points to address 0 being usr, r/w and not present
@@ -188,9 +184,9 @@ void PageTable::handle_fault (REGS * _r)
         // else
         // {
         //   // kernel
-            unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
+        unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
             // Set new frame on page as sup., r/w and present
-            page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
+        page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
         // }
     }
     return;

@@ -5,6 +5,11 @@ FramePool * FramePool::head_frame = 0;
 FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes, 
     unsigned long _info_frame_no)
 {
+	Console::puts ("\n\nentered framepool() to create this guy: ");
+	Console::putui (_base_frame_no);
+	Console::putui (_nframes);
+	Console::putui (_info_frame_no);
+
     // Decides the free frame location
     if (_info_frame_no != 0)
         info_frame_n = _info_frame_no;
@@ -33,28 +38,47 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
     unsigned long j = info_frame_n / LONG_SIZE;
     unsigned long mask = 1 << (info_frame_n % LONG_SIZE);
     
-    Console::puts ("\nBefore | After making info unaccessible: ");
-    Console::putui (free_frames[j]);
+    //Console::puts ("\nBefore | After making info unaccessible: ");
+    //Console::putui (free_frames[j]);
     free_frames[j] = mask;
-    Console::puts (" | ");
-    Console::putui (free_frames[j]);
-    Console::puts (" ...and after releasing it: ");
-    release_frame (info_frame_n);
-    Console::putui (free_frames[j]);
-    while (true);
+    //Console::puts (" | ");
+    //Console::putui (free_frames[j]);
+    //Console::puts (" ...and after releasing it: ");
+    //release_frame (info_frame_n);
+    //Console::putui (free_frames[j]);
 }
 
 
 unsigned long FramePool::get_frame ()
 {
+	Console::puts ("\n\nEntered get_frame. Info frame no: ");
+	Console::putui (info_frame_n);
+	Console::puts (" From frame: ");
+	Console::putui ((unsigned int)this);
     for (unsigned long i = 0; i < frames_n; i++)
     {
         unsigned long j = i / LONG_SIZE;
         unsigned long mask = 1 << (i % LONG_SIZE);
+	Console::puts ("\nSeeing frame: ");
+	Console::putui (i);
+		Console::puts ("\nfree_frame[j] = ");
+		Console::putui (free_frames[j]);
         if (!(free_frames[j] & mask))
         {
             // Makes frame unavailable and return frame number
+		Console::puts ("\nThis is free, lets use it");
             free_frames[j] = free_frames[j] | mask;
+		Console::puts ("\n(after use) free_frame[j] = ");
+		Console::putui (free_frames[j]);
+		Console::puts (" i =");
+		Console::putui (i);
+		Console::puts (" j =");
+		Console::putui (j);
+		Console::puts (" mask = ");
+		Console::putui (mask);
+		Console::puts ("\n");
+		//showFramesStates ();
+ while(true);
             return i + base_n;
         }
     }
@@ -111,13 +135,12 @@ void FramePool::release_frame (unsigned long _fram_no)
 
 void FramePool::showFramesStates ()
 {
+        Console::puts ("Frames states from frame pool ");
+        Console::putui ((unsigned int) this);
     for (unsigned long i = 0; i < frames_n; i++)
     {
         unsigned long j = i / LONG_SIZE;
         unsigned long mask = 1 << (i % LONG_SIZE);
-        Console::puts ("Frames states from frame pool ");
-        Console::putui ((unsigned int) this);
-        Console::puts ("\n");
-        Console::putui (free_frames[j] & mask);
+        Console::putui (!(!(free_frames[j] & mask)));
     }
 }

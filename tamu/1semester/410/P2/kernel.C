@@ -83,6 +83,10 @@ int main() {
                               KERNEL_POOL_SIZE,
                               0);
     unsigned long process_mem_pool_info_frame = kernel_mem_pool.get_frame();
+   Console::puts("ajuda luciano");
+	unsigned long * debugg =(unsigned long *) (512 * FRAME_SIZE);
+	Console::puts ("\nfree_frames[0] = ");
+	Console::putui (debugg[0]);
     FramePool process_mem_pool(PROCESS_POOL_START_FRAME,
                                PROCESS_POOL_SIZE,
                                process_mem_pool_info_frame);

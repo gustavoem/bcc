@@ -17,6 +17,9 @@ PageTable::PageTable ()
     Console::puts ("Entered PageTable ()\n");
     // Initializes page_directory. Gives it a frame to store entries
     // what if kenerl_mem_pool == NULL?
+	unsigned long * debugg =(unsigned long *) (512 * FRAME_SIZE);
+	Console::puts ("\nfree_frames[0] = ");
+	Console::putui (debugg[0]);
     if (kernel_mem_pool == NULL)
     {
         Console::puts ("Unable to create a PageTabel. First you need to initialize class members\n");

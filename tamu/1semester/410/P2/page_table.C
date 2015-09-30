@@ -35,8 +35,8 @@ PageTable::PageTable ()
     // from 0MB to 4MB
     unsigned long * first_page_table = (unsigned long *) 
         (kernel_mem_pool->get_frame () * FRAME_SIZE);
-    // Console::puts ("Created first Page Table at ");
-    // Console::putui ((unsigned long) first_page_table);
+    Console::puts ("\nCreated first Page Table at ");
+    Console::putui ((unsigned long) first_page_table);
     // Console::puts ("\n");
 
     // Now we map addresses from 0MB to 4MB
@@ -142,6 +142,8 @@ void PageTable::handle_fault (REGS * _r)
             // every page points to address 0 being usr, r/w and not present
             for (unsigned long i = 0; i < 1024; i++)
                 page_table [i] = 0x2;
+	    Console::puts ("pg table address: ");
+            Console::putui ((unsigned int) page_table);
         }
         else
         {
@@ -149,6 +151,9 @@ void PageTable::handle_fault (REGS * _r)
             Console::puts ("\nFault in a pre-existant page_table");
             page_table = (unsigned long *)
                 (pg_directory[pg_directory_i] >> 12);
+		Console::puts ("pg table address: ");
+		Console::putui ((unsigned int) page_table);
+		while(true);
         }
 
         unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);

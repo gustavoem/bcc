@@ -5,10 +5,10 @@ FramePool * FramePool::head_frame = 0;
 FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes, 
     unsigned long _info_frame_no)
 {
-	Console::puts ("\n\nentered framepool() to create this guy: ");
-	Console::putui (_base_frame_no);
-	Console::putui (_nframes);
-	Console::putui (_info_frame_no);
+	//Console::puts ("\n\nentered framepool() to create this guy: ");
+	//Console::putui (_base_frame_no);
+	//Console::putui (_nframes);
+	//Console::putui (_info_frame_no);
 
     // Decides the free frame location
     if (_info_frame_no != 0)
@@ -35,8 +35,8 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
     if (_info_frame_no == 0)
 	free_frames[0] = 0x1;
     
-    Console::puts ("free_frames[0]: ");
-    Console::putui (free_frames[0]);
+    //Console::puts ("free_frames[0]: ");
+    //Console::putui (free_frames[0]);
 
     // List of frames update
     FramePool * prev = FramePool::head_frame;
@@ -47,10 +47,10 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
 
 unsigned long FramePool::get_frame ()
 {
-	Console::puts ("\n\nEntered get_frame. Info frame no: ");
-	Console::putui (info_frame_n);
-	Console::puts (" From frame: ");
-	Console::putui ((unsigned int)this);
+	//Console::puts ("\n\nEntered get_frame. Info frame no: ");
+	//Console::putui (info_frame_n);
+	//Console::puts (" From frame: ");
+	//Console::putui ((unsigned int)this);
     for (unsigned long i = 0; i < frames_n; i++)
     {
         unsigned long j = i / LONG_SIZE;

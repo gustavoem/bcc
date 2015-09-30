@@ -1,25 +1,25 @@
+Plex86/Bochs VGABios 0.6b 30 May 2008
+This VGA/VBE Bios is released under the GNU LGPL
+
+Please visit :
+ . http://bochs.sourceforge.net
+ . http://www.nongnu.org/vgabios
+
+Bochs VBE Display Adapter enabled
+
+Bochs BIOS - build: 06/03/08
+$Revision: 1.209 $ $Date: 2008/06/02 20:08:10 $
+Options: apmbios pcibios eltorito rombios32
+
 ß
-Page fault:
-pg_directory: <2097152>
-Page Fault on page table: <1>
-On frame: <0>
-Fault in a pre-existant page_tableEXCEPTION DISPATCHER: exc_no = <14>
 
-Page fault:
-pg_directory: <2097152>
-Page Fault on page table: <1>
-On frame: <0>
-Fault in a pre-existant page_tableEXCEPTION DISPATCHER: exc_no = <14>
 
-Page fault:
-pg_directory: <2097152>
-Page Fault on page table: <1>
-On frame: <0>
-Fault in a pre-existant page_tableEXCEPTION DISPATCHER: exc_no = <14>
 
-Page fault:
-pg_directory: <2097152>
-Page Fault on page table: <1>
-On frame: <0>
-Fault in a pre-existant page_table
-Couldn't find a free frame
+
+
+
+
+
+
+
+

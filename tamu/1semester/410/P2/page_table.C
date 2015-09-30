@@ -119,20 +119,6 @@ void PageTable::handle_fault (REGS * _r)
     Console::puts ("\nOn frame: ");
     Console::putui (pg_table_i);
     
-
-    if (pg_directory_i >= 1024)
-    {
-        Console::puts ("Page directory index out of bounds!\n");
-        while (true);
-        return;
-    }
-    if (pg_table_i >= 1024)
-    {
-        Console::puts ("Page table index out of bounds!\n");
-        while(true);
-        return;
-    }
-        
     if (er_is_present)
     {
         // Protection fault
@@ -192,6 +178,7 @@ void PageTable::handle_fault (REGS * _r)
             // Set new frame on page as sup., r/w and present
             page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
         // }
+
     }
     return;
 }   

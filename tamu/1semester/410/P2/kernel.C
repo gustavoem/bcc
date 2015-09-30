@@ -136,11 +136,11 @@ int main() {
     int *foo = (int *) FAULT_ADDR;
     int i;
 
-    for (i=0; i<NACCESS; i++) {
+    for (i=0; i<1025; i++) {
        foo[i] = i;
     }
     
-    for (i=0; i<NACCESS; i++) {
+    for (i=0; i<1025; i++) {
        if(foo[i] != i) {
           Console::puts("TEST FAILED for access number:");
           Console::putui(i);

@@ -56,17 +56,17 @@ unsigned long FramePool::get_frame ()
         unsigned long j = i / LONG_SIZE;
         unsigned long mask = 0x1 << (i % (unsigned long)LONG_SIZE);
 	
-	Console::puts ("\nSeeing frame: ");
-	Console::putui (i);
-	Console::puts ("\nfree_frame[j] = ");
-	Console::putui (free_frames[j]);
+	//Console::puts ("\nSeeing frame: ");
+	//Console::putui (i);
+//	Console::puts ("\nfree_frame[j] = ");
+//	Console::putui (free_frames[j]);
         if (!(free_frames[j] & mask))
         {
             // Makes frame unavailable and return frame number
-		Console::puts ("\nThis is free, lets use it");
+//		Console::puts ("\nThis is free, lets use it");
             free_frames[j] = free_frames[j] | mask;
-		Console::puts ("\n(after use) free_frame[j] = ");
-		Console::putui (free_frames[j]);
+//		Console::puts ("\n(after use) free_frame[j] = ");
+//		Console::putui (free_frames[j]);
 		//Console::puts (" i =");
 //		Console::putui (i);
 //		Console::puts (" j =");
@@ -77,7 +77,7 @@ unsigned long FramePool::get_frame ()
 		//showFramesStates ();
             return i + base_n;
         }
-	if(i>0)	while (true);
+//	if(i>0)	while (true);
 
     }
 	Console::puts ("\nCouldn't find a free frame");

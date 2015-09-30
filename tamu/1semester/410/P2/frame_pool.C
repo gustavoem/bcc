@@ -12,9 +12,12 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
 
     // Decides the free frame location
     if (_info_frame_no != 0)
-        info_frame_n = _base_frame_no + _info_frame_no;
+        info_frame_n =  _info_frame_no; // I'm assuming that if you're doing this,
+					// this frame number is already unavailable
+					// inside its frame pool creator 
     else
         info_frame_n = _base_frame_no;
+		
 
     // Sets the free_frame address
     free_frames = (unsigned long *) ((info_frame_n) * (FRAME_SIZE));
@@ -23,29 +26,22 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
     base_n = _base_frame_no;
     frames_n = _nframes;
 
-    // Makes all frames of this pool available
+    // Makes all frames available
     for (unsigned long i = 0; i < _nframes; i++)
     {
         free_frames[i] = 0;
     }
+    // And if the info frame is inside the frame pool, make it unavailable
+    if (_info_frame_no == 0)
+	free_frames[0] = 0x1;
+    
+    Console::puts ("free_frames[0]: ");
+    Console::putui (free_frames[0]);
 
     // List of frames update
     FramePool * prev = FramePool::head_frame;
     FramePool::head_frame = this;
     previous_frame = prev;
-
-    // Makes the info frame unavailable
-    unsigned long j = info_frame_n / LONG_SIZE;
-    unsigned long mask = 1 << (info_frame_n % LONG_SIZE);
-    
-    //Console::puts ("\nBefore | After making info unaccessible: ");
-    //Console::putui (free_frames[j]);
-    free_frames[j] = mask;
-    //Console::puts (" | ");
-    //Console::putui (free_frames[j]);
-    //Console::puts (" ...and after releasing it: ");
-    //release_frame (info_frame_n);
-    //Console::putui (free_frames[j]);
 }
 
 
@@ -55,8 +51,6 @@ unsigned long FramePool::get_frame ()
 	Console::putui (info_frame_n);
 	Console::puts (" From frame: ");
 	Console::putui ((unsigned int)this);
-	Console::puts (" value of long_size: ");
-	Console::putui (LONG_SIZE);
     for (unsigned long i = 0; i < frames_n; i++)
     {
         unsigned long j = i / LONG_SIZE;
@@ -64,8 +58,8 @@ unsigned long FramePool::get_frame ()
 	
 	Console::puts ("\nSeeing frame: ");
 	Console::putui (i);
-		Console::puts ("\nfree_frame[j] = ");
-		Console::putui (free_frames[j]);
+	Console::puts ("\nfree_frame[j] = ");
+	Console::putui (free_frames[j]);
         if (!(free_frames[j] & mask))
         {
             // Makes frame unavailable and return frame number
@@ -73,18 +67,18 @@ unsigned long FramePool::get_frame ()
             free_frames[j] = free_frames[j] | mask;
 		Console::puts ("\n(after use) free_frame[j] = ");
 		Console::putui (free_frames[j]);
-		Console::puts (" i =");
-		Console::putui (i);
-		Console::puts (" j =");
-		Console::putui (j);
-		Console::puts (" mask = ");
-		Console::putui (mask);
-		Console::puts ("\n");
+		//Console::puts (" i =");
+//		Console::putui (i);
+//		Console::puts (" j =");
+//		Console::putui (j);
+//		Console::puts (" mask = ");
+//		Console::putui (mask);
+//		Console::puts ("\n");
 		//showFramesStates ();
             return i + base_n;
         }
-	if (i > 0)
-	while (true);
+	if(i>0)	while (true);
+
     }
 	Console::puts ("\nCouldn't find a free frame");
 	while(true); 

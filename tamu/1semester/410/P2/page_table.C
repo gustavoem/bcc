@@ -120,7 +120,7 @@ void PageTable::handle_fault (REGS * _r)
         // Protection fault
         Console::puts ("Protection Fault!\n");
         while (true);
-	return;
+        return;
     }
     else
     {
@@ -132,21 +132,10 @@ void PageTable::handle_fault (REGS * _r)
             // Non present page_table
             // Creates a new page and put it on the appropriate index of the page dir.
             Console::puts ("\nFault in a non-existant page_table");
-            // if (er_is_user)
-            // {
-            //     // set as user, r/w and present
-            //     page_table = (unsigned long *) 
-            //         (process_mem_pool->get_frame () * FRAME_SIZE);
-            //     pg_directory[pg_directory_i] = ((unsigned long)page_table) | 7;
-            // }
-            // else
-            // {
-                // set as sup, r/w and present
+            // set as sup, r/w and present
             page_table = (unsigned long *) 
                 (kernel_mem_pool->get_frame () * FRAME_SIZE);
             pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
-            //}   
-            // how should I initialize this page table?
             // every page points to address 0 being usr, r/w and not present
             for (unsigned long i = 0; i < 1024; i++)
                 page_table [i] = 0x2;
@@ -158,23 +147,10 @@ void PageTable::handle_fault (REGS * _r)
             page_table = (unsigned long *)
                 (pg_directory[pg_directory_i] >> 12);
         }
-        
-        // Page is still not present
-        // if (er_is_user)
-        // {
-        //     // user
-        //     unsigned long new_frame = process_mem_pool->get_frame () * FRAME_SIZE;
-        //     // Set new frame on page as user, r/w and present
-        //     page_table[pg_table_i] = new_frame | 7;
-        // }
-        // else
-        // {
-        //   // kernel
-        unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
-            // Set new frame on page as sup., r/w and present
-        page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
-        // }
 
+        unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);
+        // Set new frame on page as sup., r/w and present
+        page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
     }
     return;
 }   

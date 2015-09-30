@@ -12,7 +12,7 @@ FramePool::FramePool (unsigned long _base_frame_no, unsigned long _nframes,
 
     // Decides the free frame location
     if (_info_frame_no != 0)
-        info_frame_n = _info_frame_no;
+        info_frame_n = _base_frame_no + _info_frame_no;
     else
         info_frame_n = _base_frame_no;
 
@@ -55,10 +55,13 @@ unsigned long FramePool::get_frame ()
 	Console::putui (info_frame_n);
 	Console::puts (" From frame: ");
 	Console::putui ((unsigned int)this);
+	Console::puts (" value of long_size: ");
+	Console::putui (LONG_SIZE);
     for (unsigned long i = 0; i < frames_n; i++)
     {
         unsigned long j = i / LONG_SIZE;
-        unsigned long mask = 1 << (i % LONG_SIZE);
+        unsigned long mask = 0x1 << (i % (unsigned long)LONG_SIZE);
+	
 	Console::puts ("\nSeeing frame: ");
 	Console::putui (i);
 		Console::puts ("\nfree_frame[j] = ");
@@ -78,9 +81,10 @@ unsigned long FramePool::get_frame ()
 		Console::putui (mask);
 		Console::puts ("\n");
 		//showFramesStates ();
- while(true);
             return i + base_n;
         }
+	if (i > 0)
+	while (true);
     }
 	Console::puts ("\nCouldn't find a free frame");
 	while(true); 

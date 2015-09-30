@@ -115,20 +115,6 @@ void PageTable::handle_fault (REGS * _r)
     Console::puts ("\nOn frame: ");
     Console::putui (pg_table_i);
     
-
-    if (pg_directory_i >= 1024)
-    {
-        Console::puts ("Page directory index out of bounds!\n");
-        while (true);
-        return;
-    }
-    if (pg_table_i >= 1024)
-    {
-        Console::puts ("Page table index out of bounds!\n");
-        while(true);
-        return;
-    }
-        
     if (er_is_present)
     {
         // Protection fault
@@ -140,7 +126,7 @@ void PageTable::handle_fault (REGS * _r)
     {
         // Non present page
         unsigned long * page_table;
-        if (pg_directory [pg_directory_i] & present_mask) 
+        if (!(pg_directory [pg_directory_i] & present_mask))
         // luckly this mask works here too, caution with the others
         {
             // Non present page_table
@@ -170,7 +156,7 @@ void PageTable::handle_fault (REGS * _r)
             // Page_table exists. Its an entry of pg_directory
             Console::puts ("\nFault in a pre-existant page_table");
             page_table = (unsigned long *)
-                (pg_directory[pg_directory_i] & (0xFFF8));
+                (pg_directory[pg_directory_i] >> 12);
         }
         
         // Page is still not present
@@ -188,6 +174,7 @@ void PageTable::handle_fault (REGS * _r)
             // Set new frame on page as sup., r/w and present
         page_table[pg_table_i] = ((unsigned long)new_frame) | 3;
         // }
+
     }
     return;
 }   

@@ -44,7 +44,7 @@ PageTable::PageTable ()
     unsigned long address = 0;
     // Maps the first 4MB of memory (i is the frame number)
     unsigned int i;
-    for (i = 0; i < 1024; i++)
+    for (i = 0; i < (shared_size / (4 * 1024)); i++)
     {
         // Masks page_table entry to: superv. level, read/write present (011 in binary)
         first_page_table[i] = address | 3;    // <- direct addressing

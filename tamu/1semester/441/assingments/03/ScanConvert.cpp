@@ -3,6 +3,7 @@
 #include<math.h>
 #include<vector>
 #include<map>
+#include<iostream>
 
 /******************************************************************
 	Notes:
@@ -148,14 +149,24 @@ void mouse (int button, int state, int x, int y)
         case GLUT_LEFT_BUTTON:
             if (state == GLUT_DOWN)
             {
-                break;
+                if (my_state == 2)
+                {
+                    my_state = 0;
+                }
             }
             break;
 
         case GLUT_RIGHT_BUTTON:
+            if (state == GLUT_DOWN)
+            {
+                if (my_state == 0)
+                {
+                    my_state = 2;
+                }
+            } 
             break;
-    
     }
+    std::cout << "Button pressed, new state: " << my_state;
 }
 
 

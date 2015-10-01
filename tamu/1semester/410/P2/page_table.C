@@ -15,18 +15,18 @@ unsigned long PageTable::shared_size = 0;
 PageTable::PageTable ()
 {
     //Console::puts ("Entered PageTable ()\n");
+    //unsigned long * debugg =(unsigned long *) (512 * FRAME_SIZE);
+    //Console::puts ("\nfree_frames[0] = ");
+    //Console::putui (debugg[0]);
+    
     // Initializes page_directory. Gives it a frame to store entries
-    // what if kenerl_mem_pool == NULL?
-	//unsigned long * debugg =(unsigned long *) (512 * FRAME_SIZE);
-	//Console::puts ("\nfree_frames[0] = ");
-	//Console::putui (debugg[0]);
     if (kernel_mem_pool == NULL)
     {
         Console::puts ("Unable to create a PageTabel. First you need to initialize class members\n");
         return;
     }
-
     page_directory = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE); 
+
     //Console::puts ("Created Page Directory at ");
     //Console::putui ((unsigned long) page_directory);
     //Console::puts ("\n");
@@ -113,10 +113,10 @@ void PageTable::handle_fault (REGS * _r)
     // takes us to a pg. table
     unsigned long pg_directory_i = (cr2_read >> 22) & (0x3FF);
 
-    Console::puts ("\nPage Fault on page table: ");
-    Console::putui (pg_directory_i);
-    Console::puts ("\nOn frame: ");
-    Console::putui (pg_table_i);
+    // Console::puts ("\nPage Fault on page table: ");
+    // Console::putui (pg_directory_i);
+    // Console::puts ("\nOn frame: ");
+    // Console::putui (pg_table_i);
     
     if (er_is_present)
     {
@@ -127,7 +127,7 @@ void PageTable::handle_fault (REGS * _r)
     }
     else
     {
-        // Non present page
+        // Not present page
         unsigned long * page_table;
         if (!(pg_directory [pg_directory_i] & present_mask))
         // luckly this mask works here too, caution with the others
@@ -135,25 +135,23 @@ void PageTable::handle_fault (REGS * _r)
             // Non present page_table
             // Creates a new page and put it on the appropriate index of the page dir.
             //Console::puts ("\nFault in a non-existant page_table");
-            // set as sup, r/w and present
             page_table = (unsigned long *) 
                 (kernel_mem_pool->get_frame () * FRAME_SIZE);
+            // set page table as sup, r/w and present in page directory
             pg_directory[pg_directory_i] = ((unsigned long)page_table) | 3;
             // every page points to address 0 being usr, r/w and not present
             for (unsigned long i = 0; i < 1024; i++)
                 page_table [i] = 0x2;
-	    //Console::puts ("pg table address: ");
+        //Console::puts ("pg table address: ");
             //Console::putui ((unsigned int) page_table);
         }
         else
         {
             // Page_table exists. Its an entry of pg_directory
             //Console::puts ("\nFault in a pre-existant page_table");
-            page_table = (unsigned long *)
-                (pg_directory[pg_directory_i] & 0xFFFFF000);
-		Console::puts ("pg table address: ");
-		Console::putui ((unsigned int) page_table);
-		//while(true);
+            page_table = (unsigned long *) (pg_directory[pg_directory_i] & 0xFFFFF000);
+            // Console::puts ("pg table address: ");
+            // Console::putui ((unsigned int) page_table);
         }
 
         unsigned long * new_frame = (unsigned long *) (kernel_mem_pool->get_frame () * FRAME_SIZE);

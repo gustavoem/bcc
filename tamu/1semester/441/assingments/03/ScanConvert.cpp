@@ -1,6 +1,8 @@
 #include<GL/glut.h>
-#include<fstream.h>
+#include<fstream>
 #include<math.h>
+#include<vector>
+#include<map>
 
 /******************************************************************
 	Notes:
@@ -23,27 +25,65 @@
 #define ImageW 400
 #define ImageH 400
 
+using namespace std;
+
+
+
+// frameBuffer matrix
+//
 float framebuffer[ImageH][ImageW][3];
 
+
+// Color struct
+//
 struct color {
-	float r, g, b;		// Color (R,G,B values)
+    float r, g, b;		// Color (R,G,B values)
 };
 
 
+// Polygon struct
+//
+struct polygon {
+    color c;
+    map<unsigned int, vector<unsigned int> > scan_lines;
+};
+
+
+// Stores the scan lines lists
+//
+vector<polygon> polygons;
+
+
+// Stores the state: 0 for defining polygons, 1 for clippping and 2 for waiting to define
+// a polygon
+//
+unsigned int my_state;
+
+
+// Stores the coordinates of the screen that received the last click
+//
+unsigned int lcx;
+unsigned int lcy;
+
+
 // Draws the scene
-void drawit(void)
+//
+void drawit (void)
 {
-   glDrawPixels(ImageW,ImageH,GL_RGB,GL_FLOAT,framebuffer);
-   glFlush();
+   glDrawPixels (ImageW, ImageH, GL_RGB, GL_FLOAT, framebuffer);
+   glFlush ();
 }
 
-// Clears framebuffer to black
-void clearFramebuffer()
-{
-	int i,j;
 
-	for(i=0;i<ImageH;i++) {
-		for (j=0;j<ImageW;j++) {
+// Clears framebuffer to black
+//
+void clearFramebuffer ()
+{
+	int i, j;
+	for (i = 0; i < ImageH; i++) 
+        {
+		for (j = 0; j < ImageW; j++) 
+                {
 			framebuffer[i][j][0] = 0.0;
 			framebuffer[i][j][1] = 0.0;
 			framebuffer[i][j][2] = 0.0;
@@ -51,60 +91,84 @@ void clearFramebuffer()
 	}
 }
 
+
 // Sets pixel x,y to the color RGB
 // I've made a small change to this function to make the pixels match
 // those returned by the glutMouseFunc exactly - Scott Schaefer 
-void setFramebuffer(int x, int y, float R, float G, float B)
+//
+void setFramebuffer (int x, int y, float R, float G, float B)
 {
 	// changes the origin from the lower-left corner to the upper-left corner
 	y = ImageH - 1 - y;
-	if (R<=1.0)
-		if (R>=0.0)
-			framebuffer[y][x][0]=R;
+	if (R <= 1.0)
+		if (R >= 0.0)
+			framebuffer[y][x][0] = R;
 		else
-			framebuffer[y][x][0]=0.0;
+			framebuffer[y][x][0] = 0.0;
 	else
-		framebuffer[y][x][0]=1.0;
-	if (G<=1.0)
-		if (G>=0.0)
-			framebuffer[y][x][1]=G;
+		framebuffer[y][x][0] = 1.0;
+	if (G <= 1.0)
+		if (G >= 0.0)
+			framebuffer[y][x][1] = G;
 		else
-			framebuffer[y][x][1]=0.0;
+			framebuffer[y][x][1] = 0.0;
 	else
 		framebuffer[y][x][1]=1.0;
-	if (B<=1.0)
-		if (B>=0.0)
-			framebuffer[y][x][2]=B;
+	if (B <= 1.0)
+		if (B >= 0.0)
+			framebuffer[y][x][2] = B;
 		else
-			framebuffer[y][x][2]=0.0;
+			framebuffer[y][x][2] = 0.0;
 	else
-		framebuffer[y][x][2]=1.0;
+		framebuffer[y][x][2] = 1.0;
 }
 
-void display(void)
+
+void display( void)
 {
 	//The next two lines of code are for demonstration only.
 	//They show how to draw a line from (0,0) to (100,100)
 	int i;
-	for(i=0;i<=100;i++) setFramebuffer(i,i,1.0,1.0,1.0);
+	for(i = 0;i <= 100; i++) setFramebuffer(i,i,1.0,1.0,1.0);
 
-	drawit();
+	drawit ();
 }
 
-void init(void)
+
+void init (void)
 {
-	clearFramebuffer();
+	clearFramebuffer ();
 }
+
+
+void mouse (int button, int state, int x, int y)
+{
+    switch (button)
+    {
+        case GLUT_LEFT_BUTTON:
+            if (state == GLUT_DOWN)
+            {
+                break;
+            }
+            break;
+
+        case GLUT_RIGHT_BUTTON:
+            break;
+    
+    }
+}
+
 
 int main(int argc, char** argv)
 {
-	glutInit(&argc,argv);
-	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-	glutInitWindowSize(ImageW,ImageH);
-	glutInitWindowPosition(100,100);
-	glutCreateWindow("<Your name> - Homework 2");
-	init();	
-	glutDisplayFunc(display);
-	glutMainLoop();
+	glutInit (&argc,argv);
+	glutInitDisplayMode (GLUT_SINGLE|GLUT_RGB);
+	glutInitWindowSize (ImageW,ImageH);
+	glutInitWindowPosition (100,100);
+	glutCreateWindow ("Gustavo Matos - Homework 2");
+	init ();	
+	glutDisplayFunc (display);
+        glutMouseFunc (mouse);
+	glutMainLoop ();
 	return 0;
 }

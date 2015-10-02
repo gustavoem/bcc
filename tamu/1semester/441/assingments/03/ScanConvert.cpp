@@ -1,9 +1,10 @@
-#include<GL/glut.h>
-#include<fstream>
-#include<math.h>
-#include<vector>
-#include<map>
-#include<iostream>
+#include <GL/glut.h>
+#include <fstream>
+#include <math.h>
+#include <vector>
+#include <map>
+#include <iostream>
+#include "Polygon.h"
 
 /******************************************************************
 	Notes:
@@ -23,13 +24,6 @@
 		setFramebuffer commands alone, though.
   *****************************************************************/
 
-#define ImageW 400
-#define ImageH 400
-
-using namespace std;
-
-
-
 // frameBuffer matrix
 //
 float framebuffer[ImageH][ImageW][3];
@@ -41,18 +35,9 @@ struct color {
     float r, g, b;		// Color (R,G,B values)
 };
 
-
-// Polygon struct
-//
-struct polygon {
-    color c;
-    map<unsigned int, vector<unsigned int> > scan_lines;
-};
-
-
 // Stores the scan lines lists
 //
-vector<polygon> polygons;
+vector<Polygon> polygons;
 
 
 // Stores the state: 0 for defining polygons, 1 for clippping and 2 for waiting to define

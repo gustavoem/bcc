@@ -1,18 +1,17 @@
-CPPFLAGS = -O2 -g -lGL -lglut -lGLU 
+FLAGS = -O2 -g -Wall -fmessage-length=0 -lglut -lGL -lGLU
 
 OBJS =	Polygon.o \
 
-TARGET = main
+TARGET = ScanConvert
 
 $(TARGET): ScanConvert.o $(OBJS)
-	$(CXX) -o $(TARGET) ScanConvert.o $(OBJS) $(CPPFLAGS)
+	g++ -o $(TARGET) ScanConvert.o $(OBJS) $(FLAGS)
 
 ScanConvert.o:
-	$(CXX) -c -o ScanConvert.cpp
+	g++ -c -o ScanConvert.o ScanConvert.cpp $(FLAGS)
 
 all:	$(TARGET)
 
 clean:
 	rm -f *.o
-	rm -f $(TEST)
 	rm -f $(TARGET)

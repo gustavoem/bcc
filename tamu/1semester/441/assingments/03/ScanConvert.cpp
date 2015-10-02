@@ -88,7 +88,7 @@ bool comp_x (Edge e1, Edge e2);
 
 // Draws a horizontal line into the buffer
 //
-void drawHorizontalLine (unsigned int x1, unsigned int x2, unsigned int y);
+void drawHorizontalLine (unsigned int x1, unsigned int x2, unsigned int y, color c);
 
 int main(int argc, char** argv)
 {
@@ -183,9 +183,9 @@ void mouse (int button, int state, int x, int y)
                 {
                     my_state = 0;
                     color c;
-                    c.r = 2.0 / (sin (polygons.size ()) + 3);
-                    c.g = 2.0 / (cos (polygons.size ()) + 3);
-                    c.b = 2.0 / (sin (polygons.size () + 0.1) + 3);
+                    c.r = 1.0 / (rand () / (float) RAND_MAX + 1);
+                    c.g = 1.0 / (rand () / (float) RAND_MAX + 1);
+                    c.b = 1.0 / (rand () / (float) RAND_MAX + 1);
                     Polygon * p = new Polygon (make_pair(x, y), c);
                     polygons.push_back (p);
                 }
@@ -212,12 +212,11 @@ void mouse (int button, int state, int x, int y)
 
 void drawPolygons ()
 {
-    // Add every edge that has lower point starting at i
-        for (unsigned int j = 0; j < polygons.size (); j++)
-        {
-    vector<Edge> active_edges;
-    for (unsigned int i = 0; i < ImageH; i++)
+    for (unsigned int j = 0; j < polygons.size (); j++)
     {
+        vector<Edge> active_edges;
+        for (unsigned int i = 0; i < ImageH; i++)
+        {
         
             vector<Edge> polygon_edges = polygons[j]->getScanLine (i);
             for (unsigned int k = 0; k < polygon_edges.size (); k++)
@@ -226,28 +225,30 @@ void drawPolygons ()
                 cout << "Adding edge w/ maxy = " << polygon_edges[k].max_y << endl;
             }
 
-        // Remove all edge that end at i
-        for (unsigned int j = 0; j < active_edges.size (); j++)
-            if (active_edges[j].max_y <= i)
-                active_edges.erase (active_edges.begin () + j);
+            // Remove all edge that end at i
+            for (unsigned int k = 0; k < active_edges.size (); k++)
+                if (active_edges[k].max_y <= i)
+                    active_edges.erase (active_edges.begin () + k);
 
-        // Sorts every edge per current_x
-        sort (active_edges.begin (), active_edges.end (), comp_x);
+            // Sorts every edge per current_x
+            sort (active_edges.begin (), active_edges.end (), comp_x);
 
-        // Now draw every odd interval of current_x
-        for (unsigned int j = 0; j + 1 < active_edges.size (); j += 2)
-            drawHorizontalLine (active_edges[j].current_x, active_edges[j + 1].current_x, i);
+            // Now draw every odd interval of current_x
+            color c = polygons[j]->getColor ();
+            cout << "\nColorrrrr" << c.r << " " << c.g << " " << c.b << endl;
+            for (unsigned int k = 0; k + 1 < active_edges.size (); k += 2)
+                drawHorizontalLine (active_edges[k].current_x, active_edges[k + 1].current_x, i, c);
 
-        // Updates current_x
-        for (unsigned int j = 0; j < active_edges.size (); j++)
-            active_edges[j].current_x += active_edges[j].x_increment; 
-    }
+            // Updates current_x
+            for (unsigned int k = 0; k < active_edges.size (); k++)
+                active_edges[k].current_x += active_edges[k].x_increment; 
         }
+    }
 }
 
 bool comp_x (Edge e1, Edge e2) { return (e1.current_x < e2.current_x); }
 
-void drawHorizontalLine (unsigned int x1, unsigned int x2, unsigned int y)
+void drawHorizontalLine (unsigned int x1, unsigned int x2, unsigned int y, color c)
 {
-    for (unsigned int i = x1; i < x2; i++) setFramebuffer(i,y,1.0,1.0,1.0);
+    for (unsigned int i = x1; i < x2; i++) setFramebuffer(i,y,c.r,c.g,c.b);
 }

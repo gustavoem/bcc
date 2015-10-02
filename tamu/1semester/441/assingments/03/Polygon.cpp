@@ -5,6 +5,7 @@ Polygon::Polygon (pair<unsigned int, unsigned int> first_point, color c)
     scan_lines = vector<vector<Edge> >(ImageH + 1);
     this->first_point = first_point;
     last_point_added = first_point;
+    this->c = c;
 }
 
 

@@ -51,6 +51,11 @@ public:
     vector<vector<Edge> > getScanLines ();   
 
 
+    // Returns the list of edges scanned in a line
+    //
+    vector<Edge> getScanLine (unsigned int);
+
+
 };
 
 #endif

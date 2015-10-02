@@ -17,6 +17,7 @@ Polygon::~Polygon ()
 void Polygon::computeEdge (unsigned int x1, unsigned int y1,
                            unsigned int x2, unsigned int y2)
 {
+    //cout << "\nComputing edge: " << x1 << ","<< y1<<" ; "<<x2<<","<<y2<<endl;
     Edge new_edge;
     unsigned int s_y, e_y;
     unsigned int s_x, e_x;
@@ -34,11 +35,13 @@ void Polygon::computeEdge (unsigned int x1, unsigned int y1,
         e_y = y1;
         e_x = x1;
     }
-    float slope = (e_y - s_y) / (float)(e_x - s_y);
+    double dy = (double) e_y - s_y;
+    double dx = (double) e_x - s_x;
+    double slope = dy / dx;
     new_edge.max_y = e_y;
-    new_edge.current_x = (float) s_x;
-    new_edge.x_increment = 1 / slope;
-    
+    new_edge.current_x = (double) s_x;
+    new_edge.x_increment = (double) 1 / slope;
+
     if (scan_lines[s_y].size () == 0)
     {
         vector<Edge> new_edges_from_sy; 
@@ -61,9 +64,29 @@ void Polygon::newPoint (unsigned int x, unsigned int y)
 void Polygon::closePolygon (unsigned int x, unsigned int y)
 {
     computeEdge (x, y, first_point.first, first_point.second);
+    computeEdge (x, y, last_point_added.first, last_point_added.second);
+    cout << "You just specified a polygon: " << endl;
+    for (unsigned int i = 0; i < scan_lines.size (); i++)
+        for (unsigned int j = 0; j < scan_lines[i].size (); j++)
+        {
+            cout << "y = " << i << " current_x = " << scan_lines[i][j].current_x << 
+            " max_y = " << scan_lines[i][j].max_y << endl;
+        }
 }
+
 
 vector<vector<Edge> > Polygon::getScanLines ()
 {
     return scan_lines;
+}
+
+
+vector<Edge> Polygon::getScanLine (unsigned int i)
+{
+    vector<Edge> answ;
+    if (i >= scan_lines.size ())
+        cout << "Index of getScanLine is out of bounds" << endl;
+    else
+        answ = scan_lines[i];
+    return answ;
 }

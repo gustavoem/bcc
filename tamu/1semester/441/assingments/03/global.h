@@ -3,6 +3,8 @@
 
 #include <utility> // pair
 #include <vector>  // vector
+#include <algorithm> // sort
+#include <iostream>
 
 #define ImageW 400
 #define ImageH 400
@@ -12,8 +14,8 @@ using namespace std;
 struct Edge 
 {
     unsigned int max_y;
-    float current_x;
-    float x_increment;
+    double current_x;
+    double x_increment;
 };
 
 #endif

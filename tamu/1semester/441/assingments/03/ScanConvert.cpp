@@ -90,6 +90,12 @@ bool comp_x (Edge e1, Edge e2);
 //
 void drawHorizontalLine (unsigned int x1, unsigned int x2, unsigned int y, color c);
 
+
+// Keyboard callback
+//
+void keyboard (unsigned char key, int x, int y);
+
+
 int main(int argc, char** argv)
 {
     glutInit (&argc,argv);
@@ -99,7 +105,8 @@ int main(int argc, char** argv)
     glutCreateWindow ("Gustavo Matos - Homework 2");
     init ();    
     glutDisplayFunc (display);
-        glutMouseFunc (mouse);
+    glutMouseFunc (mouse);
+    glutKeyboardFunc (keyboard);
     glutMainLoop ();
     return 0;
 }
@@ -173,7 +180,7 @@ void init (void)
 
 void mouse (int button, int state, int x, int y)
 {
-    std::cout << "\nButton pressed on <" << x << ", " << y << ">" << endl;
+    //std::cout << "\nButton pressed on <" << x << ", " << y << ">" << endl;
     switch (button)
     {
         case GLUT_LEFT_BUTTON:
@@ -192,6 +199,19 @@ void mouse (int button, int state, int x, int y)
                 else if (my_state == 0)
                 {
                     polygons.back ()->newPoint (x, y);
+                }
+                else if (my_state == 1)
+                {
+                    lcx = x;
+                    lcy = y;
+                }
+            }
+            else
+            {
+                if (state == GLUT_UP && my_state == 1)
+                {
+                    //clip polygons
+                    break;
                 }
             }
             break;
@@ -222,7 +242,7 @@ void drawPolygons ()
             for (unsigned int k = 0; k < polygon_edges.size (); k++)
             {
                 active_edges.push_back (polygon_edges[k]);
-                cout << "Adding edge w/ maxy = " << polygon_edges[k].max_y << endl;
+                //cout << "Adding edge w/ maxy = " << polygon_edges[k].max_y << endl;
             }
 
             // Remove all edge that end at i
@@ -235,7 +255,6 @@ void drawPolygons ()
 
             // Now draw every odd interval of current_x
             color c = polygons[j]->getColor ();
-            cout << "\nColorrrrr" << c.r << " " << c.g << " " << c.b << endl;
             for (unsigned int k = 0; k + 1 < active_edges.size (); k += 2)
                 drawHorizontalLine (active_edges[k].current_x, active_edges[k + 1].current_x, i, c);
 
@@ -251,4 +270,15 @@ bool comp_x (Edge e1, Edge e2) { return (e1.current_x < e2.current_x); }
 void drawHorizontalLine (unsigned int x1, unsigned int x2, unsigned int y, color c)
 {
     for (unsigned int i = x1; i < x2; i++) setFramebuffer(i,y,c.r,c.g,c.b);
+}
+
+
+void keyboard (unsigned char key, int x, int y)
+{
+    switch (key) 
+    {
+        case 'c':
+            my_state = 1;
+            break;
+    }
 }

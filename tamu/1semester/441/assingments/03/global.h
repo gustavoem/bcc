@@ -5,6 +5,7 @@
 #include <vector>  // vector
 #include <algorithm> // sort
 #include <iostream>
+#include <cmath>
 
 #define ImageW 400
 #define ImageH 400
@@ -17,5 +18,12 @@ struct Edge
     double current_x;
     double x_increment;
 };
+
+// Color struct
+//
+struct color {
+    float r, g, b;      // Color (R,G,B values)
+};
+
 
 #endif

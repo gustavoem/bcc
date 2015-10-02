@@ -29,12 +29,6 @@
 float framebuffer[ImageH][ImageW][3];
 
 
-// Color struct
-//
-struct color {
-    float r, g, b;      // Color (R,G,B values)
-};
-
 // Stores the scan lines lists
 //
 static vector<Polygon *> polygons;
@@ -188,7 +182,11 @@ void mouse (int button, int state, int x, int y)
                 if (my_state == 2)
                 {
                     my_state = 0;
-                    Polygon * p = new Polygon (make_pair(x, y));
+                    color c;
+                    c.r = 2.0 / (sin (polygons.size ()) + 3);
+                    c.g = 2.0 / (cos (polygons.size ()) + 3);
+                    c.b = 2.0 / (sin (polygons.size () + 0.1) + 3);
+                    Polygon * p = new Polygon (make_pair(x, y), c);
                     polygons.push_back (p);
                 }
                 else if (my_state == 0)
@@ -214,19 +212,19 @@ void mouse (int button, int state, int x, int y)
 
 void drawPolygons ()
 {
+    // Add every edge that has lower point starting at i
+        for (unsigned int j = 0; j < polygons.size (); j++)
+        {
     vector<Edge> active_edges;
     for (unsigned int i = 0; i < ImageH; i++)
     {
-        // Add every edge that has lower point starting at i
-        for (unsigned int j = 0; j < polygons.size (); j++)
-        {
+        
             vector<Edge> polygon_edges = polygons[j]->getScanLine (i);
             for (unsigned int k = 0; k < polygon_edges.size (); k++)
             {
                 active_edges.push_back (polygon_edges[k]);
                 cout << "Adding edge w/ maxy = " << polygon_edges[k].max_y << endl;
             }
-        }
 
         // Remove all edge that end at i
         for (unsigned int j = 0; j < active_edges.size (); j++)
@@ -244,6 +242,7 @@ void drawPolygons ()
         for (unsigned int j = 0; j < active_edges.size (); j++)
             active_edges[j].current_x += active_edges[j].x_increment; 
     }
+        }
 }
 
 bool comp_x (Edge e1, Edge e2) { return (e1.current_x < e2.current_x); }

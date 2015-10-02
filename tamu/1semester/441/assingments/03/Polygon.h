@@ -22,13 +22,21 @@ private:
     vector<vector<Edge> > scan_lines;
 
 
+    // Computes an edge updating the scan_lines vector
+    //
     void computeEdge (unsigned int, unsigned int, unsigned int, unsigned int);
+
+
+    // Polynom color
+    //
+    color c;
+
 
 public:
 
     // Default constructor. Receives the first point as an argument
     //
-    Polygon (pair<unsigned int, unsigned int>);
+    Polygon (pair<unsigned int, unsigned int>, color);
 
 
     // Default destructor
@@ -56,6 +64,7 @@ public:
     vector<Edge> getScanLine (unsigned int);
 
 
+    color getColor ();
 };
 
 #endif

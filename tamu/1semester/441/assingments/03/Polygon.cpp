@@ -1,6 +1,6 @@
 #include "Polygon.h"
 
-Polygon::Polygon (pair<unsigned int, unsigned int> first_point)
+Polygon::Polygon (pair<unsigned int, unsigned int> first_point, color c)
 {
     scan_lines = vector<vector<Edge> >(ImageH + 1);
     this->first_point = first_point;
@@ -89,4 +89,10 @@ vector<Edge> Polygon::getScanLine (unsigned int i)
     else
         answ = scan_lines[i];
     return answ;
+}
+
+
+color Polygon::getColor ()
+{
+    return c;
 }

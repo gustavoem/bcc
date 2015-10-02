@@ -10,12 +10,12 @@ private:
 
     // Stores the first point that defined the polygon
     //
-    pair <unsigned int, unsigned int> first_point;
+    Point first_point;
 
 
     // Stores the last point seen in this polygon
     //
-    pair <unsigned int, unsigned int> last_point_added;
+    Point last_point_added;
 
     // Storest the scan_line of the polygon
     //
@@ -24,7 +24,7 @@ private:
 
     // Computes an edge updating the scan_lines vector
     //
-    void computeEdge (unsigned int, unsigned int, unsigned int, unsigned int);
+    void computeEdge (Point, Point);
 
 
     // Polynom color
@@ -32,11 +32,16 @@ private:
     color c;
 
 
+    //
+    //
+    vector<Point> vertices;
+
+
 public:
 
     // Default constructor. Receives the first point as an argument
     //
-    Polygon (pair<unsigned int, unsigned int>, color);
+    Polygon (Point, color);
 
 
     // Default destructor
@@ -46,12 +51,12 @@ public:
 
     // Receives a new point
     //
-    void newPoint (unsigned int, unsigned int);
+    void newPoint (Point);
 
 
     // Closes the polygon
     //
-    void closePolygon (unsigned int, unsigned int);
+    void closePolygon (Point);
 
 
     // Returns the scan list of the polygon

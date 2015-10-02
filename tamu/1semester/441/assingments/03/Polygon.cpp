@@ -1,11 +1,12 @@
 #include "Polygon.h"
 
-Polygon::Polygon (pair<unsigned int, unsigned int> first_point, color c)
+Polygon::Polygon (Point first_point, color c)
 {
     scan_lines = vector<vector<Edge> >(ImageH + 1);
     this->first_point = first_point;
     last_point_added = first_point;
     this->c = c;
+    vertices.push_back (first_point);
 }
 
 
@@ -15,11 +16,15 @@ Polygon::~Polygon ()
 }
 
 
-void Polygon::computeEdge (unsigned int x1, unsigned int y1,
-                           unsigned int x2, unsigned int y2)
+void Polygon::computeEdge (Point p1, Point p2)
 {
     //cout << "\nComputing edge: " << x1 << ","<< y1<<" ; "<<x2<<","<<y2<<endl;
     Edge new_edge;
+    unsigned int x1 = p1.x;
+    unsigned int x2 = p2.x;
+    unsigned int y1 = p1.y;
+    unsigned int y2 = p2.y;
+
     unsigned int s_y, e_y;
     unsigned int s_x, e_x;
     if (y2 > y1)
@@ -54,18 +59,17 @@ void Polygon::computeEdge (unsigned int x1, unsigned int y1,
 }
 
 
-void Polygon::newPoint (unsigned int x, unsigned int y)
+void Polygon::newPoint (Point p)
 {
-    computeEdge (x, y, last_point_added.first, last_point_added.second);
-    last_point_added.first = x;
-    last_point_added.second = y;
+    computeEdge (p, last_point_added);
+    last_point_added = p;
 }
 
 
-void Polygon::closePolygon (unsigned int x, unsigned int y)
+void Polygon::closePolygon (Point p)
 {
-    computeEdge (x, y, first_point.first, first_point.second);
-    computeEdge (x, y, last_point_added.first, last_point_added.second);
+    computeEdge (p, first_point);
+    computeEdge (p, last_point_added);
     cout << "You just specified a polygon: " << endl;
     for (unsigned int i = 0; i < scan_lines.size (); i++)
         for (unsigned int j = 0; j < scan_lines[i].size (); j++)

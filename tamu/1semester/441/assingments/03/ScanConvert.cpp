@@ -34,6 +34,19 @@ float framebuffer[ImageH][ImageW][3];
 static vector<Polygon *> polygons;
 
 
+// Stores the clipping coordinates
+//
+static unsigned int c_xs;
+static unsigned int c_xe;
+static unsigned int c_ys;
+static unsigned int c_ye;
+
+
+//
+//
+//static vector<Polygon *> clipped_polygons;
+
+
 // Stores the state: 0 for defining polygons, 1 for clippping and 2 for waiting to define
 // a polygon
 //
@@ -181,6 +194,9 @@ void init (void)
 void mouse (int button, int state, int x, int y)
 {
     //std::cout << "\nButton pressed on <" << x << ", " << y << ">" << endl;
+    Point pt;
+    pt.x = x;
+    pt.y = y;
     switch (button)
     {
         case GLUT_LEFT_BUTTON:
@@ -193,12 +209,12 @@ void mouse (int button, int state, int x, int y)
                     c.r = 1.0 / (rand () / (float) RAND_MAX + 1);
                     c.g = 1.0 / (rand () / (float) RAND_MAX + 1);
                     c.b = 1.0 / (rand () / (float) RAND_MAX + 1);
-                    Polygon * p = new Polygon (make_pair(x, y), c);
-                    polygons.push_back (p);
+                    Polygon * polygon = new Polygon (pt, c);
+                    polygons.push_back (polygon);
                 }
                 else if (my_state == 0)
                 {
-                    polygons.back ()->newPoint (x, y);
+                    polygons.back ()->newPoint (pt);
                 }
                 else if (my_state == 1)
                 {
@@ -211,6 +227,9 @@ void mouse (int button, int state, int x, int y)
                 if (state == GLUT_UP && my_state == 1)
                 {
                     //clip polygons
+                    // For every polygon...
+                    // Intersect clipping polygon with the polygon
+                    //polygon polygon = intersectPolygonClipping (polygons[0], clip_polygon);
                     break;
                 }
             }
@@ -222,7 +241,7 @@ void mouse (int button, int state, int x, int y)
                 if (my_state == 0)
                 {
                     my_state = 2;
-                    polygons.back ()->closePolygon (x, y);
+                    polygons.back ()->closePolygon (pt);
                     glutPostRedisplay ();
                 }
             } 

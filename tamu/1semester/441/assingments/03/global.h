@@ -12,6 +12,13 @@
 
 using namespace std;
 
+struct Point
+{
+	unsigned int x;
+	unsigned int y;
+	unsigned int flag;
+};
+
 struct Edge 
 {
     unsigned int max_y;

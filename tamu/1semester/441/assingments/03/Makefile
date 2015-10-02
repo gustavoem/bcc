@@ -7,7 +7,7 @@ TARGET = ScanConvert
 $(TARGET): ScanConvert.o $(OBJS)
 	g++ -o $(TARGET) ScanConvert.o $(OBJS) $(FLAGS)
 
-ScanConvert.o:
+ScanConvert.o: ScanConvert.cpp
 	g++ -c -o ScanConvert.o ScanConvert.cpp $(FLAGS)
 
 all:	$(TARGET)

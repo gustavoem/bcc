@@ -37,19 +37,19 @@ struct color {
 
 // Stores the scan lines lists
 //
-vector<Polygon> polygons;
+static vector<Polygon *> polygons;
 
 
 // Stores the state: 0 for defining polygons, 1 for clippping and 2 for waiting to define
 // a polygon
 //
-unsigned int my_state;
+static unsigned int my_state = 2;
 
 
 // Stores the coordinates of the screen that received the last click
 //
-unsigned int lcx;
-unsigned int lcy;
+static unsigned int lcx;
+static unsigned int lcy;
 
 
 // Draws the scene
@@ -129,6 +129,7 @@ void init (void)
 
 void mouse (int button, int state, int x, int y)
 {
+    std::cout << "\nButton pressed on <" << x << ", " << y << ">" << endl;
     switch (button)
     {
         case GLUT_LEFT_BUTTON:
@@ -137,6 +138,12 @@ void mouse (int button, int state, int x, int y)
                 if (my_state == 2)
                 {
                     my_state = 0;
+                    Polygon * p = new Polygon (make_pair(x, y));
+                    polygons.push_back (p);
+                }
+                else if (my_state == 0)
+                {
+                	polygons.back ()->newPoint (x, y);
                 }
             }
             break;
@@ -147,11 +154,16 @@ void mouse (int button, int state, int x, int y)
                 if (my_state == 0)
                 {
                     my_state = 2;
+                    polygons.back ()->closePolygon (x, y);
+
+                    vector<vector<Edge> > scl = polygons.back()->getScanLines ();
+                    for (unsigned int i = 0; i < scl.size (); i++)
+                    	for (unsigned int j = 0; j < scl[i].size (); j++)
+                    			cout  << " X = " << scl[i][j].current_x << "Y = " << i << endl;
                 }
             } 
             break;
     }
-    std::cout << "Button pressed, new state: " << my_state;
 }
 
 

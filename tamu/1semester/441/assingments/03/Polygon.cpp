@@ -63,6 +63,7 @@ void Polygon::newPoint (Point p)
 {
     computeEdge (p, last_point_added);
     last_point_added = p;
+    vertices.push_back (p);
 }
 
 
@@ -70,6 +71,7 @@ void Polygon::closePolygon (Point p)
 {
     computeEdge (p, first_point);
     computeEdge (p, last_point_added);
+    vertices.push_back (p);
     cout << "You just specified a polygon: " << endl;
     for (unsigned int i = 0; i < scan_lines.size (); i++)
         for (unsigned int j = 0; j < scan_lines[i].size (); j++)

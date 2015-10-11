@@ -2,27 +2,22 @@
 Sample Solution-1 for Lab-1, Problem-4
 Add your own INPUT/OUTPUT code to test it.
 */
-
+#include <stdio.h>
 unsigned int input;  
 
 unsigned int output;  
 
 
 
-//For input interface implementation
+
 inline void read_inputs_from_ip_if(){
-
-		/* write your own input code */
-
-
+    scanf ("%u", &input);
 }
 
-//For output interface implementation
 inline void write_output_to_op_if(){
-
-		/* write your own output code */
-
+    printf ("%u\n", output);
 }
+
 
 
 //The code segment which implements the decision logic

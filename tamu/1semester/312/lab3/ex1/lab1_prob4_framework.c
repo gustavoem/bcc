@@ -13,6 +13,7 @@ run this file as: gcc FileName.c -o ExecutableName -lrt
 
 
 #include <stdio.h>
+#include <time.h>
 // Macro definitions to ensure portablity between both sun.cs and linux.cs
 
 #if defined(sun)
@@ -23,27 +24,53 @@ run this file as: gcc FileName.c -o ExecutableName -lrt
 #endif
     
 
+unsigned int input;  
+
+unsigned int output;  
+
+enum INMASKS {
+    DOSM  = 1, 
+    DSBFM = 2,   
+    ERM   = 4,
+    DCM   = 8,
+    KICM  = 16,
+    DLCM  = 32,
+    BPM   = 64,
+    CMM   = 128
+};
+
+enum OUTMASK {
+    BELLM = 1,
+    DLAM  = 2,
+    BAM   = 4
+};
+
+inline unsigned int mask (unsigned int x, unsigned int a)
+{
+    return (x & a);
+}
+
 inline void read_inputs_from_ip_if(){
-
-	//place your input code here
-	//to read the current state of the available sensors
-
+    scanf ("%u", &input);
 }
 
 inline void write_output_to_op_if(){
-
-	//place your output code here
-    //to display/print the state of the 3 actuators (DLA/BELL/BA)
-
+    printf ("%u\n", output);
 }
 
 
 //The code segment which implements the decision logic
 inline void control_action(){
+     output = 0;
+    
+    if (mask (input, ERM) && mask (input, DOSM) && (!(mask (input, DSBFM) && mask (input, DCM))))
+        output += BELLM;
 
-//3. Put your control/decision logic code segments inside this function
-// This is the actual code whose execution time which is being measure
+    if (mask (input, DLCM) && ((!mask (input, KICM)) || mask (input, DOSM)))
+        output += DLAM;
 
+    if (mask (input, BPM) && mask (input, CMM))
+        output += BAM;
 }
 
 
@@ -70,30 +97,30 @@ struct timespec diff(struct timespec start, struct timespec end)
 
 int main(int argc, char *argv[])
 {
-	unsigned int cpu_mhz;
-	unsigned long long int begin_time, end_time;
-	struct timespec timeDiff,timeres;
-	struct timespec time1, time2, calibrationTime;
-	
+    unsigned int cpu_mhz;
+    unsigned long long int begin_time, end_time;
+    struct timespec timeDiff,timeres;
+    struct timespec time1, time2, calibrationTime;
+    
     clock_gettime(CLOCKNAME, &time1);
-	clock_gettime(CLOCKNAME, &time2);
-	calibrationTime = diff(time1,time2); //calibration for overhead of the function calls
+    clock_gettime(CLOCKNAME, &time2);
+    calibrationTime = diff(time1,time2); //calibration for overhead of the function calls
     clock_getres(CLOCKNAME, &timeres);  // get the clock resolution data
-	
+    
     read_inputs_from_ip_if(); // get the sensor inputs
-	
-	clock_gettime(CLOCKNAME, &time1); // get current time
-	control_action();       // process the sensors
-	clock_gettime(CLOCKNAME, &time2);   // get current time
+    
+    clock_gettime(CLOCKNAME, &time1); // get current time
+    control_action();       // process the sensors
+    clock_gettime(CLOCKNAME, &time2);   // get current time
 
-	write_output_to_op_if();    // output the values of the actuators
-	
-	timeDiff = diff(time1,time2); // compute the time difference
+    write_output_to_op_if();    // output the values of the actuators
+    
+    timeDiff = diff(time1,time2); // compute the time difference
 
-	printf("Timer Resolution = %u nanoseconds \n ",timeres.tv_nsec);
-	printf("Calibrartion time = %u seconds and %u nanoseconds \n ", calibrationTime.tv_sec, calibrationTime.tv_nsec);
+    printf("Timer Resolution = %u nanoseconds \n ",timeres.tv_nsec);
+    printf("Calibrartion time = %u seconds and %u nanoseconds \n ", calibrationTime.tv_sec, calibrationTime.tv_nsec);
     printf("The measured code took %u seconds and ", timeDiff.tv_sec - calibrationTime.tv_sec);
-	printf(" %u nano seconds to run \n", timeDiff.tv_nsec - calibrationTime.tv_nsec);
-	
-	return 0;
+    printf(" %u nano seconds to run \n", timeDiff.tv_nsec - calibrationTime.tv_nsec);
+    
+    return 0;
 }

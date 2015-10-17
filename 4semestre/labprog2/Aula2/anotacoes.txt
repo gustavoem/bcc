@@ -1,0 +1,55 @@
+Aula do dia:15/08
+
+Polimorfismo:
+-Várias instâncias da mesma classe que podem responder de forma distinta à  mesma chamada.
+-Um nome, várias formas.
+	-Tipos {
+		-method overloading 			   | compile time
+		-method overriding (tempo herança) | running time
+		-mehtod overriding (interface)     | running time
+	}
+
+	Críticas ao encapsulamento:
+	-Pode dificultar a programação?
+		Apenas para quem está acostumado com variáveis globais
+	-Pode atrapalhar a depuração?
+		Temos que ter visão global
+
+	Cŕiticas ao polimorfismo:
+	-Pode diminuir o desempenho?
+		Whatever. Eu estou preocupado em organizar o código. Se eu quiser otimizar eu posso faze-lo depois de fazer o sistema funcionar, variando a plataforma, etc.
+	-Pode deixar o program confuso?
+		Mas é para o bem.
+
+	Herança:
+	-Pode ser mal usado?
+		Sim, e acontece muito.
+
+		Mini intro de herança:			
+			______________				   ___________
+		   | Cliente   	  |				  | Cliente   |
+		   |______________|               |cheque esp.|
+		   |Atributos     |  ---------->  |___________|
+		   |______________|   			  |Atributos  | 
+		   |Métodos 	  |				  |limite	  |
+		   |______________|				  |___________|
+		   								  |Métodos	  |
+		   								  |___________|
+
+		   	Qual a pergunta a se fazer para se decidir se há ou não herança:
+
+		   	Cliente cheque especial É cliente? SIM!
+		   	Stack É Array? NOOO!
+		   	Stack TEM Array -> TEM = delegação
+
+		   	Principais erros em O.O.
+		   	1) Conjuntos equivocados. Aeronave herda de asa, motor, cauda, etc ou asa, cauda, motor, etc herdam de aeronave?
+
+		   	2) Hierarquia invertida. Gerente herda de diretor e funcionario herda de diretor?
+		   
+		   	3) Confuindor classe com instância. Panda é um urso, mas também é uma espécie ameçada. Então urso tem herança múltipla de urso e espécie ameaçada?
+		   		Panda deve ser herança de urso e espécie ameaçada uma outra classe que tem herança de Espécie
+
+		   	4) Utilização inadequada. Ideia: calcular volume de quartos de hotel.
+		   		Quarto deve receber herança de cuboide? E se eu quiser mudar o formato do quarto?
+		   		A solução é fazer o quarto ter um atributo formato, que é uma outra classe que pode calcular seu proprio volume dependendo do formato que for.

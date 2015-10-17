@@ -1,0 +1,24 @@
+Padrões
+blab lablalba
+
+Programação orientada a objetos
+Objetos:     ____
+			/    \ 
+		   /      \     -> estado
+		  /        \ 
+		 /atributos \
+		 \__________/
+		  \métodos /    -> comportamento
+           \      /
+		    \____/
+
+Classes: forma de objetos
+
+Instância: objeto criado a partir de uma classe
+
+Três principios básicos:
+- encapsulamento
+	- forma de esconder atributos e metodos
+	- apenas a interface está disponível
+-polimorfismo
+	- várias instâncias da mesma classe que podem responder de forma distinta a mesma classe.

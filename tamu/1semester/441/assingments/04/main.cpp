@@ -10,14 +10,50 @@
 
 #include <GL/glut.h>
 #include <iostream>
+#include "Fly.h"
+
+#define WINDOW_X 700
+#define WINDOW_Y 700
 
 using namespace std;
 
+// Used to define a zoom, moving the near plan closer to the object
+//
 float zoom = 0;
+
+// Used to move the eyeposition
+//
+float eyex;
+float eyey;
+
+
+Fly fly;
+
+void display (void);
+
+void init (void);
 
 void mouse (int button, int state, int x, int y);
 
+void mouseMove (int x, int y);
+
 void applyZoom ();
+
+
+int main(int argc, char **argv)
+{
+  glutInit (&argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+  glutInitWindowSize (WINDOW_X, WINDOW_X);
+  glutCreateWindow ("Assignment 3");
+  glutDisplayFunc (display);
+  glutMouseFunc (mouse);
+  glutPassiveMotionFunc (mouseMove);
+  init();
+  glutMainLoop();
+  return 0;             /* ANSI C requires main to return int. */
+}
+
 
 void display (void)
 {
@@ -26,11 +62,9 @@ void display (void)
     glColor4f (.5, .5, .1, .5);
 
     glPushMatrix ();
-    /* Adjust cube position to be asthetic angle. */
-    glTranslatef (0.0, 0.0, 5.0);
-    glRotatef (60, 1.0, 0.0, 0.0);
-    glRotatef (-20, 0.0, 0.0, 1.0);
-    glutSolidCube (1);
+    glTranslatef (0.0, 0.0, 10.0);
+    fly.draw ();
+    glutSolidCube (2);
     glPopMatrix ();
 
     glutSwapBuffers ();
@@ -40,41 +74,18 @@ void display (void)
 void init (void)
 {
     glClearColor (208.0 / 255, 258.0 / 255, 1, 1);
-    /* Enable a single OpenGL light. */
-    //glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-    //glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-    //glEnable(GL_LIGHT0);
-    //glEnable(GL_LIGHTING);
 
-    /* Use depth buffering for hidden surface elimination. */
-    glEnable (GL_DEPTH_TEST);
+//    /* Use depth buffering for hidden surface elimination. */
+//    glEnable (GL_DEPTH_TEST);
 
-    /* Setup the view of the cube. */
+    // Projection Matrix
     glMatrixMode (GL_PROJECTION);
-    // gluPerspective( /* field of view in degree */ 40.0,
-    //    aspect ratio  1.0,
-    //   /* Z near */ 1.0, /* Z far */ 10.0);
-    glFrustum (-1, 1, -1, 1, 1, 10);
+    glFrustum (-1, 1, -1, 1, 1, 100);
 
     glMatrixMode (GL_MODELVIEW);
     gluLookAt (0.0, 0.0, 0.0,  /* eye is at (0,0,0) */
-        0.0, 0.0, 10.0,      /* center is at (0,0,10) */
-        0.0, 1.0, 0.);      /* up is in positive Y direction */
-}
-
-
-
-
-int main(int argc, char **argv)
-{
-  glutInit (&argc, argv);
-  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-  glutCreateWindow ("Assignment 3");
-  glutDisplayFunc (display);
-  glutMouseFunc (mouse);
-  init();
-  glutMainLoop();
-  return 0;             /* ANSI C requires main to return int. */
+        0.0, 0.0, 10.0,        /* center is at (0,0,10) */
+        0.0, 1.0, 0.0);        /* up is in positive Y direction */
 }
 
 
@@ -89,26 +100,48 @@ void mouse (int button, int state, int x, int y)
             break;
 
         case 3:
-            if (state == GLUT_UP) return;
-            cout << "Scroll up!" << endl;
-            zoom += 0.2;
+            // if (state == GLUT_UP) return;
+            zoom += 0.05;
             if (zoom > 2) zoom = 2;
             break;
+
         case 4:
-            if (state == GLUT_UP) return;
-            cout << "Scroll down!" << endl;
-            zoom -= 0.2;
+            // if (state == GLUT_UP) return;
+            zoom -= 0.05;
             if (zoom < 0) zoom = 0;
             break;
+    
     }
     glutPostRedisplay ();
 }
 
+
+void mouseMove (int x, int y)
+{
+    cout << "Moving mouse to x:" << x << " y:" << y << endl; 
+    float x_p = (float) x / WINDOW_X;
+    float y_p = (float) y / WINDOW_Y;
+
+    eyex = x_p * 10 - 5;
+    eyey = y_p * 10 - 5;
+
+
+    glMatrixMode (GL_MODELVIEW);
+    glLoadIdentity ();
+    gluLookAt (eyex, eyey, 0.0,  /* eye is at (eyex,eyey,0) */
+        0.0, 0.0, 10.0,        /* center is at (0,0,10) */
+        0.0, 1.0, 0.0);        /* up is in positive Y direction */
+
+    glutPostRedisplay ();
+}
+
+
+// We apply zoom by translating the near plan nearer the object
+//
 void applyZoom ()
 {
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    cout << "zoom value: " << zoom;
-    glFrustum (-1, 1, -1, 1, 1 + zoom, 10);
+    glFrustum (-1, 1, -1, 1, 1 + zoom, 100);
     glMatrixMode (GL_MODELVIEW);
 }

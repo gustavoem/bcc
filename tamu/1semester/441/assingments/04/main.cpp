@@ -1,52 +1,114 @@
+
+/* Copyright (c) Mark J. Kilgard, 1997. */
+
+/* This program is freely distributable without licensing fees 
+   and is provided without guarantee or warrantee expressed or 
+   implied. This program is -not- in the public domain. */
+
+/* This program was requested by Patrick Earl; hopefully someone else
+   will write the equivalent Direct3D immediate mode program. */
+
 #include <GL/glut.h>
+#include <iostream>
 
-static int shoulder = 0, elbow = 0;
+using namespace std;
 
-void display(void)
+float zoom = 0;
+
+void mouse (int button, int state, int x, int y);
+
+void applyZoom ();
+
+void display (void)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f (1.0, 1.0, 1.0);
-    glPushMatrix();
-    glTranslatef (-1.0, 0.0, 0.0);
-    glRotatef ((GLfloat) shoulder, 0.0, 0.0, 1.0);
-    glTranslatef (1.0, 0.0, 0.0);
-    glutSolidCube (2.0); /* shoulder */
-    glTranslatef (1.0, 0.0, 0.0);
-    glRotatef ((GLfloat) elbow, 0.0, 0.0, 1.0);
-    glTranslatef (1.0, 0.0, 0.0);
-    glutSolidCube(2.0); /* elbow */
-    glPopMatrix();
-    glFlush();
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    applyZoom ();
+    glColor4f (.5, .5, .1, .5);
+
+    glPushMatrix ();
+    /* Adjust cube position to be asthetic angle. */
+    glTranslatef (0.0, 0.0, 5.0);
+    glRotatef (60, 1.0, 0.0, 0.0);
+    glRotatef (-20, 0.0, 0.0, 1.0);
+    glutSolidCube (1);
+    glPopMatrix ();
+
+    glutSwapBuffers ();
 }
 
 
-void myinit (void)
+void init (void)
 {
-    glShadeModel (GL_FLAT);
-}
+    glClearColor (208.0 / 255, 258.0 / 255, 1, 1);
+    /* Enable a single OpenGL light. */
+    //glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    //glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    //glEnable(GL_LIGHT0);
+    //glEnable(GL_LIGHTING);
 
+    /* Use depth buffering for hidden surface elimination. */
+    glEnable (GL_DEPTH_TEST);
 
-void myReshape(GLsizei w, GLsizei h)
-{
-    glViewport (0, 0, w, h);
+    /* Setup the view of the cube. */
     glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-    gluPerspective (65.0, (GLfloat) w/(GLfloat) h, 1.0, 20.0);
+    // gluPerspective( /* field of view in degree */ 40.0,
+    //    aspect ratio  1.0,
+    //   /* Z near */ 1.0, /* Z far */ 10.0);
+    glFrustum (-1, 1, -1, 1, 1, 10);
+
     glMatrixMode (GL_MODELVIEW);
-    glLoadIdentity ();
-    glTranslatef (0.0, 0.0, -5.0);
+    gluLookAt (0.0, 0.0, 0.0,  /* eye is at (0,0,0) */
+        0.0, 0.0, 10.0,      /* center is at (0,0,10) */
+        0.0, 1.0, 0.);      /* up is in positive Y direction */
 }
 
 
-int main(int argc, char** argv)
+
+
+int main(int argc, char **argv)
 {
-    glutInit (&argc,argv);
-    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
-    glutInitWindowSize (500, 500);
-    glutInitWindowPosition (500, 500);
-    glutCreateWindow ("Gustavo Matos - Homework 2");
-    myinit ();
-    glutReshapeFunc (myReshape);
-    glutDisplayFunc (display);
-    glutMainLoop ();
+  glutInit (&argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+  glutCreateWindow ("Assignment 3");
+  glutDisplayFunc (display);
+  glutMouseFunc (mouse);
+  init();
+  glutMainLoop();
+  return 0;             /* ANSI C requires main to return int. */
+}
+
+
+void mouse (int button, int state, int x, int y)
+{
+    switch (button)
+    {
+        case GLUT_LEFT_BUTTON:
+            break;
+
+        case GLUT_RIGHT_BUTTON:
+            break;
+
+        case 3:
+            if (state == GLUT_UP) return;
+            cout << "Scroll up!" << endl;
+            zoom += 0.2;
+            if (zoom > 2) zoom = 2;
+            break;
+        case 4:
+            if (state == GLUT_UP) return;
+            cout << "Scroll down!" << endl;
+            zoom -= 0.2;
+            if (zoom < 0) zoom = 0;
+            break;
+    }
+    glutPostRedisplay ();
+}
+
+void applyZoom ()
+{
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity();
+    cout << "zoom value: " << zoom;
+    glFrustum (-1, 1, -1, 1, 1 + zoom, 10);
+    glMatrixMode (GL_MODELVIEW);
 }

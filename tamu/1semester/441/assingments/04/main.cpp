@@ -49,7 +49,14 @@ void mouse (int button, int state, int x, int y);
 void mouseMove (int x, int y);
 
 
+// Callback for special keys from keyboard
+//
 void SpecialFunc (int key, int x, int y);
+
+
+// Keyboard callback
+//
+void keyboard (unsigned char key, int x, int y);
 
 
 // We apply zoom by translating the near plan nearer the object
@@ -72,6 +79,7 @@ int main(int argc, char **argv)
     glutDisplayFunc (display);
     glutMouseFunc (mouse);
     glutPassiveMotionFunc (mouseMove);
+    glutKeyboardFunc (keyboard);
     glutSpecialFunc (SpecialFunc);
     init ();
     glutMainLoop ();
@@ -189,6 +197,34 @@ void SpecialFunc (int key, int x, int y)
             break;
     }
     rotation = rotation % 361;
+    glutPostRedisplay ();
+}
+
+
+void keyboard (unsigned char key, int x, int y)
+{
+    switch (key) 
+    {
+        case 'n':
+            ant.selectNextMember ();
+            break;
+
+        case 'w':
+            ant.rotateMember (1, 0);
+            break;
+
+        case 's':
+            ant.rotateMember (-1, 0);
+            break;
+
+        case 'a':
+            ant.rotateMember (0, 1);
+            break;
+
+        case 'd':
+            ant.rotateMember (0, -1);
+            break;
+    }
     glutPostRedisplay ();
 }
 

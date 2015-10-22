@@ -17,6 +17,10 @@
 
 using namespace std;
 
+// Used to determine if ant is walking or not
+//
+bool walking = false;
+
 // Used to define a zoom, moving the near plan closer to the object
 //
 float zoom = 0;
@@ -69,6 +73,10 @@ void applyZoom ();
 void applyRotation ();
 
 
+// Makes ant walk
+//
+void walkAnt ();
+
 
 int main(int argc, char **argv)
 {
@@ -92,6 +100,9 @@ void display (void)
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPushMatrix ();
 
+    if (walking)
+        walkAnt ();
+
     // applies rotation
     applyRotation ();
 
@@ -101,17 +112,6 @@ void display (void)
     glPushMatrix ();
     glTranslatef (0.0, 0.0, 10.0);
     ant.draw ();
-    glColor4f (.5, .5, .1, .1);
-    glBegin(GL_LINE_STRIP);
-        glVertex3f(-1, -1, -1);
-        glVertex3f(1, -1, -1);
-        glVertex3f(1, 1, -1);
-        glVertex3f(-1, 1, -1);
-        glVertex3f(-1, -1, 1);
-        glVertex3f(1, -1, 1);
-        glVertex3f(1, 1, 1);
-        glVertex3f(-1, 1, 1);
-    glEnd();
     glPopMatrix ();
 
     glutSwapBuffers ();
@@ -122,10 +122,12 @@ void display (void)
 void init (void)
 {
     glClearColor (208.0 / 255, 258.0 / 255, 1, 1);
+    
+    // Enables culling
+    glCullFace (GL_BACK); 
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
 
-//    /* Use depth buffering for hidden surface elimination. */
+    // Enables z-buffering
     glEnable (GL_DEPTH_TEST);
 
     // Projection Matrix
@@ -162,7 +164,6 @@ void mouse (int button, int state, int x, int y)
             break;
     
     }
-    //glutPostRedisplay ();
 }
 
 
@@ -224,6 +225,9 @@ void keyboard (unsigned char key, int x, int y)
         case 'd':
             ant.rotateMember (0, -1);
             break;
+
+        case 'g':
+            walking = !walking;
     }
     glutPostRedisplay ();
 }
@@ -242,6 +246,12 @@ void applyRotation ()
 {
     glTranslatef (0, 0, 10);
     glRotatef ((float) rotation, 0.0, 1.0, 0);
-    //rotation = 0;
     glTranslatef (0, 0, -10);
+}
+
+
+void walkAnt ()
+{
+    ant.walkStep ();
+    glutPostRedisplay ();
 }

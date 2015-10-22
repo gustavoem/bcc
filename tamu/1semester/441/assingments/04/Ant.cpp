@@ -17,12 +17,16 @@ Ant::Ant ()
         b_up_leg.x = (i - 1) * gap_inter_leg;
         b_up_leg.z = 0.4 + (float) (i % 2) / 10;
         b_up_leg.angle = -90;
+        b_up_leg.direc = 1;
         b_dw_leg.angle = 90;
+        b_dw_leg.direc = 1;
         
         f_up_leg.x = (i - 1) * gap_inter_leg;
         f_up_leg.z = -0.4 - (float) (i % 2) / 10;
         f_up_leg.angle = 90;
+        f_up_leg.direc = 1;
         f_dw_leg.angle = 90;
+        f_dw_leg.direc = 1;
             
         my_legs[2 * i] = b_up_leg;
         my_legs[2 * i + 1] = b_dw_leg;
@@ -30,9 +34,16 @@ Ant::Ant ()
         my_legs[6 + 2 * i] = f_up_leg;
         my_legs[6 + 2 * i + 1] = f_dw_leg;
     }
+
     head.z_rot = 0;
     head.x_rot = 0;
     active_joint = 0;
+
+    my_legs[0].angle -= 30;
+    my_legs[6].angle -= 30;
+
+    my_legs[4].angle += 30;
+    my_legs[10].angle += 30;
 }
 
 
@@ -46,7 +57,6 @@ void Ant::draw ()
 {
     // body
     glPushMatrix ();
-    drawCoordinates ();
     glColor4f (.4, .2, .2, 1);
     glScalef (1, 0.25, 0.25);
     glutSolidSphere (body_size, 1000, 1000);
@@ -127,7 +137,6 @@ void Ant::drawHead ()
     glPushMatrix ();
     glTranslatef (2, 0, 0);
 
-    drawCoordinates ();
     glRotatef (head.z_rot, 0, 0, 1);
     glRotatef (head.x_rot, 1, 0, 0);
 
@@ -195,4 +204,49 @@ void Ant::rotateMember (int ax1_clock, int ax2_clock)
         head.z_rot += ax1_clock;
         head.x_rot += ax2_clock;
     }
+}
+
+
+void Ant::walkStep ()
+{
+    // upper legs
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        // back legs
+        my_legs[2 * i].angle += (float) my_legs[2 * i].direc * 4;
+        if (my_legs[2 * i].angle > -60)
+            my_legs[2 * i].direc = -1;
+        if (my_legs[2 * i].angle < -120)
+            my_legs[2 * i].direc = 1;
+
+        // front legs
+        my_legs[6 + 2 * i].angle += (float) my_legs[6 + 2 * i].direc * 4;
+        if (my_legs[6 + 2 * i].angle < 60)
+            my_legs[6 + 2 * i].direc = 1;
+        if (my_legs[6 + 2 * i].angle > 120)
+            my_legs[6 + 2 * i].direc = -1;
+    }
+
+    // lower legs goes up when the upper has an angle near 90
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        float upper_angle = my_legs[2 * i].angle;
+        if (upper_angle < 0)
+            upper_angle *= (-1);
+        // used polynomial regression for this
+        float angle = ((my_legs[2 * i].direc - 1) / -2) *
+         (-3.333333333e-2 * upper_angle * upper_angle + 6 * upper_angle - 240);
+        my_legs[2 * i + 1].angle = angle + 90;
+    }
+    for (unsigned int i = 3; i < 6; i++)
+    {
+        float upper_angle = my_legs[2 * i].angle;
+        if (upper_angle < 0)
+            upper_angle *= (-1);
+        // used polynomial regression for this
+        float angle = ((my_legs[2 * i].direc + 1) / 2) *
+         (-3.333333333e-2 * upper_angle * upper_angle + 6 * upper_angle - 240);
+        my_legs[2 * i + 1].angle = angle + 90;
+    }
+
 }

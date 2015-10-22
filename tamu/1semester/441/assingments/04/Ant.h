@@ -11,11 +11,13 @@ struct Leg {
     float x;
     float z;
     float angle;
+    int direc;
 };
 
 struct Head {
     float z_rot;
     float x_rot;
+    int direc;
 };
 
 private:
@@ -87,6 +89,11 @@ public:
     // Rotates the selected member 
     //
     void rotateMember (int, int);
+
+
+    //
+    //
+    void walkStep ();
 };
 
 #endif

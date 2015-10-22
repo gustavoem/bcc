@@ -163,8 +163,15 @@ void Ant::drawHead ()
     glLineWidth (1);
 
     // and the eyes
-    drawEye (body_size / 4, 0, 0.1);
-    drawEye (body_size / 4, 0, -0.1);
+    drawEye (body_size / 4, 0.1, 0.1);
+    drawEye (body_size / 4, 0.1, -0.1);
+
+    // and mouthe
+    glLineWidth (5);
+    glBegin (GL_LINES);
+        glVertex3f (body_size / 4 -0.025, -0.1, 0.2);
+        glVertex3f (body_size / 4 -0.025, -0.1, -0.2);
+    glEnd ();
 
     glPopMatrix ();
 }
@@ -193,16 +200,22 @@ void Ant::selectNextMember ()
 
 void Ant::rotateMember (int ax1_clock, int ax2_clock)
 {
-    if (active_joint != 12) // its an upper leg
+    if (active_joint != 12) // its a leg
     {
         float angle = my_legs[active_joint].angle;
-        angle += ax1_clock;
+        float abs_next_angle = angle + ax1_clock;
+        if (angle < 0)
+            abs_next_angle *= -1;
+        if (abs_next_angle < 121 && abs_next_angle > 59)
+            angle += ax1_clock;
         my_legs[active_joint].angle = angle;
     }
     else
     {
-        head.z_rot += ax1_clock;
-        head.x_rot += ax2_clock;
+        if (head.z_rot + ax1_clock < 30 && head.z_rot + ax1_clock > 0)
+            head.z_rot += ax1_clock;
+        if (head.x_rot + ax2_clock < 30 && head.x_rot + ax2_clock > -30)
+            head.x_rot += ax2_clock;
     }
 }
 

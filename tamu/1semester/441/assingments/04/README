@@ -1,0 +1,14 @@
+Assignment 4 features
+
+There are 3 viewing changes implemented:
+- You can rotate the windows centered to the ant using keyboard arrows left and right (View Transformation)
+- You can move the eyepoint just by moving the mouse in the window (View Transformation)
+- You can zoom in the object by scrolling up and zoom out by scrolling down (Projection Transformation)
+
+You can select joints to spin. The active joint being spinned is red colored.
+- To move to the next joint press N
+- To rotate the joint use wasd
+- The head is the only one that spins in two axis
+
+Bonus implemented:
+- You can make the ant walk by pressing G on your keyboard

@@ -83,7 +83,7 @@ int main(int argc, char **argv)
     glutInit (&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (WINDOW_X, WINDOW_X);
-    glutCreateWindow ("Assignment 3");
+    glutCreateWindow ("Assignment 4");
     glutDisplayFunc (display);
     glutMouseFunc (mouse);
     glutPassiveMotionFunc (mouseMove);
@@ -154,7 +154,7 @@ void mouse (int button, int state, int x, int y)
         case 3:
             // if (state == GLUT_UP) return;
             zoom += 0.05;
-            if (zoom > 2) zoom = 2;
+            if (zoom > 3) zoom = 3;
             break;
 
         case 4:

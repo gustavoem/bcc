@@ -13,12 +13,21 @@ struct Leg {
     float angle;
 };
 
+struct Head {
+    float z_rot;
+    float x_rot;
+};
+
 private:
 
-    //
+    // Stores the size of the body
     //
     float body_size;
 
+
+    // Stores the ant head
+    // 
+    Head head;
 
     // Vector of my legs
     //

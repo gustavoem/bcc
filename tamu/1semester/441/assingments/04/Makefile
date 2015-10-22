@@ -1,6 +1,6 @@
 FLAGS = -O2 -g -Wall -fmessage-length=0 -lglut -lGL -lGLU
 
-OBJS =	Fly.o \
+OBJS =	Ant.o \
 
 TARGET = main
 

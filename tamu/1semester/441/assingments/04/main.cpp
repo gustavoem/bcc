@@ -10,7 +10,7 @@
 
 #include <GL/glut.h>
 #include <iostream>
-#include "Fly.h"
+#include "Ant.h"
 
 #define WINDOW_X 700
 #define WINDOW_Y 700
@@ -21,68 +21,110 @@ using namespace std;
 //
 float zoom = 0;
 
+
+// Used to rotate around our insect
+//
+int rotation = 0;
+
+
 // Used to move the eyeposition
 //
 float eyex;
 float eyey;
 
+// Our ant object
+//
+Ant ant;
 
-Fly fly;
 
 void display (void);
 
+
 void init (void);
+
 
 void mouse (int button, int state, int x, int y);
 
+
 void mouseMove (int x, int y);
 
+
+void SpecialFunc (int key, int x, int y);
+
+
+// We apply zoom by translating the near plan nearer the object
+//
 void applyZoom ();
+
+
+// Apply rotation
+//
+void applyRotation ();
+
 
 
 int main(int argc, char **argv)
 {
-  glutInit (&argc, argv);
-  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-  glutInitWindowSize (WINDOW_X, WINDOW_X);
-  glutCreateWindow ("Assignment 3");
-  glutDisplayFunc (display);
-  glutMouseFunc (mouse);
-  glutPassiveMotionFunc (mouseMove);
-  init();
-  glutMainLoop();
-  return 0;             /* ANSI C requires main to return int. */
+    glutInit (&argc, argv);
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize (WINDOW_X, WINDOW_X);
+    glutCreateWindow ("Assignment 3");
+    glutDisplayFunc (display);
+    glutMouseFunc (mouse);
+    glutPassiveMotionFunc (mouseMove);
+    glutSpecialFunc (SpecialFunc);
+    init ();
+    glutMainLoop ();
+    return 0;             /* ANSI C requires main to return int. */
 }
 
 
 void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix ();
+
+    // applies rotation
+    applyRotation ();
+
+    // applies zoom
     applyZoom ();
-    glColor4f (.5, .5, .1, .5);
 
     glPushMatrix ();
     glTranslatef (0.0, 0.0, 10.0);
-    fly.draw ();
-    glutSolidCube (2);
+    ant.draw ();
+    glColor4f (.5, .5, .1, .1);
+    glBegin(GL_LINE_STRIP);
+        glVertex3f(-1, -1, -1);
+        glVertex3f(1, -1, -1);
+        glVertex3f(1, 1, -1);
+        glVertex3f(-1, 1, -1);
+        glVertex3f(-1, -1, 1);
+        glVertex3f(1, -1, 1);
+        glVertex3f(1, 1, 1);
+        glVertex3f(-1, 1, 1);
+    glEnd();
     glPopMatrix ();
 
     glutSwapBuffers ();
+    glPopMatrix ();
 }
 
 
 void init (void)
 {
     glClearColor (208.0 / 255, 258.0 / 255, 1, 1);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
 //    /* Use depth buffering for hidden surface elimination. */
-//    glEnable (GL_DEPTH_TEST);
+    glEnable (GL_DEPTH_TEST);
 
     // Projection Matrix
     glMatrixMode (GL_PROJECTION);
     glFrustum (-1, 1, -1, 1, 1, 100);
 
-    glMatrixMode (GL_MODELVIEW);
+    glMatrixMode (GL_MODELVIEW);    
     gluLookAt (0.0, 0.0, 0.0,  /* eye is at (0,0,0) */
         0.0, 0.0, 10.0,        /* center is at (0,0,10) */
         0.0, 1.0, 0.0);        /* up is in positive Y direction */
@@ -112,18 +154,17 @@ void mouse (int button, int state, int x, int y)
             break;
     
     }
-    glutPostRedisplay ();
+    //glutPostRedisplay ();
 }
 
 
 void mouseMove (int x, int y)
 {
-    cout << "Moving mouse to x:" << x << " y:" << y << endl; 
     float x_p = (float) x / WINDOW_X;
     float y_p = (float) y / WINDOW_Y;
 
-    eyex = x_p * 10 - 5;
-    eyey = y_p * 10 - 5;
+    eyex = x_p * 20 - 5;
+    eyey = y_p * 20 - 5;
 
 
     glMatrixMode (GL_MODELVIEW);
@@ -136,12 +177,35 @@ void mouseMove (int x, int y)
 }
 
 
-// We apply zoom by translating the near plan nearer the object
-//
+void SpecialFunc (int key, int x, int y)
+{
+    switch(key)
+    {
+        case GLUT_KEY_LEFT:
+            rotation += 5;
+            break;
+        case GLUT_KEY_RIGHT:
+            rotation -= 5;
+            break;
+    }
+    rotation = rotation % 361;
+    glutPostRedisplay ();
+}
+
+
 void applyZoom ()
 {
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
     glFrustum (-1, 1, -1, 1, 1 + zoom, 100);
     glMatrixMode (GL_MODELVIEW);
+}
+
+
+void applyRotation ()
+{
+    glTranslatef (0, 0, 10);
+    glRotatef ((float) rotation, 0.0, 1.0, 0);
+    //rotation = 0;
+    glTranslatef (0, 0, -10);
 }

@@ -10,23 +10,34 @@ private:
 
 	// Stores the location of the Sphere
 	//
-	Vertex center;
+	Vector center;
 
 
 	// Stores the size of the Sphere edges
 	//
 	double size;
 
+
+
+	// Stores the color of the sphere
+	// 
+	Color color;
+
 public:
 
 	// Default constructor
 	//
-	Sphere (Vertex, double);
+	Sphere (Vector, double);
 
 
 	// Default destructor
 	//
 	virtual ~Sphere ();
+
+
+	// Intersects the shere with a ray
+	//
+	Color intersect (Vector);
 };
 
 #endif

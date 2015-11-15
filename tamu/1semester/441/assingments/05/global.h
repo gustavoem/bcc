@@ -5,11 +5,19 @@
 
 using namespace std;
 
-struct Vertex 
+struct Vector 
 {
 	double x;
 	double y;
 	double z;
+};
+
+
+struct Color
+{
+	double r;
+	double g;
+	double b;
 };
 
 #endif

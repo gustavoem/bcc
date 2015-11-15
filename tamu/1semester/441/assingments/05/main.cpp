@@ -25,24 +25,64 @@
 
 #define ImageW 800
 #define ImageH 800
+#define FILM_WALL_Z 2
+
+#include "global.h"
+#include "Sphere.h"
 
 float framebuffer[ImageH][ImageW][3];
 
-struct color 
-{
-    float r, g, b;      // Color (R,G,B values)
-};
+
+// Elements to be drawn
+//
+Sphere * sphere1;
+Sphere * sphere2;
 
 
 // Draws the scene
+void drawit (void);
+
+// Clears framebuffer to black
+void clearFramebuffer ();
+
+// Sets pixel x,y to the color RGB
+void setFramebuffer (int x, int y, float R, float G, float B);
+
+// Draws in the buffer
+void display (void);
+
+// Initializes objects
+void init (void);
+
+// Traces the ray and determines the color of the pixel
+void intersectElements (int x, int y);
+
+
+
+int main (int argc, char** argv)
+{
+    glutInit (&argc,argv);
+    glutInitDisplayMode (GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize (ImageW,ImageH);
+    glutInitWindowPosition (100,100);
+    glutCreateWindow ("Gustavo Estrela - Assignment 5");
+    init ();    
+    glutDisplayFunc (display);
+    glutMainLoop ();
+    return 0;
+}
+
+
+
+
 void drawit (void)
 {
    glDrawPixels (ImageW,ImageH,GL_RGB,GL_FLOAT,framebuffer);
    glFlush ();
 }
 
-// Clears framebuffer to black
-void clearFramebuffer()
+
+void clearFramebuffer ()
 {
     int i, j;
 
@@ -57,8 +97,8 @@ void clearFramebuffer()
     }
 }
 
-// Sets pixel x,y to the color RGB
-void setFramebuffer(int x, int y, float R, float G, float B)
+
+void setFramebuffer (int x, int y, float R, float G, float B)
 {
     if (R <= 1.0)
         if (R >= 0.0)
@@ -85,32 +125,51 @@ void setFramebuffer(int x, int y, float R, float G, float B)
         framebuffer[x][y][2] = 1.0;
 }
 
-void display(void)
+
+void init (void)
+{
+    Vector sphere_c;
+    sphere_c.x = 10;
+    sphere_c.y = 10;
+    sphere_c.z = 10;
+    sphere1 = new Sphere (sphere_c, 2);
+    clearFramebuffer ();
+}
+
+
+void intersectElements (int x, int y)
+{
+    // Ray tracing vector
+    Vector u;
+    u.x = x;
+    u.y = y;
+    u.z = FILM_WALL_Z;
+    double u_norm = u.x * u.x + u.y * u.y + u.z * u.z;
+    u_norm = sqrt (u_norm);
+    u.x /= u_norm;
+    u.y /= u_norm;
+    u.z /= u_norm;
+
+    Color c;
+    c = sphere1->intersect (u);
+    setFramebuffer (x, y, c.r, c.g, c.b);
+}
+
+
+void display (void)
 {
     //The next two lines of code are for demonstration only.
     //They show how to draw a line from (0,0) to (100,100)
     int i;
-    
-    for (i = 0;i <= 100; i++)
-        setFramebuffer (i, i, 1.0, 1.0, 1.0);
+    int j;
+
+    for (i = 0;i < ImageH; i++)
+    {
+        for (j = 0; j < ImageW; j++)
+        {
+            intersectElements (i, j);
+        }
+    }
 
     drawit ();
-}
-
-void init(void)
-{
-    clearFramebuffer ();
-}
-
-int main(int argc, char** argv)
-{
-    glutInit (&argc,argv);
-    glutInitDisplayMode (GLUT_SINGLE|GLUT_RGB);
-    glutInitWindowSize (ImageW,ImageH);
-    glutInitWindowPosition (100,100);
-    glutCreateWindow ("Gustavo Estrela - Assignment 5");
-    init ();    
-    glutDisplayFunc (display);
-    glutMainLoop ();
-    return 0;
 }

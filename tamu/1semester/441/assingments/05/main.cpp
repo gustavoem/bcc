@@ -26,11 +26,14 @@
 #define ImageW 800
 #define ImageH 800
 #define FILM_WALL_Z 1000
+#define MAX_DEPTH 10000
 
 #include "global.h"
 #include "Sphere.h"
 
 float framebuffer[ImageH][ImageW][3];
+
+float zbuffer[ImageH][ImageW];
 
 
 // Elements to be drawn
@@ -96,13 +99,19 @@ void clearFramebuffer ()
             framebuffer[i][j][0] = 0.0;
             framebuffer[i][j][1] = 0.0;
             framebuffer[i][j][2] = 0.0;
+
+            zbuffer[i][j] = MAX_DEPTH;
         }
     }
 }
 
 
-void setFramebuffer (int x, int y, float R, float G, float B)
+void setFramebuffer (int x, int y, float R, float G, float B, float z)
 {
+    if (zbuffer[x][y] < z)
+        return;
+    zbuffer[x][y] = z;
+
     if (R <= 1.0)
         if (R >= 0.0)
             framebuffer[x][y][0] = R;
@@ -167,8 +176,8 @@ void intersectElements (int x, int y)
 
     Color c;
     c = intersection->first;
-    //float z = intersection->second.z;
-    setFramebuffer (x, y, c.r, c.g, c.b);
+    float z = intersection->second.z;
+    setFramebuffer (x, y, c.r, c.g, c.b, z);
     delete intersection;
 }
 

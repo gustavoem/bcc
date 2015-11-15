@@ -8,36 +8,36 @@ class Sphere
 
 private:
 
-	// Stores the location of the Sphere
-	//
-	Vector center;
+    // Stores the location of the Sphere
+    //
+    Vector center;
 
 
-	// Stores the size of the Sphere edges
-	//
-	double size;
+    // Stores the size of the Sphere edges
+    //
+    double size;
 
 
 
-	// Stores the color of the sphere
-	// 
-	Color color;
+    // Stores the color of the sphere
+    // 
+    Color color;
 
 public:
 
-	// Default constructor
-	//
-	Sphere (Vector, double);
+    // Default constructor
+    //
+    Sphere (Vector, double);
 
 
-	// Default destructor
-	//
-	virtual ~Sphere ();
+    // Default destructor
+    //
+    virtual ~Sphere ();
 
 
-	// Intersects the shere with a ray
-	//
-	Color intersect (Vector);
+    // Intersects the shere with a ray
+    //
+    pair<Color, Vector> * intersect (Vector, Vector);
 };
 
 #endif

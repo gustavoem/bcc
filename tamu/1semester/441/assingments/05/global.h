@@ -2,6 +2,7 @@
 #define GLOBAL_H_
 
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 

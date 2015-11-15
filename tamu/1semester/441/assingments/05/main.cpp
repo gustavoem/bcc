@@ -1,6 +1,6 @@
 #include <GL/glut.h>
 #include <fstream>
-#include <math.h>
+
 
 /******************************************************************
     Notes:
@@ -25,7 +25,7 @@
 
 #define ImageW 800
 #define ImageH 800
-#define FILM_WALL_Z 2
+#define FILM_WALL_Z 1000
 
 #include "global.h"
 #include "Sphere.h"
@@ -37,6 +37,9 @@ float framebuffer[ImageH][ImageW][3];
 //
 Sphere * sphere1;
 Sphere * sphere2;
+
+
+Vector eye;
 
 
 // Draws the scene
@@ -128,11 +131,17 @@ void setFramebuffer (int x, int y, float R, float G, float B)
 
 void init (void)
 {
+    eye.x = 0;
+    eye.y = 0;
+    eye.z = 0;
+
     Vector sphere_c;
-    sphere_c.x = 10;
-    sphere_c.y = 10;
-    sphere_c.z = 10;
-    sphere1 = new Sphere (sphere_c, 2);
+    sphere_c.x = 800;
+    sphere_c.y = 800;
+    sphere_c.z = FILM_WALL_Z + 100;
+    sphere1 = new Sphere (sphere_c, 50);
+
+
     clearFramebuffer ();
 }
 
@@ -141,18 +150,26 @@ void intersectElements (int x, int y)
 {
     // Ray tracing vector
     Vector u;
-    u.x = x;
-    u.y = y;
-    u.z = FILM_WALL_Z;
+    u.x = x - eye.x;
+    u.y = y - eye.y;
+    u.z = FILM_WALL_Z - eye.z;
     double u_norm = u.x * u.x + u.y * u.y + u.z * u.z;
     u_norm = sqrt (u_norm);
     u.x /= u_norm;
     u.y /= u_norm;
     u.z /= u_norm;
 
+
+    pair<Color, Vector> * intersection;
+    intersection = sphere1->intersect (u, eye);
+    if (intersection == NULL)
+        return;
+
     Color c;
-    c = sphere1->intersect (u);
+    c = intersection->first;
+    //float z = intersection->second.z;
     setFramebuffer (x, y, c.r, c.g, c.b);
+    delete intersection;
 }
 
 

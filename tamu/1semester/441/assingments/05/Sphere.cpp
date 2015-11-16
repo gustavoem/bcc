@@ -1,11 +1,9 @@
 #include "Sphere.h"
 
-Sphere::Sphere (Vector pos, double size, Color color, Material material)
+Sphere::Sphere (Vector pos, double size, Color color, Material material) : 
+                Object (pos, color, material)
 {
-    center = pos;
     this->size = size;
-    this->color = color;
-    this->material = material;
 }
 
 Sphere::~Sphere ()

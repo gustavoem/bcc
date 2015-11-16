@@ -10,7 +10,7 @@ private:
 
     // Stores the location of the Light
     //
-    Vector center;
+    R3Vector center;
 
 
     // Stores the color of the light
@@ -21,7 +21,7 @@ public:
 
     // Default constructor
     //
-    Light (Vector, Color);
+    Light (R3Vector, Color);
 
 
     // Default destructor
@@ -36,7 +36,7 @@ public:
 
     // Returns the diffuse light from this source to a point p0 with normal N
     //
-    Color getDiffuseLight (Vector, Vector);
+    Color getDiffuseLight (R3Vector, R3Vector);
 };
 
 #endif

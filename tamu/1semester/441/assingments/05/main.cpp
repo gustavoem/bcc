@@ -1,36 +1,16 @@
 #include <GL/glut.h>
+
+#include "global.h"
+#include "Sphere.h"
+#include "Light.h" 
+#include <vector>       
 #include <fstream>
-
-
-/******************************************************************
-    Notes:
-    This is the same utility as in the earlier homework assignment.
-    Image size is 400 by 400 by default.  You may adjust this if
-        you want to.
-    You can assume the window will NOT be resized.
-    Call clearFramebuffer to clear the entire framebuffer.
-    Call setFramebuffer to set a pixel.  This should be the only
-        routine you use to set the color (other than clearing the
-        entire framebuffer).  drawit() will cause the current
-        framebuffer to be displayed.
-    As is, your ray tracer should probably be called from
-        within the display function.  There is a very short sample
-        of code there now.  You can replace that with a call to a
-        function that raytraces your scene (or whatever other
-        interaction you provide.
-    You may add code to any of the subroutines here,  You probably
-        want to leave the drawit, clearFramebuffer, and
-        setFramebuffer commands alone, though.
-  *****************************************************************/
 
 #define ImageW 800
 #define ImageH 800
 #define FILM_WALL_Z 1000
 #define MAX_DEPTH 10000
 
-#include "global.h"
-#include "Sphere.h"
-#include "Light.h"        
 
 float framebuffer[ImageH][ImageW][3];
 
@@ -39,14 +19,17 @@ float zbuffer[ImageH][ImageW];
 
 // Elements to be drawn
 //
-Sphere * sphere1;
-Sphere * sphere2;
+vector<Object *> objs;
 
+
+// Lights
+//
 Light * light1;
 
 
-
-Vector eye;
+// Eye position
+//
+R3Vector eye;
 
 
 // Draws the scene
@@ -152,7 +135,7 @@ void init (void)
     color.r = 1;
     color.g = 0;
     color.b = 0;
-    Vector center;
+    R3Vector center;
     center.x = 800;
     center.y = 800;
     center.z = FILM_WALL_Z + 100;
@@ -160,7 +143,8 @@ void init (void)
     material.k_a = 0.2;
     material.k_d = 0.5;
     material.k_s = 0.5;
-    sphere1 = new Sphere (center, 50, color, material);
+    Sphere * sphere1 = new Sphere (center, 50, color, material);
+    objs.push_back (sphere1);
     
     color.r = 1;
     color.g = 0;
@@ -176,40 +160,42 @@ void init (void)
 
 void intersectElements (int x, int y)
 {
-    // Ray tracing vector
-    Vector u;
+    // Ray tracing R3Vector
+    R3Vector u;
     u.x = x - eye.x;
     u.y = y - eye.y;
     u.z = FILM_WALL_Z - eye.z;
     normalize (&u);
 
-    pair<Color, Vector> * intersection;
-    intersection = sphere1->intersect (u, eye);
-    if (intersection == NULL)
-        return;
+    for (unsigned int i = 0; i < objs.size (); i++)
+    {
+        Object * object = objs[i];
+        pair<Color, R3Vector> * intersection;
+        intersection = object->intersect (u, eye);
+        if (intersection == NULL)
+            return;
 
-    Color c;
-    c = intersection->first;
-    // Ambient light
-    Material mt = sphere1->getMaterial ();
-    double k_a = mt.k_a;
-    c.r *= light1->getIntensity ().r  * k_a;
-    c.g *= light1->getIntensity ().g  * k_a;
-    c.b *= light1->getIntensity ().b  * k_a;
+        Color c;
+        c = intersection->first;
+        // Ambient light
+        Material mt = object->getMaterial ();
+        double k_a = mt.k_a;
+        c.r *= light1->getIntensity ().r  * k_a;
+        c.g *= light1->getIntensity ().g  * k_a;
+        c.b *= light1->getIntensity ().b  * k_a;
 
-    // Diffuse light
-    double k_d = mt.k_d;
-    Vector N = sphere1->getNormal (intersection->second);
-    Color cd = light1->getDiffuseLight (N, intersection->second);
-    c.r += cd.r * k_d;
-    c.g += cd.g * k_d;
-    c.b += cd.b * k_d;
+        // Diffuse light
+        double k_d = mt.k_d;
+        R3Vector N = object->getNormal (intersection->second);
+        Color cd = light1->getDiffuseLight (N, intersection->second);
+        c.r += cd.r * k_d;
+        c.g += cd.g * k_d;
+        c.b += cd.b * k_d;
 
-
-
-    float z = intersection->second.z;
-    setFramebuffer (x, y, c.r, c.g, c.b, z);
-    delete intersection;
+        float z = intersection->second.z;
+        setFramebuffer (x, y, c.r, c.g, c.b, z);
+        delete intersection;
+    }
 }
 
 

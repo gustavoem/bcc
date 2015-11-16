@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere (Vector pos, double size, Color color, Material material) : 
+Sphere::Sphere (R3Vector pos, double size, Color color, Material material) : 
                 Object (pos, color, material)
 {
     this->size = size;
@@ -17,7 +17,7 @@ Sphere::~Sphere ()
 // by calculation the two solutions for:
 //      s^2 - 2(u.dP)s + |dP|^2 - r^2
 //      where dP = P_c - P_0
-pair<Color, Vector> * Sphere::intersect (Vector u, Vector p0)
+pair<Color, R3Vector> * Sphere::intersect (R3Vector u, R3Vector p0)
 {       
     double u_dp = u.x * (center.x - p0.x)+
                   u.y * (center.y - p0.y) + 
@@ -46,12 +46,12 @@ pair<Color, Vector> * Sphere::intersect (Vector u, Vector p0)
         else
             s = s2;
 
-        Vector p;
+        R3Vector p;
         p.x = s * u.x + p0.x;
         p.y = s * u.y + p0.y;
         p.z = s * u.z + p0.z;
 
-        pair<Color, Vector> * intersect = new pair<Color, Vector> ();
+        pair<Color, R3Vector> * intersect = new pair<Color, R3Vector> ();
         intersect->first = c;
         intersect->second = p;
         return intersect;
@@ -66,9 +66,9 @@ Material Sphere::getMaterial ()
 }
 
 
-Vector Sphere::getNormal (Vector p)
+R3Vector Sphere::getNormal (R3Vector p)
 {
-    Vector n;
+    R3Vector n;
     n.x = p.x - center.x;
     n.y = p.y - center.y;
     n.z = p.z - center.z;

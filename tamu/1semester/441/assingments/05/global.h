@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <math.h>
+#include <vector>
 
 using namespace std;
 
-struct Vector 
+struct R3Vector 
 {
 	double x;
 	double y;
@@ -29,6 +30,6 @@ struct Material
 	double k_s;
 };
 
-void normalize (Vector *);
+void normalize (R3Vector *);
 
 #endif

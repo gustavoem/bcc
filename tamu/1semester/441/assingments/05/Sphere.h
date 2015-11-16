@@ -17,7 +17,7 @@ public:
 
     // Default constructor
     //
-    Sphere (Vector, double, Color, Material);
+    Sphere (R3Vector, double, Color, Material);
 
 
     // Default destructor
@@ -27,7 +27,7 @@ public:
 
     // Intersects the shere with a ray
     //
-    virtual pair<Color, Vector> * intersect (Vector, Vector);
+    virtual pair<Color, R3Vector> * intersect (R3Vector, R3Vector);
 
 
     // Returns material of the sphere
@@ -35,12 +35,12 @@ public:
     virtual Material getMaterial ();
 
 
-    // Returns the normal vector from a given point of the sphere. If the point its not
-    // from the sphere, the method will return a vector N which is the normal vector of
+    // Returns the normal R3Vector from a given point of the sphere. If the point its not
+    // from the sphere, the method will return a R3Vector N which is the normal R3Vector of
     // the given point p in a sphere with same center and with radius equals to 
     // |p - center|
     //
-    virtual Vector getNormal (Vector);
+    virtual R3Vector getNormal (R3Vector);
 
 };
 

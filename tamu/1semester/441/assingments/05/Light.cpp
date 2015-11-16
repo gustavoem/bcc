@@ -1,6 +1,6 @@
 #include "Light.h"
 
-Light::Light (Vector pos, Color color)
+Light::Light (R3Vector pos, Color color)
 {
     center = pos;
     intensity = color;
@@ -19,9 +19,9 @@ Color Light::getIntensity ()
 }
 
 
-Color Light::getDiffuseLight (Vector N, Vector p0)
+Color Light::getDiffuseLight (R3Vector N, R3Vector p0)
 {
-	Vector L;
+	R3Vector L;
 	L.x = center.x - p0.x;
 	L.y = center.y - p0.y;
 	L.z = center.z - p0.z;

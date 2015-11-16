@@ -30,6 +30,7 @@
 
 #include "global.h"
 #include "Sphere.h"
+#include "Light.h"        
 
 float framebuffer[ImageH][ImageW][3];
 
@@ -40,6 +41,9 @@ float zbuffer[ImageH][ImageW];
 //
 Sphere * sphere1;
 Sphere * sphere2;
+
+Light * light1;
+
 
 
 Vector eye;
@@ -144,12 +148,22 @@ void init (void)
     eye.y = 0;
     eye.z = 0;
 
-    Vector sphere_c;
-    sphere_c.x = 800;
-    sphere_c.y = 800;
-    sphere_c.z = FILM_WALL_Z + 100;
-    sphere1 = new Sphere (sphere_c, 50);
-
+    Color color;
+    color.r = 1;
+    color.g = 0;
+    color.b = 0;
+    Vector center;
+    center.x = 800;
+    center.y = 800;
+    center.z = FILM_WALL_Z + 100;
+    sphere1 = new Sphere (center, 50, color, .1, .15);
+    
+    color.r = 1;
+    color.g = 0;
+    color.b = 1;
+    center.y = 1000;
+    center.z = FILM_WALL_Z;
+    light1 = new Light (center, color);
 
     clearFramebuffer ();
 }
@@ -176,6 +190,18 @@ void intersectElements (int x, int y)
 
     Color c;
     c = intersection->first;
+    // Ambient light
+    double k_a = sphere1->getAmbientCoef ();
+    c.r *= light1->getIntensity ().r  * k_a;
+    c.g *= light1->getIntensity ().g  * k_a;
+    c.b *= light1->getIntensity ().b  * k_a;
+
+    // Diffuse light
+    double k_d = sphere1->getDiffuseCoef ();
+    Vector N = sphere1.getNormal (intersection->second);
+    light1.get
+
+
     float z = intersection->second.z;
     setFramebuffer (x, y, c.r, c.g, c.b, z);
     delete intersection;
@@ -184,8 +210,6 @@ void intersectElements (int x, int y)
 
 void display (void)
 {
-    //The next two lines of code are for demonstration only.
-    //They show how to draw a line from (0,0) to (100,100)
     int i;
     int j;
 

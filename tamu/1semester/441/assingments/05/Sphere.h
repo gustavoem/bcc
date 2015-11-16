@@ -23,11 +23,16 @@ private:
     // 
     Color color;
 
+
+    // Stores the ambient reflection coeficient
+    // 
+    double k_a;
+
 public:
 
     // Default constructor
     //
-    Sphere (Vector, double);
+    Sphere (Vector, double, Color, double);
 
 
     // Default destructor
@@ -38,6 +43,16 @@ public:
     // Intersects the shere with a ray
     //
     pair<Color, Vector> * intersect (Vector, Vector);
+
+
+    // Returns the coeficient for ambient light reflection
+    //
+    double getAmbientCoef ();
+
+
+    // Returns the coeficient for diffuse light reflection
+    //
+    double getDiffusetCoef ();
 };
 
 #endif

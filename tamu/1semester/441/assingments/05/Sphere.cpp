@@ -1,12 +1,11 @@
 #include "Sphere.h"
 
-Sphere::Sphere (Vector pos, double size)
+Sphere::Sphere (Vector pos, double size, Color color, double k_a, double k_d)
 {
     center = pos;
     this->size = size;
-    color.r = 1;
-    color.g = 1;
-    color.b = 1;
+    this->color = color;
+    this->k_a = k_a;
 }
 
 Sphere::~Sphere ()
@@ -60,4 +59,10 @@ pair<Color, Vector> * Sphere::intersect (Vector u, Vector p0)
         return intersect;
     }
 
+}
+
+
+double Sphere::getAmbientReflectionCoef ()
+{
+    return k_a;
 }

@@ -31,8 +31,6 @@ pair<Color, R3Vector> * Plane::intersect (R3Vector u, R3Vector p0)
 {
     // First, if u is perpendicular to the normal, there is no intersection
     double un = u.x * normal.x + u.y * normal.y + u.z * normal.z;
-    if (abs (un) < 1e-5)
-        return NULL;
 
     double dpn = (center.x - p0.x) * normal.x + 
                  (center.y - p0.y) * normal.y +
@@ -40,6 +38,8 @@ pair<Color, R3Vector> * Plane::intersect (R3Vector u, R3Vector p0)
 
     // Finds the intersection point
     double s = dpn / un;
+    if (s < +1e-5)
+        return NULL;
     R3Vector p = p0;
     p.x += u.x * s;
     p.y += u.y * s;

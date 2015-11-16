@@ -24,9 +24,13 @@ float zbuffer[ImageH][ImageW];
 vector<Object *> objs;
 
 
-// Lights
+// Light sources
+// 
+vector<Light *> lights;
+
+// Ambient light
 //
-Light * light1;
+Light * ambent_light;
 
 
 // Eye position
@@ -97,7 +101,7 @@ void clearFramebuffer ()
 void setFramebuffer (int x, int y, float R, float G, float B, float z)
 {
     if (zbuffer[x][y] < z)
-        return;
+         return;
     zbuffer[x][y] = z;
 
     if (R <= 1.0)
@@ -142,34 +146,87 @@ void init (void)
     center.z = FILM_WALL_Z + 100;
     Material material;
     material.k_a = 0.2;
-    material.k_d = 0.5;
-    material.k_s = 0.5;
+    material.k_d = 0.3;
+    material.k_s = 0.2;
     Sphere * sphere1 = new Sphere (center, 50, color, material);
     objs.push_back (sphere1);
 
-    color.r = 0;
+
+
+    // Walls
+    color.r = .5;
     color.g = .7;
     color.b = .7;
     center.x = 0;
     center.y = 0;
-    center.z = FILM_WALL_Z + 1000;
-    material.k_a = 1;
-    material.k_d = 0.1;
-    material.k_s = 0.1;
+    center.z = FILM_WALL_Z;
+    material.k_a = 0.2;
+    material.k_d = 0.6;
+    material.k_s = 0.4;
     R3Vector normal;
+    normal.x = 1;
+    normal.y = 0;
+    normal.z = 0;
+    // left plane
+    Plane * plane1 = new Plane (center, color, material, normal);
+    objs.push_back (plane1);
+    
+    // floor plane
+    normal.x = 0;
+    normal.y = 1;
+    normal.z = 0;
+    Plane * plane2 = new Plane (center, color, material, normal);
+    objs.push_back (plane2);
+    
+    center.x = 800;
+    center.y = 800;
+    
+    // ceiling
+    normal.x = 0;
+    normal.y = -1;
+    normal.z = 0;
+    Plane * plane3 = new Plane (center, color, material, normal);
+    objs.push_back (plane3);
+
+    // right plane
+    normal.x = -1;
+    normal.y = 0;
+    normal.z = 0;
+    Plane * plane4 = new Plane (center, color, material, normal);
+    objs.push_back (plane4);
+
+    // back plane
+    center.z = FILM_WALL_Z + 1000;
     normal.x = 0;
     normal.y = 0;
-    normal.z = 1;
-    Plane * plane1 = new Plane (center, color, material, normal);
-    //objs.push_back (plane1);
-    
+    normal.z = -1;
+    Plane * plane5 = new Plane (center, color, material, normal);
+    objs.push_back (plane5);
+
+
+
+    // Light
+    color.r = 255 / 255;
+    color.g = 214.0 / 255;
+    color.b = 170.0 / 255;
+    center.x = 400;
+    center.y = 750;
+    center.z = FILM_WALL_Z - 100;
+    material.k_a = 1;
+    material.k_d = 0;
+    material.k_s = 0;
+    Sphere * sphere2 = new Sphere (center, 10, color, material);
+    Light * light1 = new Light (center, color);
+    lights.push_back (light1);
+    objs.push_back (sphere2);
+
     color.r = 1;
-    color.g = 0;
+    color.g = 1;
     color.b = 1;
     center.x = 400;
-    center.y = 800;
-    center.z = FILM_WALL_Z - 100;
-    light1 = new Light (center, color);
+    center.y = 0;
+    center.z = 0;
+    ambent_light = new Light (center, color);
 
     clearFramebuffer ();
 }
@@ -190,24 +247,28 @@ void intersectElements (int x, int y)
         pair<Color, R3Vector> * intersection;
         intersection = object->intersect (u, eye);
         if (intersection == NULL)
-            return;
+            continue;
 
         Color c;
         c = intersection->first;
         // Ambient light
         Material mt = object->getMaterial ();
         double k_a = mt.k_a;
-        c.r *= light1->getIntensity ().r  * k_a;
-        c.g *= light1->getIntensity ().g  * k_a;
-        c.b *= light1->getIntensity ().b  * k_a;
+        c.r *= ambent_light->getIntensity ().r  * k_a;
+        c.g *= ambent_light->getIntensity ().g  * k_a;
+        c.b *= ambent_light->getIntensity ().b  * k_a;
 
         // Diffuse light
-        double k_d = mt.k_d;
-        R3Vector N = object->getNormal (intersection->second);
-        Color cd = light1->getDiffuseLight (N, intersection->second);
-        c.r += cd.r * k_d;
-        c.g += cd.g * k_d;
-        c.b += cd.b * k_d;
+        for (unsigned int j = 0; j < lights.size (); j++)
+        {
+            Light * light = lights[j];
+            double k_d = mt.k_d;
+            R3Vector N = object->getNormal (intersection->second);
+            Color cd = light->getDiffuseLight (N, intersection->second);
+            c.r += cd.r * k_d;
+            c.g += cd.g * k_d;
+            c.b += cd.b * k_d;
+        }
 
         float z = intersection->second.z;
         setFramebuffer (y, x, c.r, c.g, c.b, z);

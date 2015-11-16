@@ -4,30 +4,31 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
 struct R3Vector 
 {
-	double x;
-	double y;
-	double z;
+    double x;
+    double y;
+    double z;
 };
 
 
 struct Color
 {
-	double r;
-	double g;
-	double b;
+    double r;
+    double g;
+    double b;
 };
 
-	
+    
 struct Material
 {
-	double k_a;
-	double k_d;
-	double k_s;
+    double k_a;
+    double k_d;
+    double k_s;
 };
 
 void normalize (R3Vector *);

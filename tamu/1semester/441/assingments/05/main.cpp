@@ -3,6 +3,8 @@
 #include "global.h"
 #include "Sphere.h"
 #include "Light.h" 
+#include "Plane.h"
+
 #include <vector>       
 #include <fstream>
 
@@ -135,7 +137,7 @@ void init (void)
     color.g = 0;
     color.b = 0;
     R3Vector center;
-    center.x = 500;
+    center.x = 700;
     center.y = 500;
     center.z = FILM_WALL_Z + 100;
     Material material;
@@ -144,12 +146,28 @@ void init (void)
     material.k_s = 0.5;
     Sphere * sphere1 = new Sphere (center, 50, color, material);
     objs.push_back (sphere1);
+
+    color.r = 0;
+    color.g = .7;
+    color.b = .7;
+    center.x = 0;
+    center.y = 0;
+    center.z = FILM_WALL_Z + 1000;
+    material.k_a = 1;
+    material.k_d = 0.1;
+    material.k_s = 0.1;
+    R3Vector normal;
+    normal.x = 0;
+    normal.y = 0;
+    normal.z = 1;
+    Plane * plane1 = new Plane (center, color, material, normal);
+    //objs.push_back (plane1);
     
     color.r = 1;
     color.g = 0;
     color.b = 1;
     center.x = 400;
-    center.y = 400;
+    center.y = 800;
     center.z = FILM_WALL_Z - 100;
     light1 = new Light (center, color);
 
@@ -192,7 +210,7 @@ void intersectElements (int x, int y)
         c.b += cd.b * k_d;
 
         float z = intersection->second.z;
-        setFramebuffer (x, y, c.r, c.g, c.b, z);
+        setFramebuffer (y, x, c.r, c.g, c.b, z);
         delete intersection;
     }
 }

@@ -1,11 +1,11 @@
 #include "Sphere.h"
 
-Sphere::Sphere (Vector pos, double size, Color color, double k_a, double k_d)
+Sphere::Sphere (Vector pos, double size, Color color, Material material)
 {
     center = pos;
     this->size = size;
     this->color = color;
-    this->k_a = k_a;
+    this->material = material;
 }
 
 Sphere::~Sphere ()
@@ -62,7 +62,19 @@ pair<Color, Vector> * Sphere::intersect (Vector u, Vector p0)
 }
 
 
-double Sphere::getAmbientReflectionCoef ()
+Material Sphere::getMaterial ()
 {
-    return k_a;
+    return material;
+}
+
+
+Vector Sphere::getNormal (Vector p)
+{
+    Vector n;
+    n.x = p.x - center.x;
+    n.y = p.y - center.y;
+    n.z = p.z - center.z;
+
+    normalize (&n);
+    return n;
 }

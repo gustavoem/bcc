@@ -1,6 +1,6 @@
 FLAGS = -O2 -g -Wall -fmessage-length=0 -lglut -lGL -lGLU
 
-OBJS = Sphere.o Light.o
+OBJS = Sphere.o Light.o global.o
 
 TARGET = main
 

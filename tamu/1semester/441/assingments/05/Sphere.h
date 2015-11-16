@@ -24,15 +24,15 @@ private:
     Color color;
 
 
-    // Stores the ambient reflection coeficient
+    // Stores the material of the sphere
     // 
-    double k_a;
+    Material material;
 
 public:
 
     // Default constructor
     //
-    Sphere (Vector, double, Color, double);
+    Sphere (Vector, double, Color, Material);
 
 
     // Default destructor
@@ -45,14 +45,18 @@ public:
     pair<Color, Vector> * intersect (Vector, Vector);
 
 
-    // Returns the coeficient for ambient light reflection
+    // Returns material of the sphere
     //
-    double getAmbientCoef ();
+    Material getMaterial ();
 
 
-    // Returns the coeficient for diffuse light reflection
+    // Returns the normal vector from a given point of the sphere. If the point its not
+    // from the sphere, the method will return a vector N which is the normal vector of
+    // the given point p in a sphere with same center and with radius equals to 
+    // |p - center|
     //
-    double getDiffusetCoef ();
+    Vector getNormal (Vector);
+
 };
 
 #endif

@@ -21,4 +21,14 @@ struct Color
 	double b;
 };
 
+	
+struct Material
+{
+	double k_a;
+	double k_d;
+	double k_s;
+};
+
+void normalize (Vector *);
+
 #endif

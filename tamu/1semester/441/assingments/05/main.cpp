@@ -156,13 +156,18 @@ void init (void)
     center.x = 800;
     center.y = 800;
     center.z = FILM_WALL_Z + 100;
-    sphere1 = new Sphere (center, 50, color, .1, .15);
+    Material material;
+    material.k_a = 0.2;
+    material.k_d = 0.5;
+    material.k_s = 0.5;
+    sphere1 = new Sphere (center, 50, color, material);
     
     color.r = 1;
     color.g = 0;
     color.b = 1;
-    center.y = 1000;
-    center.z = FILM_WALL_Z;
+    center.x = 400;
+    center.y = 400;
+    center.z = FILM_WALL_Z - 100;
     light1 = new Light (center, color);
 
     clearFramebuffer ();
@@ -176,12 +181,7 @@ void intersectElements (int x, int y)
     u.x = x - eye.x;
     u.y = y - eye.y;
     u.z = FILM_WALL_Z - eye.z;
-    double u_norm = u.x * u.x + u.y * u.y + u.z * u.z;
-    u_norm = sqrt (u_norm);
-    u.x /= u_norm;
-    u.y /= u_norm;
-    u.z /= u_norm;
-
+    normalize (&u);
 
     pair<Color, Vector> * intersection;
     intersection = sphere1->intersect (u, eye);
@@ -191,15 +191,20 @@ void intersectElements (int x, int y)
     Color c;
     c = intersection->first;
     // Ambient light
-    double k_a = sphere1->getAmbientCoef ();
+    Material mt = sphere1->getMaterial ();
+    double k_a = mt.k_a;
     c.r *= light1->getIntensity ().r  * k_a;
     c.g *= light1->getIntensity ().g  * k_a;
     c.b *= light1->getIntensity ().b  * k_a;
 
     // Diffuse light
-    double k_d = sphere1->getDiffuseCoef ();
-    Vector N = sphere1.getNormal (intersection->second);
-    light1.get
+    double k_d = mt.k_d;
+    Vector N = sphere1->getNormal (intersection->second);
+    Color cd = light1->getDiffuseLight (N, intersection->second);
+    c.r += cd.r * k_d;
+    c.g += cd.g * k_d;
+    c.b += cd.b * k_d;
+
 
 
     float z = intersection->second.z;

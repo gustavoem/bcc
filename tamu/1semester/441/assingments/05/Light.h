@@ -32,6 +32,11 @@ public:
     // Returns intensity of the light
     //
     Color getIntensity ();
+
+
+    // Returns the diffuse light from this source to a point p0 with normal N
+    //
+    Color getDiffuseLight (Vector, Vector);
 };
 
 #endif

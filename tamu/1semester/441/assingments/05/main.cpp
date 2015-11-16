@@ -141,14 +141,15 @@ void init (void)
     color.g = 0;
     color.b = 0;
     R3Vector center;
-    center.x = 700;
-    center.y = 500;
-    center.z = FILM_WALL_Z + 100;
+    center.x = 100;
+    center.y = 100;
+    center.z = FILM_WALL_Z + 200;
     Material material;
     material.k_a = 0.2;
     material.k_d = 0.3;
     material.k_s = 0.2;
-    Sphere * sphere1 = new Sphere (center, 50, color, material);
+    material.n = 1;
+    Sphere * sphere1 = new Sphere (center, 100, color, material);
     objs.push_back (sphere1);
 
 
@@ -167,6 +168,7 @@ void init (void)
     normal.x = 1;
     normal.y = 0;
     normal.z = 0;
+    material.n = 10000;
     // left plane
     Plane * plane1 = new Plane (center, color, material, normal);
     objs.push_back (plane1);
@@ -210,8 +212,8 @@ void init (void)
     color.g = 214.0 / 255;
     color.b = 170.0 / 255;
     center.x = 400;
-    center.y = 750;
-    center.z = FILM_WALL_Z - 100;
+    center.y = 790;
+    center.z = FILM_WALL_Z + 100;
     material.k_a = 1;
     material.k_d = 0;
     material.k_s = 0;
@@ -219,6 +221,20 @@ void init (void)
     Light * light1 = new Light (center, color);
     lights.push_back (light1);
     objs.push_back (sphere2);
+
+    color.r = 255 / 255;
+    color.g = 100.0 / 255;
+    color.b = 100.0 / 255;
+    center.x = 400;
+    center.y = 110;
+    center.z = FILM_WALL_Z + 100;
+    material.k_a = 1;
+    material.k_d = 0;
+    material.k_s = 0;
+    Sphere * sphere3 = new Sphere (center, 10, color, material);
+    Light * light2 = new Light (center, color);
+    lights.push_back (light2);
+    objs.push_back (sphere3);
 
     color.r = 1;
     color.g = 1;
@@ -258,16 +274,27 @@ void intersectElements (int x, int y)
         c.g *= ambent_light->getIntensity ().g  * k_a;
         c.b *= ambent_light->getIntensity ().b  * k_a;
 
-        // Diffuse light
         for (unsigned int j = 0; j < lights.size (); j++)
         {
             Light * light = lights[j];
-            double k_d = mt.k_d;
             R3Vector N = object->getNormal (intersection->second);
-            Color cd = light->getDiffuseLight (N, intersection->second);
-            c.r += cd.r * k_d;
-            c.g += cd.g * k_d;
-            c.b += cd.b * k_d;
+            // Diffuse light
+            double k_d = mt.k_d;
+            Color cd = light->getDiffuseLight (N, intersection->second, k_d);
+            c.r += cd.r;
+            c.g += cd.g;
+            c.b += cd.b;
+            // Specular light
+            double k_s = mt.k_s;
+            double n = mt.n;
+            R3Vector E;
+            E.x = -u.x;
+            E.y = -u.y;
+            E.z = -u.z;
+            cd = light->getSpecularLight (N, intersection->second, E, k_s, n);
+            c.r += cd.r;
+            c.g += cd.g;
+            c.b += cd.b;
         }
 
         float z = intersection->second.z;

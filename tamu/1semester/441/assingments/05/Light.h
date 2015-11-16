@@ -36,7 +36,13 @@ public:
 
     // Returns the diffuse light from this source to a point p0 with normal N
     //
-    Color getDiffuseLight (R3Vector, R3Vector);
+    Color getDiffuseLight (R3Vector, R3Vector, double);
+
+
+    // Returns the specular light from this source to a point p0 with normal N being
+    // looked from E
+    //
+    Color getSpecularLight (R3Vector, R3Vector, R3Vector, double, double);
 };
 
 #endif

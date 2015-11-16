@@ -51,7 +51,6 @@ void init (void);
 void intersectElements (int x, int y);
 
 
-
 int main (int argc, char** argv)
 {
     glutInit (&argc,argv);
@@ -59,8 +58,8 @@ int main (int argc, char** argv)
     glutInitWindowSize (ImageW,ImageH);
     glutInitWindowPosition (100,100);
     glutCreateWindow ("Gustavo Estrela - Assignment 5");
-    init ();    
     glutDisplayFunc (display);
+    init ();
     glutMainLoop ();
     return 0;
 }
@@ -127,8 +126,8 @@ void setFramebuffer (int x, int y, float R, float G, float B, float z)
 
 void init (void)
 {
-    eye.x = 0;
-    eye.y = 0;
+    eye.x = 400;
+    eye.y = 400;
     eye.z = 0;
 
     Color color;
@@ -136,8 +135,8 @@ void init (void)
     color.g = 0;
     color.b = 0;
     R3Vector center;
-    center.x = 800;
-    center.y = 800;
+    center.x = 500;
+    center.y = 500;
     center.z = FILM_WALL_Z + 100;
     Material material;
     material.k_a = 0.2;
@@ -203,7 +202,7 @@ void display (void)
 {
     int i;
     int j;
-
+    clearFramebuffer ();
     for (i = 0;i < ImageH; i++)
     {
         for (j = 0; j < ImageW; j++)
@@ -211,6 +210,5 @@ void display (void)
             intersectElements (i, j);
         }
     }
-
     drawit ();
 }

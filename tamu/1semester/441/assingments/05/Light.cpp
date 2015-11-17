@@ -18,7 +18,7 @@ Color Light::getIntensity ()
     return intensity;
 }
 
-// STOPPED HERE!!!!
+
 Color Light::getDiffuseLight (R3Vector N, R3Vector p0, double k_d)
 {
     R3Vector L;
@@ -64,4 +64,10 @@ Color Light::getSpecularLight (R3Vector N, R3Vector p0, R3Vector E, double k_s, 
     specularlight.g = intensity.g * ks_ERn;
     specularlight.b = intensity.b * ks_ERn;
     return specularlight;
+}
+
+
+R3Vector Light::getCenter ()
+{
+    return center;
 }

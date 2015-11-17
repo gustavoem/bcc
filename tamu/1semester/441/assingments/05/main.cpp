@@ -56,6 +56,9 @@ void init (void);
 // Traces the ray and determines the color of the pixel
 void intersectElements (int x, int y);
 
+// Verifies if an object is in a shadow from a light source
+bool isInShadow (R3Vector objectPosition, R3Vector lightPosition);
+
 
 int main (int argc, char** argv)
 {
@@ -137,9 +140,9 @@ void init (void)
     eye.z = 0;
 
     Color color;
-    color.r = 1;
-    color.g = 0;
-    color.b = 0;
+    color.r = 0;
+    color.g = 1;
+    color.b = 1;
     R3Vector center;
     center.x = 100;
     center.y = 100;
@@ -147,28 +150,27 @@ void init (void)
     Material material;
     material.k_a = 0.2;
     material.k_d = 0.3;
-    material.k_s = 0.2;
-    material.n = 1;
+    material.k_s = 0.6;
+    material.n = 100;
     Sphere * sphere1 = new Sphere (center, 100, color, material);
     objs.push_back (sphere1);
 
 
-
     // Walls
-    color.r = .5;
+    color.r = .7;
     color.g = .7;
     color.b = .7;
     center.x = 0;
     center.y = 0;
     center.z = FILM_WALL_Z;
-    material.k_a = 0.2;
-    material.k_d = 0.6;
-    material.k_s = 0.4;
+    material.k_a = 0.3;
+    material.k_d = 0.7;
+    material.k_s = 0;
     R3Vector normal;
     normal.x = 1;
     normal.y = 0;
     normal.z = 0;
-    material.n = 10000;
+    material.n = 2;
     // left plane
     Plane * plane1 = new Plane (center, color, material, normal);
     objs.push_back (plane1);
@@ -218,21 +220,21 @@ void init (void)
     Sphere * sphere2 = new Sphere (center, 10, color, material);
     Light * light1 = new Light (center, color);
     lights.push_back (light1);
-    objs.push_back (sphere2);
+    //objs.push_back (sphere2);
 
-    color.r = 255 / 255;
-    color.g = 100.0 / 255;
-    color.b = 100.0 / 255;
+    color.r = 0.5;
+    color.g = 70.0 / 255;
+    color.b = 0;
     center.x = 400;
-    center.y = 110;
+    center.y = 10;
     center.z = FILM_WALL_Z + 100;
-    material.k_a = 1;
+    material.k_a = 2;
     material.k_d = 0;
     material.k_s = 0;
     Sphere * sphere3 = new Sphere (center, 10, color, material);
     Light * light2 = new Light (center, color);
-    lights.push_back (light2);
-    objs.push_back (sphere3);
+    //lights.push_back (light2);
+    //objs.push_back (sphere3);
 
     color.r = 1;
     color.g = 1;
@@ -272,13 +274,18 @@ void intersectElements (int x, int y)
         c.g *= ambent_light->getIntensity ().g  * k_a;
         c.b *= ambent_light->getIntensity ().b  * k_a;
 
+        R3Vector inter_point = intersection->second;
         for (unsigned int j = 0; j < lights.size (); j++)
         {
             Light * light = lights[j];
-            R3Vector N = object->getNormal (intersection->second);
+            // Ideia boa: light é um objeto
+            if (!isInShadow (inter_point, light->getCenter ()))
+                continue;
+
+            R3Vector N = object->getNormal (inter_point);
             // Diffuse light
             double k_d = mt.k_d;
-            Color cd = light->getDiffuseLight (N, intersection->second, k_d);
+            Color cd = light->getDiffuseLight (N, inter_point, k_d);
             c.r += cd.r;
             c.g += cd.g;
             c.b += cd.b;
@@ -289,16 +296,54 @@ void intersectElements (int x, int y)
             E.x = -u.x;
             E.y = -u.y;
             E.z = -u.z;
-            cd = light->getSpecularLight (N, intersection->second, E, k_s, n);
+            cd = light->getSpecularLight (N, inter_point, E, k_s, n);
             c.r += cd.r;
             c.g += cd.g;
             c.b += cd.b;
         }
 
-        float z = intersection->second.z;
+        float z = inter_point.z;
         setFramebuffer (y, x, c.r, c.g, c.b, z);
         delete intersection;
     }
+}
+
+
+bool isInShadow (R3Vector objectPosition, R3Vector lightPosition)
+{
+    // Verifies if theres no intersection between light source and obj surface
+    for (unsigned int k  = 0; k < objs.size (); k++)
+    {
+        Object * candidateToIntersect = objs[k];
+        
+        R3Vector u;
+        u.x = lightPosition.x - objectPosition.x;
+        u.y = lightPosition.y - objectPosition.y;
+        u.z = lightPosition.z - objectPosition.z;
+        double lo_distance = u.x * u.x + u.y * u.y + u.z * u.z;
+        u.x /= lo_distance;
+        u.y /= lo_distance;
+        u.z /= lo_distance;
+        
+        pair<Color, R3Vector> * intersection;
+        intersection = candidateToIntersect->intersect (u, objectPosition);
+        
+        if (intersection == NULL)
+            continue;
+
+        R3Vector intPosition = intersection->second;
+        R3Vector t;
+        t.x = intPosition.x - objectPosition.x;
+        t.y = intPosition.y - objectPosition.y;
+        t.z = intPosition.z - objectPosition.z;
+        double it_distance = t.x * t.x + t.y * t.y + t.z * t.z;
+
+        if (it_distance  < lo_distance)
+            return true;
+        else
+            continue;
+    }
+    return false;
 }
 
 

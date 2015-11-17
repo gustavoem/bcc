@@ -43,6 +43,9 @@ public:
     // looked from E
     //
     Color getSpecularLight (R3Vector, R3Vector, R3Vector, double, double);
+
+
+    R3Vector getCenter ();
 };
 
 #endif

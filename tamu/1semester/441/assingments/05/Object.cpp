@@ -13,13 +13,13 @@ Object::~Object ()
 }
 
 
-Object::isLight ()
+bool Object::isLight ()
 {
 	return false;
 }
 
 
-R3Vector getCenter ()
+R3Vector Object::getCenter ()
 {
 	return center;
 }

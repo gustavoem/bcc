@@ -266,8 +266,7 @@ void intersectElements (int x, int y)
         intersection = object->intersect (u, eye);
         
         // If intersects nothing or intersects a light go to the next object
-        Light * l = dinamic_cast<Light *> (object);
-        if (intersection == NULL || l == NULL)
+        if (intersection == NULL || object->isLight ())
             continue;
 
         Color c = intersection->first;

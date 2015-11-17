@@ -13,7 +13,7 @@
 #define ImageH 800
 #define FILM_WALL_Z 1000
 #define MAX_DEPTH 10000
-
+#define MAX_REFLECTION 2
 
 float framebuffer[ImageH][ImageW][3];
 
@@ -59,6 +59,9 @@ void rayCast (int x, int y);
 
 // Returns the intersection of the ray to the nearest object
 Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights);
+
+// Returns the color of a point being looked by V in the object obj
+Color pointColor (Object obj, R3Vector inter_point, R3Vector V, unsigned int level)
 
 int main (int argc, char** argv)
 {
@@ -254,12 +257,19 @@ void rayCast (int x, int y)
     if (inter == NULL) return;
 
     Object * obj = inter->object;
-    // if (obj->getMaterial ().k_s == 0.6)
-    //     cout << "Hum, intersection on the spheaaare" << obj << endl;
-    Color c = inter->color;
     R3Vector inter_point = inter->point;
+    Color c = pointColor (obj, inter_point, u, 0);
     delete inter;
+    
 
+
+    setFramebuffer (y, x, c.r, c.g, c.b);
+}
+
+
+Color pointColor (Object obj, R3Vector inter_point, R3Vector V, unsigned int level)
+{
+    Color c = obj->getColor ();
     // Ambient light
     Material mt = obj->getMaterial ();
     double k_a = mt.k_a;
@@ -280,15 +290,9 @@ void rayCast (int x, int y)
         normalize (&itToLight);
         inter = intersectElements (itToLight, inter_point, true);
 
+        // Shadow
         if (inter->object != light)
-        {    
-        //     if (obj->getMaterial ().k_s == 0.6)
-        //     {
-        //         cout << "Intersected to: " << inter->object << endl;
-        //         cout.flush ();
-        //     }
             continue;
-        }
 
         R3Vector N = obj->getNormal (inter_point);
         
@@ -311,11 +315,8 @@ void rayCast (int x, int y)
         c.g += cd.g;
         c.b += cd.b;
     }
-
-
-    setFramebuffer (y, x, c.r, c.g, c.b);
+    return c;
 }
-
 
 
 Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)

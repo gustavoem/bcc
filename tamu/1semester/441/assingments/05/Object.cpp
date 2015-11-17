@@ -23,3 +23,9 @@ R3Vector Object::getCenter ()
 {
 	return center;
 }
+
+
+Color Object::getColor ()
+{
+	return color;
+}

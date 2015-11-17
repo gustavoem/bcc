@@ -61,6 +61,10 @@ public:
     //
     R3Vector getCenter ();
 
+
+    // Returns the object color
+    //
+    Color getColor ();
 };
 
 #endif

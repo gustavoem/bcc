@@ -205,8 +205,6 @@ void init (void)
     Plane * plane5 = new Plane (center, color, material, normal);
     objs.push_back (plane5);
 
-
-
     // Light
     color.r = 255 / 255;
     color.g = 214.0 / 255;

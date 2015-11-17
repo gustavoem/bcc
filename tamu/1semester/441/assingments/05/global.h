@@ -30,7 +30,16 @@ struct Material
     double k_d;
     double k_s;
     unsigned int n;
+    
+    Material (double a, double d, double s, unsigned int na)
+    {
+        k_a = a;
+        k_d = d;
+        k_s = s;
+        n = na;
+    }
 };
+
 
 void normalize (R3Vector *);
 

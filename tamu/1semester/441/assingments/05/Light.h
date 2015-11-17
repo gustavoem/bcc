@@ -2,20 +2,13 @@
 #define LIGHT_H_
 
 #include "global.h"
+#include "Sphere.h"
 
-class Light
+class Light : public Object
 {
 
 private:
 
-    // Stores the location of the Light
-    //
-    R3Vector center;
-
-
-    // Stores the color of the light
-    // 
-    Color intensity;
 
 public:
 

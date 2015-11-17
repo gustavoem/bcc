@@ -1,9 +1,9 @@
 #include "Light.h"
 
-Light::Light (R3Vector pos, Color color)
+Light::Light (R3Vector pos, Color color) : Object (pos, color, Material (.0, .0, .0, 0))
 {
     center = pos;
-    intensity = color;
+    this->color = color;
 }
 
 
@@ -15,7 +15,7 @@ Light::~Light ()
 
 Color Light::getIntensity ()
 {
-    return intensity;
+    return color;
 }
 
 
@@ -33,9 +33,9 @@ Color Light::getDiffuseLight (R3Vector N, R3Vector p0, double k_d)
 
     Color diffuselight;
     double LN_kd = LN * k_d;
-    diffuselight.r = intensity.r * LN_kd;
-    diffuselight.g = intensity.g * LN_kd;
-    diffuselight.b = intensity.b * LN_kd;
+    diffuselight.r = color.r * LN_kd;
+    diffuselight.g = color.g * LN_kd;
+    diffuselight.b = color.b * LN_kd;
     return diffuselight;
 }
 
@@ -60,9 +60,9 @@ Color Light::getSpecularLight (R3Vector N, R3Vector p0, R3Vector E, double k_s, 
     double ER = E.x * R.x + E.y * R.y + E.z * R.z;
     double ks_ERn = pow (ER, n) * k_s;
     Color specularlight;
-    specularlight.r = intensity.r * ks_ERn;
-    specularlight.g = intensity.g * ks_ERn;
-    specularlight.b = intensity.b * ks_ERn;
+    specularlight.r = color.r * ks_ERn;
+    specularlight.g = color.g * ks_ERn;
+    specularlight.b = color.b * ks_ERn;
     return specularlight;
 }
 

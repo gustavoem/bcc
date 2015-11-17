@@ -233,7 +233,7 @@ void init (void)
     material.k_s = 0;
     Sphere * sphere3 = new Sphere (center, 10, color, material);
     Light * light2 = new Light (center, color);
-    //lights.push_back (light2);
+    lights.push_back (light2);
     //objs.push_back (sphere3);
 
     color.r = 1;
@@ -279,8 +279,8 @@ void intersectElements (int x, int y)
         {
             Light * light = lights[j];
             // Ideia boa: light é um objeto
-            if (!isInShadow (inter_point, light->getCenter ()))
-                continue;
+            // if (isInShadow (inter_point, light->getCenter ()))
+            //     continue;
 
             R3Vector N = object->getNormal (inter_point);
             // Diffuse light
@@ -309,42 +309,45 @@ void intersectElements (int x, int y)
 }
 
 
-bool isInShadow (R3Vector objectPosition, R3Vector lightPosition)
-{
-    // Verifies if theres no intersection between light source and obj surface
-    for (unsigned int k  = 0; k < objs.size (); k++)
-    {
-        Object * candidateToIntersect = objs[k];
+// bool isInShadow (R3Vector objectPosition, R3Vector lightPosition)
+// {
+//     // Verifies if theres no intersection between light source and obj surface
+//     for (unsigned int k  = 0; k < objs.size (); k++)
+//     {
+//         Object * candidateToIntersect = objs[k];
         
-        R3Vector u;
-        u.x = lightPosition.x - objectPosition.x;
-        u.y = lightPosition.y - objectPosition.y;
-        u.z = lightPosition.z - objectPosition.z;
-        double lo_distance = u.x * u.x + u.y * u.y + u.z * u.z;
-        u.x /= lo_distance;
-        u.y /= lo_distance;
-        u.z /= lo_distance;
+//         R3Vector u;
+//         u.x = lightPosition.x - objectPosition.x;
+//         u.y = lightPosition.y - objectPosition.y;
+//         u.z = lightPosition.z - objectPosition.z;
+//         double lo_distance = u.x * u.x + u.y * u.y + u.z * u.z;
+//         // u.x /= lo_distance;
+//         // u.y /= lo_distance;
+//         // u.z /= lo_distance;
         
-        pair<Color, R3Vector> * intersection;
-        intersection = candidateToIntersect->intersect (u, objectPosition);
+//         pair<Color, R3Vector> * intersection;
+//         intersection = candidateToIntersect->intersect (u, objectPosition);
         
-        if (intersection == NULL)
-            continue;
+//         if (intersection == NULL)
+//             continue;
 
-        R3Vector intPosition = intersection->second;
-        R3Vector t;
-        t.x = intPosition.x - objectPosition.x;
-        t.y = intPosition.y - objectPosition.y;
-        t.z = intPosition.z - objectPosition.z;
-        double it_distance = t.x * t.x + t.y * t.y + t.z * t.z;
+//         R3Vector intPosition = intersection->second;
+//         R3Vector t;
+//         t.x = intPosition.x - objectPosition.x;
+//         t.y = intPosition.y - objectPosition.y;
+//         t.z = intPosition.z - objectPosition.z;
+//         double it_distance = t.x * t.x + t.y * t.y + t.z * t.z;
 
-        if (it_distance  < lo_distance)
-            return true;
-        else
-            continue;
-    }
-    return false;
-}
+//         double ut = u.x * t.x + u.y * t.y + u.z * t.z;
+
+//         if (ut >= 0 &&
+//          it_distance  < lo_distance)
+//             return true;
+//         else
+//             continue;
+//     }
+//     return false;
+// }
 
 
 void display (void)

@@ -50,14 +50,15 @@ struct Material
     }
 };
 
-struct Intersection 
+struct Intersection
 {
-    Color c;
+    Color color;
     R3Vector point;
-    Object * obj;
+    Object * object;
 };
 
-
 void normalize (R3Vector *);
+
+double norm (R3Vector);
 
 #endif

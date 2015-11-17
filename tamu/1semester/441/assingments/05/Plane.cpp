@@ -44,11 +44,11 @@ Intersection * Plane::intersect (R3Vector u, R3Vector p0)
     p.x += u.x * s;
     p.y += u.y * s;
     p.z += u.z * s;
-    
+
     Intersection * intersect = new Intersection;
-    intersect->c = color;
+    intersect->color = color;
     intersect->point = p;
-    intersect->obj = this;
+    intersect->object = this;
     return intersect;
 }
 

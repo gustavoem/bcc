@@ -52,9 +52,9 @@ Intersection * Sphere::intersect (R3Vector u, R3Vector p0)
         p.z = s * u.z + p0.z;
 
         Intersection * intersect = new Intersection;
-        intersect->c = c;
+        intersect->color = c;
         intersect->point = p;
-        intersect->obj = this;
+        intersect->object = this;
         return intersect;
     }
 

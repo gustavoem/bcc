@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 
+#include "Object.h"
 #include "global.h"
 #include "Sphere.h"
 #include "Light.h" 
@@ -59,6 +60,8 @@ void rayCast (int x, int y);
 // Verifies if an object is in a shadow from a light source
 bool isInShadow (R3Vector objectPosition, R3Vector lightPosition);
 
+// Returns the intersection of the ray to the nearest object
+Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights);
 
 int main (int argc, char** argv)
 {
@@ -258,61 +261,82 @@ void rayCast (int x, int y)
     u.y = y - eye.y;
     u.z = FILM_WALL_Z - eye.z;
     normalize (&u);
+    
+    Intersection * inter = intersectElements (u, eye, false);
 
-    for (unsigned int i = 0; i < objs.size (); i++)
+    Object * obj = inter->object;
+    Color c = inter->color;
+    R3Vector inter_point = inter->point;
+
+    // Ambient light
+    Material mt = obj->getMaterial ();
+    double k_a = mt.k_a;
+    c.r *= ambent_light->getIntensity ().r  * k_a;
+    c.g *= ambent_light->getIntensity ().g  * k_a;
+    c.b *= ambent_light->getIntensity ().b  * k_a;
+
+    // Diffuse and Specular Light
+    for (unsigned int j = 0; j < lights.size (); j++)
     {
-        Object * object = objs[i];
-        pair<Color, R3Vector> * intersection;
-        intersection = object->intersect (u, eye);
-        
-        // If intersects nothing or intersects a light go to the next object
-        if (intersection == NULL || object->isLight ())
-            continue;
+        Light * light = lights[j];
+        // if (isInShadow (inter_point, light->getCenter ()))
+        //     continue;
 
-        Color c = intersection->first;
-        R3Vector inter_point = intersection->second;
-        delete intersection;
-        
-        // Ambient light
-        Material mt = object->getMaterial ();
-        double k_a = mt.k_a;
-        c.r *= ambent_light->getIntensity ().r  * k_a;
-        c.g *= ambent_light->getIntensity ().g  * k_a;
-        c.b *= ambent_light->getIntensity ().b  * k_a;
-
-        // Diffuse and Specular Light
-        for (unsigned int j = 0; j < lights.size (); j++)
-        {
-            Light * light = lights[j];
-            // if (isInShadow (inter_point, light->getCenter ()))
-            //     continue;
-
-            R3Vector N = object->getNormal (inter_point);
-            // Diffuse light
-            double k_d = mt.k_d;
-            Color cd = light->getDiffuseLight (N, inter_point, k_d);
-            c.r += cd.r;
-            c.g += cd.g;
-            c.b += cd.b;
-            // Specular light
-            double k_s = mt.k_s;
-            double n = mt.n;
-            R3Vector E;
-            E.x = -u.x;
-            E.y = -u.y;
-            E.z = -u.z;
-            cd = light->getSpecularLight (N, inter_point, E, k_s, n);
-            c.r += cd.r;
-            c.g += cd.g;
-            c.b += cd.b;
-        }
-
-        float z = inter_point.z;
-        setFramebuffer (y, x, c.r, c.g, c.b, z);
+        R3Vector N = obj->getNormal (inter_point);
+        // Diffuse light
+        double k_d = mt.k_d;
+        Color cd = light->getDiffuseLight (N, inter_point, k_d);
+        c.r += cd.r;
+        c.g += cd.g;
+        c.b += cd.b;
+        // Specular light
+        double k_s = mt.k_s;
+        double n = mt.n;
+        R3Vector E;
+        E.x = -u.x;
+        E.y = -u.y;
+        E.z = -u.z;
+        cd = light->getSpecularLight (N, inter_point, E, k_s, n);
+        c.r += cd.r;
+        c.g += cd.g;
+        c.b += cd.b;
     }
+
+
+    setFramebuffer (y, x, c.r, c.g, c.b, 0);
 }
 
 
+
+Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
+{
+    Intersection * nearestIntersection = NULL;
+    double NIDistance = MAX_DEPTH * MAX_DEPTH;
+    for (unsigned int i = 0; i < objs.size (); i++)
+    {
+        Object * object = objs[i];
+        Intersection * intersection = object->intersect (u, p0);
+        
+        // If intersects nothing or intersects a light go to the next object
+        if (intersection == NULL)
+            continue;
+
+        double intDistance;
+        R3Vector p0ToInt = intersection->point;
+        p0ToInt.x = p0.x - p0ToInt.x;
+        p0ToInt.y = p0.y - p0ToInt.y;
+        p0ToInt.z = p0.z - p0ToInt.z;
+        intDistance = norm (p0ToInt);
+
+        if (nearestIntersection == NULL || intDistance < NIDistance)
+        {
+            nearestIntersection = intersection;
+            NIDistance = intDistance;
+        }
+
+    }
+    return nearestIntersection;
+}
 
 
 

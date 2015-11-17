@@ -17,9 +17,9 @@ Sphere::~Sphere ()
 // by calculation the two solutions for:
 //      s^2 - 2(u.dP)s + |dP|^2 - r^2
 //      where dP = P_c - P_0
-vector<Intersection> Sphere::intersect (R3Vector u, R3Vector p0)
+Intersection * Sphere::intersect (R3Vector u, R3Vector p0)
 {       
-    vector<Intersection> intersections;
+    Intersection * intersection = NULL;
     double u_dp = u.x * (center.x - p0.x)+
                   u.y * (center.y - p0.y) + 
                   u.z * (center.z - p0.z);
@@ -28,6 +28,7 @@ vector<Intersection> Sphere::intersect (R3Vector u, R3Vector p0)
                            pow (center.z - p0.z, 2);
     double discriminant = pow (u_dp, 2) - dp_mod_square + pow (size, 2);
 
+    double s = -1;
     if (discriminant >= 0)
     {
         Color c;
@@ -35,7 +36,6 @@ vector<Intersection> Sphere::intersect (R3Vector u, R3Vector p0)
         c.g = color.g;
         c.b = color.b;        
         
-        double s;
         double s1 = u_dp + sqrt (discriminant);
         double s2 = u_dp - sqrt (discriminant);
         double s_1st;
@@ -52,30 +52,26 @@ vector<Intersection> Sphere::intersect (R3Vector u, R3Vector p0)
             s_2nd = s1;
         }
 
-        R3Vector p1;
-        R3Vector p2;
-        p1.x = s_1st * u.x + p0.x;
-        p1.y = s_1st * u.y + p0.y;
-        p1.z = s_1st * u.z + p0.z;
-        p2.x = s_2nd * u.x + p0.x;
-        p2.y = s_2nd * u.y + p0.y;
-        p2.z = s_2nd * u.z + p0.z;
-
-        Intersection intersect;
-        intersect.color = c;
-        intersect.point = p1;
-        intersect.object = this;
-        if (s_1st > 0)
-            intersections.push_back (intersect);
-
-        if (s1 != s2)
-        {
-            intersect.point = p2;
-            if (s_2nd > 0)
-                intersections.push_back (intersect);
-        }
+        if (s_1st > 1e-5)
+            s = s_1st;
+        else
+            if (s_2nd > 1e-5)
+                s = s_2nd;
     }
-    return intersections;
+    
+    if (s > 1e-5)
+    {
+        R3Vector p = p0;
+        p.x += s * u.x;
+        p.y += s * u.y;
+        p.z += s * u.z;
+        intersection = new Intersection;
+        intersection->color = color;
+        intersection->point = p;
+        intersection->object = this;
+    }
+
+    return intersection;
 }
 
 

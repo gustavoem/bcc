@@ -27,7 +27,7 @@ public:
 
     // Intersects the shere with a ray
     //
-    virtual vector<Intersection> intersect (R3Vector, R3Vector);
+    virtual Intersection * intersect (R3Vector, R3Vector);
 
 
     // Returns material of the Plane

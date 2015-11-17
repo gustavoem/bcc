@@ -140,7 +140,7 @@ void init (void)
     R3Vector center;
     center.x = 100;
     center.y = 100;
-    center.z = FILM_WALL_Z + 500;
+    center.z = FILM_WALL_Z + 200;
     Material material;
     material.k_a = 0.2;
     material.k_d = 0.3;
@@ -220,8 +220,8 @@ void init (void)
     color.g = 70.0 / 255;
     color.b = 0;
     center.x = 400;
-    center.y = 10;
-    center.z = FILM_WALL_Z + 500;
+    center.y = 20;
+    center.z = FILM_WALL_Z;
     material.k_a = 2;
     material.k_d = 0;
     material.k_s = 0;
@@ -325,17 +325,11 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
     for (unsigned int i = 0; i < objs.size (); i++)
     {
         Object * object = objs[i];
-        vector<Intersection> intersections = object->intersect (u, p0);
+        Intersection * intersection = object->intersect (u, p0);
         
         // If intersects nothing or intersects a light go to the next object
-        if (intersections.size () == 0)
+        if (intersection == NULL)
             continue;
-
-        Intersection * intersection = NULL;
-        for (unsigned int k = 0; k < intersections.size (); k++)
-        {
-            if (intersections[])
-        }
 
         double intDistance;
         R3Vector p0ToInt = intersection->point;
@@ -349,7 +343,7 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
             // cout << "Intersected to an obj " << object << " distance: " << intDistance << endl; 
             // cout << "teste: " << (intDistance < NIDistance) << endl;
         }
-        if (nearestIntersection == NULL || intDistance < NIDistance)
+        if (nearestIntersection == NULL || intDistance - 1e-5 < NIDistance)
         {
             nearestIntersection = intersection;
             NIDistance = intDistance;

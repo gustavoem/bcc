@@ -27,9 +27,8 @@ Plane::~Plane ()
 //
 // OBS: we don't draw planes aligned to the vision, with u parallel to the plan and
 // with p0 inside the plan
-vector<Intersection> Plane::intersect (R3Vector u, R3Vector p0)
+Intersection * Plane::intersect (R3Vector u, R3Vector p0)
 {
-    vector<Intersection> intersections;
     // First, if u is perpendicular to the normal, there is no intersection
     double un = u.x * normal.x + u.y * normal.y + u.z * normal.z;
 
@@ -39,21 +38,18 @@ vector<Intersection> Plane::intersect (R3Vector u, R3Vector p0)
 
     // Finds the intersection point
     double s = dpn / un;
-    if (s > +1e-5)
-    {
-        R3Vector p = p0;
-        p.x += u.x * s;
-        p.y += u.y * s;
-        p.z += u.z * s;
+    if (s < +1e-5)
+        return NULL;
+    R3Vector p = p0;
+    p.x += u.x * s;
+    p.y += u.y * s;
+    p.z += u.z * s;
 
-        Intersection intersect;
-        intersect.color = color;
-        intersect.point = p;
-        intersect.object = this;
-
-        intersections.push_back (intersect);
-    }
-    return intersections;
+    Intersection * intersect = new Intersection;
+    intersect->color = color;
+    intersect->point = p;
+    intersect->object = this;
+    return intersect;
 }
 
 

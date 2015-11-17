@@ -17,7 +17,7 @@ Sphere::~Sphere ()
 // by calculation the two solutions for:
 //      s^2 - 2(u.dP)s + |dP|^2 - r^2
 //      where dP = P_c - P_0
-pair<Color, R3Vector> * Sphere::intersect (R3Vector u, R3Vector p0)
+Intersection * Sphere::intersect (R3Vector u, R3Vector p0)
 {       
     double u_dp = u.x * (center.x - p0.x)+
                   u.y * (center.y - p0.y) + 
@@ -51,9 +51,10 @@ pair<Color, R3Vector> * Sphere::intersect (R3Vector u, R3Vector p0)
         p.y = s * u.y + p0.y;
         p.z = s * u.z + p0.z;
 
-        pair<Color, R3Vector> * intersect = new pair<Color, R3Vector> ();
-        intersect->first = c;
-        intersect->second = p;
+        Intersection * intersect = new Intersection;
+        intersect->c = c;
+        intersect->point = p;
+        intersect->obj = this;
         return intersect;
     }
 

@@ -27,7 +27,7 @@ Plane::~Plane ()
 //
 // OBS: we don't draw planes aligned to the vision, with u parallel to the plan and
 // with p0 inside the plan
-pair<Color, R3Vector> * Plane::intersect (R3Vector u, R3Vector p0)
+Intersection * Plane::intersect (R3Vector u, R3Vector p0)
 {
     // First, if u is perpendicular to the normal, there is no intersection
     double un = u.x * normal.x + u.y * normal.y + u.z * normal.z;
@@ -44,13 +44,13 @@ pair<Color, R3Vector> * Plane::intersect (R3Vector u, R3Vector p0)
     p.x += u.x * s;
     p.y += u.y * s;
     p.z += u.z * s;
-
-    pair<Color, R3Vector> * intersect = new pair<Color, R3Vector> ();
-    intersect->first = color;
-    intersect->second = p;
-
+    
+    Intersection * intersect = new Intersection;
+    intersect->c = color;
+    intersect->point = p;
+    intersect->obj = this;
     return intersect;
-};
+}
 
 
 Material Plane::getMaterial ()

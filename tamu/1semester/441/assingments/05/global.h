@@ -8,6 +8,8 @@
 
 using namespace std;
 
+class Object;
+
 struct R3Vector 
 {
     double x;
@@ -46,6 +48,13 @@ struct Material
         k_s = s;
         n = na;
     }
+};
+
+struct Intersection 
+{
+    Color c;
+    R3Vector point;
+    Object * obj;
 };
 
 

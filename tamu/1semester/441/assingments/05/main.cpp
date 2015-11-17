@@ -54,7 +54,7 @@ void display (void);
 void init (void);
 
 // Traces the ray and determines the color of the pixel
-void intersectElements (int x, int y);
+void rayCast (int x, int y);
 
 // Verifies if an object is in a shadow from a light source
 bool isInShadow (R3Vector objectPosition, R3Vector lightPosition);
@@ -250,7 +250,7 @@ void init (void)
 }
 
 
-void intersectElements (int x, int y)
+void rayCast (int x, int y)
 {
     // Ray tracing R3Vector
     R3Vector u;
@@ -313,6 +313,9 @@ void intersectElements (int x, int y)
 }
 
 
+
+
+
 // bool isInShadow (R3Vector objectPosition, R3Vector lightPosition)
 // {
 //     // Verifies if theres no intersection between light source and obj surface
@@ -363,7 +366,7 @@ void display (void)
     {
         for (j = 0; j < ImageW; j++)
         {
-            intersectElements (i, j);
+            rayCast (i, j);
         }
     }
     drawit ();

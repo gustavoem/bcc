@@ -36,7 +36,7 @@ public:
 
     // Intersects the shere with a ray
     //
-    virtual pair<Color, R3Vector> * intersect (R3Vector, R3Vector) = 0;
+    virtual Intersection * intersect (R3Vector, R3Vector) = 0;
 
 
     // Returns material of the sphere

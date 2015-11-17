@@ -17,9 +17,6 @@
 
 float framebuffer[ImageH][ImageW][3];
 
-float zbuffer[ImageH][ImageW];
-
-
 // Elements to be drawn
 //
 vector<Object *> objs;
@@ -39,6 +36,9 @@ Light * ambent_light;
 R3Vector eye;
 
 
+Object * sphere_add;
+
+
 // Draws the scene
 void drawit (void);
 
@@ -56,9 +56,6 @@ void init (void);
 
 // Traces the ray and determines the color of the pixel
 void rayCast (int x, int y);
-
-// Verifies if an object is in a shadow from a light source
-bool isInShadow (R3Vector objectPosition, R3Vector lightPosition);
 
 // Returns the intersection of the ray to the nearest object
 Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights);
@@ -97,19 +94,13 @@ void clearFramebuffer ()
             framebuffer[i][j][0] = 0.0;
             framebuffer[i][j][1] = 0.0;
             framebuffer[i][j][2] = 0.0;
-
-            zbuffer[i][j] = MAX_DEPTH;
         }
     }
 }
 
 
-void setFramebuffer (int x, int y, float R, float G, float B, float z)
+void setFramebuffer (int x, int y, float R, float G, float B)
 {
-    if (zbuffer[x][y] < z)
-         return;
-    zbuffer[x][y] = z;
-
     if (R <= 1.0)
         if (R >= 0.0)
             framebuffer[x][y][0] = R;
@@ -149,7 +140,7 @@ void init (void)
     R3Vector center;
     center.x = 100;
     center.y = 100;
-    center.z = FILM_WALL_Z + 200;
+    center.z = FILM_WALL_Z + 500;
     Material material;
     material.k_a = 0.2;
     material.k_d = 0.3;
@@ -157,6 +148,7 @@ void init (void)
     material.n = 100;
     Sphere * sphere1 = new Sphere (center, 100, color, material);
     objs.push_back (sphere1);
+    sphere_add = sphere1;
 
 
     // Walls
@@ -220,26 +212,22 @@ void init (void)
     material.k_a = 1;
     material.k_d = 0;
     material.k_s = 0;
-    Sphere * sphere2 = new Sphere (center, 10, color, material);
     Light * light1 = new Light (center, color);
     lights.push_back (light1);
     objs.push_back (light1);
-    //objs.push_back (sphere2);
 
     color.r = 0.5;
     color.g = 70.0 / 255;
     color.b = 0;
     center.x = 400;
     center.y = 10;
-    center.z = FILM_WALL_Z + 100;
+    center.z = FILM_WALL_Z + 500;
     material.k_a = 2;
     material.k_d = 0;
     material.k_s = 0;
-    Sphere * sphere3 = new Sphere (center, 10, color, material);
     Light * light2 = new Light (center, color);
     lights.push_back (light2);
     objs.push_back (light2);
-    //objs.push_back (sphere3);
 
     color.r = 1;
     color.g = 1;
@@ -263,10 +251,14 @@ void rayCast (int x, int y)
     normalize (&u);
     
     Intersection * inter = intersectElements (u, eye, false);
+    if (inter == NULL) return;
 
     Object * obj = inter->object;
+    // if (obj->getMaterial ().k_s == 0.6)
+    //     cout << "Hum, intersection on the spheaaare" << obj << endl;
     Color c = inter->color;
     R3Vector inter_point = inter->point;
+    delete inter;
 
     // Ambient light
     Material mt = obj->getMaterial ();
@@ -279,16 +271,34 @@ void rayCast (int x, int y)
     for (unsigned int j = 0; j < lights.size (); j++)
     {
         Light * light = lights[j];
-        // if (isInShadow (inter_point, light->getCenter ()))
-        //     continue;
+
+        // Verifies if its in shadow
+        R3Vector itToLight = light->getCenter ();
+        itToLight.x = light->getCenter ().x - inter_point.x;
+        itToLight.y = light->getCenter ().y - inter_point.y;
+        itToLight.z = light->getCenter ().z - inter_point.z;
+        normalize (&itToLight);
+        inter = intersectElements (itToLight, inter_point, true);
+
+        if (inter->object != light)
+        {    
+        //     if (obj->getMaterial ().k_s == 0.6)
+        //     {
+        //         cout << "Intersected to: " << inter->object << endl;
+        //         cout.flush ();
+        //     }
+            continue;
+        }
 
         R3Vector N = obj->getNormal (inter_point);
+        
         // Diffuse light
         double k_d = mt.k_d;
         Color cd = light->getDiffuseLight (N, inter_point, k_d);
         c.r += cd.r;
         c.g += cd.g;
         c.b += cd.b;
+        
         // Specular light
         double k_s = mt.k_s;
         double n = mt.n;
@@ -303,7 +313,7 @@ void rayCast (int x, int y)
     }
 
 
-    setFramebuffer (y, x, c.r, c.g, c.b, 0);
+    setFramebuffer (y, x, c.r, c.g, c.b);
 }
 
 
@@ -315,11 +325,17 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
     for (unsigned int i = 0; i < objs.size (); i++)
     {
         Object * object = objs[i];
-        Intersection * intersection = object->intersect (u, p0);
+        vector<Intersection> intersections = object->intersect (u, p0);
         
         // If intersects nothing or intersects a light go to the next object
-        if (intersection == NULL)
+        if (intersections.size () == 0)
             continue;
+
+        Intersection * intersection = NULL;
+        for (unsigned int k = 0; k < intersections.size (); k++)
+        {
+            if (intersections[])
+        }
 
         double intDistance;
         R3Vector p0ToInt = intersection->point;
@@ -327,7 +343,12 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
         p0ToInt.y = p0.y - p0ToInt.y;
         p0ToInt.z = p0.z - p0ToInt.z;
         intDistance = norm (p0ToInt);
-
+        if (object == sphere_add)
+        {
+            // cout << "Nearest one: " << NIDistance << endl;
+            // cout << "Intersected to an obj " << object << " distance: " << intDistance << endl; 
+            // cout << "teste: " << (intDistance < NIDistance) << endl;
+        }
         if (nearestIntersection == NULL || intDistance < NIDistance)
         {
             nearestIntersection = intersection;
@@ -337,48 +358,6 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
     }
     return nearestIntersection;
 }
-
-
-
-// bool isInShadow (R3Vector objectPosition, R3Vector lightPosition)
-// {
-//     // Verifies if theres no intersection between light source and obj surface
-//     for (unsigned int k  = 0; k < objs.size (); k++)
-//     {
-//         Object * candidateToIntersect = objs[k];
-        
-//         R3Vector u;
-//         u.x = lightPosition.x - objectPosition.x;
-//         u.y = lightPosition.y - objectPosition.y;
-//         u.z = lightPosition.z - objectPosition.z;
-//         double lo_distance = u.x * u.x + u.y * u.y + u.z * u.z;
-//         // u.x /= lo_distance;
-//         // u.y /= lo_distance;
-//         // u.z /= lo_distance;
-        
-//         pair<Color, R3Vector> * intersection;
-//         intersection = candidateToIntersect->intersect (u, objectPosition);
-        
-//         if (intersection == NULL)
-//             continue;
-
-//         R3Vector intPosition = intersection->second;
-//         R3Vector t;
-//         t.x = intPosition.x - objectPosition.x;
-//         t.y = intPosition.y - objectPosition.y;
-//         t.z = intPosition.z - objectPosition.z;
-//         double it_distance = t.x * t.x + t.y * t.y + t.z * t.z;
-
-//         double ut = u.x * t.x + u.y * t.y + u.z * t.z;
-
-//         if (ut >= 0 &&
-//          it_distance  < lo_distance)
-//             return true;
-//         else
-//             continue;
-//     }
-//     return false;
-// }
 
 
 void display (void)

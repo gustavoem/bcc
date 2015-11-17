@@ -1,6 +1,6 @@
 #include "Light.h"
 
-Light::Light (R3Vector pos, Color color) : Sphere (pos, 5, color, Material (1, .0, .0, 0))
+Light::Light (R3Vector pos, Color color) : Sphere (pos, 10, color, Material (1, .0, .0, 0))
 {
     center = pos;
     this->color = color;

@@ -4,7 +4,7 @@
 #include "global.h"
 #include "Sphere.h"
 
-class Light : public Object
+class Light : public Sphere
 {
 
 private:
@@ -38,7 +38,9 @@ public:
     Color getSpecularLight (R3Vector, R3Vector, R3Vector, double, double);
 
 
-    R3Vector getCenter ();
+    // Returns true if object is a Light
+    //
+    virtual bool isLight ();
 };
 
 #endif

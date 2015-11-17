@@ -220,6 +220,7 @@ void init (void)
     Sphere * sphere2 = new Sphere (center, 10, color, material);
     Light * light1 = new Light (center, color);
     lights.push_back (light1);
+    objs.push_back (light1);
     //objs.push_back (sphere2);
 
     color.r = 0.5;
@@ -234,6 +235,7 @@ void init (void)
     Sphere * sphere3 = new Sphere (center, 10, color, material);
     Light * light2 = new Light (center, color);
     lights.push_back (light2);
+    objs.push_back (light2);
     //objs.push_back (sphere3);
 
     color.r = 1;
@@ -262,11 +264,16 @@ void intersectElements (int x, int y)
         Object * object = objs[i];
         pair<Color, R3Vector> * intersection;
         intersection = object->intersect (u, eye);
-        if (intersection == NULL)
+        
+        // If intersects nothing or intersects a light go to the next object
+        Light * l = dinamic_cast<Light *> (object);
+        if (intersection == NULL || l == NULL)
             continue;
 
-        Color c;
-        c = intersection->first;
+        Color c = intersection->first;
+        R3Vector inter_point = intersection->second;
+        delete intersection;
+        
         // Ambient light
         Material mt = object->getMaterial ();
         double k_a = mt.k_a;
@@ -274,11 +281,10 @@ void intersectElements (int x, int y)
         c.g *= ambent_light->getIntensity ().g  * k_a;
         c.b *= ambent_light->getIntensity ().b  * k_a;
 
-        R3Vector inter_point = intersection->second;
+        // Diffuse and Specular Light
         for (unsigned int j = 0; j < lights.size (); j++)
         {
             Light * light = lights[j];
-            // Ideia boa: light é um objeto
             // if (isInShadow (inter_point, light->getCenter ()))
             //     continue;
 
@@ -304,7 +310,6 @@ void intersectElements (int x, int y)
 
         float z = inter_point.z;
         setFramebuffer (y, x, c.r, c.g, c.b, z);
-        delete intersection;
     }
 }
 

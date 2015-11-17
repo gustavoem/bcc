@@ -51,6 +51,16 @@ public:
     //
     virtual R3Vector getNormal (R3Vector) = 0;
 
+
+    // Returns true if object is a Light
+    //
+    virtual bool isLight ();
+
+
+    // Returns the center of the object
+    //
+    R3Vector getCenter ();
+
 };
 
 #endif

@@ -11,3 +11,15 @@ Object::~Object ()
 {
 	return;
 }
+
+
+Object::isLight ()
+{
+	return false;
+}
+
+
+R3Vector getCenter ()
+{
+	return center;
+}

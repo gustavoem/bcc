@@ -31,6 +31,14 @@ struct Material
     double k_s;
     unsigned int n;
     
+    Material ()
+    {
+        k_a = 0;
+        k_d = 0;
+        k_s = 0;
+        n = 0;
+    }
+
     Material (double a, double d, double s, unsigned int na)
     {
         k_a = a;

@@ -32,6 +32,7 @@ struct Material
     double k_d;
     double k_s;
     unsigned int n;
+    double k_r;
     
     Material ()
     {
@@ -41,12 +42,13 @@ struct Material
         n = 0;
     }
 
-    Material (double a, double d, double s, unsigned int na)
+    Material (double a, double d, double s, unsigned int na, double r)
     {
         k_a = a;
         k_d = d;
         k_s = s;
         n = na;
+        k_r = r;
     }
 };
 
@@ -60,5 +62,7 @@ struct Intersection
 void normalize (R3Vector *);
 
 double norm (R3Vector);
+
+double prod (R3Vector, R3Vector);
 
 #endif

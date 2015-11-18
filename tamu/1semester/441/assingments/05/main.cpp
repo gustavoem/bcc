@@ -13,7 +13,7 @@
 #define ImageH 800
 #define FILM_WALL_Z 1000
 #define MAX_DEPTH 10000
-#define MAX_REFLECTION 2
+#define MAX_REFLECTION 7
 
 float framebuffer[ImageH][ImageW][3];
 
@@ -26,6 +26,7 @@ vector<Object *> objs;
 // 
 vector<Light *> lights;
 
+
 // Ambient light
 //
 Light * ambent_light;
@@ -36,8 +37,11 @@ Light * ambent_light;
 R3Vector eye;
 
 
-Object * sphere_add;
+int state = 0;
 
+
+// Keyboard callback
+void keyboard (unsigned char key, int x, int y);
 
 // Draws the scene
 void drawit (void);
@@ -58,7 +62,7 @@ void init (void);
 void rayCast (int x, int y);
 
 // Returns the intersection of the ray to the nearest object
-Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights);
+Intersection * intersectElement (R3Vector u, R3Vector p0, bool intersectLights);
 
 // Returns the color of a point being looked by V in the object obj
 Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int level);
@@ -71,12 +75,11 @@ int main (int argc, char** argv)
     glutInitWindowPosition (100,100);
     glutCreateWindow ("Gustavo Estrela - Assignment 5");
     glutDisplayFunc (display);
+    glutKeyboardFunc (keyboard);
     init ();
     glutMainLoop ();
     return 0;
 }
-
-
 
 
 void drawit (void)
@@ -136,102 +139,238 @@ void init (void)
     eye.y = 400;
     eye.z = 0;
 
+    if (state == 1)
+    {
+        // Sphere
+        Color color;
+        color.r = 0;
+        color.g = 1;
+        color.b = 1;
+        R3Vector center;
+        center.x = 100;
+        center.y = 100;
+        center.z = FILM_WALL_Z + 200;
+        Material material;
+        material.k_a = 0.2;
+        material.k_d = 0.3;
+        material.k_s = 0.6;
+        material.n = 100;
+        material.k_r = 0.0;
+        Sphere * sphere1 = new Sphere (center, 100, color, material);
+        objs.push_back (sphere1);
+
+
+        // Walls
+        color.r = .7;
+        color.g = .7;
+        color.b = .7;
+        center.x = 0;
+        center.y = 0;
+        center.z = FILM_WALL_Z;
+        material.k_a = 0.3;
+        material.k_d = 0.7;
+        material.k_s = 0;
+        R3Vector normal;
+        normal.x = 1;
+        normal.y = 0;
+        normal.z = 0;
+        material.n = 2;
+        material.k_r = 0;
+        // left plane
+        Plane * plane1 = new Plane (center, color, material, normal);
+        objs.push_back (plane1);
+        
+        // floor plane
+        normal.x = 0;
+        normal.y = 1;
+        normal.z = 0;
+        Plane * plane2 = new Plane (center, color, material, normal);
+        objs.push_back (plane2);
+        
+        center.x = 800;
+        center.y = 800;
+        
+        // ceiling
+        normal.x = 0;
+        normal.y = -1;
+        normal.z = 0;
+        Plane * plane3 = new Plane (center, color, material, normal);
+        objs.push_back (plane3);
+
+        // right plane
+        normal.x = -1;
+        normal.y = 0;
+        normal.z = 0;
+        Plane * plane4 = new Plane (center, color, material, normal);
+        objs.push_back (plane4);
+
+        // back plane
+        material.k_r = 1;
+        material.k_a = 0;
+        material.k_d = 0;
+        material.k_s = 0;
+        center.z = FILM_WALL_Z + 1000;
+        normal.x = 0;
+        normal.y = 0;
+        normal.z = -1;
+        Plane * plane5 = new Plane (center, color, material, normal);
+        objs.push_back (plane5);
+        material.k_r = 0;
+
+        // Light
+        color.r = 255 / 255;
+        color.g = 214.0 / 255;
+        color.b = 170.0 / 255;
+        center.x = 400;
+        center.y = 790;
+        center.z = FILM_WALL_Z + 100;
+        material.k_a = 1;
+        material.k_d = 0;
+        material.k_s = 0;
+        Light * light1 = new Light (center, color);
+        lights.push_back (light1);
+        objs.push_back (light1);
+
+        color.r = 0.5;
+        color.g = 70.0 / 255;
+        color.b = 0;
+        center.x = 400;
+        center.y = 20;
+        center.z = FILM_WALL_Z;
+        material.k_a = 2;
+        material.k_d = 0;
+        material.k_s = 0;
+        Light * light2 = new Light (center, color);
+        lights.push_back (light2);
+        objs.push_back (light2);
+
+    }
+    else
+    {
+        Color color;
+        R3Vector center;
+        center.x = 0;
+        center.y = 0;
+        center.z = FILM_WALL_Z;
+        Material material;
+        material.k_a = 0;
+        material.k_d = .1;
+        material.k_s = .1;
+        material.k_r = .7;
+        material.n = 2;
+        R3Vector normal;
+        
+        // floor
+        color.r = 0;
+        color.g = 1;
+        color.b = 0;
+        normal.x = 0;
+        normal.y =  1;
+        normal.z = 0;
+        Plane * plane2 = new Plane (center, color, material, normal);
+        objs.push_back (plane2);
+
+        // right plane
+        center.x = 400;
+        center.y = 800 * (sqrt (3) / 2);
+        color.r = 0;
+        color.g = 0;
+        color.b = 1;
+        normal.x = -sqrt (3);
+        normal.y =  -1;
+        normal.z = 0;
+        normalize (&normal);
+        Plane * plane3 = new Plane (center, color, material, normal);
+        objs.push_back (plane3);
+        
+        // left plane
+        color.r = 1;
+        color.g = 0;
+        color.b = 0;
+        normal.x = sqrt (3);
+        normal.y =  -1;
+        normal.z = 0;
+        normalize (&normal);
+        Plane * plane1 = new Plane (center, color, material, normal);
+        objs.push_back (plane1);
+
+
+        // bacl plane
+        color.r = .8;
+        color.g = .8;
+        color.b = .8;
+
+        material.k_r = 0;
+        material.k_a = 1;
+        material.k_d = 0;
+        material.k_s = 0;
+        center.z = FILM_WALL_Z + 5000;
+        normal.x = 0;
+        normal.y = 0;
+        normal.z = -1;
+        Plane * plane5 = new Plane (center, color, material, normal);
+        objs.push_back (plane5);
+        material.k_r = 0;
+
+        color.r = 1;
+        color.g = 0;
+        color.b = 0;
+        center.x = 400;
+        center.y = 800 * (sqrt (3) / 4) + 50;
+        center.z = FILM_WALL_Z + 4900;
+        material.k_a = 1;
+        material.k_d = 0.6;
+        material.k_s = 0.6;
+        material.n = 3;
+        material.k_r = 0;
+        Sphere * sphere1 = new Sphere (center, 100, color, material);
+        objs.push_back (sphere1);
+
+        color.r = 0;
+        color.g = 1;
+        color.b = 0;
+        center.x = 400 - 100;
+        center.y = 800 * (sqrt (3) / 4) - 100;
+        center.z = FILM_WALL_Z + 4900;
+        material.k_a = 1;
+        material.k_d = 0.6;
+        material.k_s = 0.6;
+        material.n = 3;
+        material.k_r = 0;
+        Sphere * sphere2 = new Sphere (center, 100, color, material);
+        objs.push_back (sphere2);
+
+        color.r = 0;
+        color.g = 0;
+        color.b = 1;
+        center.x = 400 + 100;
+        center.y = 800 * (sqrt (3) / 4) - 100;
+        center.z = FILM_WALL_Z + 4900;
+        material.k_a = 1;
+        material.k_d = 0.6;
+        material.k_s = 0.6;
+        material.n = 3;
+        material.k_r = 0;
+        Sphere * sphere3 = new Sphere (center, 100, color, material);
+        objs.push_back (sphere3);
+
+        // Light
+        color.r = 0.3;
+        color.g = 0.3;
+        color.b = 0.3;
+        center.x = 400;
+        center.y = 800 * (sqrt (3) / 4);
+        center.z = FILM_WALL_Z - 4900;
+        material.k_a = 1;
+        material.k_d = 0;
+        material.k_s = 0;
+        Light * light1 = new Light (center, color);
+        lights.push_back (light1);
+        objs.push_back (light1);
+    }
+
     Color color;
-    color.r = 0;
-    color.g = 1;
-    color.b = 1;
     R3Vector center;
-    center.x = 100;
-    center.y = 100;
-    center.z = FILM_WALL_Z + 200;
-    Material material;
-    material.k_a = 0.2;
-    material.k_d = 0.3;
-    material.k_s = 0.6;
-    material.n = 100;
-    Sphere * sphere1 = new Sphere (center, 100, color, material);
-    objs.push_back (sphere1);
-    sphere_add = sphere1;
-
-
-    // Walls
-    color.r = .7;
-    color.g = .7;
-    color.b = .7;
-    center.x = 0;
-    center.y = 0;
-    center.z = FILM_WALL_Z;
-    material.k_a = 0.3;
-    material.k_d = 0.7;
-    material.k_s = 0;
-    R3Vector normal;
-    normal.x = 1;
-    normal.y = 0;
-    normal.z = 0;
-    material.n = 2;
-    // left plane
-    Plane * plane1 = new Plane (center, color, material, normal);
-    objs.push_back (plane1);
-    
-    // floor plane
-    normal.x = 0;
-    normal.y = 1;
-    normal.z = 0;
-    Plane * plane2 = new Plane (center, color, material, normal);
-    objs.push_back (plane2);
-    
-    center.x = 800;
-    center.y = 800;
-    
-    // ceiling
-    normal.x = 0;
-    normal.y = -1;
-    normal.z = 0;
-    Plane * plane3 = new Plane (center, color, material, normal);
-    objs.push_back (plane3);
-
-    // right plane
-    normal.x = -1;
-    normal.y = 0;
-    normal.z = 0;
-    Plane * plane4 = new Plane (center, color, material, normal);
-    objs.push_back (plane4);
-
-    // back plane
-    center.z = FILM_WALL_Z + 1000;
-    normal.x = 0;
-    normal.y = 0;
-    normal.z = -1;
-    Plane * plane5 = new Plane (center, color, material, normal);
-    objs.push_back (plane5);
-
-    // Light
-    color.r = 255 / 255;
-    color.g = 214.0 / 255;
-    color.b = 170.0 / 255;
-    center.x = 400;
-    center.y = 790;
-    center.z = FILM_WALL_Z + 100;
-    material.k_a = 1;
-    material.k_d = 0;
-    material.k_s = 0;
-    Light * light1 = new Light (center, color);
-    lights.push_back (light1);
-    objs.push_back (light1);
-
-    color.r = 0.5;
-    color.g = 70.0 / 255;
-    color.b = 0;
-    center.x = 400;
-    center.y = 20;
-    center.z = FILM_WALL_Z;
-    material.k_a = 2;
-    material.k_d = 0;
-    material.k_s = 0;
-    Light * light2 = new Light (center, color);
-    lights.push_back (light2);
-    objs.push_back (light2);
-
     color.r = 1;
     color.g = 1;
     color.b = 1;
@@ -239,7 +378,6 @@ void init (void)
     center.y = 0;
     center.z = 0;
     ambent_light = new Light (center, color);
-
     clearFramebuffer ();
 }
 
@@ -253,15 +391,13 @@ void rayCast (int x, int y)
     u.z = FILM_WALL_Z - eye.z;
     normalize (&u);
     
-    Intersection * inter = intersectElements (u, eye, false);
+    Intersection * inter = intersectElement (u, eye, true);
     if (inter == NULL) return;
 
     Object * obj = inter->object;
     R3Vector inter_point = inter->point;
     Color c = pointColor (obj, inter_point, u, 0);
     delete inter;
-    
-
 
     setFramebuffer (y, x, c.r, c.g, c.b);
 }
@@ -276,6 +412,7 @@ Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int l
     c.r *= ambent_light->getIntensity ().r  * k_a;
     c.g *= ambent_light->getIntensity ().g  * k_a;
     c.b *= ambent_light->getIntensity ().b  * k_a;
+    R3Vector N = obj->getNormal (inter_point);
 
     // Diffuse and Specular Light
     for (unsigned int j = 0; j < lights.size (); j++)
@@ -288,11 +425,11 @@ Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int l
         itToLight.y = light->getCenter ().y - inter_point.y;
         itToLight.z = light->getCenter ().z - inter_point.z;
         normalize (&itToLight);
-        Intersection * inter = intersectElements (itToLight, inter_point, true);
-        if (inter->object != light)
+        Intersection * inter = intersectElement (itToLight, inter_point, true);
+        if (inter == NULL || inter->object != light)
             continue;
+        delete inter;
 
-        R3Vector N = obj->getNormal (inter_point);
         
         // Diffuse light
         double k_d = mt.k_d;
@@ -313,11 +450,48 @@ Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int l
         c.g += cd.g;
         c.b += cd.b;
     }
+
+    double k_r = mt.k_r;
+    if (k_r > 0)
+    {
+        // Get reflection intersection
+        V.x = -V.x;
+        V.y = -V.y;
+        V.z = -V.z;
+        double VN = prod (V, N);
+        R3Vector R = N;
+        R.x = 2 * VN * R.x - V.x;
+        R.y = 2 * VN * R.y - V.y;
+        R.z = 2 * VN * R.z - V.z;
+        normalize (&R);
+        Intersection * inter = intersectElement (R, inter_point, true);
+
+
+        Color refColor;
+        if (inter != NULL)
+        {
+            Object * reflectingObject = inter->object;
+            R3Vector reflectingPoint = inter->point;
+            if (reflectingObject->isLight () || level == MAX_REFLECTION)
+            {
+                refColor = reflectingObject->getColor ();
+            }
+            else
+            {
+                refColor = pointColor (reflectingObject, reflectingPoint, R, level + 1);
+            }
+        }
+
+        c.r += k_r * refColor.r;
+        c.g += k_r * refColor.g;
+        c.b += k_r * refColor.b;
+    }
+
     return c;
 }
 
 
-Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
+Intersection * intersectElement (R3Vector u, R3Vector p0, bool intersectLights)
 {
     Intersection * nearestIntersection = NULL;
     double NIDistance = MAX_DEPTH * MAX_DEPTH;
@@ -326,8 +500,10 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
         Object * object = objs[i];
         Intersection * intersection = object->intersect (u, p0);
         
-        // If intersects nothing or intersects a light go to the next object
-        if (intersection == NULL)
+        // If intersects nothing or intersects a light (and we are avoiding lights)
+        // go to the next object
+        if (intersection == NULL || 
+           (!intersectLights && intersection->object->isLight ()))
             continue;
 
         double intDistance;
@@ -336,12 +512,7 @@ Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights)
         p0ToInt.y = p0.y - p0ToInt.y;
         p0ToInt.z = p0.z - p0ToInt.z;
         intDistance = norm (p0ToInt);
-        if (object == sphere_add)
-        {
-            // cout << "Nearest one: " << NIDistance << endl;
-            // cout << "Intersected to an obj " << object << " distance: " << intDistance << endl; 
-            // cout << "teste: " << (intDistance < NIDistance) << endl;
-        }
+
         if (nearestIntersection == NULL || intDistance - 1e-5 < NIDistance)
         {
             nearestIntersection = intersection;
@@ -366,4 +537,17 @@ void display (void)
         }
     }
     drawit ();
+}
+
+
+void keyboard (unsigned char key, int x, int y)
+{
+    if (key == 'n')
+    {
+        state = 1 - state;
+        lights.clear ();
+        objs.clear ();
+        init ();
+        display ();
+    }
 }

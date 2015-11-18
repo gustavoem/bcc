@@ -15,3 +15,8 @@ double norm (R3Vector v)
     v_norm = sqrt (v_norm);
     return v_norm;
 }
+
+double prod (R3Vector a, R3Vector b)
+{
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}

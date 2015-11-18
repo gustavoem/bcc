@@ -61,7 +61,7 @@ void rayCast (int x, int y);
 Intersection * intersectElements (R3Vector u, R3Vector p0, bool intersectLights);
 
 // Returns the color of a point being looked by V in the object obj
-Color pointColor (Object obj, R3Vector inter_point, R3Vector V, unsigned int level)
+Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int level);
 
 int main (int argc, char** argv)
 {
@@ -267,7 +267,7 @@ void rayCast (int x, int y)
 }
 
 
-Color pointColor (Object obj, R3Vector inter_point, R3Vector V, unsigned int level)
+Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int level)
 {
     Color c = obj->getColor ();
     // Ambient light
@@ -288,9 +288,7 @@ Color pointColor (Object obj, R3Vector inter_point, R3Vector V, unsigned int lev
         itToLight.y = light->getCenter ().y - inter_point.y;
         itToLight.z = light->getCenter ().z - inter_point.z;
         normalize (&itToLight);
-        inter = intersectElements (itToLight, inter_point, true);
-
-        // Shadow
+        Intersection * inter = intersectElements (itToLight, inter_point, true);
         if (inter->object != light)
             continue;
 
@@ -307,9 +305,9 @@ Color pointColor (Object obj, R3Vector inter_point, R3Vector V, unsigned int lev
         double k_s = mt.k_s;
         double n = mt.n;
         R3Vector E;
-        E.x = -u.x;
-        E.y = -u.y;
-        E.z = -u.z;
+        E.x = -V.x;
+        E.y = -V.y;
+        E.z = -V.z;
         cd = light->getSpecularLight (N, inter_point, E, k_s, n);
         c.r += cd.r;
         c.g += cd.g;

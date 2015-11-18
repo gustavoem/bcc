@@ -1,0 +1,19 @@
+Assignment 05 - Ray Tracing
+Author: Gustavo Estrela de Matos
+
+This program can render two different scenes. The first one is a room with spheres in  the ground and the second one is a kaleidoscope. To switch between scenes you should press the key 'n'.
+
+The first scene shows the following requirements:
+Planes drawn - There are 5 planes drawn. Four of them, floor, ceiling, left and right wall are opaque and simulates walls we are used to see in real life. The last plane is the back of the room, and it simulates a mirror.
+Spheres drawn - There are 5 spheres drawn plus 2 more small spheres that are light sources.
+Ambient light - Theres one ambient light for the two scenes. It's a white light and we can see it's effect in the first small sphere that have k_s, k_d and k_r zero and k_a = 0.5.
+Diffuse light - The second small sphere reproduces diffuse and ambient lightning
+Specular light - The third small sphere reproduces specular, diffuse and ambient lightning
+Reflections - The fourth small ball has reflection and specular, diffuse and ambient lightning. The bigger sphere and the back wall also reproduces reflections. The maximum degree of reflection is set to 7
+Lights - There are 2 light sources in the environment. One in the ceiling, with a yellow-ish color (similar to lamps we have at home) and another one in the floor that's orange.
+Shadows - All the elements reproduces shadow correctly and we can see complex shadows caused by the big sphere. The big sphere causes shadow in the floor and in the left wall. These shadows are caused by the first light or by the second one, and there is also shadow spots from both light sources.
+
+The second scene is a kaleidoscope with 3 spheres close to the back plane. In this scene we can see all the 7 degrees of reflection working.
+
+Details:
+- The lights are drawn in my rendering but if that's not what you want you can change the parameter passed to intersectElement from rayCast to false. This parameter in intersectElement determines if we want to intersect lights or not, changing it to false will make the ray pass through and the light won't be drawn. For simplicity 

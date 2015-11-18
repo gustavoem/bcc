@@ -34,7 +34,7 @@ vector<Light *> lights;
 
 // Ambient light
 //
-Light * ambent_light;
+Light * ambient_light;
 
 
 // Eye position
@@ -170,7 +170,7 @@ void init (void)
         center.y = 50;
         center.z = FILM_WALL_Z + 400;
         center.x = 400;
-        material.k_a = 0.4;
+        material.k_a = 0.5;
         material.k_d = 0.0;
         material.k_s = 0;
         material.n = 10;
@@ -423,7 +423,7 @@ void init (void)
     center.x = 400;
     center.y = 0;
     center.z = 0;
-    ambent_light = new Light (center, color);
+    ambient_light = new Light (center, color);
     clearFramebuffer ();
 }
 
@@ -455,9 +455,9 @@ Color pointColor (Object * obj, R3Vector inter_point, R3Vector V, unsigned int l
     // Ambient light
     Material mt = obj->getMaterial ();
     double k_a = mt.k_a;
-    c.r *= ambent_light->getIntensity ().r  * k_a;
-    c.g *= ambent_light->getIntensity ().g  * k_a;
-    c.b *= ambent_light->getIntensity ().b  * k_a;
+    c.r *= ambient_light->getIntensity ().r  * k_a;
+    c.g *= ambient_light->getIntensity ().g  * k_a;
+    c.b *= ambient_light->getIntensity ().b  * k_a;
     R3Vector N = obj->getNormal (inter_point);
 
     // Diffuse and Specular Light

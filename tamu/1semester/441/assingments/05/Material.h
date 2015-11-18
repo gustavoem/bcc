@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #ifndef MATERIAL_H_
 #define MATERIAL_H_
 

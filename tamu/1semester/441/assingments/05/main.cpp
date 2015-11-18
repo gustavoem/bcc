@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+
 #include <GL/glut.h>
 
 #include "Object.h"
@@ -139,9 +144,9 @@ void init (void)
     eye.y = 400;
     eye.z = 0;
 
-    if (state == 1)
+    if (state == 0)
     {
-        // Sphere
+        // Sphere 1
         Color color;
         color.r = 0;
         color.g = 1;
@@ -155,9 +160,50 @@ void init (void)
         material.k_d = 0.3;
         material.k_s = 0.6;
         material.n = 100;
-        material.k_r = 0.0;
+        material.k_r = 0.1;
         Sphere * sphere1 = new Sphere (center, 100, color, material);
         objs.push_back (sphere1);
+
+        color.r = 1;
+        color.g = 1;
+        color.b = 1;
+        center.y = 50;
+        center.z = FILM_WALL_Z + 400;
+        center.x = 400;
+        material.k_a = 0.4;
+        material.k_d = 0.0;
+        material.k_s = 0;
+        material.n = 10;
+        material.k_r = 0.0;
+        Sphere * sphere2 = new Sphere (center, 50, color, material);
+        objs.push_back (sphere2);
+
+        center.x = 500;
+        material.k_a = 0.4;
+        material.k_d = 0.5;
+        material.k_s = 0.0;
+        material.n = 10;
+        material.k_r = 0.0;
+        Sphere * sphere3 = new Sphere (center, 50, color, material);
+        objs.push_back (sphere3);
+
+        center.x = 600;
+        material.k_a = 0.4;
+        material.k_d = 0.5;
+        material.k_s = 0.5;
+        material.n = 10;
+        material.k_r = 0.0;
+        Sphere * sphere4 = new Sphere (center, 50, color, material);
+        objs.push_back (sphere4);
+
+        center.x = 700;
+        material.k_a = 0.4;
+        material.k_d = 0.5;
+        material.k_s = 0.5;
+        material.n = 10;
+        material.k_r = 0.5;
+        Sphere * sphere5 = new Sphere (center, 50, color, material);
+        objs.push_back (sphere5);
 
 
         // Walls

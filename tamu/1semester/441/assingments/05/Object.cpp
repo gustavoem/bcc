@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #include "Object.h"
 
 Object::Object (R3Vector center, Color color, Material material)

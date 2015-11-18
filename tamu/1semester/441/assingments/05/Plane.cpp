@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #include "Plane.h"
 
 Plane::Plane (R3Vector pos, Color color, Material material, R3Vector normal) : 

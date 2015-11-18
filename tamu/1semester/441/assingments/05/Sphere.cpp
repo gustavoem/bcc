@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+
 #include "Sphere.h"
 
 Sphere::Sphere (R3Vector pos, double size, Color color, Material material) : 

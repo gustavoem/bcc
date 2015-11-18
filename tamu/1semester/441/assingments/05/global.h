@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 

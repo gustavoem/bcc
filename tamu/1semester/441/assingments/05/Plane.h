@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #ifndef PLANE_H_
 #define PLANE_H_
 

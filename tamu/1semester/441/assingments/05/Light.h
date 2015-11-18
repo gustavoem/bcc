@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+
 #ifndef LIGHT_H_
 #define LIGHT_H_
 

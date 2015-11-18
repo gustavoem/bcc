@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #include "Light.h"
 
 Light::Light (R3Vector pos, Color color) : Sphere (pos, 10, color, Material (1, .0, .0, 0, 0))

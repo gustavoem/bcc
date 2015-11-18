@@ -1,3 +1,8 @@
+/*
+    Author: Gustavo Estrela de Matos
+    Date: 11/18/15
+*/
+    
 #ifndef OBJECT_H_
 #define OBJECT_H_
 

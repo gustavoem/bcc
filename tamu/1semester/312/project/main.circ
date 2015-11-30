@@ -59,27 +59,79 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
-    <wire from="(310,670)" to="(330,670)"/>
-    <wire from="(330,610)" to="(330,670)"/>
-    <wire from="(210,640)" to="(260,640)"/>
-    <wire from="(290,560)" to="(290,610)"/>
+    <wire from="(620,650)" to="(620,660)"/>
+    <wire from="(270,700)" to="(290,700)"/>
     <wire from="(290,690)" to="(290,700)"/>
+    <wire from="(330,660)" to="(620,660)"/>
+    <wire from="(150,540)" to="(170,540)"/>
+    <wire from="(610,520)" to="(610,600)"/>
+    <wire from="(220,640)" to="(260,640)"/>
+    <wire from="(390,530)" to="(600,530)"/>
+    <wire from="(330,660)" to="(330,670)"/>
+    <wire from="(530,490)" to="(530,510)"/>
+    <wire from="(620,650)" to="(640,650)"/>
+    <wire from="(590,540)" to="(590,560)"/>
     <wire from="(290,610)" to="(330,610)"/>
-    <wire from="(240,670)" to="(240,700)"/>
-    <wire from="(240,700)" to="(290,700)"/>
-    <wire from="(150,670)" to="(240,670)"/>
+    <wire from="(600,530)" to="(600,580)"/>
+    <wire from="(240,700)" to="(270,700)"/>
+    <wire from="(180,670)" to="(180,680)"/>
+    <wire from="(330,540)" to="(590,540)"/>
+    <wire from="(170,540)" to="(170,570)"/>
     <wire from="(290,560)" to="(350,560)"/>
     <wire from="(260,670)" to="(280,670)"/>
+    <wire from="(310,670)" to="(330,670)"/>
+    <wire from="(220,570)" to="(220,640)"/>
+    <wire from="(730,650)" to="(740,650)"/>
+    <wire from="(330,610)" to="(330,660)"/>
+    <wire from="(270,480)" to="(270,700)"/>
+    <wire from="(530,510)" to="(620,510)"/>
+    <wire from="(390,490)" to="(390,530)"/>
+    <wire from="(210,640)" to="(220,640)"/>
+    <wire from="(460,520)" to="(610,520)"/>
+    <wire from="(620,510)" to="(620,620)"/>
+    <wire from="(240,670)" to="(240,700)"/>
+    <wire from="(270,480)" to="(300,480)"/>
+    <wire from="(180,670)" to="(240,670)"/>
+    <wire from="(330,490)" to="(330,540)"/>
     <wire from="(260,640)" to="(260,670)"/>
+    <wire from="(170,570)" to="(220,570)"/>
+    <wire from="(570,620)" to="(620,620)"/>
+    <wire from="(570,560)" to="(590,560)"/>
+    <wire from="(290,560)" to="(290,610)"/>
+    <wire from="(460,490)" to="(460,520)"/>
+    <wire from="(570,580)" to="(600,580)"/>
+    <wire from="(570,600)" to="(610,600)"/>
+    <wire from="(150,670)" to="(180,670)"/>
+    <comp lib="0" loc="(180,680)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="clock"/>
+    </comp>
     <comp lib="6" loc="(237,632)" name="Text">
       <a name="text" val="new_pc"/>
     </comp>
-    <comp loc="(380,550)" name="fetch_cicuit"/>
     <comp lib="6" loc="(313,600)" name="Text">
       <a name="text" val="pc"/>
     </comp>
-    <comp lib="0" loc="(150,670)" name="Clock"/>
+    <comp lib="0" loc="(740,650)" name="Tunnel">
+      <a name="width" val="8"/>
+      <a name="label" val="NEWPC"/>
+    </comp>
     <comp lib="4" loc="(310,670)" name="Register"/>
+    <comp lib="0" loc="(210,640)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="8"/>
+      <a name="label" val="NEWPC"/>
+    </comp>
+    <comp lib="0" loc="(150,540)" name="Pin">
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="PC"/>
+    </comp>
+    <comp loc="(380,550)" name="fetch_cicuit"/>
+    <comp lib="0" loc="(150,670)" name="Clock"/>
+    <comp loc="(430,470)" name="fetch_register"/>
+    <comp loc="(650,630)" name="pc_predict"/>
   </circuit>
   <circuit name="fetch_cicuit">
     <a name="circuit" val="fetch_cicuit"/>
@@ -184,23 +236,141 @@ f0 4*0 ba
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
+    <appear>
+      <rect fill="none" height="20" stroke="#000000" stroke-width="2" width="257" x="50" y="80"/>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="79" y="94">ifun</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="137" y="93">address</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="211" y="91">rax_on</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="278" y="93">rbx_on</text>
+      <circ-port height="8" pin="170,120" width="8" x="76" y="96"/>
+      <circ-port height="8" pin="170,180" width="8" x="136" y="96"/>
+      <circ-port height="8" pin="160,240" width="8" x="206" y="96"/>
+      <circ-port height="8" pin="160,300" width="8" x="276" y="96"/>
+      <circ-port height="8" pin="270,380" width="8" x="46" y="86"/>
+      <circ-port height="10" pin="430,120" width="10" x="75" y="75"/>
+      <circ-port height="10" pin="430,180" width="10" x="135" y="75"/>
+      <circ-port height="10" pin="430,240" width="10" x="205" y="75"/>
+      <circ-port height="10" pin="430,300" width="10" x="275" y="75"/>
+      <circ-anchor facing="east" height="6" width="6" x="177" y="77"/>
+    </appear>
+    <wire from="(280,210)" to="(320,210)"/>
+    <wire from="(340,300)" to="(430,300)"/>
+    <wire from="(280,210)" to="(280,270)"/>
+    <wire from="(280,270)" to="(320,270)"/>
+    <wire from="(170,180)" to="(310,180)"/>
+    <wire from="(320,140)" to="(320,150)"/>
+    <wire from="(340,240)" to="(430,240)"/>
+    <wire from="(280,270)" to="(280,330)"/>
+    <wire from="(170,120)" to="(310,120)"/>
+    <wire from="(320,200)" to="(320,210)"/>
+    <wire from="(270,380)" to="(280,380)"/>
+    <wire from="(340,180)" to="(430,180)"/>
+    <wire from="(320,260)" to="(320,270)"/>
+    <wire from="(340,120)" to="(430,120)"/>
+    <wire from="(280,150)" to="(320,150)"/>
+    <wire from="(280,330)" to="(280,380)"/>
+    <wire from="(160,240)" to="(310,240)"/>
+    <wire from="(280,150)" to="(280,210)"/>
+    <wire from="(280,330)" to="(320,330)"/>
+    <wire from="(320,320)" to="(320,330)"/>
+    <wire from="(160,300)" to="(310,300)"/>
+    <comp lib="4" loc="(340,120)" name="Register">
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="4" loc="(340,300)" name="Register">
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="4" loc="(340,240)" name="Register">
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="0" loc="(170,180)" name="Pin">
+      <a name="width" val="5"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="address"/>
+    </comp>
+    <comp lib="0" loc="(430,240)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="rax_on"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(270,380)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="clock"/>
+    </comp>
+    <comp lib="0" loc="(430,180)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="5"/>
+      <a name="label" val="address"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(160,240)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="rax_on"/>
+    </comp>
     <comp lib="0" loc="(170,120)" name="Pin">
       <a name="width" val="2"/>
       <a name="tristate" val="false"/>
       <a name="label" val="ifun"/>
     </comp>
-    <comp lib="0" loc="(170,160)" name="Pin">
-      <a name="width" val="5"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="address"/>
+    <comp lib="0" loc="(430,120)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="2"/>
+      <a name="label" val="ifun"/>
+      <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(170,200)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="rax_on"/>
-    </comp>
-    <comp lib="0" loc="(170,240)" name="Pin">
+    <comp lib="0" loc="(160,300)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="rbx_on"/>
+    </comp>
+    <comp lib="4" loc="(340,180)" name="Register">
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(430,300)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="rbx_on"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+  </circuit>
+  <circuit name="pc_predict">
+    <a name="circuit" val="pc_predict"/>
+    <a name="clabel" val=""/>
+    <a name="clabelup" val="east"/>
+    <a name="clabelfont" val="SansSerif plain 12"/>
+    <appear>
+      <path d="M61,51 Q65,61 69,51" fill="none" stroke="#808080" stroke-width="2"/>
+      <rect fill="none" height="30" stroke="#000000" stroke-width="2" width="90" x="50" y="50"/>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="95" y="68">pcpredict</text>
+      <circ-port height="8" pin="250,480" width="8" x="46" y="66"/>
+      <circ-port height="10" pin="480,190" width="10" x="135" y="65"/>
+      <circ-anchor facing="east" height="6" width="6" x="57" y="47"/>
+    </appear>
+    <wire from="(290,380)" to="(290,400)"/>
+    <wire from="(290,380)" to="(370,380)"/>
+    <wire from="(480,190)" to="(480,390)"/>
+    <wire from="(200,400)" to="(200,430)"/>
+    <wire from="(80,430)" to="(200,430)"/>
+    <wire from="(250,480)" to="(330,480)"/>
+    <wire from="(410,390)" to="(480,390)"/>
+    <wire from="(200,400)" to="(290,400)"/>
+    <wire from="(330,400)" to="(330,480)"/>
+    <wire from="(330,400)" to="(370,400)"/>
+    <comp lib="3" loc="(410,390)" name="Adder"/>
+    <comp lib="0" loc="(480,190)" name="Pin">
+      <a name="facing" val="south"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(250,480)" name="Pin">
+      <a name="width" val="8"/>
+      <a name="tristate" val="false"/>
+    </comp>
+    <comp lib="0" loc="(80,430)" name="Constant">
+      <a name="width" val="8"/>
     </comp>
   </circuit>
 </project>

@@ -410,16 +410,22 @@ void Skeleton::setBasePosture()
 {
    int i;
    m_RootPos[0] = m_RootPos[1] = m_RootPos[2] = 0.0;
+   m_RootPos[0] += xDisplacement;
 
    for(i=0;i<NUM_BONES_IN_ASF_FILE;i++)
       m_pBoneList[i].drx = m_pBoneList[i].dry = m_pBoneList[i].drz = 0.0;
+}
+
+void Skeleton::displaceInX (float amount)
+{
+	xDisplacement = amount;
 }
 
 
 // set the skeleton's pose based on the given posture
 void Skeleton::setPosture(Posture posture) 
 {
-    m_RootPos[0] = posture.root_pos.p[0];
+    m_RootPos[0] = posture.root_pos.p[0] + xDisplacement;
     m_RootPos[1] = posture.root_pos.p[1];
     m_RootPos[2] = posture.root_pos.p[2];
 
@@ -506,6 +512,8 @@ Skeleton::Skeleton(char *asf_filename, float scale)
 
 	//Set the aspect ratio of each bone 
 	set_bone_shape(m_pRootBone);
+
+	xDisplacement = 0;
 }
 
 Skeleton::~Skeleton()

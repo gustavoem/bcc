@@ -37,7 +37,9 @@ enum {OFF, ON};
 /***************  Static Variables *********/
 static Display displayer;		
 
-static Skeleton *pActor = NULL;			// Actor info as read from ASF file
+static Skeleton *pActor = NULL;			// Actor info as read from ASF fil
+static Skeleton *iActor = NULL;			// Same actor, but for interpolated movement
+
 static bool bActorExist = false;		// Set to true if actor exists
 
 static Motion *pSampledMotion = NULL;	// Motion information as read from AMC file
@@ -219,11 +221,18 @@ void load_callback(Fl_Button *button, void *)
 			//	delete pActor; 
 			//Read skeleton from asf file
 			pActor = new Skeleton(filename, MOCAP_SCALE);
+			iActor = new Skeleton(filename, MOCAP_SCALE - 10);
+			iActor->displaceInX (10);
+			
 
 			//Set the rotations for all bones in their local coordinate system to 0
 			//Set root position to (0, 0, 0)
 			pActor->setBasePosture();
+			iActor->setBasePosture();
+			
 			displayer.loadActor(pActor);
+			displayer.loadActor(iActor);
+
 			bActorExist = true;
 			glwindow->redraw();
 		}
@@ -251,9 +260,13 @@ void load_callback(Fl_Button *button, void *)
 
 				//Read motion (.amc) file and create a motion
 				pSampledMotion = new Motion(filename, MOCAP_SCALE,pActor);
+				pInterpMotion = new Motion (pSampledMotion->m_NumFrames);
+				pInterpMotion->pActor = pActor;
+				
 
 				//set sampled motion for display
-				displayer.loadMotion(pSampledMotion);               
+				displayer.loadMotion(pSampledMotion);
+				displayer.loadMotion(pInterpMotion);
 			
 				//Tell actor to perform the first pose ( first posture )
 //				pActor->setPosture(displayer.m_pMotion->m_pPostures[0]);          
@@ -796,11 +809,15 @@ if (argc > 2)
 				delete pActor; 
 			//Read skeleton from asf file
 			pActor = new Skeleton(filename, MOCAP_SCALE);
+			iActor = new Skeleton(filename, MOCAP_SCALE);
+			iActor->displaceInX (10);
 
 			//Set the rotations for all bones in their local coordinate system to 0
 			//Set root position to (0, 0, 0)
 			pActor->setBasePosture();
+			iActor->setBasePosture();
 			displayer.loadActor(pActor);
+			displayer.loadActor(iActor);
 			bActorExist = true;
 		}
 	}
@@ -827,12 +844,16 @@ if (argc > 2)
 
 				//Read motion (.amc) file and create a motion
 				pSampledMotion = new Motion(filename, MOCAP_SCALE,pActor);
+				pInterpMotion = new Motion(pSampledMotion->m_NumFrames);
+				pInterpMotion->pActor = iActor;
 
 				//set sampled motion for display
-				displayer.loadMotion(pSampledMotion);               
+				displayer.loadMotion(pSampledMotion);
+				displayer.loadMotion(pInterpMotion);
 			
 				//Tell actor to perform the first pose ( first posture )
-				pActor->setPosture(displayer.m_pMotion[0]->m_pPostures[0]);          
+				pActor->setPosture(displayer.m_pMotion[0]->m_pPostures[0]);
+				iActor->setPosture(displayer.m_pMotion[0]->m_pPostures[0]);
 
 				frame_slider->maximum((double)displayer.m_pMotion[0]->m_NumFrames );
 

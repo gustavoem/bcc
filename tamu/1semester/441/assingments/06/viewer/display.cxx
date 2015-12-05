@@ -19,8 +19,13 @@ Display::Display()
 {
 	m_SpotJoint = -1;
 	numActors = 0;
-	m_pActor[0] = NULL;
-	m_pMotion[0] = NULL;
+	numMotions = 0;
+
+	for (unsigned int i = 0; i < MAX_SKELS; i++)
+	{
+		m_pActor[i] = NULL;
+		m_pMotion[i] = NULL;
+	}
 }
 
 Display::~Display()
@@ -213,12 +218,9 @@ void Display::show()
 
 void Display::loadMotion(Motion *pMotion)
 {
-	if (numActors - 1 > MAX_SKELS) return;
-//set a pointer to the new motion
-
-	if(m_pMotion[numActors-1]!=NULL) 
-		delete m_pMotion[numActors-1];
-	m_pMotion[numActors-1] = pMotion;
+	if (numMotions > MAX_SKELS) return;
+	
+	m_pMotion[numMotions++] = pMotion;
 }
 
 //Set actor for display

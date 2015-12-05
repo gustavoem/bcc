@@ -73,6 +73,9 @@ class Skeleton {
 	//Initial posture Root at (0,0,0)
 	//All bone rotations are set to 0
     void setBasePosture();
+	
+	// Displace the skeleton in respect to x coordinate
+	void displaceInX (float amount);
 	  
 
   private:
@@ -80,6 +83,8 @@ class Skeleton {
 	//parse the skeleton (.ASF) file	
     void readASFfile(char* asf_filename, float scale);
 
+	//Determines how much we displace the skeleton in the x axis
+	float xDisplacement;
 
 	//This recursive function traverces skeleton hierarchy 
 	//and returns a pointer to the bone with index - bIndex

@@ -42,6 +42,7 @@ class Display
 	public: 
 		int m_SpotJoint;		//joint whose local coordinate system is drawn
 		int numActors;
+		int numMotions;
 		Skeleton *m_pActor[MAX_SKELS];		//pointer to current actor
 		Motion *m_pMotion[MAX_SKELS];		//pointer to current motion	
 

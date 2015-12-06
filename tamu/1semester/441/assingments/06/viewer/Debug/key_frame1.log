@@ -1,4 +1,4 @@
-﻿Build started 06/12/2015 10:32:22.
+﻿Build started 06/12/2015 11:40:35.
      1>Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\viewer\key_frame1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\Gustavo\Desktop\asf_amc_viewer\fltk-1.0.11" /ZI /nologo /W1 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc110.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt player.cxx
@@ -15,6 +15,8 @@
          .\Debug/transform.obj
          .\Debug/vector.obj
          "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\lib\fltkd.lib"
+     1>CatmullRom.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+            Creating library .\Debug\key_frame1.lib and object .\Debug\key_frame1.exp
          key_frame1.vcxproj -> C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\viewer\.\Debug\key_frame1.exe
        BscMake:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\bscmake.exe /nologo /o".\Debug/key_frame1.bsc" .\Debug\CatmullRom.sbr .\Debug\display.sbr .\Debug\interface.sbr .\Debug\interpolator.sbr .\Debug\motion.sbr .\Debug\player.sbr .\Debug\posture.sbr .\Debug\skeleton.sbr .\Debug\transform.sbr .\Debug\vector.sbr
@@ -22,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.25
+Time Elapsed 00:00:04.26

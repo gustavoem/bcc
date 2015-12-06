@@ -1,8 +1,145 @@
-﻿Build started 06/12/2015 00:15:36.
-     1>Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\visualc\fltk.lib.vcxproj" on node 2 (Build target(s)).
+﻿Build started 06/12/2015 11:19:11.
+     1>Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\visualc\fltk.lib.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I. /I.. /Z7 /nologo /W1 /WX- /Od /Oy- /D FL_STATIC /D WIN32 /D _DEBUG /D _WINDOWS /D WIN32_LEAN_AND_MEAN /D VC_EXTRA_LEAN /D WIN32_EXTRA_LEAN /D _VC80_UPGRADE=0x0600 /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc110.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt ..\src\Fl_Button.cxx
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I. /I.. /Z7 /nologo /W1 /WX- /Od /Oy- /D FL_STATIC /D WIN32 /D _DEBUG /D _WINDOWS /D WIN32_LEAN_AND_MEAN /D VC_EXTRA_LEAN /D WIN32_EXTRA_LEAN /D _VC80_UPGRADE=0x0600 /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc110.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt ..\src\filename_absolute.cxx ..\src\filename_expand.cxx ..\src\filename_ext.cxx ..\src\filename_isdir.cxx ..\src\filename_list.cxx ..\src\filename_match.cxx ..\src\filename_setext.cxx ..\src\Fl.cxx ..\src\Fl_abort.cxx ..\src\Fl_add_idle.cxx ..\src\Fl_Adjuster.cxx ..\src\fl_arc.cxx ..\src\fl_arci.cxx ..\src\Fl_arg.cxx ..\src\fl_ask.cxx ..\src\Fl_Bitmap.cxx ..\src\Fl_Box.cxx ..\src\fl_boxtype.cxx ..\src\Fl_Browser.cxx ..\src\Fl_Browser_.cxx ..\src\Fl_Browser_load.cxx ..\src\Fl_Button.cxx ..\src\Fl_Chart.cxx ..\src\Fl_Check_Button.cxx ..\src\Fl_Choice.cxx ..\src\Fl_Clock.cxx ..\src\fl_color.cxx ..\src\Fl_Color_Chooser.cxx ..\src\Fl_compose.cxx ..\src\Fl_Counter.cxx ..\src\fl_cursor.cxx ..\src\fl_curve.cxx ..\src\Fl_cutpaste.cxx ..\src\Fl_Dial.cxx ..\src\fl_diamond_box.cxx ..\src\Fl_display.cxx ..\src\Fl_Double_Window.cxx ..\src\fl_draw.cxx ..\src\fl_draw_image.cxx ..\src\fl_draw_pixmap.cxx ..\src\fl_engraved_label.cxx ..\src\fl_file_chooser.cxx ..\src\fl_font.cxx ..\src\Fl_get_key.cxx ..\src\Fl_get_system_colors.cxx ..\src\Fl_Gl_Choice.cxx ..\src\Fl_Gl_Overlay.cxx ..\src\Fl_Gl_Window.cxx ..\src\Fl_grab.cxx ..\src\Fl_Group.cxx ..\src\Fl_Image.cxx ..\src\Fl_Input.cxx ..\src\Fl_Input_.cxx ..\src\fl_labeltype.cxx ..\src\Fl_Light_Button.cxx ..\src\fl_line_style.cxx ..\src\Fl_Menu.cxx ..\src\Fl_Menu_.cxx ..\src\Fl_Menu_add.cxx ..\src\Fl_Menu_Bar.cxx ..\src\Fl_Menu_Button.cxx ..\src\Fl_Menu_global.cxx ..\src\Fl_Menu_Window.cxx ..\src\Fl_Multi_Label.cxx ..\src\Fl_Output.cxx ..\src\fl_oval_box.cxx ..\src\fl_overlay.cxx ..\src\fl_overlay_visual.cxx ..\src\Fl_Overlay_Window.cxx ..\src\Fl_own_colormap.cxx ..\src\Fl_Pack.cxx ..\src\Fl_Pixmap.cxx ..\src\Fl_Positioner.cxx ..\src\fl_rect.cxx ..\src\Fl_Repeat_Button.cxx ..\src\Fl_Return_Button.cxx ..\src\Fl_Roller.cxx ..\src\fl_round_box.cxx ..\src\Fl_Round_Button.cxx ..\src\fl_rounded_box.cxx ..\src\Fl_Scroll.cxx ..\src\fl_scroll_area.cxx ..\src\Fl_Scrollbar.cxx ..\src\fl_set_font.cxx ..\src\fl_set_fonts.cxx ..\src\fl_shadow_box.cxx ..\src\fl_shortcut.cxx ..\src\fl_show_colormap.cxx ..\src\Fl_Single_Window.cxx ..\src\Fl_Slider.cxx ..\src\fl_symbols.cxx ..\src\Fl_Tabs.cxx ..\src\Fl_Tile.cxx ..\src\Fl_Valuator.cxx ..\src\Fl_Value_Input.cxx ..\src\Fl_Value_Output.cxx ..\src\Fl_Value_Slider.cxx ..\src\fl_vertex.cxx ..\src\Fl_visual.cxx ..\src\Fl_Widget.cxx ..\src\Fl_Window.cxx ..\src\Fl_Window_fullscreen.cxx ..\src\Fl_Window_hotspot.cxx ..\src\Fl_Window_iconize.cxx ..\src\Fl_x.cxx ..\src\forms_bitmap.cxx ..\src\forms_compatability.cxx ..\src\forms_free.cxx ..\src\forms_fselect.cxx ..\src\forms_pixmap.cxx ..\src\forms_timer.cxx ..\src\gl_draw.cxx ..\src\gl_start.cxx ..\src\glut_compatability.cxx ..\src\glut_font.cxx
+         filename_absolute.cxx
+         filename_expand.cxx
+         filename_ext.cxx
+         filename_isdir.cxx
+         filename_list.cxx
+         filename_match.cxx
+         filename_setext.cxx
+         Fl.cxx
+         Fl_abort.cxx
+     1>..\src\Fl_abort.cxx(62): warning C4273: 'vsnprintf' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(340) : see previous definition of 'vsnprintf'
+         Fl_add_idle.cxx
+         Fl_Adjuster.cxx
+         fl_arc.cxx
+         fl_arci.cxx
+         Fl_arg.cxx
+         fl_ask.cxx
+     1>..\src\fl_ask.cxx(86): warning C4273: 'vsnprintf' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(340) : see previous definition of 'vsnprintf'
+         Fl_Bitmap.cxx
+         Fl_Box.cxx
+         fl_boxtype.cxx
+         Fl_Browser.cxx
+         Fl_Browser_.cxx
+         Generating Code...
+         Compiling...
+         Fl_Browser_load.cxx
          Fl_Button.cxx
+         Fl_Chart.cxx
+         Fl_Check_Button.cxx
+         Fl_Choice.cxx
+         Fl_Clock.cxx
+         fl_color.cxx
+         Fl_Color_Chooser.cxx
+         Fl_compose.cxx
+         Fl_Counter.cxx
+         fl_cursor.cxx
+         fl_curve.cxx
+         Fl_cutpaste.cxx
+         Fl_Dial.cxx
+         fl_diamond_box.cxx
+         Fl_display.cxx
+         Fl_Double_Window.cxx
+         fl_draw.cxx
+         fl_draw_image.cxx
+         fl_draw_pixmap.cxx
+         Generating Code...
+         Compiling...
+         fl_engraved_label.cxx
+         fl_file_chooser.cxx
+         fl_font.cxx
+         Fl_get_key.cxx
+         Fl_get_system_colors.cxx
+         Fl_Gl_Choice.cxx
+         Fl_Gl_Overlay.cxx
+         Fl_Gl_Window.cxx
+         Fl_grab.cxx
+         Fl_Group.cxx
+         Fl_Image.cxx
+         Fl_Input.cxx
+         Fl_Input_.cxx
+         fl_labeltype.cxx
+         Fl_Light_Button.cxx
+         fl_line_style.cxx
+         Fl_Menu.cxx
+         Fl_Menu_.cxx
+         Fl_Menu_add.cxx
+         Fl_Menu_Bar.cxx
+         Generating Code...
+         Compiling...
+         Fl_Menu_Button.cxx
+         Fl_Menu_global.cxx
+         Fl_Menu_Window.cxx
+         Fl_Multi_Label.cxx
+         Fl_Output.cxx
+         fl_oval_box.cxx
+         fl_overlay.cxx
+         fl_overlay_visual.cxx
+         Fl_Overlay_Window.cxx
+         Fl_own_colormap.cxx
+         Fl_Pack.cxx
+         Fl_Pixmap.cxx
+         Fl_Positioner.cxx
+         fl_rect.cxx
+         Fl_Repeat_Button.cxx
+         Fl_Return_Button.cxx
+         Fl_Roller.cxx
+         fl_round_box.cxx
+         Fl_Round_Button.cxx
+         fl_rounded_box.cxx
+         Generating Code...
+         Compiling...
+         Fl_Scroll.cxx
+         fl_scroll_area.cxx
+         Fl_Scrollbar.cxx
+         fl_set_font.cxx
+         fl_set_fonts.cxx
+         fl_shadow_box.cxx
+         fl_shortcut.cxx
+         fl_show_colormap.cxx
+         Fl_Single_Window.cxx
+         Fl_Slider.cxx
+         fl_symbols.cxx
+         Fl_Tabs.cxx
+         Fl_Tile.cxx
+         Fl_Valuator.cxx
+         Fl_Value_Input.cxx
+         Fl_Value_Output.cxx
+         Fl_Value_Slider.cxx
+         fl_vertex.cxx
+         Fl_visual.cxx
+         Fl_Widget.cxx
+         Generating Code...
+         Compiling...
+         Fl_Window.cxx
+         Fl_Window_fullscreen.cxx
+         Fl_Window_hotspot.cxx
+         Fl_Window_iconize.cxx
+         Fl_x.cxx
+         forms_bitmap.cxx
+         forms_compatability.cxx
+         forms_free.cxx
+         forms_fselect.cxx
+         forms_pixmap.cxx
+         forms_timer.cxx
+         gl_draw.cxx
+         gl_start.cxx
+         glut_compatability.cxx
+         glut_font.cxx
+         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I. /I.. /Z7 /nologo /W1 /WX- /Od /Oy- /D FL_STATIC /D WIN32 /D _DEBUG /D _WINDOWS /D WIN32_LEAN_AND_MEAN /D VC_EXTRA_LEAN /D WIN32_EXTRA_LEAN /D _VC80_UPGRADE=0x0600 /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc110.pdb" /FR".\Debug\\" /Gd /TC /analyze- /errorReport:prompt ..\src\fl_call_main.c ..\src\numericsort.c ..\src\scandir.c ..\src\vsnprintf.c
+         fl_call_main.c
+         numericsort.c
+         scandir.c
+         vsnprintf.c
+     1>..\src\vsnprintf.c(54): warning C4273: 'vsnprintf' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(340) : see previous definition of 'vsnprintf'
+         Generating Code...
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1299,5): warning MSB8012: TargetPath(C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\visualc\.\Debug\fltk.lib) does not match the Library's OutputFile property value (C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\lib\fltkd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1301,5): warning MSB8012: TargetName(fltk) does not match the Library's OutputFile property value (fltkd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
        Lib:
@@ -128,8 +265,8 @@
          fltk.lib.vcxproj -> C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\visualc\.\Debug\fltk.lib
        BscMake:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\bscmake.exe /nologo /o".\Debug/fltk.lib.bsc" .\Debug\filename_absolute.sbr .\Debug\filename_expand.sbr .\Debug\filename_ext.sbr .\Debug\filename_isdir.sbr .\Debug\filename_list.sbr .\Debug\filename_match.sbr .\Debug\filename_setext.sbr .\Debug\Fl.sbr .\Debug\Fl_abort.sbr .\Debug\Fl_add_idle.sbr .\Debug\Fl_Adjuster.sbr .\Debug\fl_arc.sbr .\Debug\fl_arci.sbr .\Debug\Fl_arg.sbr .\Debug\fl_ask.sbr .\Debug\Fl_Bitmap.sbr .\Debug\Fl_Box.sbr .\Debug\fl_boxtype.sbr .\Debug\Fl_Browser.sbr .\Debug\Fl_Browser_.sbr .\Debug\Fl_Browser_load.sbr .\Debug\Fl_Button.sbr .\Debug\fl_call_main.sbr .\Debug\Fl_Chart.sbr .\Debug\Fl_Check_Button.sbr .\Debug\Fl_Choice.sbr .\Debug\Fl_Clock.sbr .\Debug\fl_color.sbr .\Debug\Fl_Color_Chooser.sbr .\Debug\Fl_compose.sbr .\Debug\Fl_Counter.sbr .\Debug\fl_cursor.sbr .\Debug\fl_curve.sbr .\Debug\Fl_cutpaste.sbr .\Debug\Fl_Dial.sbr .\Debug\fl_diamond_box.sbr .\Debug\Fl_display.sbr .\Debug\Fl_Double_Window.sbr .\Debug\fl_draw.sbr .\Debug\fl_draw_image.sbr .\Debug\fl_draw_pixmap.sbr .\Debug\fl_engraved_label.sbr .\Debug\fl_file_chooser.sbr .\Debug\fl_font.sbr .\Debug\Fl_get_key.sbr .\Debug\Fl_get_system_colors.sbr .\Debug\Fl_Gl_Choice.sbr .\Debug\Fl_Gl_Overlay.sbr .\Debug\Fl_Gl_Window.sbr .\Debug\Fl_grab.sbr .\Debug\Fl_Group.sbr .\Debug\Fl_Image.sbr .\Debug\Fl_Input.sbr .\Debug\Fl_Input_.sbr .\Debug\fl_labeltype.sbr .\Debug\Fl_Light_Button.sbr .\Debug\fl_line_style.sbr .\Debug\Fl_Menu.sbr .\Debug\Fl_Menu_.sbr .\Debug\Fl_Menu_add.sbr .\Debug\Fl_Menu_Bar.sbr .\Debug\Fl_Menu_Button.sbr .\Debug\Fl_Menu_global.sbr .\Debug\Fl_Menu_Window.sbr .\Debug\Fl_Multi_Label.sbr .\Debug\Fl_Output.sbr .\Debug\fl_oval_box.sbr .\Debug\fl_overlay.sbr .\Debug\fl_overlay_visual.sbr .\Debug\Fl_Overlay_Window.sbr .\Debug\Fl_own_colormap.sbr .\Debug\Fl_Pack.sbr .\Debug\Fl_Pixmap.sbr .\Debug\Fl_Positioner.sbr .\Debug\fl_rect.sbr .\Debug\Fl_Repeat_Button.sbr .\Debug\Fl_Return_Button.sbr .\Debug\Fl_Roller.sbr .\Debug\fl_round_box.sbr .\Debug\Fl_Round_Button.sbr .\Debug\fl_rounded_box.sbr .\Debug\Fl_Scroll.sbr .\Debug\fl_scroll_area.sbr .\Debug\Fl_Scrollbar.sbr .\Debug\fl_set_font.sbr .\Debug\fl_set_fonts.sbr .\Debug\fl_shadow_box.sbr .\Debug\fl_shortcut.sbr .\Debug\fl_show_colormap.sbr .\Debug\Fl_Single_Window.sbr .\Debug\Fl_Slider.sbr .\Debug\fl_symbols.sbr .\Debug\Fl_Tabs.sbr .\Debug\Fl_Tile.sbr .\Debug\Fl_Valuator.sbr .\Debug\Fl_Value_Input.sbr .\Debug\Fl_Value_Output.sbr .\Debug\Fl_Value_Slider.sbr .\Debug\fl_vertex.sbr .\Debug\Fl_visual.sbr .\Debug\Fl_Widget.sbr .\Debug\Fl_Window.sbr .\Debug\Fl_Window_fullscreen.sbr .\Debug\Fl_Window_hotspot.sbr .\Debug\Fl_Window_iconize.sbr .\Debug\Fl_x.sbr .\Debug\forms_bitmap.sbr .\Debug\forms_compatability.sbr .\Debug\forms_free.sbr .\Debug\forms_fselect.sbr .\Debug\forms_pixmap.sbr .\Debug\forms_timer.sbr .\Debug\gl_draw.sbr .\Debug\gl_start.sbr .\Debug\glut_compatability.sbr .\Debug\glut_font.sbr .\Debug\numericsort.sbr .\Debug\scandir.sbr .\Debug\vsnprintf.sbr
-     1>Done Building Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\visualc\fltk.lib.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\visualc\fltk.lib.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.68
+Time Elapsed 00:00:18.76

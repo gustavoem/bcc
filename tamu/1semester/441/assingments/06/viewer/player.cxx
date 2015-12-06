@@ -44,7 +44,7 @@ static Skeleton *iActor = NULL;			// Same actor, but for interpolated movement
 static char * loaded_skeleton_file;
 static char * loaded_motion_file;
 
-static set<unsigned int> control_points;
+static set<unsigned int> control_points_frames;
 
 static bool bActorExist = false;		// Set to true if actor exists
 
@@ -208,28 +208,32 @@ void redisplay_proc(Fl_Light_Button *obj, long val)
 //Interpolate motion
 void interpolate_callback(Fl_Button *button, void *) 
 {
-	if (control_points.size () < 2)
+	if (control_points_frames.size () < 2)
 	{
 		cout << "There is not enough control points to make an interpolation";
 		return;
 	}
 
-	// Postures in the control points
-	Posture * control_points_postures;
-	control_points_postures = new Posture[control_points.size () + 5];
+	// Creates the control points
+	ControlPoint * control_points;
+	control_points = new ControlPoint[control_points_frames.size () + 5];
 	unsigned int i = 1;
-	for (set<unsigned int>::iterator it = control_points.begin (); 
-		it != control_points.end (); ++it, i++)
-		control_points_postures[i] = pSampledMotion->m_pPostures[*it];
-
-	// Calculate postures in the extremes
-	Posture posture_0;       // fake posture that comes right before the first posture
-	Posture posture_nplus1;  // fake posture that comes right after the last posture
+	for (set<unsigned int>::iterator it = control_points_frames.begin (); 
+		it != control_points_frames.end (); ++it, i++)
+	{
+		ControlPoint cp;
+		cp.frame = *it;
+		cp.posture = pSampledMotion->m_pPostures[*it];
+		control_points[i] = cp;
+	}
+	// Calculate extreme control points
+	ControlPoint posture_0;       // fake posture that comes right before the first posture
+	ControlPoint posture_nplus1;  // fake posture that comes right after the last posture
 	// posture_0 should be a reflection of the second posture in relation to the first one
-	posture_0 = CatmullRom::reflectPosture (control_points_postures[1], control_points_postures[2]);
-	posture_nplus1 = CatmullRom::reflectPosture (control_points_postures[i], control_points_postures[i - 1]);
-	control_points_postures[0] = posture_0;
-	control_points_postures[control_points.size () + 1] = posture_nplus1;
+	posture_0 = CatmullRom::reflectControlPoints (control_points[1], control_points[2]);
+	posture_nplus1 = CatmullRom::reflectControlPoints (control_points[i], control_points[i - 1]);
+	control_points[0] = posture_0;
+	control_points[control_points_frames.size () + 1] = posture_nplus1;
 
 	// Creating new actor and new motion so I could compare in the same screen the two motions.... it didn't work I don't know why
 	// Load new actor
@@ -252,14 +256,17 @@ void interpolate_callback(Fl_Button *button, void *)
 	
 	i = 0;
 	unsigned int j = 0;
-	for (set<unsigned int>::iterator it = control_points.begin (); it != control_points.end (); ++it, i++)
+	for (set<unsigned int>::iterator it = control_points_frames.begin (); it != control_points_frames.end (); ++it, i++)
 	{
 		unsigned int current_control_point = *it;
 		for (; j < current_control_point; j++)
 		{
-			displayer.m_pMotion[1]->SetPosture(j, control_points_postures[i]);
+			displayer.m_pMotion[1]->SetPosture(j, control_points[i].posture);
 		}
 	}
+
+
+
 
 	// display
 	/*for (int i = 0; i < displayer.numActors; i++)
@@ -272,7 +279,7 @@ void interpolate_callback(Fl_Button *button, void *)
 void add_control_point_callback(Fl_Button *button, void *)
 {
 	cout << "Added control point at moment: " << nFrameNum << endl;
-	control_points.insert (nFrameNum);
+	control_points_frames.insert (nFrameNum);
 }
 
 

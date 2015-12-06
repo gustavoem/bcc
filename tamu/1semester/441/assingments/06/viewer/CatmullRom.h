@@ -4,6 +4,14 @@
 #include "posture.h"
 #include "vector.h"
 
+//using namespace std;
+
+struct ControlPoint
+{
+	unsigned int frame;
+	Posture posture;
+};
+
 class CatmullRom
 {
 public:
@@ -15,7 +23,7 @@ public:
 
 	// Returns a posture that is the reflection of b in relation to a
 	//
-	static Posture reflectPosture (Posture a, Posture b);
+	static ControlPoint reflectControlPoints (ControlPoint a, ControlPoint b);
 };
 
 #endif

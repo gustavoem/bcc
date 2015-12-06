@@ -27,6 +27,8 @@ Motion::Motion(int nNumFrames)
 
 	//Set all postures to default posture
 	SetPosturesToDefault();
+
+	x_translation = 0;
 }
 
 Motion::Motion(char *amc_filename, float scale,Skeleton * pActor2)
@@ -38,6 +40,8 @@ Motion::Motion(char *amc_filename, float scale,Skeleton * pActor2)
 	m_NumFrames = 0;
 	m_pPostures = NULL;
 	readAMCfile(amc_filename, scale);	
+	
+	x_translation = 0;
 }
 
 Motion::Motion(char *amc_filename, float scale)
@@ -47,6 +51,8 @@ Motion::Motion(char *amc_filename, float scale)
 	m_NumFrames = 0;
 	m_pPostures = NULL;
 	readAMCfile(amc_filename, scale);
+	
+	x_translation = 0;
 }
 
 
@@ -76,6 +82,12 @@ void Motion::SetPosturesToDefault()
 //Set posture at spesified frame
 void Motion::SetPosture(int nFrameNum, Posture InPosture)
 {
+	vector translation (x_translation, 0, 0);
+	InPosture.root_pos = InPosture.root_pos + translation;
+	for (unsigned int j = 0; j < MAX_BONES_IN_ASF_FILE; j++)
+	{
+		InPosture.bone_translation[j] = InPosture.bone_translation[j] + translation;
+	}
 	m_pPostures[nFrameNum] = InPosture; 	
 }
 
@@ -104,7 +116,9 @@ void Motion::SetBoneRotation(int nFrameNum, vector vRot, int nBone)
 
 void Motion::SetRootPos(int nFrameNum, vector vPos)
 {
-	m_pPostures[nFrameNum].root_pos = vPos;
+	vector translation (x_translation, 0, 0);
+	m_pPostures[nFrameNum].root_pos = vPos + translation;
+
 }
 
 
@@ -311,5 +325,9 @@ int Motion::writeAMCfile(char *filename, float scale)
 	return 0;
 }
 
+void Motion::translate_in_x (float x)
+{
+	x_translation = x;
+}
 
 

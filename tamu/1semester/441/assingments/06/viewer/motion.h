@@ -52,10 +52,13 @@ class Motion
 	   void SetBoneRotation(int nFrameNum, vector vRot, int nBone);
 	   void SetRootPos(int nFrameNum, vector vPos);
 
+	   void translate_in_x (float x);
+
 	//data members
 	public:
        int m_NumFrames; //Number of frames in the motion 
-	   int offset;
+	   int offset;	
+	   float x_translation;
 
 //	   int m_NumDOFs;	//Overall number of degrees of freedom (summation of degrees of freedom for all bones)
 		Skeleton * pActor;

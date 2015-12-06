@@ -19,9 +19,11 @@ extern void load_callback(Fl_Button*, void*);
 extern Fl_Button *loadMotion_button;
 extern Fl_Button *loadActor_button;
 extern void interpolate_callback(Fl_Button*, void*);
+extern void add_control_point_callback(Fl_Button*, void *);
 //DEGUG: temp
 //extern Fl_Button *saveAs_button;
 extern Fl_Button *interpolate_button;
+extern Fl_Button *add_control_point_button;
 
 extern void locate_callback(Fl_Button*, void*);
 extern Fl_Button *locate_button;

@@ -62,7 +62,7 @@ void Motion::SetPosturesToDefault()
 {
 	//for each frame
 	//int numbones = numBonesInSkel(bone[0]);
-	for (int i = 0; i<MAX_BONES_IN_ASF_FILE; i++)
+	for (int i = 0; i < m_NumFrames; i++)
 	{
 		//set root position to (0,0,0)
 		m_pPostures[i].root_pos.setValue(0.0, 0.0, 0.0);

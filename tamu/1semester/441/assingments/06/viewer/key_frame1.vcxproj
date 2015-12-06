@@ -129,6 +129,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CatmullRom.cpp" />
     <ClCompile Include="display.cxx" />
     <ClCompile Include="interface.cxx" />
     <ClCompile Include="interpolator.cxx" />
@@ -140,6 +141,7 @@
     <ClCompile Include="vector.cxx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CatmullRom.h" />
     <ClInclude Include="display.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="interpolator.h" />

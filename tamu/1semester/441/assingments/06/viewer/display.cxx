@@ -218,9 +218,12 @@ void Display::show()
 
 void Display::loadMotion(Motion *pMotion)
 {
-	if (numMotions > MAX_SKELS) return;
-	
-	m_pMotion[numMotions++] = pMotion;
+	if (numActors - 1 > MAX_SKELS) return;
+//set a pointer to the new motion
+
+	if(m_pMotion[numActors-1]!=NULL) 
+		delete m_pMotion[numActors-1];
+	m_pMotion[numActors-1] = pMotion;
 }
 
 //Set actor for display

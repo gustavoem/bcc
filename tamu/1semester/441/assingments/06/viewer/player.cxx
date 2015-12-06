@@ -29,6 +29,8 @@ using namespace std;
 #include "display.h"   
 #include "interpolator.h"
 #include "video_texture.h"
+#include "CatmullRom.h"
+#include <set>
 
 /***************  Types *********************/
 enum {OFF, ON};
@@ -39,6 +41,10 @@ static Display displayer;
 
 static Skeleton *pActor = NULL;			// Actor info as read from ASF fil
 static Skeleton *iActor = NULL;			// Same actor, but for interpolated movement
+static char * loaded_skeleton_file;
+static char * loaded_motion_file;
+
+static set<unsigned int> control_points;
 
 static bool bActorExist = false;		// Set to true if actor exists
 
@@ -202,14 +208,75 @@ void redisplay_proc(Fl_Light_Button *obj, long val)
 //Interpolate motion
 void interpolate_callback(Fl_Button *button, void *) 
 {
-	cout<<"Do interpolation here!"<<endl;
+	if (control_points.size () < 2)
+	{
+		cout << "There is not enough control points to make an interpolation";
+		return;
+	}
 
+	// Postures in the control points
+	Posture * control_points_postures;
+	control_points_postures = new Posture[control_points.size () + 2];
+	unsigned int i = 0;
+	for (set<unsigned int>::iterator it = control_points.begin (), i = 0; 
+		it != control_points.end (); ++it, ++i)
+		control_points_postures[i] = pSampledMotion->m_pPostures[*it];
+
+	// Calculate postures in the extremes
+	Posture posture_0;       // fake posture that comes right before the first posture
+	Posture posture_nplus1;  // fake posture that comes right after the last posture
+	// posture_0 should be a reflection of the second posture in relation to the first one
+	posture_0 = CatmullRom::reflectPosture (control_points_postures[1], control_points_postures[2]);
+	posture_nplus1 = CatmullRom::reflectPosture (control_points_postures[i], control_points_postures[i - 1]);
+
+
+	// Load new actor
+	pActor = new Skeleton(loaded_skeleton_file, MOCAP_SCALE / 2);
+	pActor->displaceInX (100);
+	pActor->setBasePosture();
+	displayer.loadActor(pActor);
+	bActorExist = true;
+	glwindow->redraw();
+
+	// Create a motion that is the interpolattion of the postures
+	//pInterpMotion = new Motion(pSampledMotion->m_NumFrames);
+	pInterpMotion = new Motion(loaded_motion_file, MOCAP_SCALE,pActor);
+	//set sampled motion for display
+	pInterpMotion->SetPosturesToDefault ();
+	pInterpMotion->pActor = pActor;
+	displayer.loadMotion(pInterpMotion);
+
+
+
+
+
+	//Tell actor to perform the first pose ( first posture )
+	maxFrames = 0;
+	if ( (displayer.m_pMotion[displayer.numActors-1]->m_NumFrames - 1) > maxFrames)
+	{
+		maxFrames = (displayer.m_pMotion[displayer.numActors-1]->m_NumFrames - 1);
+		frame_slider->maximum((double)maxFrames+1);
+	}
+	nFrameNum=(int) frame_slider->value() -1;
+
+	// display
+	for (int i = 0; i < displayer.numActors; i++)
+		displayer.m_pActor[i]->setPosture(displayer.m_pMotion[i]->m_pPostures[displayer.m_pMotion[i]->GetPostureNum(nFrameNum)]);
+	Fl::flush();
+	glwindow->redraw();
+}
+
+
+void add_control_point_callback(Fl_Button *button, void *)
+{
+	cout << "Added control point at moment: " << nFrameNum << endl;
+	control_points.insert (nFrameNum);
 }
 
 
 void load_callback(Fl_Button *button, void *) 
 {
-	char *filename;
+	char * filename;
 
 	if(button==loadActor_button)
 	{
@@ -221,17 +288,14 @@ void load_callback(Fl_Button *button, void *)
 			//	delete pActor; 
 			//Read skeleton from asf file
 			pActor = new Skeleton(filename, MOCAP_SCALE);
-			iActor = new Skeleton(filename, MOCAP_SCALE - 10);
-			iActor->displaceInX (10);
-			
+			strcpy (loaded_skeleton_file, filename);
+
 
 			//Set the rotations for all bones in their local coordinate system to 0
 			//Set root position to (0, 0, 0)
 			pActor->setBasePosture();
-			iActor->setBasePosture();
 			
 			displayer.loadActor(pActor);
-			displayer.loadActor(iActor);
 
 			bActorExist = true;
 			glwindow->redraw();
@@ -243,6 +307,7 @@ void load_callback(Fl_Button *button, void *)
 		if (bActorExist == true)
 		{
 			filename = fl_file_chooser("Select filename","*.AMC","");
+			strcpy (loaded_motion_file, filename);
 			if(filename != NULL)
 			{
 				//delete old motion if any
@@ -260,13 +325,11 @@ void load_callback(Fl_Button *button, void *)
 
 				//Read motion (.amc) file and create a motion
 				pSampledMotion = new Motion(filename, MOCAP_SCALE,pActor);
-				pInterpMotion = new Motion (pSampledMotion->m_NumFrames);
-				pInterpMotion->pActor = pActor;
 				
 
 				//set sampled motion for display
 				displayer.loadMotion(pSampledMotion);
-				displayer.loadMotion(pInterpMotion);
+
 			
 				//Tell actor to perform the first pose ( first posture )
 //				pActor->setPosture(displayer.m_pMotion->m_pPostures[0]);          
@@ -665,7 +728,7 @@ int Player_Gl_Window::handle(int event)
       mouse.x = (Fl::event_x());
       mouse.y = (Fl::event_y());
       mouse.button = (Fl::event_button());
-       break;
+      break;
    case FL_DRAG:
       mouse.x = (Fl::event_x());
       mouse.y = (Fl::event_y());
@@ -701,17 +764,10 @@ int Player_Gl_Window::handle(int event)
 		 camera.atz = -camera.tz;
       }
       break;
-   case FL_KEYBOARD:
-      switch (Fl::event_key()) {
-      case 'q':
-      case 'Q':
-      case 65307:
-         exit(0);
-      }
-      break;
    default:
       // pass other events to the base class...
       handled= Fl_Gl_Window::handle(event);
+
    }
 
    prev_x=mouse.x;
@@ -777,10 +833,10 @@ void Player_Gl_Window::draw ()
 	redisplay();
 }
 
-
 int main(int argc, char **argv) 
 {
-
+	loaded_skeleton_file = new char[500];	
+	loaded_motion_file = new char[500];
     /* initialize form, sliders and buttons*/
     form = make_window();
 
@@ -809,15 +865,12 @@ if (argc > 2)
 				delete pActor; 
 			//Read skeleton from asf file
 			pActor = new Skeleton(filename, MOCAP_SCALE);
-			iActor = new Skeleton(filename, MOCAP_SCALE);
-			iActor->displaceInX (10);
-
+			strcpy (loaded_skeleton_file, filename);
+			
 			//Set the rotations for all bones in their local coordinate system to 0
 			//Set root position to (0, 0, 0)
 			pActor->setBasePosture();
-			iActor->setBasePosture();
 			displayer.loadActor(pActor);
-			displayer.loadActor(iActor);
 			bActorExist = true;
 		}
 	}
@@ -844,16 +897,13 @@ if (argc > 2)
 
 				//Read motion (.amc) file and create a motion
 				pSampledMotion = new Motion(filename, MOCAP_SCALE,pActor);
-				pInterpMotion = new Motion(pSampledMotion->m_NumFrames);
-				pInterpMotion->pActor = iActor;
+				strcpy (loaded_motion_file, filename);
 
 				//set sampled motion for display
 				displayer.loadMotion(pSampledMotion);
-				displayer.loadMotion(pInterpMotion);
 			
 				//Tell actor to perform the first pose ( first posture )
 				pActor->setPosture(displayer.m_pMotion[0]->m_pPostures[0]);
-				iActor->setPosture(displayer.m_pMotion[0]->m_pPostures[0]);
 
 				frame_slider->maximum((double)displayer.m_pMotion[0]->m_NumFrames );
 

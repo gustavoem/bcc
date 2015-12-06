@@ -16,6 +16,8 @@ Fl_Button *loadActor_button=(Fl_Button *)0;
 
 Fl_Button *interpolate_button=(Fl_Button *)0;
 
+Fl_Button *add_control_point_button=(Fl_Button *)0;
+
 Fl_Button *locate_button=(Fl_Button *)0;
 
 Fl_Button *rewind_button=(Fl_Button *)0;
@@ -82,6 +84,9 @@ Fl_Window* make_window() {
       }
       { Fl_Button* o = interpolate_button = new Fl_Button(425, 545, 75, 40, "Interpolate");
 		o->callback((Fl_Callback*)interpolate_callback);
+      }
+	  { Fl_Button* o = add_control_point_button = new Fl_Button(425, 495, 115, 40, "New control point");
+	  o->callback((Fl_Callback*)add_control_point_callback);
       }
       { Fl_Button* o = locate_button = new Fl_Button(320, 590, 65, 30, "Locate");
         o->callback((Fl_Callback*)locate_callback);

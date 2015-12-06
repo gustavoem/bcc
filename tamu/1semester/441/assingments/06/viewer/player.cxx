@@ -216,10 +216,10 @@ void interpolate_callback(Fl_Button *button, void *)
 
 	// Postures in the control points
 	Posture * control_points_postures;
-	control_points_postures = new Posture[control_points.size () + 2];
-	unsigned int i = 0;
-	for (set<unsigned int>::iterator it = control_points.begin (), i = 0; 
-		it != control_points.end (); ++it, ++i)
+	control_points_postures = new Posture[control_points.size () + 5];
+	unsigned int i = 1;
+	for (set<unsigned int>::iterator it = control_points.begin (); 
+		it != control_points.end (); ++it, i++)
 		control_points_postures[i] = pSampledMotion->m_pPostures[*it];
 
 	// Calculate postures in the extremes
@@ -228,36 +228,44 @@ void interpolate_callback(Fl_Button *button, void *)
 	// posture_0 should be a reflection of the second posture in relation to the first one
 	posture_0 = CatmullRom::reflectPosture (control_points_postures[1], control_points_postures[2]);
 	posture_nplus1 = CatmullRom::reflectPosture (control_points_postures[i], control_points_postures[i - 1]);
+	control_points_postures[0] = posture_0;
+	control_points_postures[pSampledMotion->m_NumFrames + 1] = posture_nplus1;
 
-
+	// Creating new actor and new motion so I could compare in the same screen the two motions.... it didn't work I don't know why
 	// Load new actor
-	pActor = new Skeleton(loaded_skeleton_file, MOCAP_SCALE / 2);
+	/*pActor = new Skeleton(loaded_skeleton_file, MOCAP_SCALE / 2);
 	pActor->displaceInX (100);
 	pActor->setBasePosture();
 	displayer.loadActor(pActor);
 	bActorExist = true;
-	glwindow->redraw();
+	glwindow->redraw();*/
 
 	// Create a motion that is the interpolattion of the postures
 	//pInterpMotion = new Motion(pSampledMotion->m_NumFrames);
-	pInterpMotion = new Motion(loaded_motion_file, MOCAP_SCALE,pActor);
-	//set sampled motion for display
-	pInterpMotion->SetPosturesToDefault ();
-	pInterpMotion->pActor = pActor;
-	displayer.loadMotion(pInterpMotion);
-
-
-
-
+	//pInterpMotion = new Motion(loaded_motion_file, MOCAP_SCALE,pActor);
+	////set sampled motion for display
+	//pInterpMotion->SetPosturesToDefault ();
+	//pInterpMotion->pActor = pActor;
+	//displayer.loadMotion(pInterpMotion);
 
 	//Tell actor to perform the first pose ( first posture )
-	maxFrames = 0;
+	/*maxFrames = 0;
 	if ( (displayer.m_pMotion[displayer.numActors-1]->m_NumFrames - 1) > maxFrames)
 	{
 		maxFrames = (displayer.m_pMotion[displayer.numActors-1]->m_NumFrames - 1);
 		frame_slider->maximum((double)maxFrames+1);
 	}
-	nFrameNum=(int) frame_slider->value() -1;
+	nFrameNum=(int) frame_slider->value() -1;*/
+	i = 0;
+	unsigned int j = 0;
+	for (set<unsigned int>::iterator it = control_points.begin (); it != control_points.end (); ++it, i++)
+	{
+		unsigned int current_control_point = *it;
+		for (; j < current_control_point; j++)
+		{
+			displayer.m_pMotion[0]->m_pPostures[j] = control_points_postures[i];
+		}
+	}
 
 	// display
 	for (int i = 0; i < displayer.numActors; i++)
@@ -766,8 +774,8 @@ int Player_Gl_Window::handle(int event)
       break;
    default:
       // pass other events to the base class...
-      handled= Fl_Gl_Window::handle(event);
-
+      //handled= Fl_Gl_Window::handle(event);
+	   int i = 0;
    }
 
    prev_x=mouse.x;

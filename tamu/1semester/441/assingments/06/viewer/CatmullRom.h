@@ -4,7 +4,7 @@
 #include "posture.h"
 #include "vector.h"
 
-static class CatmullRom
+class CatmullRom
 {
 public:
 

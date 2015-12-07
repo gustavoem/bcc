@@ -1,7 +1,8 @@
-﻿Build started 06/12/2015 19:15:09.
+﻿Build started 06/12/2015 19:57:24.
      1>Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\viewer\key_frame1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11" /I"E:\asf_amc_viewer_vs8\asf_amc_viewer 1-18-2005\fltk-1.0.11" /Zi /nologo /W3 /WX- /O2 /Ob1 /Oy- /D WIN32 /D NDEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc110.pdb" /Gd /TP /analyze- /errorReport:prompt player.cxx
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11" /I"E:\asf_amc_viewer_vs8\asf_amc_viewer 1-18-2005\fltk-1.0.11" /Zi /nologo /W3 /WX- /O2 /Ob1 /Oy- /D WIN32 /D NDEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc110.pdb" /Gd /TP /analyze- /errorReport:prompt CatmullRom.cpp player.cxx
+         CatmullRom.cpp
          player.cxx
      1>player.cxx(89): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
      1>player.cxx(93): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
@@ -33,6 +34,7 @@
      1>player.cxx(768): warning C4101: 'ev_y' : unreferenced local variable
      1>player.cxx(923): warning C4305: 'argument' : truncation from 'double' to 'float'
      1>player.cxx(954): warning C4305: 'argument' : truncation from 'double' to 'float'
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Release/key_frame1.exe" /INCREMENTAL:NO /NOLOGO glu32.lib opengl32.lib comctl32.lib wsock32.lib libjpeg.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\Release/key_frame1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Release\key_frame1.lib" /MACHINE:X86 /SAFESEH .\Release/CatmullRom.obj
          .\Release/display.obj
@@ -51,4 +53,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.34
+Time Elapsed 00:00:01.69

@@ -41,6 +41,10 @@ static Display displayer;
 
 static Skeleton *pActor = NULL;			// Actor info as read from ASF fil
 static Skeleton *iActor = NULL;			// Same actor, but for interpolated movement
+static Skeleton *cActor1 = NULL;
+static Skeleton *cActor2 = NULL;
+
+
 static char * loaded_skeleton_file;
 static char * loaded_motion_file;
 
@@ -50,6 +54,8 @@ static bool bActorExist = false;		// Set to true if actor exists
 
 static Motion *pSampledMotion = NULL;	// Motion information as read from AMC file
 static Motion *pInterpMotion = NULL;	// Interpolated Motion 
+static Motion *cMotion1 = NULL;
+static Motion *cMotion2 = NULL;
 
 
 static int nFrameNum, nFrameInc=1;		// Current frame and frame increment
@@ -237,24 +243,50 @@ void interpolate_callback(Fl_Button *button, void *)
 
 	// Creating new actor and new motion so I could compare in the same screen the two motions.... it didn't work I don't know why
 	// Load new actor
-	pActor = new Skeleton(loaded_skeleton_file, MOCAP_SCALE);
-	pActor->displaceInX (100);
-	pActor->setBasePosture();
-	displayer.loadActor(pActor);
+	iActor = new Skeleton(loaded_skeleton_file, MOCAP_SCALE);
+	iActor->displaceInX (100);
+	iActor->setBasePosture();
+	displayer.loadActor(iActor);
 	bActorExist = true;
 	glwindow->redraw();
 
 	// Create a motion that is the interpolattion of the postures
 	pInterpMotion = new Motion(pSampledMotion->m_NumFrames);
-	pInterpMotion = new Motion(loaded_motion_file, MOCAP_SCALE,pActor);
+	pInterpMotion = new Motion(loaded_motion_file, MOCAP_SCALE,iActor);
 	pInterpMotion->translate_in_x (1);
 	//set sampled motion for display
-	pInterpMotion->pActor = pActor;
+	pInterpMotion->pActor = iActor;
 	displayer.loadMotion(pInterpMotion);
+
+	// This actor shows the control points
+	cActor1 = new Skeleton(loaded_skeleton_file, MOCAP_SCALE);
+	cActor1->displaceInX (100);
+	cActor1->setBasePosture();
+	displayer.loadActor(cActor1);
+	bActorExist = true;
+	glwindow->redraw();
+	cMotion1 = new Motion(pSampledMotion->m_NumFrames);
+	cMotion1 = new Motion(loaded_motion_file, MOCAP_SCALE, cActor1);
+	cMotion1->translate_in_x (-1);
+	cMotion1->pActor = cActor1;
+	displayer.loadMotion(cMotion1);
+
+	cActor2 = new Skeleton(loaded_skeleton_file, MOCAP_SCALE);
+	cActor2->displaceInX (100);
+	cActor2->setBasePosture();
+	displayer.loadActor(cActor2);
+	bActorExist = true;
+	glwindow->redraw();
+	cMotion2 = new Motion(pSampledMotion->m_NumFrames);
+	cMotion2 = new Motion(loaded_motion_file, MOCAP_SCALE, cActor2);
+	cMotion2->translate_in_x (-2);
+	//set sampled motion for display
+	cMotion2->pActor = cActor2;
+	displayer.loadMotion(cMotion2);
 
 	//Tell actor to perform the first pose ( first posture )
 	
-	i = 0;
+	/*i = 0;
 	unsigned int j = 0;
 	for (set<unsigned int>::iterator it = control_points_frames.begin (); it != control_points_frames.end (); ++it, i++)
 	{
@@ -263,10 +295,23 @@ void interpolate_callback(Fl_Button *button, void *)
 		{
 			displayer.m_pMotion[1]->SetPosture(j, control_points[i].posture);
 		}
+	}*/
+
+	for (unsigned int i = 1; i < control_points_frames.size (); i++)
+	{
+		ControlPoint p0 = control_points[i - 1];
+		ControlPoint p1 = control_points[i];
+		ControlPoint p2 = control_points[i + 1];
+		ControlPoint p3 = control_points[i + 2];
+		for (unsigned int frame = p1.frame; frame < p2.frame; frame++)
+		{
+			Posture p = CatmullRom::interpolate(p0, p1, p2, p3, frame);
+			displayer.m_pMotion[1]->SetPosture(frame, p);
+
+			displayer.m_pMotion[2]->SetPosture(frame, p1.posture);
+			displayer.m_pMotion[3]->SetPosture(frame, p2.posture);
+		}
 	}
-
-
-
 
 	// display
 	/*for (int i = 0; i < displayer.numActors; i++)

@@ -1,0 +1,48 @@
+STORE
+LOAD
+HOLD
+ADD
+
+
+LOAD
+-> FETCH
+	get ifun, address, which register
+-> Decode
+	--
+-> Execute
+	--
+-> Memory 
+	get the value stored at address
+	put into a wire called value
+-> Write Back
+	feed the value into the register file
+
+
+STORE
+-> FETCH
+	get ifun, address, which register
+-> Decode
+	valA <- R[rax]
+	valB <- R[rbx]
+-> Execute
+	--
+-> Memory
+	write into address the value of the register, valA or valB
+-> Write Back
+	--
+
+ADD
+-> FETCH
+	get infun
+-> Decode
+	valA <- R[rax]
+	valB <- R[rbx]
+-> Execute
+	valE <- valA + valB
+-> Memory
+	--
+-> Write Back
+	R[rbx] <- valE
+
+HOLD
+anything

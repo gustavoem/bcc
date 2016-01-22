@@ -1,0 +1,6 @@
+- To set keyframes you can use the button "New control point"
+- After selecting an actor, a motion and keyframes you can click on Interpolate
+- This will produce on the screen 3 more actors between the first and last keyframe:
+	- on the right of the original actor there will be the another actor reproducing the resultant motion after applying the CatmullRom algorithm
+	- on the left of the original actor there will be two more actor that are the postures in the frame of the 2 selected keyframes that are being interpolated locally 
+- PS: for some reason, when I compiled to release mode, all the characters got into root position (0, 0, 0) and I couldn't fix it since when I debugged they were in the right position

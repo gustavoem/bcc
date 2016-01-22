@@ -1,0 +1,27 @@
+﻿Build started 06/12/2015 19:55:45.
+     1>Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\viewer\key_frame1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11" /I"C:\Users\Gustavo\Desktop\asf_amc_viewer\fltk-1.0.11" /ZI /nologo /W1 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc110.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt CatmullRom.cpp player.cxx
+         player.cxx
+         CatmullRom.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug/key_frame1.exe" /INCREMENTAL /NOLOGO /LIBPATH:../lib glu32.lib opengl32.lib comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:libcd /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\Debug/key_frame1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\key_frame1.lib" /MACHINE:X86 /SAFESEH .\Debug/CatmullRom.obj
+         .\Debug/display.obj
+         .\Debug/interface.obj
+         .\Debug/interpolator.obj
+         .\Debug/motion.obj
+         .\Debug/player.obj
+         .\Debug/posture.obj
+         .\Debug/skeleton.obj
+         .\Debug/transform.obj
+         .\Debug/vector.obj
+         "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\fltk-1.0.11\lib\fltkd.lib"
+         key_frame1.vcxproj -> C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\viewer\.\Debug\key_frame1.exe
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\bscmake.exe /nologo /o".\Debug/key_frame1.bsc" .\Debug\CatmullRom.sbr .\Debug\display.sbr .\Debug\interface.sbr .\Debug\interpolator.sbr .\Debug\motion.sbr .\Debug\player.sbr .\Debug\posture.sbr .\Debug\skeleton.sbr .\Debug\transform.sbr .\Debug\vector.sbr
+     1>Done Building Project "C:\Users\Gustavo\Desktop\bcc\tamu\1semester\441\assingments\06\viewer\key_frame1.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.87

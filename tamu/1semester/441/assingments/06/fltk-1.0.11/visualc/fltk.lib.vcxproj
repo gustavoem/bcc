@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>fltk</ProjectName>
+    <ProjectGuid>{8520B211-1136-4DFE-87EF-911CE283F61B}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.61030.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FL_STATIC;WIN32;_DEBUG;_WINDOWS;WIN32_LEAN_AND_MEAN;VC_EXTRA_LEAN;WIN32_EXTRA_LEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Debug/fltk.lib.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\lib\fltkd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug/fltk.lib.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>.;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FL_STATIC;WIN32;NDEBUG;_WINDOWS;WIN32_LEAN_AND_MEAN;VC_EXTRA_LEAN;WIN32_EXTRA_LEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Release/fltk.lib.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\lib\fltk.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release/fltk.lib.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\filename_absolute.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\filename_expand.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\filename_ext.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\filename_isdir.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\filename_list.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\filename_match.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\filename_setext.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_abort.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_add_idle.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Adjuster.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_arc.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_arci.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_arg.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_ask.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Bitmap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Box.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_boxtype.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Browser.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Browser_.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Browser_load.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_call_main.c">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Chart.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Check_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Choice.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Clock.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_color.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Color_Chooser.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_compose.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Counter.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_cursor.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_curve.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_cutpaste.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Dial.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_diamond_box.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_display.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Double_Window.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_draw.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_draw_image.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_draw_pixmap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_engraved_label.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_file_chooser.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_font.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_get_key.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_get_system_colors.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Gl_Choice.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Gl_Overlay.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Gl_Window.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_grab.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Group.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Image.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Input.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Input_.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_labeltype.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Light_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_line_style.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu_.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu_add.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu_Bar.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu_global.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Menu_Window.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Multi_Label.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Output.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_oval_box.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_overlay.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_overlay_visual.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Overlay_Window.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_own_colormap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Pack.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Pixmap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Positioner.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_rect.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Repeat_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Return_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Roller.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_round_box.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Round_Button.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_rounded_box.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Scroll.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_scroll_area.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Scrollbar.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_set_font.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_set_fonts.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_shadow_box.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_shortcut.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_show_colormap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Single_Window.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Slider.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_symbols.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Tabs.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Tile.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Valuator.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Value_Input.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Value_Output.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Value_Slider.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\fl_vertex.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_visual.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Widget.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Window.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Window_fullscreen.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Window_hotspot.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_Window_iconize.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\Fl_x.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\forms_bitmap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\forms_compatability.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\forms_free.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\forms_fselect.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\forms_pixmap.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\forms_timer.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\gl_draw.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\gl_start.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\glut_compatability.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\glut_font.cxx">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\numericsort.c">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\scandir.c">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+    <ClCompile Include="..\src\vsnprintf.c">
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Fl_Gl_Choice.H" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

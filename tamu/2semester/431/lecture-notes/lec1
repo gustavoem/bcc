@@ -1,0 +1,77 @@
+1st Development Process: Waterfall
+- Five phases in the lifecycle
+    - requirements analysis & specs
+    - architectural design
+    - implementation & integration
+    - verification
+    - maintenance & operation
+- Complete one phase to start the next one
+- Cons
+    - if you fail at one level you have to come back and re-do everything that came after
+that level
+
+Spiral Lifecycle (1986)
+- Combine plan-and-document with prototypes
+exemple: concept of requirements -> concept of operations -> requirements plan 
+-> prototype 1 -> requirements -> verification and validation -> development plan ...
+- Pros
+    - Iterations involve customer before product is complete
+    - Project monitoring is easier
+    - Schedule & cost more realistic over time
+- Cons
+    - Iterations are long (custumers can change their mind)
+    - Lots of documentations per iteration
+    - Cost is high
+
+P&D Project Manager
+- P&D depends on Project Managers
+    - Recruits team
+    - Responsible for win or fail
+- P&D team size
+    - Groups of 4 to 9 people (two pizza team)
+    - Adding manpower to late projects makes it later
+- Requires extensive documentation and planning and depends on an experienced manager
+    - Can we build software effectly without careful planning and documentation?
+    - How to avoid just hacking?
+        - Staged Delivery Model
+
+Agile        
+- Agile Manifesto (2001) 
+    -Individuals and interactions over ...
+- Extreme Programming (XP)
+    - If short iterations are good make it as short as possible
+    - If simplicity is good, do the simplest
+    - If testing is good, test all the time - write test before the code
+    - Make code reviews
+- Agile Lifecycle
+    - Embraces changes as a fact of life
+    - Developers continuously refine working but incomplete prototype until customers happy
+    - Agile emphasizes TDD to reduce mistakes. User Stories to validate customer experience
+- Agile Then and Now
+    - Controversial in 2001 - attempt to legitimize hacking behaviour
+    - Accepted in 2013 - 2012 study of 66 projects found majority using agile
+- Scrum Agenda
+    - What have you done since yesterday
+    - What are you going to do today
+    - What are you going to do tomorrow
+- Scrum Roles
+    - Team
+    - Scrum Master
+    - Product owner
+- Resolve Conflics
+    - List items of sides
+    - Each side articulate the arguments of the other side
+    - Constructive confrontation
+    - Disagree and commit
+- Scrum Summary
+    - Self-organizing small teams with daily meetings
+    - Work in "sprints" of 2-4 weeks
+
+Pair Programming
+- Motivation
+    - Goal: better quality code
+- Roles
+    - Driver
+    - Observer
+    - Alternate roles
+

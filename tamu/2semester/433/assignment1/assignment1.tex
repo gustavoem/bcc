@@ -51,7 +51,7 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 
 
 \question{2}{Show that any integer postage greater than 7 cents can be formed by using only 3-cent and 5-cent stamps}
-Basically, what we want to proof is that, for any $n > 7$, $n$ can be written as 
+Basically, what we want to demonstrate is that, for any $n > 7$, $n$ can be written as 
 \begin{align}
     n = 3a + 5b \label{eq2}
 \end{align}
@@ -94,9 +94,73 @@ where $a$ and $b$ non negative numbers. Let $k$ be an integer such that $k > 7$ 
 \end{equation*}
     Therefore, equation \ref{eq2} holds again.
 \end{itemize}
-Since equation \ref{eq2} holds for all possible
+Since the equation \ref{eq2} holds for all cases it holds for any case.
 
-\question{3}{Constructing DFA's}
+\question{3}{Give a DFA for each of the following languages}
+\part{a} Binary strings that contais at least five 1s.\\
+\part{b} Binary strings that beggins with 010 or ends with 101.\\
+\part{c} Binary strings having the substring 010 but not having the substring 101. \\
 
+\part{a}
+\begin{itemize}
+	\item $Q = \{q_0, q_1, q_2, q_3, q_4, q_5\}$,	
+	\item $\Sigma = \{0,1\}$,
+	\item $q = q_0$,
+	\item $F = \{q_5\}$, and
+        \item $\delta$ is defined as follows. \\
+
+\begin{tabular}{|c||c|c|}  \hline
+      & 0 & 1 \\ \hline 
+      $q_0$ & $q_0$ & $q_1$ \\ \hline 
+      $q_1$ & $q_1$ & $q_2$ \\ \hline
+      $q_2$ & $q_2$ & $q_3$ \\ \hline
+      $q_3$ & $q_3$ & $q_4$ \\ \hline 
+      $q_4$ & $q_4$ & $q_5$ \\ \hline 
+      $q_5$ & $q_5$ & $q_5$ \\ \hline 
+\end{tabular}
+\end{itemize}
+
+\part{b}
+\begin{itemize}
+	\item $Q = \{q_0, q_1, q_2, q_4, q_5, q_6, q_7, q_8\}$,	
+	\item $\Sigma = \{0,1\}$,
+	\item $q = q_0$,
+	\item $F = \{q_4, q_8\}$, and
+        \item $\delta$ is defined as follows. \\
+
+\begin{tabular}{|c||c|c|}  \hline
+      & 0 & 1 \\ \hline 
+      $q_0$ & $q_1$ & $q_5$ \\ \hline 
+      $q_1$ & $q_7$ & $q_2$ \\ \hline
+      $q_2$ & $q_4$ & $q_5$ \\ \hline
+      $q_4$ & $q_4$ & $q_4$ \\ \hline 
+      $q_5$ & $q_6$ & $q_5$ \\ \hline 
+      $q_6$ & $q_7$ & $q_8$ \\ \hline 
+      $q_7$ & $q_7$ & $q_5$ \\ \hline 
+      $q_8$ & $q_6$ & $q_5$ \\ \hline 
+\end{tabular}
+\end{itemize}
+
+\part{c}
+\begin{itemize}
+	\item $Q = \{q_0, q_1, q_2, q_3, q_4, q_5, q_6, q_7\}$,	
+	\item $\Sigma = \{0,1\}$,
+	\item $q = q_0$,
+	\item $F = \{q_4, q_5\}$, and
+        \item $\delta$ is defined as follows. \\
+
+\begin{tabular}{|c||c|c|}  \hline
+      & 0 & 1 \\ \hline 
+      $q_0$ & $q_1$ & $q_2$ \\ \hline 
+      $q_1$ & $q_1$ & $q_3$ \\ \hline
+      $q_2$ & $q_6$ & $q_2$ \\ \hline
+      $q_3$ & $q_4$ & $q_2$ \\ \hline 
+      $q_4$ & $q_5$ & $q_7$ \\ \hline 
+      $q_5$ & $q_5$ & $q_2$ \\ \hline 
+      $q_6$ & $q_1$ & $q_7$ \\ \hline 
+      $q_7$ & $q_7$ & $q_7$ \\ \hline 
+\end{tabular}
+
+\end{itemize}
 \end{document}
 

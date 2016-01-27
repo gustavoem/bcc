@@ -1,0 +1,99 @@
+(Print this page as a cover sheet for your printouts)
+
+CSCE 420 HOMEWORK 1
+Dr. Daugherity
+Section: ______________ 
+Due: 11:59 P.M. Monday, February 1, 2016
+
+"On my honor, as an Aggie, I have neither given nor received any unauthorized 
+aid on any portion of the academic work included in this assignment."
+
+
+________________________________	________________________________
+Typed or printed name of student	           Signature of student
+
+NOTE:  Please follow your lab instructor's directions for submitting your 
+assignment through CSNET.  ONLY ASSIGNMENTS SUBMITTED TO CSNET WILL BE GRADED!
+Make a printout of each source file and staple it behind this cover sheet, 
+unless your lab instructor directs otherwise.  Sign it and give it to your TA 
+in lab or put it in your TA's mailbox in the corner of the 3rd floor of HRBB, 
+near room 312, by 5:00 P.M. Tuesday.  IF YOU DO NOT TURN IN A SIGNED COVER 
+SHEET YOUR WORK WILL NOT BE GRADED!
+
+NOTE:  Homework will be graded on build.tamu.edu using g++ 5.3.0 with 
+-std=c++14, or javac and java.  You are free to develop your programs on any 
+other platform, but it is your responsibility to make sure your programs also 
+compile and execute correctly on build.tamu.edu using g++ -std=c++14, or javac
+and java.
+
+NOTE:  Each file submitted (hw1pr1.cpp, etc.--see below) must begin as follows:
+//Your Name
+//CSCE 420-xxx (fill in your section number)
+//Due: February 1, 2016 (or whatever the due date is)
+//hw1pr1.cpp (or whatever this file name is)
+
+The grade for this lab will be based on style (formatting, variable names, 
+comments, etc.), syntax (no compilation or link errors), and correctness 
+(passes all test cases).  Your grade for this lab is:
+Problem #	 1       2       3       4 
+Style             /2      /4      /4      /2 
+Syntax            /3      /6      /6      /3 
+Correctness       /5      /10     /10     /5
+-------------------------------------------------------------------
+Total             /10     /20     /20     /10
+Grand total _____/50
+
+1. (10 points) Design a simple reflex agent like page 38 for the "vacuum cleaner
+world", with the following changes:
+	* The room is rectangular and represented by a matrix of squares (the
+	   floor tiles), with 0 indicating clean and 1 indicating dirty.  Thus
+	   the room in Figure 2.2 has 1 row and 2 columns and the matrix is
+	   [1 1].  The agent is only allowed to see if its current square is
+	   clean or dirty.
+	* The agent is allowed to know the room dimensions and the
+	  fact that it starts in the top left square (row 0, column 0).
+	* The available actions are Left, Right, Up, Down, Suck.
+Now write a program named hw1pr1.cpp or Hw1Pr1.java which reads the number of
+rows, the number of columns, and the rows of the dirt matrix, then runs the 
+agent and outputs the performance measure.  Thus the input for Figure 2.2 would 
+be
+	1
+	2
+	1 1
+
+2. (20 points) Using your agent from problem 1, and a room with 1000 rows and
+1000 columns, calculate the average performance measure over 1000 "random 
+rooms."  Each "random room" is created as follows:
+	* Generate a random number n between 0 and 1000000.
+	* Place dirt in n random squares.
+For the performance measure stop at 2000000 actions.
+Name your program hw1pr2.cpp or Hw1Pr2.java.
+
+3. (20 points) Given a list of points (x,y) in the plane, write a greedy best-
+first search to find a closed path connecting all the points (the "Travelling
+Salesperson Problem") and output its length.  You may assume that x and y are 
+non-negative integers that will fit in a 32-bit int.  Each line of input will 
+be the x and y coordinates for a point; keep reading until EOF (control-D).  You
+may assume there will be no more than 1000 points.
+
+For example, if the input is
+0 0
+0 1
+1 1
+1 2
+^D
+the output is (probably) 5.236.
+
+Name your program hw1pr3.cpp or Hw1Pr3.java.
+
+OPTIONAL EXTRA CREDIT 
+=====================
+4. (10 points) The shortest closed path for the example points in problem 3 is
+actually 4.828.  In other words, greeedy best-first search did not find the
+shortest path.  Modify your program for problem 3 to do a breadth-first search
+to the depth of the number of points, with the path cost the total distance.  
+To avoid "combinatorial explosion" for 1000 points, when you expand a node only
+consider the nearest 4 unvisited points; then the run time should be 10 minutes
+or less.  Hint: use the UNIX timeout command to automatically stop execution 
+after 10 minutes.  Name your program hw1pr4.cpp or Hw1Pr4.java.
+

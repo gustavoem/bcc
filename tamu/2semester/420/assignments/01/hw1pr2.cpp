@@ -1,11 +1,12 @@
 // Gustavo Estrela de Matos
 // CSCE 420-500
 // Due: February 1, 2016 (or whatever the due date is)
-// hw1pr1.cpp
+// hw1pr2.cpp
 //
 
 #include <cstdio>
 #include <iostream>
+#include <set>
 
 using namespace std;
 
@@ -70,7 +71,7 @@ class Vacuum
         //       ^ < ^
         void updatePosition ()
         {
-            //cout << "(" << x << ", " << y <<  ")";            
+            // cout << "(" << x << ", " << y <<  ")";            
             
             // cases in which you have to come back
             if ((x_orientation == -1 && x == 0 && y == 0) ||
@@ -90,7 +91,7 @@ class Vacuum
             else // regular case
                 y += vy;
             
-            //cout << "-> (" << x << ", " << y <<  ")" << endl;            
+            // cout << "-> (" << x << ", " << y <<  ")" << endl;            
         }
 
     public:
@@ -110,7 +111,7 @@ class Vacuum
             {
                 room->cleanSquare (x, y);
                 score++;
-                cout << "Scored at: (" << x << ", " << y << ")" << endl;
+                // cout << "Scored at: (" << x << ", " << y << ")" << endl;
             }
             else
                updatePosition ();    
@@ -125,31 +126,48 @@ class Vacuum
 
 int main ()
 {
-    unsigned int n, m;
+    unsigned int n = 1000, m = 1000;
     bool ** room_floor;
+    unsigned int rep = 10;
+    double total_score = 0;    
     
-    scanf ("%u %u", &n, &m);
-    room_floor = new bool * [n];
+    room_floor = new bool * [m];
     for (unsigned int i = 0; i < n; i++)
         room_floor[i] = new bool[m];
 
-    //cout << "n m: " << (int) n  << " " << (int) m << endl;
-
-    for (unsigned int i = 0; i < n; i++)
-        for (unsigned int j = 0; j < m; j++)
+    for (unsigned int i = 0; i < rep; i++)
+    {
+        for (unsigned int k = 0; k < 1000; k++)
+            for (unsigned int l = 0; l < 1000; l++)
+                room_floor[k][l] = 0;
+        
+        set<unsigned int> squares;
+        for (unsigned int k = 0; k < 1000 * 1000; k++)
+            squares.insert (squares.end (), k);
+        
+        unsigned int n = rand () % 1000;
+        for (unsigned int k = 0; k < n; k++)
         {
-            int x;
-            scanf ("%d", &x);
-            room_floor[i][j] = (bool) x;
+            unsigned int r = rand () % squares.size ();
+            squares.erase (r);
+            room_floor[r / 1000][r % 1000] = 1; 
         }
 
-    Room room (room_floor, n, m);
-    Vacuum vacuum (&room);
-    
-    for (unsigned int i = 0; i < 2 * m * n; i++)
-        vacuum.takeAction ();
-    
-    cout << "Score: " << vacuum.getScore () << endl;
+        Room room (room_floor, n, m);
+        Vacuum vacuum (&room);
+
+        for (unsigned int k = 0; k < 2000000; k++)
+        {
+            vacuum.takeAction ();
+        }
+        
+        total_score += vacuum.getScore ();
+    }
+        
+
+    cout << "Avg score: " << total_score / rep;
+
+
     for (unsigned int i = 0; i < n; i++)
         delete[] room_floor[i];
     delete[] room_floor;

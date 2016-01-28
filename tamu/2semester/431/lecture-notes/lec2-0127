@@ -1,0 +1,13 @@
+01/27
+
+- Explicit return: last line is the return value of a method
+- Everything is passed by reference
+- Naming conventions
+    -> ClassNames
+    -> methods_and_variables
+    -> CONSTANTS
+    -> $GLOBALS
+- symbols
+- get and set-> attr_accessor;attr_reader...
+- method visibilities: protected, private, ...
+

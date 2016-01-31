@@ -13,22 +13,24 @@ class Room
 {
     private:
         bool ** floor;
-        unsigned int n;
         unsigned int m;
+        unsigned int n;
 
     public:
-        Room (bool ** floor, unsigned int n, unsigned int m)
+        Room (bool ** floor, unsigned int m, unsigned int n)
         {
             this->floor = floor;
             this->n = n;
             this->m = m;
         }
-
+    
+        // Number of columns
         unsigned int getRowSize ()
         {
             return n;
         }
 
+        // Number of rows
         unsigned int getColumnSize ()
         {
             return m;
@@ -54,7 +56,9 @@ class Vacuum
         unsigned int x_orientation;
         unsigned int vy;
         Room * room;
+        bool ** visited;
         float score;
+        unsigned int clean_tiles;
     
  
         // Updates the position of the vacuum
@@ -68,6 +72,9 @@ class Vacuum
         //       ^ v ^
         //       ^ v ^
         //       ^ < ^
+        // Note that all the actions the vacuum does here are Left, Right, Up and
+        // Down as determined in the problem (even tough I did not write the actual 
+        // methods for just moving in these directions).
         void updatePosition ()
         {
             //cout << "(" << x << ", " << y <<  ")";            
@@ -102,6 +109,25 @@ class Vacuum
             x_orientation = 1;
             vy = 1;
             score = 0;
+            clean_tiles = 0;
+
+            unsigned int m = room->getColumnSize ();
+            unsigned int n = room->getRowSize ();
+    
+            visited = new bool * [m];
+            for (unsigned int i = 0; i < m; i++)
+                visited[i] = new bool[n];
+            for (unsigned int i = 0; i < m; i++)
+                for (unsigned int j = 0; j < n; j++)
+                    visited[i][j] = 0;
+        }
+        
+        virtual ~Vacuum ()
+        {
+            unsigned int m = room->getRowSize ();
+            for (unsigned int i = 0; i < m; i++)
+                delete[] visited[i];
+            delete[] visited;
         }
 
         void takeAction ()
@@ -109,11 +135,18 @@ class Vacuum
             if (room->isDirty (x, y))
             {
                 room->cleanSquare (x, y);
-                score++;
-                cout << "Scored at: (" << x << ", " << y << ")" << endl;
+                clean_tiles++;
+                // cout << "Scored at: (" << x << ", " << y << ")" << endl;
             }
             else
-               updatePosition ();    
+            {
+                if (!visited[x][y])
+                    clean_tiles++;
+                updatePosition ();
+            }
+    
+            visited[x][y] = 1;
+            score += clean_tiles;
         }
 
         float getScore ()
@@ -128,29 +161,27 @@ int main ()
     unsigned int n, m;
     bool ** room_floor;
     
-    scanf ("%u %u", &n, &m);
-    room_floor = new bool * [n];
-    for (unsigned int i = 0; i < n; i++)
-        room_floor[i] = new bool[m];
+    scanf ("%u %u", &m, &n);
+    room_floor = new bool * [m];
+    for (unsigned int i = 0; i < m; i++)
+        room_floor[i] = new bool[n];
 
-    //cout << "n m: " << (int) n  << " " << (int) m << endl;
-
-    for (unsigned int i = 0; i < n; i++)
-        for (unsigned int j = 0; j < m; j++)
+    for (unsigned int i = 0; i < m; i++)
+        for (unsigned int j = 0; j < n; j++)
         {
             int x;
             scanf ("%d", &x);
             room_floor[i][j] = (bool) x;
         }
 
-    Room room (room_floor, n, m);
+    Room room (room_floor, m, n);
     Vacuum vacuum (&room);
     
-    for (unsigned int i = 0; i < 2 * m * n; i++)
+    for (unsigned int i = 0; i < 1000; i++)
         vacuum.takeAction ();
     
-    cout << "Score: " << vacuum.getScore () << endl;
-    for (unsigned int i = 0; i < n; i++)
+    cout << "Score: " << vacuum.getScore () / 1000 << endl;
+    for (unsigned int i = 0; i < m; i++)
         delete[] room_floor[i];
     delete[] room_floor;
     return 0;

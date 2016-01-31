@@ -1,12 +1,11 @@
 // Gustavo Estrela de Matos
 // CSCE 420-500
-// Due: February 1, 2016 (or whatever the due date is)
+// Due: February 1, 2016
 // hw1pr2.cpp
 //
 
 #include <cstdio>
 #include <iostream>
-#include <set>
 
 using namespace std;
 
@@ -14,22 +13,24 @@ class Room
 {
     private:
         bool ** floor;
-        unsigned int n;
         unsigned int m;
+        unsigned int n;
 
     public:
-        Room (bool ** floor, unsigned int n, unsigned int m)
+        Room (bool ** floor, unsigned int m, unsigned int n)
         {
             this->floor = floor;
             this->n = n;
             this->m = m;
         }
-
+    
+        // Number of columns
         unsigned int getRowSize ()
         {
             return n;
         }
 
+        // Number of rows
         unsigned int getColumnSize ()
         {
             return m;
@@ -55,7 +56,9 @@ class Vacuum
         unsigned int x_orientation;
         unsigned int vy;
         Room * room;
+        bool ** visited;
         float score;
+        unsigned int clean_tiles;
     
  
         // Updates the position of the vacuum
@@ -69,9 +72,12 @@ class Vacuum
         //       ^ v ^
         //       ^ v ^
         //       ^ < ^
+        // Note that all the actions the vacuum does here are Left, Right, Up and
+        // Down as determined in the problem (even tough I did not write the actual 
+        // methods for just moving in these directions).
         void updatePosition ()
         {
-            // cout << "(" << x << ", " << y <<  ")";            
+            //cout << "(" << x << ", " << y <<  ")";            
             
             // cases in which you have to come back
             if ((x_orientation == -1 && x == 0 && y == 0) ||
@@ -91,7 +97,7 @@ class Vacuum
             else // regular case
                 y += vy;
             
-            // cout << "-> (" << x << ", " << y <<  ")" << endl;            
+            //cout << "-> (" << x << ", " << y <<  ")" << endl;            
         }
 
     public:
@@ -103,6 +109,25 @@ class Vacuum
             x_orientation = 1;
             vy = 1;
             score = 0;
+            clean_tiles = 0;
+
+            unsigned int m = room->getColumnSize ();
+            unsigned int n = room->getRowSize ();
+    
+            visited = new bool * [m];
+            for (unsigned int i = 0; i < m; i++)
+                visited[i] = new bool[n];
+            for (unsigned int i = 0; i < m; i++)
+                for (unsigned int j = 0; j < n; j++)
+                    visited[i][j] = 0;
+        }
+        
+        virtual ~Vacuum ()
+        {
+            unsigned int m = room->getRowSize ();
+            for (unsigned int i = 0; i < m; i++)
+                delete[] visited[i];
+            delete[] visited;
         }
 
         void takeAction ()
@@ -110,11 +135,18 @@ class Vacuum
             if (room->isDirty (x, y))
             {
                 room->cleanSquare (x, y);
-                score++;
+                clean_tiles++;
                 // cout << "Scored at: (" << x << ", " << y << ")" << endl;
             }
             else
-               updatePosition ();    
+            {
+                if (!visited[x][y])
+                    clean_tiles++;
+                updatePosition ();
+            }
+    
+            visited[x][y] = 1;
+            score += clean_tiles;
         }
 
         float getScore ()
@@ -122,7 +154,6 @@ class Vacuum
             return score;
         }
 };
-
 
 int main ()
 {
@@ -132,17 +163,17 @@ int main ()
     double total_score = 0;    
     
     room_floor = new bool * [m];
-    for (unsigned int i = 0; i < n; i++)
-        room_floor[i] = new bool[m];
+    for (unsigned int i = 0; i < m; i++)
+        room_floor[i] = new bool[n];
 
     for (unsigned int i = 0; i < rep; i++)
     {
-        for (unsigned int k = 0; k < 1000; k++)
-            for (unsigned int l = 0; l < 1000; l++)
+        for (unsigned int k = 0; k < m; k++)
+            for (unsigned int l = 0; l < n; l++)
                 room_floor[k][l] = 0;
         
         set<unsigned int> squares;
-        for (unsigned int k = 0; k < 1000 * 1000; k++)
+        for (unsigned int k = 0; k < m * n; k++)
             squares.insert (squares.end (), k);
         
         unsigned int n = rand () % 1000;
@@ -150,10 +181,10 @@ int main ()
         {
             unsigned int r = rand () % squares.size ();
             squares.erase (r);
-            room_floor[r / 1000][r % 1000] = 1; 
+            room_floor[r / m][r % n] = 1; 
         }
 
-        Room room (room_floor, n, m);
+        Room room (room_floor, m, n);
         Vacuum vacuum (&room);
 
         for (unsigned int k = 0; k < 2000000; k++)
@@ -161,14 +192,14 @@ int main ()
             vacuum.takeAction ();
         }
         
-        total_score += vacuum.getScore ();
+        total_score += vacuum.getScore () / 2000; // score is over 1000 steps
     }
         
 
     cout << "Avg score: " << total_score / rep;
 
 
-    for (unsigned int i = 0; i < n; i++)
+    for (unsigned int i = 0; i < m; i++)
         delete[] room_floor[i];
     delete[] room_floor;
     return 0;

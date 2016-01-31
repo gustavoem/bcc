@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <iostream>
+#include <set>
 
 using namespace std;
 
@@ -159,9 +160,9 @@ int main ()
 {
     unsigned int n = 1000, m = 1000;
     bool ** room_floor;
-    unsigned int rep = 10;
+    unsigned int rep = 1000;
     double total_score = 0;    
-    
+    srand (time(NULL)); 
     room_floor = new bool * [m];
     for (unsigned int i = 0; i < m; i++)
         room_floor[i] = new bool[n];
@@ -172,15 +173,15 @@ int main ()
             for (unsigned int l = 0; l < n; l++)
                 room_floor[k][l] = 0;
         
-        set<unsigned int> squares;
-        for (unsigned int k = 0; k < m * n; k++)
-            squares.insert (squares.end (), k);
-        
-        unsigned int n = rand () % 1000;
-        for (unsigned int k = 0; k < n; k++)
+        unsigned int d = rand () % 1000000;
+        for (unsigned int k = 0; k < d; k++)
         {
-            unsigned int r = rand () % squares.size ();
-            squares.erase (r);
+            unsigned int r = rand () % 1000000;;
+            
+            // Avoids putting dirt in the same square 
+            while (room_floor[r / m][r % n])
+                r = (r + 1) % 1000000;
+
             room_floor[r / m][r % n] = 1; 
         }
 
@@ -188,11 +189,9 @@ int main ()
         Vacuum vacuum (&room);
 
         for (unsigned int k = 0; k < 2000000; k++)
-        {
             vacuum.takeAction ();
-        }
         
-        total_score += vacuum.getScore () / 2000; // score is over 1000 steps
+        total_score += vacuum.getScore () / 2000.0; // score is over 1000 steps
     }
         
 

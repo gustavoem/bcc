@@ -180,7 +180,7 @@ int main ()
     for (unsigned int i = 0; i < 1000; i++)
         vacuum.takeAction ();
     
-    cout << "Score: " << vacuum.getScore () / 1000 << endl;
+    cout << "Score: " << vacuum.getScore () << endl;
     for (unsigned int i = 0; i < m; i++)
         delete[] room_floor[i];
     delete[] room_floor;

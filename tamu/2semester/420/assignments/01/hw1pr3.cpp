@@ -13,10 +13,8 @@
 
 double points_distance (std::pair<int, int>  p, std::pair<int, int> q)
 {
-    int x;
-    int y;
-    x = p.first - q.first;
-    y = p.second - q.second;
+    double x = p.first - q.first;
+    double y = p.second - q.second;
     return sqrt (x * x + y * y);
 }
 
@@ -34,13 +32,13 @@ int main ()
 
     while (scanf ("%d %d", &x, &y) != EOF)
     {
-        //std::cout << "Read point (" << x << ", " << y << ") " << std::endl;
+        // std::cout << "Read point (" << x << ", " << y << ") " << std::endl;
         points.push_back (std::make_pair (x, y));
     }
     
     while (!points.empty ())
     {
-        // std::cout << "Last point: " << last_point.first << ", " << last_point.second << std::endl;
+        std::cout << "Last point: " << last_point.first << ", " << last_point.second << std::endl;
         std::list<std::pair <int, int> >::iterator min_it = points.begin ();
         double min_distance = points_distance (last_point, *min_it);
         for (std::list<std::pair <int, int> >::iterator it = min_it;  it != points.end (); ++it)   
@@ -52,7 +50,7 @@ int main ()
                 min_it = it;
             }
         }
-        // std::cout << "to " << min_it->first << ", " << min_it->second << ": " << min_distance << std::endl;
+        std::cout << "to " << min_it->first << ", " << min_it->second << ": " << min_distance << std::endl;
         traveld_distance += min_distance;
         last_point = *min_it;
         points.erase (min_it);

@@ -35,8 +35,8 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 \item{Base case:} For the base case we know that $n = 1$, then: \\
     $\sum_{i = 1}^{1}{\frac{1}{2^i}} = {\frac{1}{2}}$; and also $1 - {\frac{1}{2}} = {\frac{1}{2}}$.\\
     Therefore the equation holds for the base case.
-\item{Inductive hypothesis:} Assume that the equation holds for $2 \leq n \leq k$ for some integer $k$\\
-\item{Inductive step:} For the case where $n = k + 1$, we have that: \\
+\item{Inductive hypothesis:} Assume that the equation holds for $2 \leq n \leq k$ for some integer $k$
+\item{Inductive step:} For the case where $n = k + 1$, we have that: 
 \begin{equation*}
 \begin{aligned}
     \sum_{i = 1}^{k + 1}{\frac{1}{2^i}} & = \sum_{i = 1}^{k}{\frac{1}{2^i}} + {\frac{1}{2^{k + 1}}} \\
@@ -97,17 +97,15 @@ where $a$ and $b$ non negative numbers. Let $k$ be an integer such that $k > 7$ 
 Since the equation \ref{eq2} holds for all cases it holds for any case.
 
 \question{3}{Give a DFA for each of the following languages}
-\part{a} Binary strings that contais at least five 1s.\\
-\part{b} Binary strings that beggins with 010 or ends with 101.\\
-\part{c} Binary strings having the substring 010 but not having the substring 101. \\
 
-\part{a}
+\textbf{\part{a} Binary strings that contais at least five 1s.}
+
 \begin{itemize}
 	\item $Q = \{q_0, q_1, q_2, q_3, q_4, q_5\}$,	
 	\item $\Sigma = \{0,1\}$,
 	\item $q = q_0$,
 	\item $F = \{q_5\}$, and
-        \item $\delta$ is defined as follows. \\
+        \item $\delta$ is defined as follows
 
 \begin{tabular}{|c||c|c|}  \hline
       & 0 & 1 \\ \hline 
@@ -118,15 +116,24 @@ Since the equation \ref{eq2} holds for all cases it holds for any case.
       $q_4$ & $q_4$ & $q_5$ \\ \hline 
       $q_5$ & $q_5$ & $q_5$ \\ \hline 
 \end{tabular}
-\end{itemize}
 
-\part{b}
+\end{itemize}
+\begin{figure}[h]
+\centering
+\fbox{
+\includegraphics{dfa-a.png}
+}
+\end{figure}
+In this machine, the state $q_i$, $ 0 \leq i \leq 4$ , represents that the string read has $i$ 1s. The state $q_5$ represents that the string has $5$ or more 1s.
+\newline
+\newline\textbf{\part{b} Binary strings that beggins with 010 or ends with 101}
+
 \begin{itemize}
 	\item $Q = \{q_0, q_1, q_2, q_4, q_5, q_6, q_7, q_8\}$,	
 	\item $\Sigma = \{0,1\}$,
 	\item $q = q_0$,
 	\item $F = \{q_4, q_8\}$, and
-        \item $\delta$ is defined as follows. \\
+        \item $\delta$ is defined as follows.
 
 \begin{tabular}{|c||c|c|}  \hline
       & 0 & 1 \\ \hline 
@@ -141,13 +148,21 @@ Since the equation \ref{eq2} holds for all cases it holds for any case.
 \end{tabular}
 \end{itemize}
 
-\part{c}
+\begin{figure}[h]
+\centering
+\fbox{
+\includegraphics{dfa-b.png}
+}
+\end{figure}
+The states $q_i$, $0 \leq i \leq 4$ are states that verify if the string starts with 010. If this fails, the machine goes to the states bellow which are responsible for verifying if the string ends with 101.
+
+\textbf{\part{c} Binary strings having the substring 010 but not having the substring 101}
 \begin{itemize}
 	\item $Q = \{q_0, q_1, q_2, q_3, q_4, q_5, q_6, q_7\}$,	
 	\item $\Sigma = \{0,1\}$,
 	\item $q = q_0$,
-	\item $F = \{q_4, q_5\}$, and
-        \item $\delta$ is defined as follows. \\
+	\item $F = \{q_4, q_5, q_8, q_9\}$, and
+        \item $\delta$ is defined as follows.
 
 \begin{tabular}{|c||c|c|}  \hline
       & 0 & 1 \\ \hline 
@@ -156,19 +171,14 @@ Since the equation \ref{eq2} holds for all cases it holds for any case.
       $q_2$ & $q_6$ & $q_2$ \\ \hline
       $q_3$ & $q_4$ & $q_2$ \\ \hline 
       $q_4$ & $q_5$ & $q_7$ \\ \hline 
-      $q_5$ & $q_5$ & $q_2$ \\ \hline 
+      $q_5$ & $q_5$ & $q_8$ \\ \hline 
       $q_6$ & $q_1$ & $q_7$ \\ \hline 
       $q_7$ & $q_7$ & $q_7$ \\ \hline 
+      $q_8$ & $q_9$ & $q_8$ \\ \hline 
+      $q_9$ & $q_5$ & $q_7$ \\ \hline 
 \end{tabular}
-
 \end{itemize}
-
-\begin{figure}[h]
-\centering 
-\fbox{
-\includegraphics{433.pdf}
-}
-\end{figure}
+The states $q_1$ and $q_3$ are responsible for verifying if the string has substring 010, and once this is checked the machine stays in the states $q_4, q_5, q_8 and q_9$ as long as the string 101 is not read. If the substring 101 appears before 010 the machine goes to state $q_7$ through the states $q_2$ and $q_6$.
 
 \end{document}
 

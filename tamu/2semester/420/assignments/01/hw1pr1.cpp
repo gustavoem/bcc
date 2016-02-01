@@ -53,8 +53,8 @@ class Vacuum
     private:
         unsigned int x;
         unsigned int y;
-        unsigned int x_orientation;
-        unsigned int vy;
+        int x_orientation;
+        int vy;
         Room * room;
         bool ** visited;
         float score;

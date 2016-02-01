@@ -1,0 +1,33 @@
+Strings and Regular Expressions
+- Different representations of string
+-> "string"
+-> %Q{string}
+-> 'string'
+-> %q{string}
+- Regex matching
+-> captured values goes to $1,...,$n
+
+Duck Typing
+- Ruby emphasizes "what do you respond to" over "which class do you belong"
+
+Modules
+- Collection of procedures that are not inside a class
+- Important use: mix it with classes
+
+Mixins
+- a collection of procedures
+- you can add the as part of a class
+-> you can even use the classes private members. It works because mixins assumes that a
+class have some characteristics. Then we see mixins as a contract.
+
+Poetry Mode
+a.should(be.send(:>=, 7)))
+a.should(be() >= 7)
+a.should be >= 7
+
+DRY: Don't Repeat Yourself
+
+Reflection and Metaprogramming
+- Reflection: the object knows himself
+- Metaprogramming let us define new code in runtime
+

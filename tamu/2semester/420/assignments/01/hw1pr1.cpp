@@ -1,6 +1,6 @@
 // Gustavo Estrela de Matos
 // CSCE 420-500
-// Due: February 1, 2016 (or whatever the due date is)
+// Due: February 1, 2016 
 // hw1pr1.cpp
 //
 

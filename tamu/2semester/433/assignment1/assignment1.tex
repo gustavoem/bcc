@@ -179,6 +179,11 @@ The states $q_i$, $0 \leq i \leq 4$ are states that verify if the string starts 
 \end{tabular}
 \end{itemize}
 The states $q_1$ and $q_3$ are responsible for verifying if the string has substring 010, and once this is checked the machine stays in the states $q_4, q_5, q_8 and q_9$ as long as the string 101 is not read. If the substring 101 appears before 010 the machine goes to state $q_7$ through the states $q_2$ and $q_6$.
-
+\begin{figure}[h]
+\centering
+\fbox{
+    \includegraphics[scale=0.2]{dfa-c.png}
+}
+\end{figure}
 \end{document}
 

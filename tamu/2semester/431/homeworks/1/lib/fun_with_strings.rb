@@ -6,19 +6,16 @@ module FunWithStrings
 
   def count_words
     v = self.downcase.split(/\W+/).reject{|s| s.empty?}
-    hash = {}
-    v.each{|x| 
-        if hash.has_key?(x)
-            hash[x] = hash[x] + 1
-        else
-            hash[x] = 1
-        end
-    }
+    hash = Hash.new(0)
+    v.each{|x| hash[x] += 1}
     hash
   end
 
   def anagram_groups
-    # your code here
+    word_v = self.split(/\s+/).reject{|s| s.empty?}
+    groups = []
+    groups = word_v.group_by{|word| word.downcase.chars.sort}.values
+    groups
   end
 
 end

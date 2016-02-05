@@ -1,0 +1,35 @@
+02/03
+
+Yield KeyWord
+yield (bla) - control comes back to who called the function and bla is returned
+example
+def make_page
+    page << make_header ()
+    page << yield
+    make << make_footer ()
+end
+
+def one_page
+    make_page do 'Hello'
+    or
+    make_page {'Hello'}
+end
+
+Lambdas in Ruby
+
+---------------------------------------
+
+Service Oriented Architecture (SOA)
+- all components are services
+- apps are composed of services
+
+- Whats the ideal HW for SaaS
+-> ?
+
+- SaaS infrastructure
+-> 1: communication
+-> 2: scalability
+-> 3: dependability
+
+- Cloud Computing
+-> Services on clusters

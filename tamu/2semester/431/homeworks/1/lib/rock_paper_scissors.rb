@@ -19,8 +19,18 @@ class RockPaperScissors
     winner
   end
 
+  def self.recursive_winner(pair)
+    if (pair[0].is_a? String)
+      pair
+    else
+      winner_1 = recursive_winner(pair[0])
+      winner_2 = recursive_winner(pair[1])
+      winner(winner_1, winner_2)
+    end
+  end
+
   def self.tournament_winner(tournament)
-    # YOUR CODE HERE
+    recursive_winner(tournament)
   end
 
 end

@@ -54,15 +54,35 @@ class Puzzle8
                 cout << endl;
             }
         }
+
+        // Returns tile present int this board position
+        unsigned int content (unsigned int x, unsigned int y)
+        {
+            return board[x][y];
+        }
+
+        // Comparation operator
+        bool operator==(Puzzle8& a)
+        {
+            for (unsigned int i = 0; i < 9; i++)
+                if (a.content (i / 3, i % 3) != this->content (i / 3, i % 3))
+                    return false;
+            return true;        
+        }
 };
 
 int main ()
 {
     unsigned int ** board;
+    unsigned int ** goal_board;
 
     board = new  unsigned int * [3];
+    goal_board = new unsigned int * [3];
     for (unsigned int i = 0; i < 3; i++)
+    {
         board[i] = new unsigned int[3];
+        goal_board[i] = new unsigned int[3];
+    }
     
     for (unsigned int i = 0; i < 9; i++)
     {
@@ -70,9 +90,20 @@ int main ()
         scanf ("%u", &x);
         board[i / 3][i % 3] = x;
     }
+    
+    for (unsigned int i = 0; i < 9; i++)
+    {
+        unsigned int x;
+        scanf ("%u", &x);
+        goal_board[i / 3][i % 3] = x;
+    }
 
     Puzzle8 game ((unsigned int **) board);
+    Puzzle8 goal_game ((unsigned int **) goal_board);
     game.printGame ();
+    goal_game.printGame ();
+
+    cout << (game == goal_game) << endl;
     
     for (unsigned int i = 0; i < 3; i++)
         delete[] board[i];

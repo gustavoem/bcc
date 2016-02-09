@@ -6,9 +6,12 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-
+#include <queue>
+#include <stack>
 
 using namespace std;
+
+static string moves[4] = {"UP", "RIGHT", "DOWN", "LEFT"};
 
 class Puzzle8
 {
@@ -173,27 +176,83 @@ struct Node
     Node * prev; // the last game state
     unsigned int last_move; // the move between the previous and current state
     Puzzle8 * state; // the current game state 
+    unsigned int depth; // the depth of the node
 };
+
+
+// Perfors the BFS 
+Node * BFS (Puzzle8 game, Puzzle8 goal, vector<Node *> * expanded_nodes)
+{
+    queue<Node *> Q;
+    Node * first = new Node;
+    expanded_nodes->push_back (first);
+    Q.push (first);
+    first->prev = NULL;
+    first->state = new Puzzle8 (game);
+    first->depth = 0;
+
+    while (!Q.empty ())
+    {
+        Node * current = Q.front ();
+        Q.pop ();
+
+        if (*(current->state) == goal)
+            return current;
+        
+        else if (current->depth < 10)
+            for (unsigned int i = 0; i < 4; i++)
+                if (current->state->isValidMove (i))
+                {
+                    Node * child = new Node;
+                    child->prev = current;
+                    child->last_move = i;
+                    Puzzle8 * child_state = new Puzzle8 (*(current->state));
+                    child_state->moveBlank (i);
+                    child->state = child_state;
+                    child->depth = current->depth + 1;
+                    
+                    expanded_nodes->push_back (child);
+                    Q.push (child);
+                }
+                       
+    }
+    return NULL;
+}
 
 
 // Using a BFS with max depth of 10 searches for a game solution
 // and prints it into the screen
 void print_solution (Puzzle8 game, Puzzle8 goal)
 {
-    Node * current = new Node;
-    current->prev = NULL;
-    current->state = &game;
-    
-    for (unsigned int i = 0; i < 4; i++)
+    vector<Node *> expanded_nodes;
+    Node * solution_node = BFS (game, goal, &expanded_nodes);
+    if (solution_node == NULL)
+        cout << "Could not find a solution" << endl;
+    else
     {
-        Puzzle8 * child_state = new Puzzle8 (*current->state);
-        child_state->moveBlank (i);
-        cout << "Child " << i << ": " << endl;
-        child_state->printGame ();
-        cout << endl;
-        delete child_state;
+        stack<Node *> path;
+        Node * current = solution_node;
+        while (current != NULL)
+        {
+            path.push (current);
+            current = current->prev;
+        }
+        
+        cout << "Start" << endl;
+        current = path.top ();
+        path.pop ();
+        current->state->printGame ();
+        while (!path.empty ())
+        {
+            cout << moves[path.top ()->last_move] << endl;
+            current = path.top ();
+            path.pop ();
+            current->state->printGame ();
+        }
     }
+    cout << "Generated " << expanded_nodes.size () << " nodes in total." << endl;
 }
+
 
 int main ()
 {
@@ -224,9 +283,6 @@ int main ()
 
     Puzzle8 game ((unsigned int **) board);
     Puzzle8 goal_game ((unsigned int **) goal_board);
-
-    cout << "Original: " << endl;
-    game.printGame ();    
 
     print_solution (game, goal_game);
 

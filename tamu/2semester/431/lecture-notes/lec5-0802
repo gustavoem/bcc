@@ -1,0 +1,21 @@
+Sites That are Really Programs (SaaS)
+- WEBrick connects your app to the browser
+    - WEBrick calls the app via the rack middleware.
+
+Scaling your system
+- Sharding vs. Replication
+
+The MVC Design Patter
+   --> View <----> controller ---> model -->
+- Alternatives: page controller; front controller;  template view;
+
+Data Storage
+- In-memory vs In-storage objects
+- Basic operations on data: Create Read Update Delete (CRUD)
+- ActiveRecord: every model knows how to CRUD itself
+- Rails use relational databases
+
+Rest
+
+
+

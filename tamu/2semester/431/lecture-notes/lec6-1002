@@ -1,0 +1,12 @@
+Unit Test SHould Be FIRST
+- Fast
+- Independent
+- Reapetable
+- Self checking
+- Timely: written about the same time as the code
+
+RSpec, a Domain-Specifi Language for Testing
+- DSL: small programiming language that 
+    - example: expect('string') to be_palindorme <= be_palindrome is part of the rspec
+    language
+

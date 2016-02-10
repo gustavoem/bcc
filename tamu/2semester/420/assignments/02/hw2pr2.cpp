@@ -22,8 +22,8 @@ class Puzzle8
         unsigned int  ** board;
         unsigned int blank_x;
         unsigned int blank_y;
-    
         
+                
         // Allocs memory for the board
         void init_board () 
         {
@@ -57,7 +57,8 @@ class Puzzle8
             copy_board (board);
         }
 
-
+        
+        // Default destructor
         ~Puzzle8 ()
         {
             for (unsigned int i = 0; i < 3; i++)
@@ -72,7 +73,7 @@ class Puzzle8
             init_board ();
             copy_board (original.getBoard ());
         }
-
+        
         
         // Returns the game board
         unsigned int ** getBoard ()
@@ -197,28 +198,43 @@ class Puzzle8
 // Represents a node in the search
 struct Node
 {
-    Node * prev; // the last game state
-    unsigned int last_move; // the move between the previous and current state
-    Puzzle8 * state; // the current game state 
-    unsigned int depth; // the depth of the node
+    Node * prev;            // Last game state
+    unsigned int last_move; // Move between the previous and current state
+    Puzzle8 * state;        // Current game state 
+    unsigned int depth;     // Depth of the node
+
+    // Stores function values for A* algorithm
+    unsigned int current_cost;     // g(x)
+    unsigned int heuristic_cost;   // h(x)
 };
 
 
-// Perfors the BFS 
-Node * BFS (Puzzle8 game, Puzzle8 goal, vector<Node *> * expanded_nodes)
+struct NodeComparison
 {
-    queue<Node *> Q;
+    bool operator ()(const Node * a, const Node * b) const
+    {
+        return a->current_cost + a->heuristic_cost < b->current_cost + b->heuristic_cost;
+    }
+};
+
+
+// Perfors the A* search
+Node * AStar (Puzzle8 game, Puzzle8 goal, vector<Node *> * expanded_nodes)
+{
+    priority_queue<Node *, vector<Node *>, NodeComparison> pq;
     Node * first = new Node;
     expanded_nodes->push_back (first);
-    Q.push (first);
+    pq.push (first);
     first->prev = NULL;
     first->state = new Puzzle8 (game);
     first->depth = 0;
+    first->current_cost = 0;
+    first->heuristic_cost = first->state->manhattanDistance (goal);
 
-    while (!Q.empty ())
+    while (!pq.empty ())
     {
-        Node * current = Q.front ();
-        Q.pop ();
+        Node * current = pq.top ();
+        pq.pop ();
 
         if (*(current->state) == goal)
             return current;
@@ -234,9 +250,11 @@ Node * BFS (Puzzle8 game, Puzzle8 goal, vector<Node *> * expanded_nodes)
                     child_state->moveBlank (i);
                     child->state = child_state;
                     child->depth = current->depth + 1;
+                    child->current_cost = current->current_cost + 1;
+                    child->heuristic_cost = child_state->manhattanDistance (goal);
                     
                     expanded_nodes->push_back (child);
-                    Q.push (child);
+                    pq.push (child);
                 }
                        
     }
@@ -249,7 +267,9 @@ Node * BFS (Puzzle8 game, Puzzle8 goal, vector<Node *> * expanded_nodes)
 void print_solution (Puzzle8 game, Puzzle8 goal)
 {
     vector<Node *> expanded_nodes;
-    Node * solution_node = BFS (game, goal, &expanded_nodes);
+    
+    Node * solution_node = AStar (game, goal, &expanded_nodes);
+    
     if (solution_node == NULL)
         cout << "Could not find a solution" << endl;
     else
@@ -275,6 +295,13 @@ void print_solution (Puzzle8 game, Puzzle8 goal)
         }
     }
     cout << "Generated " << expanded_nodes.size () << " nodes in total." << endl;
+
+    while (!expanded_nodes.empty ())
+    {
+        delete expanded_nodes.back ()->state;
+        delete expanded_nodes.back ();
+        expanded_nodes.pop_back ();
+    }
 }
 
 

@@ -251,6 +251,13 @@ void print_solution (Puzzle8 game, Puzzle8 goal)
         }
     }
     cout << "Generated " << expanded_nodes.size () << " nodes in total." << endl;
+    
+    while (!expanded_nodes.empty ())
+    {
+        delete expanded_nodes.back ()->state;
+        delete expanded_nodes.back ();
+        expanded_nodes.pop_back ();
+    }
 }
 
 

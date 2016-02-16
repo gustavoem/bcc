@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.16)  16 FEB 2016 12:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.16)  16 FEB 2016 14:09
 entering extended mode
-**H:/bcc/tamu/2semester/433/hw2/assignment2.tex
-(H:/bcc/tamu/2semester/433/hw2/assignment2.tex
+**assignment2.tex
+(assignment2.tex
 LaTeX2e <2015/01/01> patch level 2
 Babel <3.9m> and hyphenation patterns for 69 languages loaded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
@@ -21,7 +21,8 @@ File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(C:\Users\gestrela\AppData\Roaming\MiKTeX\2.9\tex\latex\preprint\fullpage.sty
+(\\filer.cse.tamu.edu\ugrads\g\gestrela\ms_windows\cpsc_redirected\AppData\MiKT
+eX\2.9\tex\latex\preprint\fullpage.sty
 Package: fullpage 1999/02/23 1.1 (PWD)
 \FP@margin=\skip43
 )
@@ -613,7 +614,8 @@ LaTeX Info: Redefining \nameref on input line 41.
 (assignment2.out) (assignment2.out)
 \@outlinefile=\write4
 
-(C:\Users\gestrela\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+(\\filer.cse.tamu.edu\ugrads\g\gestrela\ms_windows\cpsc_redirected\AppData\MiKT
+eX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count130
 \scratchdimen=\dimen165
@@ -647,28 +649,33 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
  [1
 
 {C:/Users/gestrela/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 126--128
+Underfull \hbox (badness 10000) in paragraph at lines 132--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--149
 
  []
 
 [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 131.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 131.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 152.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 152.
  (assignment2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 131.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 131.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 152.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 152.
 Package rerunfilecheck Info: File `assignment2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 131.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 152.
  ) 
 Here is how much of TeX's memory you used:
- 16795 strings out of 493673
- 329544 string characters out of 3141521
+ 16796 strings out of 493673
+ 329729 string characters out of 3141401
  391696 words of memory out of 3000000
- 19870 multiletter control sequences out of 15000+200000
+ 19872 multiletter control sequences out of 15000+200000
  10737 words of font info for 41 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 48i,7n,66p,469b,387s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,7n,66p,451b,387s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/
@@ -680,7 +687,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86
 )/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on assignment2.pdf (2 pages, 122169 bytes).
+Output written on assignment2.pdf (2 pages, 123109 bytes).
 PDF statistics:
  65 PDF objects out of 1000 (max. 8388607)
  6 named destinations out of 1000 (max. 500000)

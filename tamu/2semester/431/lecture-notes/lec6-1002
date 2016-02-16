@@ -1,0 +1,79 @@
+Unit Test SHould Be FIRST
+- Fast
+- Independent
+- Reapetable
+- Self checking
+- Timely: written about the same time as the code
+
+RSpec, a Domain-Specifi Language for Testing
+- DSL: small programiming language that 
+    - example: expect('string') to be_palindorme <= be_palindrome is part of the rspec
+    language
+
+A Trip Through a Rails App
+1 - Routes
+    -> map incoming URLs to controller actions and extract any optional parameters
+2 - Controller actions set instance variables, visible to views
+
+Rails Philosophy
+- Convention over configuration: if naming follows certain conventions no need for 
+config files, 
+- DRY, again
+
+----------
+~ Database & Migrations ~
+
+Your Customer Data is Golden
+- How to avoid messing up when developing?
+- How do we track and manage the schema changes?
+- ... the answer is both in automation
+
+Multiple Environments, Multiple Databases
+- Test, Develop and Deploy different databases
+
+Meet a Code Generator
+- rails generate migration bla
+- rake db:migrate
+
+Rails Cookery #1
+- Augmenting app functionality = adding mmodels, views and controller apps
+- To add a new model to a Rails app:
+    - 1. Create a migration
+    - 2. Describe a migration
+    - 3. ...
+
+----------
+How can language features simplify design & implementation of design patterns
+
+CRUD in SQL
+- Rails generates SQL statements at runtime, based on your Ruby code
+- Subclassin from ActiveRecord::Base connects a model to the database
+
+Creating: new != save
+- Must call save or save! on an AR model instance to actually save changes in the database
+
+Reading
+- Class method where selects objects based on attributes
+
+Update: Two Ways
+- Let
+- Modify and then change
+
+Deleting is strightfoward
+
+Summary: ActiveRecord Intro
+- Subclassing ActiveRecord::Base connects a model to database
+- Convetion over configuration maps
+- Object in memory != row in database
+    - save and destroy
+
+-> after retrieving information 
+
+----------
+Rails Cookery #2
+
+MVC Responsibilities
+- Model: methods to get/manipulate data
+- Controllers: get data from model
+- View: display data, allow user interaction
+

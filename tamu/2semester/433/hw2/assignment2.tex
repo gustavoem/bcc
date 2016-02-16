@@ -48,9 +48,86 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 \maketitle
 
 
-\question{1}{Mathematical Symbols}
-aslfalsdf
-\question{3}{Constructing DFA's}
+\question{1}{Construct the NFA that accepts the language $\{w \vert w$ contains an odd number of 1's and exactly two 0's$\}$ with exatcly six states.}
+First let's build a machine that accepts strings with odd number of 1's:
+
+%\begin{figure}[h]
+%\centering
+%\fbox{
+%    \includegraphics[scale=0.2]{dfa-c.png}
+%}
+%\end{figure}
+
+Now we build a machine that accepts strings with exactly 2 zeros:
+
+%\begin{figure}[h]
+%\centering
+%\fbox{
+%    \includegraphics[scale=0.2]{dfa-c.png}
+%}
+%\end{figure}
+
+Notice that we used 6 states already. Then, since we don't need to keep track of strings that go to state $r_3$, we could simply remove this state, then all the strings with more than 2 zeros would halt on this machine.
+
+Now we can create a new state that goes to both machines without consuming characters of the string:
+
+%\begin{figure}[h]
+%\centering
+%\fbox{
+%    \includegraphics[scale=0.2]{dfa-c.png}
+%}
+%\end{figure}
+
+
+
+
+\question{2}{Construct an NFA that accepts the set of binary strings that contain both substrings 010 and 101.}
+A machine that accepts strings with both substrings $010$ and $101$ has either the substring $010$ or $101$ first, then we could build different machines for both cases:
+\begin{itemize}
+
+\item{$010$ and then $101$}
+
+%\begin{figure}[h]
+%\centering
+%\fbox{
+%    \includegraphics[scale=0.2]{dfa-c.png}
+%}
+%\end{figure}
+
+Notice that the machine consider the case in which $010$ and $101$ overlaps.
+
+\item{$101$ and then $010$}
+%\begin{figure}[h]
+%\centering
+%\fbox{
+%    \includegraphics[scale=0.2]{dfa-c.png}
+%}
+%\end{figure}
+
+\end{itemize}
+
+
+
+\question{3}{Convert the NFA below to a DFA}
+%\begin{figure}[h]
+%\centering
+%\fbox{
+%    \includegraphics[scale=0.2]{dfa-c.png}
+%}
+%\end{figure}
+To solve this question we are going to use the same algorithm used to proove that $\epsilon$-NFAs are equivalent to DFAs. We are going to call this NFA $N = (Q, \Sigma, \delta, q, F)$ and build a DFA $M = (Q', \Sigma, \delta', q', F')$ such that $q' = C_{\epsilon}(0) = \{0, 1\}$; $\delta': \mathcal{P}(Q) \times \Sigma$ where $\delta'(R, a) = \bigcup \limits_{r \in R}^{} C_{\epsilon}(\delta(r, a))$ as it follows:
+
+\begin{itemize}
+\item{Start with the initial state}
+
+
+\item{Calculate the transitions of $\{0, 1\}$}
+
+$\delta'(\{0, 1\}, a) = C_{\epsilon}(\{1\}) = \{1\}$\\
+$\delta'(\{0, 1\}, b) = C_{\epsilon}(\{2\}) = \{0, 1, 2\}$\\
+
+
+\end{itemize}
 
 \end{document}
 

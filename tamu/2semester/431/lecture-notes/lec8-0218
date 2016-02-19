@@ -1,0 +1,19 @@
+Aspect Oriented Programming - AOP
+- A way of DRYing out cross-cutting concerns
+
+Model Lifecycle Callbacks
+- Allows pre and pos operations
+- Validations check
+
+Session
+- You should keep the opened user sessions
+
+Flash
+- Stores data for a few user accesses
+- Useful to store data that is used temporarily. For instance, data of a page that is
+about to be changed.
+
+SQL Injections
+- SQL security flaw
+
+

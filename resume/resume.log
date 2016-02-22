@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2016.2.21)  21 FEB 2016 21:59
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2016.2.21)  21 FEB 2016 23:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -811,32 +811,32 @@ LaTeX Info: Redefining \nameref on input line 62.
 \openout3 = `resume.out'.
 
 LaTeX Font Info:    Font shape `EU1/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.95015pt on input line 89.
+(Font)              scaled to size 10.95015pt on input line 90.
 LaTeX Font Info:    Font shape `EU1/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.67863pt on input line 89.
+(Font)              scaled to size 7.67863pt on input line 90.
 LaTeX Font Info:    Font shape `EU1/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.45398pt on input line 89.
+(Font)              scaled to size 5.45398pt on input line 90.
 LaTeX Font Info:    Font shape `EU1/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.94983pt on input line 89.
+(Font)              scaled to size 10.94983pt on input line 90.
 LaTeX Font Info:    Font shape `EU1/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.6784pt on input line 89.
+(Font)              scaled to size 7.6784pt on input line 90.
 LaTeX Font Info:    Font shape `EU1/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.45381pt on input line 89.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 93.
+(Font)              scaled to size 5.45381pt on input line 90.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 128.
  [1
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 93.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 128.
  (./resume.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 93.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 93.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 128.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 128.
  ) 
 Here is how much of TeX's memory you used:
- 27878 strings out of 493706
- 496895 string characters out of 6147748
- 629252 words of memory out of 5000000
- 30954 multiletter control sequences out of 15000+600000
- 6480 words of font info for 72 fonts, out of 8000000 for 9000
+ 27880 strings out of 493706
+ 497003 string characters out of 6147748
+ 633261 words of memory out of 5000000
+ 30955 multiletter control sequences out of 15000+600000
+ 6488 words of font info for 73 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
  53i,11n,68p,10393b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
 

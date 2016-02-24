@@ -30,8 +30,25 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 
 \maketitle
 
-\question{1}{Mathematical Symbols}
+\question{1}{Find the smallest string in $\{a, b\}^{*}$ not in the language corresponding to the given regular expressions. \\
+\part{a} 
+$b^{*} (ab)^{*} a^{*}$ \\
+\part{b}
+$(a^* + b^*)(a^* + b^*)(a^* + b^*)$ \\
+\part{c} 
+$a^*(baa^*)^*b^*$
+}
 
+\part{a} \\
+This regular expression accepts any string with lenght less or equal to $2$.
+To make a string that is not accepted we can put a $b$ in the end of the string, considering the fact that this string can't be of format $b^*(ab)^*$ because it would be accepted. The string $abb$, for instance, is not accepted and it is minimal because any string with size less then $abb$ is accepted.
+
+\part{b} \\
+We can see that this regular expression accepts any string with length less or equal to $3$. Also, the look of a string accepted by this language is one that has $3$ or less sequences of $a$'s and $b$'s; if we have more than $3$ sequences the string won't be accepted. Therefore, the string $abab$ is not accepted and is minimal since any string with length less than $4$ is accepted.
+
+\part{c} \\
+First let's observe that any string with size less or equal to $2$ is accepted by this language.
+To find a string not accepted by this regular expression we are going to exploit the fact that the term in the middle ($baa*$) repeats the string $ba$ everytime that it is repeated.
+Then, if we have a string that starts with $bb$ the first ($a^*$) and second ($(baa*)^*$) sequences are not in this string, therefore this string should have just $b$'s, then $bba$ is not accepted by the language and it is minimal since every string with size less then $3$ is accepted.
 
 \end{document}
-

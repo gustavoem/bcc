@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
 
+\usepackage{indentfirst}
 
 \newcommand{\question}[2] {\vspace{0.3in}\noindent{\subsection*{Question #1. #2} \vspace{0.15in}}}
 
@@ -39,16 +40,65 @@ $(a^* + b^*)(a^* + b^*)(a^* + b^*)$ \\
 $a^*(baa^*)^*b^*$
 }
 
-\part{a} \\
-This regular expression accepts any string with lenght less or equal to $2$.
-To make a string that is not accepted we can put a $b$ in the end of the string, considering the fact that this string can't be of format $b^*(ab)^*$ because it would be accepted. The string $abb$, for instance, is not accepted and it is minimal because any string with size less then $abb$ is accepted.
+\part{a}
+\par This regular expression accepts any string with lenght less or equal to $2$.
+\par To make a string that is not accepted we can put a $b$ in the end of the string, considering the fact that this string can't be of format $b^*(ab)^*$ because it would be accepted. The string $abb$, for instance, is not accepted and it is minimal because any string with size less then $abb$ is accepted.
 
-\part{b} \\
-We can see that this regular expression accepts any string with length less or equal to $3$. Also, the look of a string accepted by this language is one that has $3$ or less sequences of $a$'s and $b$'s; if we have more than $3$ sequences the string won't be accepted. Therefore, the string $abab$ is not accepted and is minimal since any string with length less than $4$ is accepted.
+\part{b} 
+\par We can see that this regular expression accepts any string with length less or equal to $3$. Also, the look of a string accepted by this language is one that has $3$ or less sequences of $a$'s and $b$'s; if we have more than $3$ sequences the string won't be accepted. Therefore, the string $abab$ is not accepted and is minimal since any string with length less than $4$ is accepted.
 
-\part{c} \\
-First let's observe that any string with size less or equal to $2$ is accepted by this language.
-To find a string not accepted by this regular expression we are going to exploit the fact that the term in the middle ($baa*$) repeats the string $ba$ everytime that it is repeated.
-Then, if we have a string that starts with $bb$ the first ($a^*$) and second ($(baa*)^*$) sequences are not in this string, therefore this string should have just $b$'s, then $bba$ is not accepted by the language and it is minimal since every string with size less then $3$ is accepted.
+\part{c} 
+\par First let's observe that any string with size less or equal to $2$ is accepted by this language.
+\par To find a string not accepted by this regular expression we are going to exploit the fact that the term in the middle ($baa*$) repeats the string $ba$ everytime that it is repeated.
+\par Then, if we have a string that starts with $bb$ the first ($a^*$) and second ($(baa*)^*$) sequences are not in this string, therefore this string should have just $b$'s, then $bba$ is not accepted by the language and it is minimal since every string with size less then $3$ is accepted.
+
+\question{2}{Find a regular expression corresponding to each of the following subsets of $\{a, b\}^*$.\\
+\part{a} The language of all strings that begin or end with $aa$ or $bb$. \\
+\part{b} The language of all strings with at most two occurrences of the substring $ab$. \\
+\part{c} The language of all strings not containing the substring $bba$.}
+
+\part{a}
+\par Let's split this subset in simpler subsets:
+\begin{itemize}
+    \item the subset of strings that start with aa or bb: $(aa + bb)(a + b)^*$
+    \item the subset of strings that end with aa or bb: $(a + b)^*(aa + bb)$
+\end{itemize}
+\par Therefore the subset we want is represented by the regular expression: $(aa + bb)(a + b)^* + (a + b)^*(aa + bb)$
+
+\part{b} 
+\par We can think of this subset as "sequences of $a$'s and $b$'s (any string in $\{a, b\}^*$ is a sequence of $a$'s and $b$'s) that changes from $a$'s to $b$'s at most twice". Then the regular expression should look like $a^*b^*a^*b^*$ and since we could have strings starting with $b$ and ending with $a$ without creating any more $ab$ we have that the regular expression is $b^*a^*b^*a^*b^*a^*$.
+
+\part{c}
+\par A string that does not contain $bba$ is a string that has a sequence of $a$'s and after a $b$ appears we have three options following this $b$:
+\begin{itemize}
+    \item a sequence of $a$'s until the end of the string
+    \item a sequence of $b$'s until the end of the string
+    \item another string that does not contain $bba$
+\end{itemize}
+\par Which allow us to see that the regular expression for this set is $(a^*b)^*(a* + b^*)$
+
+\question{3}{Use the pumping lemma to prove that the following languages are not regular. \\
+\part{a} $L = \{a^nb^nc^{2n} $ $|$ $ n \geq 0\}$ \\
+\part{b} $L = \{w $ $|$ $ w \in \{0, 1\}^* $ and $w$ is a palindrome$\}$ \\
+\part{c} $L = \{0^i1^j $ $|$ $ j = i$ or $j = 2i\}$
+}
+
+\part{a} 
+\par Assume that $L$ is a regular language and let $p$ be the pumping constant for $L$.
+\par Take the string $s = a^pb^pc^{2p}$. Since $s \in L$ we know that, according to the pumping lemma, $s$ can be written as $s = xyz$ where $y \neq \epsilon$, $|xy| \leq p$ and $xy^iz \in L$ for all integer $i \geq 0$. 
+\par Since $|xy| \leq p$ we have that $y = a^j$ for some integer $j > 0$ ($y \neq \epsilon$) such that $s = a^ia^ja^kb^pc^{2p}$ with $i + j + k = p$. Then, using the pumping lemma we know that $s' = xy^0z$ should be in $L$, but $xy^0z = a^{i + k}b^pc^{2p}$ and since $j > 0$ then $i + k \neq p$  and $s' \notin L$ which is a contradiction.
+\par Assuming that $L$ is a regular language led us to a contradiction, therefore $L$ is not regular.
+
+\part{b}
+\par Assume that $L$ is a regular language and let $p$ be the pumping constant for $L$.
+\par Take the string $s = 0^p1^p1^p0^p$. Since $s \in L$ we know that, according to the pumping lemma, $s$ can be written as $s = xyz$ where $y \neq \epsilon$, $|xy| \leq p$ and $xy^iz \in L$ for all integer $i \geq 0$.
+\par Since $|xy| \leq p$ we have that $y = 0^j$ for some integer $j > 0$ ($y \neq \epsilon$) such that $s = 0^i0^j0^k1^p1^p0^p$ with $i + j + k = p$. Then, using the pumping lemma we know that $s' = xy^0z$ should be in $L$, but $xy^0z = 0^{i + k}1^p1^p0^p$ and since $j > 0$ then $i + k \neq p$, so $s'$ is not palindrome and  $s' \notin L$ which is a contradiction.
+\par Assuming that $L$ is a regular language led us to a contradiction, therefore $L$ is not regular.
+
+\part{c}
+\par Assume that $L$ is a regular language and let $p$ be the pumping constant for $L$.
+\par Take the string $s = 0^p1^{2p}$. Since $s \in L$ we know that, according to the pumping lemma, $s$ can be written as $s = xyz$ where $y \neq \epsilon$, $|xy| \leq p$ and $xy^iz \in L$ for all integer $i \geq 0$.
+\par Since $|xy| \leq p$ we have that $y = 0^j$ for some integer $j > 0$ ($y \neq \epsilon$) such that $s = 0^i0^j0^k1^{2p}$ with $i + j + k = p$. Then, using the pumping lemma we know that $s' = xy^0z$ should be in $L$, but $xy^0z = 0^{i + k}1^{2p}$ and since $j > 0$ we know that $i + k < p$ therefore $i + k \neq p$ and $i + k \neq 2p$, then $s' \notin L$ which is a contradiction.
+\par Assuming that $L$ is a regular language led us to a contradiction, therefore $L$ is not regular.
 
 \end{document}

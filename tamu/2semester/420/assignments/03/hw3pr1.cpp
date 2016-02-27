@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 
 using namespace std;
 class Cryptomathic 
@@ -40,14 +41,53 @@ class Cryptomathic
 
         // Store individual restrictions to letters
         //       
-        map<char, vector<int> > individual_restrictions; 
- 
+        map<char, set<int> > individual_restrictions; 
+
+
         // Make simple inferentios to restrict domain for some letters
         //
         void restrict_domain ()
         {
             // leading letter in the result can't be zero
-            individual_restrictions[sum[sum.length () - 1]].push_back (0);
+            individual_restrictions[sum[sum.length () - 1]].insert (0);
+
+            // if first two are equal then first number of sum is even
+            if (term1[0] == term2[0])
+                for (unsigned int i = 1; i < 10; i += 2)
+                    individual_restrictions[term1[0]].insert (i);
+
+            // if sum has more digits then term1 and term2 then the leading digit of sum is one
+            if (sum.length () > term1.length () && sum.length () > term2.length ())
+            {
+                for (unsigned int i = 2; i < 10; i++)
+                    individual_restrictions[sum[sum.length () - 1]].insert (i);
+                individual_restrictions[sum[sum.length () - 1]].insert (0);
+            }
+        }
+
+
+        // Reorders variables so we have less expanded nodes
+        //
+        void reorder_var ()
+        {
+            // simple insertion sort
+            for (unsigned int i = 0; i < letters.size () - 1; i++)
+            {
+                unsigned int min = individual_restrictions[letters[i]].size ();
+                unsigned int i_min = i;
+                for (unsigned int j = i + 1; j < letters.size (); j++)
+                {
+                    if (min > individual_restrictions[letters[j]].size ())
+                    {
+                        min = individual_restrictions[letters[j]].size ();
+                        i_min = j;
+                    }
+                }
+
+                char temp = letters[i];
+                letters[i] = letters[i_min];
+                letters[i_min] = temp;
+            }
         }
 
 
@@ -60,6 +100,11 @@ class Cryptomathic
             term1 = string1;
             term2 = string2;
             sum = string3;
+
+            restrict_domain ();
+            // reorder_var ();
+            
+
         }
 
 

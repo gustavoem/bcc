@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2016.2.21)  26 FEB 2016 21:51
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2016.2.21)  27 FEB 2016 00:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -692,6 +692,9 @@ LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
 (Font)                  OT1/cmr/bx/n --> EU1/SourceSansPro(1)/bx/n on input lin
 e 209.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
+Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
+)
 (./wustl-coverletter.aux)
 \openout1 = `wustl-coverletter.aux'.
 
@@ -810,26 +813,23 @@ LaTeX Info: Redefining \nameref on input line 60.
 \@outlinefile=\write3
 \openout3 = `wustl-coverletter.out'.
 
-
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 93.
-[1
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 99.
+ [1
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 93.
- (./wustl-coverletter.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 93.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 93.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 99.
+
+(./wustl-coverletter.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 99.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 99.
  ) 
 Here is how much of TeX's memory you used:
- 27851 strings out of 493706
- 495622 string characters out of 6147748
- 629335 words of memory out of 5000000
- 30939 multiletter control sequences out of 15000+600000
+ 27857 strings out of 493706
+ 495813 string characters out of 6147748
+ 634351 words of memory out of 5000000
+ 30942 multiletter control sequences out of 15000+600000
  4864 words of font info for 58 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
- 53i,11n,68p,10404b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 53i,11n,68p,10428b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on wustl-coverletter.pdf (1 page).

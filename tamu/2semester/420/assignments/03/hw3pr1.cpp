@@ -5,6 +5,7 @@
 #include <set>
 
 using namespace std;
+
 class Cryptomathic 
 {
     private:
@@ -16,6 +17,8 @@ class Cryptomathic
         // _______
         //     sum
         //
+        // To facilitete the code we are going to make all the strings have the same size
+        // by appending the characther 'x' to the smaller ones.
         string term1;
         string term2;
         string sum;
@@ -100,9 +103,7 @@ class Cryptomathic
             for (i = 0; i < max_index; i++)
             {
                 // There is no reason to verify consistency on index i if one of the 
-                // variables is not defined for this index. Since we can't say anything
-                // about this index we can't say anything about greater indexes too
-                // so we can say it's consistant
+                // variables is not defined for this index.
                 if (!(isDefined (string1, i) && isDefined (string2, i) && isDefined (sum, i)))
                     continue;
 
@@ -118,6 +119,8 @@ class Cryptomathic
 
                         if (s1_digit + s2_digit > 9)
                             carry = 1;
+                        else
+                            carry = 0;
                     }
                     else
                         carry = -1;
@@ -173,6 +176,27 @@ class Cryptomathic
                 return true;
         }
 
+    
+        // Make all the strings have the same size by adding the character 'x' to the
+        // smaller ones
+        //
+        void resize_terms ()
+        {
+            int max_length = max (max (term1.length (), term2.length ()), sum.length ());
+            int min_length = min (min (term1.length (), term2.length ()), sum.length ());
+            for (unsigned int i = min_length; i < max_length; i++)
+            {
+                if (term1.lenght () <= i)
+                    term1.append ('x');
+                
+                if (term2.lenght () <= i)
+                    term2.append ('x');
+                
+                if (sum.lenght () <= i)
+                    sum.append ('x');
+            }
+        } 
+
     public:
 
         // Default Constructor
@@ -182,7 +206,8 @@ class Cryptomathic
             term1 = string1;
             term2 = string2;
             sum = string3;
-
+            
+            resize_terms ();
             restrict_domain ();
             // reorder_var ();
         }

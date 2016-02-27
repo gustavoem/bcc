@@ -30,7 +30,7 @@ class Cryptomathic
 
         // assignments[i] = C iif we assigned value i to letter C
         //
-        vector<char> assignments;
+        map<char, int> assignments;
 
 
         // Vector with all the different letters. This vector is used to order the 
@@ -70,7 +70,8 @@ class Cryptomathic
         //
         void reorder_var ()
         {
-            // simple insertion sort
+            // Simple insertion sort. We won't have many vars to sort
+            //
             for (unsigned int i = 0; i < letters.size () - 1; i++)
             {
                 unsigned int min = individual_restrictions[letters[i]].size ();
@@ -90,6 +91,87 @@ class Cryptomathic
             }
         }
 
+        
+        // Verifies if variable assignments broken any rule
+        //
+        bool isConsistant ()
+        {
+            int max_index = max (max (string1.length (), string2.length ()), sum.length());
+            for (i = 0; i < max_index; i++)
+            {
+                // There is no reason to verify consistency on index i if one of the 
+                // variables is not defined for this index. Since we can't say anything
+                // about this index we can't say anything about greater indexes too
+                // so we can say it's consistant
+                if (!(isDefined (string1, i) && isDefined (string2, i) && isDefined (sum, i)))
+                    continue;
+
+                // verifies if there is carry
+                int carry = 0;
+                if (i > 0)
+                {
+                    if (isDefined (string1, i - 1) && isDefined (string2, i - 1))
+                    {
+                        int s1_digit = getValue (string1, i - 1);
+                        int s2_digit = getValue (string2, i - 1);
+                        int sum_digit = getValue ()
+
+                        if (s1_digit + s2_digit > 9)
+                            carry = 1;
+                    }
+                    else
+                        carry = -1;
+
+                }
+               
+                // we are assuming that these numbers are defined 
+                int s1_digit = 0;
+                int s2_digit = 0;
+                s1_digit = getValue (string1, i);
+                s2_digit = assignments (string2, i);
+                sum_digit = assignments (sum, i);
+
+                if (carry == -1)
+                    if (s1_digit + s2_digit  == sum_digit || 
+                        s1_digit + s2_digit + 1 == sum_digit)
+                        continue;
+                    else
+                        return false;
+                else
+                    if (s1_digit + s2_digit + carry == sum_digit)
+                        continue;
+                    else
+                        return false;
+            }
+        }
+
+        
+        // Returns the value of i-th charachter of s. 
+        // If i >= s.length returns 0
+        // Returns -1 if characther not defined
+        //
+        int getValue (string s, index i)
+        {
+            if (i < s.length ())
+                if (assignments.find (s[i]) != assignments.end ())
+                    return assignments[s[i]];
+                else
+                    return -1;
+            else
+                return 0;
+        }
+        
+
+        // Verifies if a character from s at index i is defined. If i >= s.length returns
+        // true
+        //
+        bool isDefined (string s, index i)
+        {
+            if (i < s.length () && assignments.find (s[i]) != assignments.end ())
+                return false;
+            else
+                return true;
+        }
 
     public:
 
@@ -103,15 +185,16 @@ class Cryptomathic
 
             restrict_domain ();
             // reorder_var ();
-            
-
         }
 
 
         vector<char> * solve ()
         {
+            
             return NULL;
         }
+
+
 };
 
 int main ()

@@ -19,9 +19,12 @@ class Clause:
     def to_str (self):
         """Returns the clause representation in s as a string
         """
-        s = str (self.implication) + " :- "
-        for p in self.predicates:
-            s += str (p) + ", "
+        s = str (self.implication) 
+        
+        if (self.predicates is not []):
+            s += " :- "
+            for p in self.predicates:
+                s += str (p) + ", "
         return s
 
     def has_premise (self, p):
@@ -61,13 +64,7 @@ for line in f:
     
     right_vars = re.split ("\W+", right_part)
     # remove split borders
-    right_vars.pop (-1)
-    right_vars.pop (0)
-    
-    #print ("left: " + left_part)
-    #print ("right: " + ''.join(right_vars))
-    #for e in right_vars:
-    #    print ("|" + str(e) + "|")
+    right_vars = [s for s in right_vars if  s != ""]
     
     inferred[left_part] = False
     for var in right_vars:
@@ -76,9 +73,23 @@ for line in f:
     KB.append (Clause (left_part, right_vars))
 f.close ()
 
-test = Clause ('A', ['B', 'C'])
-test2 = copy.deepcopy (test)
-p = 'B'
-test2.assume_truth (p)
-print (test2.to_str ())
+print ("Inferences: ")
+while  len(agenda) is not 0:
+    p = agenda.pop ()
+    if not (inferred[p]):
+        print ("Premise: " + p)
+        inferred[p] = True
+        for clause in KB:
+            print ("Looking at clause: " + clause.to_str ())
+            if (clause.has_premise (p)):
+                new_clause = copy.deepcopy (clause)
+                new_clause.assume_truth (p)
+                print ("New clause: ")
+                if (new_clause.concluded ()):
+                    implication = new_clause.implication
+                    print ("Concluded: ")
+                    print (implication)
+                    agenda.append (implication)
+                
+
 

@@ -1,3 +1,4 @@
-B:-balbalb.
+B:-A.
+D:- B, C.
+A.
 C.
-D:- A, B, C, D.

@@ -48,11 +48,9 @@ class Clause:
         return self.left_var
 
 
-clauses = []
 agenda = []
 inferred = {}
 KB = []
-
 filename = input ()
 f = open (filename, 'r')
 for line in f:
@@ -73,21 +71,19 @@ for line in f:
     KB.append (Clause (left_part, right_vars))
 f.close ()
 
-print ("Inferences: ")
+
+print ("Concluded: ")
 while  len(agenda) is not 0:
     p = agenda.pop ()
     if not (inferred[p]):
-        print ("Premise: " + p)
         inferred[p] = True
         for clause in KB:
-            print ("Looking at clause: " + clause.to_str ())
             if (clause.has_premise (p)):
                 new_clause = copy.deepcopy (clause)
                 new_clause.assume_truth (p)
-                print ("New clause: ")
+                KB.append (new_clause)
                 if (new_clause.concluded ()):
                     implication = new_clause.implication
-                    print ("Concluded: ")
                     print (implication)
                     agenda.append (implication)
                 

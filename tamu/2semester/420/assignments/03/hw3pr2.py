@@ -1,9 +1,84 @@
 import sys
 import re
+import copy
+
+class Clause:
+    def __init__ (self, left_var, right_vars):
+        """Default Constructor
+        """
+        self.implication = left_var
+        self.predicates = right_vars
+
+    def concluded (self):
+        """Returns true if the implication is true in the clause
+        """
+        if self.predicates == []:
+            return True
+        return False
+
+    def to_str (self):
+        """Returns the clause representation in s as a string
+        """
+        s = str (self.implication) + " :- "
+        for p in self.predicates:
+            s += str (p) + ", "
+        return s
+
+    def has_premise (self, p):
+        """Returns true if clause has premise p
+        """
+        if p in self.predicates:
+            return True
+        else:
+            return False
+
+    def assume_truth (self, p):
+        """Removes p from the premises assuming that p is true
+        """
+        if (self.has_premise (p)):
+            self.predicates.remove (p)
+
+    
+    def implication (self):
+        """Returns the implication symbol of the clause
+        """
+        return self.left_var
+
+
+clauses = []
+agenda = []
+inferred = {}
+KB = []
 
 filename = input ()
 f = open (filename, 'r')
 for line in f:
-    [left_part, right_part] = line.split (":-")
-    right_vars = re.split (",|\.", right_part)
-    right_vars.pop (-1) #removes \n
+    if ":-" in line:
+        [left_part, right_part] = re.split (":-", line)
+    else:
+        [left_part, right_part] = line[0:-1] 
+        agenda.append (left_part)
+    
+    right_vars = re.split ("\W+", right_part)
+    # remove split borders
+    right_vars.pop (-1)
+    right_vars.pop (0)
+    
+    #print ("left: " + left_part)
+    #print ("right: " + ''.join(right_vars))
+    #for e in right_vars:
+    #    print ("|" + str(e) + "|")
+    
+    inferred[left_part] = False
+    for var in right_vars:
+        inferred[var] = False
+
+    KB.append (Clause (left_part, right_vars))
+f.close ()
+
+test = Clause ('A', ['B', 'C'])
+test2 = copy.deepcopy (test)
+p = 'B'
+test2.assume_truth (p)
+print (test2.to_str ())
+

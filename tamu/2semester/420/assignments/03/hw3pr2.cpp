@@ -21,11 +21,6 @@ int main ()
             cout << "left_predicate: " << left_var << "|\n";
             string right_part = line.substr (division + 2);
 
-            while (right_part != ".")
-            {
-                unsigned int comma_index;
-                string right_var = right_part.substr (0, )
-            }
         }
         myfile.close();
     }

@@ -3,6 +3,8 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -43,6 +45,11 @@ class Cryptomathic
         // Store individual restrictions to letters
         //       
         map<char, set<int> > individual_restrictions; 
+
+    
+        // Stores the index of the next variable to be assigned
+        // 
+        unsigned int next_var;
 
 
         // Make simple inferentios to restrict domain for some letters
@@ -95,9 +102,6 @@ class Cryptomathic
         }
 
         
-        
-
-        
         // Returns the value of i-th charachter of s. 
         // If i >= s.length returns 0
         // Returns -1 if characther not defined
@@ -119,10 +123,26 @@ class Cryptomathic
         //
         bool isDefined (string s, unsigned int i)
         {
-            if (i < s.length () && assignments.find (s[i]) != assignments.end ())
+            if (i < s.length () && assignments.find (s[i]) == assignments.end ())
                 return false;
             else
                 return true;
+        }
+
+
+        void init_letters ()
+        {
+            set<char> letters_set;
+            string s;
+            stringstream ss;
+            ss << term1 << term2 << sum;
+            s = ss.str ();
+
+            for (unsigned int i = 0; i < s.length (); i++)
+                letters_set.insert (s[i]);
+            
+            for (set<char>::iterator it = letters_set.begin (); it != letters_set.end (); ++it)
+                letters.push_back (*it);
         }
 
     public:
@@ -134,13 +154,16 @@ class Cryptomathic
             term1 = string1;
             term2 = string2;
             sum = string3;
+            next_var = 0;
                 
             for (unsigned int i = 0; i < 10; i++)
                 global_domain.push_back (true);
-
+            
+            init_letters ();
             restrict_domain ();
-            // reorder_var ();
+            reorder_var ();
         }
+
 
         // Verifies if variable assignments broken any rule
         //
@@ -177,29 +200,40 @@ class Cryptomathic
                     }
                     else
                         carry = -1;
-
+                    
                 }
                 else
                 {
                     carry = 0; // i = 0
                 }
-               
+                
+
+                cout << "Determined carry: " << carry << endl;
+
                 // we are assuming that these numbers are defined 
                 int s1_digit = getValue (term1, i);
                 int s2_digit = getValue (term2, i);
                 int sum_digit = getValue (sum, i);
+                
+                
 
                 if (carry == -1)
-                    if (s1_digit + s2_digit  == sum_digit || 
-                        s1_digit + s2_digit + 1 == sum_digit)
+                    if ((s1_digit + s2_digit) % 10  == sum_digit || 
+                        (s1_digit + s2_digit + 1) % 10 == sum_digit)
                         continue;
                     else
+                    {
+                        cout << "Failed with uncertain carry" << endl;
                         return false;
+                    }
                 else
-                    if (s1_digit + s2_digit + carry == sum_digit)
+                    if ((s1_digit + s2_digit + carry) % 10 == sum_digit)
                         continue;
                     else
+                    {
+                        cout << "Failed with certain cary" << s1_digit << " + " << s2_digit << " + " << carry << "!= " << sum_digit<<endl;
                         return false;
+                    }
             }
             return true;
         }       
@@ -210,30 +244,131 @@ class Cryptomathic
         //
         bool assign (char c, int value)
         {
+            bool answ = true;
             // you can't reassign variables 
             if (assignments.find (c) != assignments.end ())
-                return false;
+            {
+                answ = false;
+                cout << "tried to reassign" << endl;
+            }
                
             // you can't assign to c restricted values
             if (individual_restrictions[c].find (value) != 
                     individual_restrictions[c].end ())
-                return false;
+            {
+                answ = false;
+                cout << "assigned bad value" << endl;
+            }
             
             // can't assign an already used value
             if (global_domain[value] == false)
-                return false;
+                answ = false;
 
 
             // update attributes
             assignments[c] = value;
             global_domain[value] = false;
+            next_var++;
 
-            if (isConsistant ())
+            cout << "Verifying if it is consistant" << endl;
+
+            if (isConsistant () && answ)
                 return true;
             else
                 return false;
         }
+        
+        
+        // Return next letter to be assigned a value
+        //
+        char getNextLetter ()
+        {
+            return letters[next_var];
+        }
+
+        // Returns the map letter->value
+        //
+        map<char, int> getAssignments ()
+        {
+            return assignments;
+        }
+
+
+        // Returns true if all variables are assigned
+        // 
+        bool allAssigned ()
+        {
+            return next_var == letters.size ();
+        }
+
+
+        // Prints current assignments
+        //
+        void printAssignments ()
+        {
+            for (map<char,int>::iterator it = assignments.begin (); 
+                    it != assignments.end (); ++it)
+                cout << it->first << " => " << it->second << '\n';
+        }
 };
+
+
+map<char, int> solve_puzzle (Cryptomathic start_state)
+{
+    vector<Cryptomathic> stack;
+    stack.push_back (start_state);
+    map<char, int> answer;
+    
+    int debug = 0;
+
+    while (stack.size () != 0)
+    {
+        Cryptomathic state = stack.back ();
+        stack.pop_back ();
+        
+        cout << "DFS Loop: " << endl;
+        state.printAssignments ();
+        
+        if (state.allAssigned ()) // found solution
+        {
+            cout << "think its all assigned" << endl;
+            return state.getAssignments ();
+        }
+
+        // otherwise continue searching
+        char next_letter = state.getNextLetter ();
+        cout << "Letter to open: " << next_letter << endl;
+        for (unsigned int i = 0; i <= 9; i++)
+        {
+            Cryptomathic child (state);
+
+            bool answ = child.assign (next_letter, i);
+            cout << "State to be verified: " << endl;
+            child.printAssignments ();
+            cout << "Consistant: " << answ << endl;
+            if (answ)
+            {
+                stack.push_back (child);
+            }
+            // else {
+                // if (child.getAssignments ()['A'] == 4 //&&
+                    // child.getAssignments ()['E'] == 5 &&
+                    // child.getAssignments ()['M'] == 1 && 
+                    // child.getAssignments ()['N'] == 6 &&
+                    // child.getAssignments ()['O'] == 0 &&  
+                    // child.getAssignments ()['R'] == 8 
+                    // )
+                // {
+                // debug++;
+                // if (debug == 9)
+                     // while (1);
+                // }
+            //}
+        }
+    }
+
+    return answer;
+}
 
 int main ()
 {
@@ -244,7 +379,16 @@ int main ()
     cin >> string1;
     cin >> string2;
     cin >> string3; 
+    
+    reverse (string1.begin (), string1.end ());
+    reverse (string2.begin (), string2.end ());
+    reverse (string3.begin (), string3.end ());
 
     Cryptomathic puzzle (string1, string2, string3);
-    cout << puzzle.assign ('A', 1) << endl;
+    map<char, int> solution = solve_puzzle (puzzle);
+        
+    cout << "Do I ever come here?" << endl;
+
+    for (map<char,int>::iterator it = solution.begin (); it != solution.end (); ++it)
+        cout << it->first << " => " << it->second << endl;
 }

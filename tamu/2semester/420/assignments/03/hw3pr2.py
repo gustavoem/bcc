@@ -79,13 +79,8 @@ while  len(agenda) is not 0:
         inferred[p] = True
         for clause in KB:
             if (clause.has_premise (p)):
-                new_clause = copy.deepcopy (clause)
-                new_clause.assume_truth (p)
-                KB.append (new_clause)
-                if (new_clause.concluded ()):
-                    implication = new_clause.implication
+                clause.assume_truth (p)
+                if (clause.concluded ()):
+                    implication = clause.implication
                     print (implication)
                     agenda.append (implication)
-                
-
-

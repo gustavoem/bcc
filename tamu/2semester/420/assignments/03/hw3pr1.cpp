@@ -203,37 +203,24 @@ class Cryptomathic
                     
                 }
                 else
-                {
                     carry = 0; // i = 0
-                }
                 
-
-                cout << "Determined carry: " << carry << endl;
-
                 // we are assuming that these numbers are defined 
                 int s1_digit = getValue (term1, i);
                 int s2_digit = getValue (term2, i);
                 int sum_digit = getValue (sum, i);
-                
-                
 
                 if (carry == -1)
                     if ((s1_digit + s2_digit) % 10  == sum_digit || 
                         (s1_digit + s2_digit + 1) % 10 == sum_digit)
                         continue;
                     else
-                    {
-                        cout << "Failed with uncertain carry" << endl;
                         return false;
-                    }
                 else
                     if ((s1_digit + s2_digit + carry) % 10 == sum_digit)
                         continue;
                     else
-                    {
-                        cout << "Failed with certain cary" << s1_digit << " + " << s2_digit << " + " << carry << "!= " << sum_digit<<endl;
                         return false;
-                    }
             }
             return true;
         }       
@@ -247,18 +234,12 @@ class Cryptomathic
             bool answ = true;
             // you can't reassign variables 
             if (assignments.find (c) != assignments.end ())
-            {
                 answ = false;
-                cout << "tried to reassign" << endl;
-            }
                
             // you can't assign to c restricted values
             if (individual_restrictions[c].find (value) != 
                     individual_restrictions[c].end ())
-            {
                 answ = false;
-                cout << "assigned bad value" << endl;
-            }
             
             // can't assign an already used value
             if (global_domain[value] == false)
@@ -269,8 +250,6 @@ class Cryptomathic
             assignments[c] = value;
             global_domain[value] = false;
             next_var++;
-
-            cout << "Verifying if it is consistant" << endl;
 
             if (isConsistant () && answ)
                 return true;
@@ -285,6 +264,7 @@ class Cryptomathic
         {
             return letters[next_var];
         }
+
 
         // Returns the map letter->value
         //
@@ -319,51 +299,21 @@ map<char, int> solve_puzzle (Cryptomathic start_state)
     stack.push_back (start_state);
     map<char, int> answer;
     
-    int debug = 0;
-
     while (stack.size () != 0)
     {
         Cryptomathic state = stack.back ();
         stack.pop_back ();
         
-        cout << "DFS Loop: " << endl;
-        state.printAssignments ();
-        
         if (state.allAssigned ()) // found solution
-        {
-            cout << "think its all assigned" << endl;
             return state.getAssignments ();
-        }
 
         // otherwise continue searching
         char next_letter = state.getNextLetter ();
-        cout << "Letter to open: " << next_letter << endl;
         for (unsigned int i = 0; i <= 9; i++)
         {
             Cryptomathic child (state);
-
-            bool answ = child.assign (next_letter, i);
-            cout << "State to be verified: " << endl;
-            child.printAssignments ();
-            cout << "Consistant: " << answ << endl;
-            if (answ)
-            {
+            if (child.assign (next_letter, i))
                 stack.push_back (child);
-            }
-            // else {
-                // if (child.getAssignments ()['A'] == 4 //&&
-                    // child.getAssignments ()['E'] == 5 &&
-                    // child.getAssignments ()['M'] == 1 && 
-                    // child.getAssignments ()['N'] == 6 &&
-                    // child.getAssignments ()['O'] == 0 &&  
-                    // child.getAssignments ()['R'] == 8 
-                    // )
-                // {
-                // debug++;
-                // if (debug == 9)
-                     // while (1);
-                // }
-            //}
         }
     }
 
@@ -386,8 +336,6 @@ int main ()
 
     Cryptomathic puzzle (string1, string2, string3);
     map<char, int> solution = solve_puzzle (puzzle);
-        
-    cout << "Do I ever come here?" << endl;
 
     for (map<char,int>::iterator it = solution.begin (); it != solution.end (); ++it)
         cout << it->first << " => " << it->second << endl;

@@ -57,29 +57,39 @@ for line in f:
     if ":-" in line:
         [left_part, right_part] = re.split (":-", line)
     else:
-        [left_part, right_part] = line[0:-1] 
-        agenda.append (left_part)
+        [left_part, right_part] = [line, ""] 
     
-    right_vars = re.split ("\W+", right_part)
+    # remove non-symbol from left part
+    left_part = re.sub ("\W+", "", left_part) 
+
     # remove split borders
+    right_vars = re.split ("\W+", right_part)
     right_vars = [s for s in right_vars if  s != ""]
+
+    #print ("left_part: " + left_part + "|")
+    #print ("right_part: " + "".join (right_vars) + "|")
     
     inferred[left_part] = False
     for var in right_vars:
         inferred[var] = False
 
-    KB.append (Clause (left_part, right_vars))
+    new_clause = Clause (left_part, right_vars)
+    if (new_clause.concluded ()):
+        agenda.append (left_part)
+    KB.append (new_clause)
 f.close ()
 
 
 print ("Concluded: ")
 while  len(agenda) is not 0:
     p = agenda.pop ()
+    #print ("\n" + p + " => ")
     if not (inferred[p]):
         inferred[p] = True
         for clause in KB:
             if (clause.has_premise (p)):
                 clause.assume_truth (p)
+                #print ("    " + clause.to_str ())
                 if (clause.concluded ()):
                     implication = clause.implication
                     print (implication)

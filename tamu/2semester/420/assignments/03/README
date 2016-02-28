@@ -1,0 +1,5 @@
+To compile problem 1
+g++ -std=c++14 hw3pr1.cpp
+
+To run problem 2
+python3 hw3pr2.py

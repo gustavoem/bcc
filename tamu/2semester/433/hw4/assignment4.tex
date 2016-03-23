@@ -36,6 +36,23 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 \question{2}{}
 
 \question{3}{}
+\part{a} $G = (V, \Sigma, R, S)$ where:
+\begin{itemize}
+    \item{$V = \{S\}$}
+    \item{$\Sigma = \{a, b\}$}
+    \item{Note that $\epsilon \in L_1$, therefore our first rule is $S \rightarrow \epsilon$. To build other strings we have to add $1$'s into the end and twice this number of $0$'s at the beggining of the string, then the second rule is $S \rightarrow 00S1$.\\ $R = \{S \rightarrow \epsilon$, $S \rightarrow 00S1\}$}
+\end{itemize}
+
+\part{b} $G = (V, \Sigma, R, S)$ where:
+\begin{itemize}
+    \item{$V = \{S\}$}
+    \item{$\Sigma = \{a, b\}$}
+    \item{Note that $\epsilon \in L_1$, therefore our first rule is $S \rightarrow \epsilon$. To build other strings of this language we have to guarantee that $m \geq n$ and keep $m$ and $n$ both odd or even. To do that we need two more rules:}
+        \subitem{1 $S \rightarrow aSb$}
+        \subitem{1 $S \rightarrow Sbb$}\\
+    Since these two rules keep $m \geq n$ and $m - n$ even, we have that\\ $R = \{S \rightarrow \epsilon$, $S \rightarrow Sbb$, $S \rightarrow aSb\}$.
+\end{itemize}
+
 
 \question{4}{}
 

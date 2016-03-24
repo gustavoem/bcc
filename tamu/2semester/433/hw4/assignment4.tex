@@ -91,6 +91,34 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 
 
 \question{4}{}
+$G = (V, \Sigma, R, S)$ where:
+\begin{itemize}
+    \item{$V = \{S, R\}$}
+    \item{$\Sigma = \{a, b, *, (, ), +, \varepsilon \}$}; to avoid ambiguity we are going to use the symbol $\varepsilon$ to represent the empty string in the regular expressions we want to build.
+\end{itemize}
 
+\par To create all the regular expressions we are going to use two different variables: $R$ and $S$. The variable $S$ represents any non-empty regular expression while $R$ can be either $S$ or the empty string $\epsilon$.
+
+\par 1 $S \rightarrow aR$
+\par 2 $S \rightarrow bR$
+\par 3 $S \rightarrow \varepsilon R$
+\par 4 $S \rightarrow S^*R$
+\par 5 $S \rightarrow (S)R$
+\par 6 $S \rightarrow S + S$
+\par 7 $R \rightarrow S$
+\par 8 $R \rightarrow \epsilon$
+\begin{itemize}    
+    \item{$R = \{
+        S \rightarrow aR, 
+        S \rightarrow bR, 
+        S \rightarrow \varepsilon R,
+        S \rightarrow S^*R, 
+        S \rightarrow (S)R,
+        S \rightarrow S + S,
+        R \rightarrow S,
+        R \rightarrow \epsilon
+    \}$
+    }
+\end{itemize}
 
 \end{document}

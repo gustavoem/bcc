@@ -9,7 +9,6 @@
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
-
 \usepackage{indentfirst}
 
 \newcommand{\question}[2] {\vspace{0.3in}\noindent{\subsection*{Question #1. #2} \vspace{0.15in}}}
@@ -40,18 +39,55 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 \begin{itemize}
     \item{$V = \{S\}$}
     \item{$\Sigma = \{a, b\}$}
-    \item{Note that $\epsilon \in L_1$, therefore our first rule is $S \rightarrow \epsilon$. To build other strings we have to add $1$'s into the end and twice this number of $0$'s at the beggining of the string, then the second rule is $S \rightarrow 00S1$.\\ $R = \{S \rightarrow \epsilon$, $S \rightarrow 00S1\}$}
+\end{itemize}
+    \par Note that $\epsilon \in L_1$, therefore our first rule is $S \rightarrow \epsilon$. To build other strings we have to add $1$'s into the end and twice this number of $0$'s at the beggining of the string, then the second rule is $S \rightarrow 00S1$.
+\begin{itemize}
+    \item {$R = \{S \rightarrow \epsilon$, $S \rightarrow 00S1\}$}
 \end{itemize}
 
 \part{b} $G = (V, \Sigma, R, S)$ where:
 \begin{itemize}
     \item{$V = \{S\}$}
     \item{$\Sigma = \{a, b\}$}
-    \item{Note that $\epsilon \in L_1$, therefore our first rule is $S \rightarrow \epsilon$. To build other strings of this language we have to guarantee that $m \geq n$ and keep $m$ and $n$ both odd or even. To do that we need two more rules:}
-        \subitem{1 $S \rightarrow aSb$}
-        \subitem{1 $S \rightarrow Sbb$}\\
-    Since these two rules keep $m \geq n$ and $m - n$ even, we have that\\ $R = \{S \rightarrow \epsilon$, $S \rightarrow Sbb$, $S \rightarrow aSb\}$.
 \end{itemize}
+    \par Note that $\epsilon \in L_1$, therefore our first rule is $S \rightarrow \epsilon$. To build other strings of this language we have to guarantee that $m \geq n$ and keep $m$ and $n$ both odd or even. Which means that:
+    \par 1 $S \rightarrow aSb$; whenever adding an $a$ you have to add a new $b$ to keep $m \geq n$ and $m - n$ even.
+    \par 2 $S \rightarrow Sbb$; whenever adding a $b$ we need to add two of them to keep $m - n$ even.
+    \par Therefore the rules for this language are:
+\begin{itemize}    
+    \item{$R = \{S \rightarrow \epsilon$, $S \rightarrow Sbb$, $S \rightarrow aSb\}$}
+\end{itemize}
+
+\part{c} $G = (V, \Sigma, R, S)$ where:
+\begin{itemize}
+    \item{$V = \{S, S_1, R_1, T_1, S_2, R_2, T_2\}$}
+    \item{$\Sigma = \{a, b, c, d\}$}
+\end{itemize}
+    
+    \par Note that the equation $m + n = p + q$ means that for every $a$ or $b$ added we need to add a new $c$ or $d$. To do that we are going to build the string from the outside to inside adding for every $a$ or $b$ a new $d$ or a new $c$. You should also note that it's hard have the pair of rules "for every $a$ add a new $c$" and "for every $b$ add a new $d$" because they intersect each other; to deal with this we are going to create rules for two different situations: $m \geq q$ and $m \leq q$.
+    \par In the case where $m \geq q$ we are looking for the language $L_1 = \{a^mb^nc^pd^q$ $|$ $m + n = p + q$, $m \geq q\} $ generate the strings with the following rules:
+    \par 1 $S_1 \rightarrow aS_1d | R_1$
+    \par 2 $R_1 \rightarrow aR_1c | T_1$
+    \par 3 $T_1 \rightarrow bT_1c | \epsilon$
+    \par We do not need a rule that adds a new $d$ when adding a $b$ because we assumed that $m \geq q$ therefore every $d$ of a string would already have been added by rule 1.
+    \par In the case where $m \leq q$ we are looking for the language $L_2 = \{a^mb^nc^pd^q$ $|$ $m + n = p + q$, $m \leq q\} $ generate the strings with the following rules:
+    \par 4 $S_2 \rightarrow aS_2d | R_2$
+    \par 5 $R_2 \rightarrow bR_2d | T_2$
+    \par 6 $T_2 \rightarrow bT_2c | \epsilon$
+    \par Simmilarly we do not need a rule that adds a new $c$ when adding a $a$ because we assumed that $m \leq q$ therefore every $a$ of a string would already have been added by rule 4.
+    Now the last rule we need is the one that makes the union of $L_1$ and $L_2$: 
+    \par 7 $S \rightarrow S_1 | S_2$
+\begin{itemize}    
+    \item{$R = \{S \rightarrow S_1 | S_2$, 
+        $S_1 \rightarrow aS_1d | R_1$,
+        $R_1 \rightarrow aR_1c | T_1$,
+        $T_1 \rightarrow bT_1c | \epsilon$,
+        $S_2 \rightarrow aS_2d | R_2$,
+        $R_2 \rightarrow bR_2d | T_2$,
+        $T_2 \rightarrow bT_2c | \epsilon\}$
+      }
+\end{itemize}
+
 
 
 \question{4}{}

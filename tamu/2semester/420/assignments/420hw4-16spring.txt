@@ -1,0 +1,125 @@
+(Print this page as a cover sheet for your printouts)
+
+CSCE 420 HOMEWORK 4 
+Dr. Daugherity
+Section: ______________ 
+Due: 11:59 P.M. Monday, March 28, 2016
+
+"On my honor, as an Aggie, I have neither given nor received any unauthorized 
+aid on any portion of the academic work included in this assignment."
+
+
+________________________________	________________________________
+Typed or printed name of student	           Signature of student
+
+NOTE:  Please follow your lab instructor's directions for submitting your 
+assignment through CSNET.  ONLY ASSIGNMENTS SUBMITTED TO CSNET WILL BE GRADED!
+Make a printout of each source file and staple it behind this cover sheet.
+Sign it and turn it in in class Tuesday.  IF YOU DO NOT TURN IN A SIGNED COVER 
+SHEET YOUR WORK WILL NOT BE GRADED!
+
+NOTE:  Homework will be graded on unix.cse.tamu.edu using gprolog.  You are 
+free to develop your programs on any other platform, but it is your 
+responsibility to make sure your programs also compile and execute correctly on 
+unix.cse.tamu.edu using gprolog.
+
+NOTE:  Each file submitted (hw4pr1.pl, etc.) must begin as follows:
+//Your Name
+//CSCE 420-xxx (fill in your section number)
+//Due: Marh 28, 2016 (or whatever the due date is)
+//hw4pr1.pl (or whatever this file name is)
+
+The grade for this lab will be based on style (formatting, variable names, 
+comments, etc.), syntax (no compilation or link errors), and correctness 
+(passes all test cases).  Your grade for this lab is:
+Problem #	 1       2       3
+Style             /3      /3      /2
+Syntax            /4      /4      /3
+Correctness       /8      /8      /5
+-------------------------------------------------------------------
+Total             /15    /15      /10
+Grand total _____/30
+
+1. (15 points) Use this recursive PROLOG predicate my_min 
+
+	%my_min(A, L) is true if A is the minimum value in list L.
+
+	%base case: if L only has one element, that element is the min
+	my_min(A, [A]).
+
+	%else recurse:
+	my_min(A, [Head|Tail]) :- my_min(B, Tail), A is min(Head, B).
+
+to write a recursive PROLOG predicate my_sort(S, U) which is true if S is list U
+sorted into ascending order.
+
+For this problem you are not allowed to use these builtin predicates:
+
+permutation
+sort
+msort
+keysort
+min_list
+max_list
+
+(although you may write your own my_permutation and so on if you wish).
+
+Hints: First thoroughly test my_min and modify if needed.  What base case(s) do
+you need for my_sort?
+
+Name your program hw4pr1.pl.
+
+2. (15 points) Do Exercise 8.14 on page 318 in PROLOG.  However, you do not 
+need to write mth cousin n times removed.  You may add additional predicates if
+needed.  Follow the PROLOG convention of only capitalizing variable names; e.g,
+
+	?- mother(X, charles).
+
+returns X = elizabeth.  You should write enough predicates to deduce
+
+	?- grandchild(X, elizabeth).
+	?- brother_in_law(X, diana).
+	?- ancestor(X, eugenie).
+
+as specified.
+
+Hints:  Remember gprolog requires that you place all statements for each 
+predicate together.  Also, be careful writing too many statements or you may 
+cause an infinite loop, e.g.,
+
+	child(A, B) :- parent(B, A).
+	parent(A, B) :- child(B, A).
+
+Name your program hw4pr2.pl.
+
+OPTIONAL EXTRA CREDIT
+=====================
+3. (10 points)
+
+Extend problem 2 to prove that you are your own grandpa, in the words of the 
+less-than-memorable Ray Stevens song 
+(www.youtube.com/watch?v=eYlJH81dSiw&list=PLnJTDIKQUfJmxapJD8f7nFRrvd-aa_dLf
+and www.metrolyrics.com/im-my-own-grandpa-lyrics-ray-stevens.html).
+
+The story (from Niklaus Wirth's "Algorithms + Data Structures = Programs")
+is as follows:
+                 I married a widow W who has a grown daughter D.  My
+                 father F, who visited us quite often, fell in love with 
+                 my step-daughter and married her.  Hence my father 
+                 became my son-in-law and my step-daughter became my 
+                 mother.  Some months later, my wife gave birth to a son 
+                 S1, who became the brother-in-law of my father, as well 
+                 as my uncle.  The wife of my father, that is, my 
+                 step-daughter, also had a son S2.
+
+First write the facts and relationships in the song as predicate calculus 
+clauses, e.g., "If X is the child of Y and Y is the child of Z and Z is male 
+then Z is the grandpa of X" becomes 
+        Child(X,Y) AND Child(Y,Z) AND Male(Z) --> Grandpa(Z,X)
+and so on, and then write as PROLOG statements.  Note:  You will need to be 
+pretty loose in your definitions of family relationships; e.g., stepchild must 
+also count as child.  Also, you will have to write explicitly some necessary 
+clauses which are only implied by the song, e.g., Male(me). The gprolog query 
+is then
+        ?-grandpa(me,me).
+Name your program hw4pr3.pl.

@@ -49,6 +49,8 @@ woman(beatrice).
 woman(eugenie).
 woman(louise).
 
+man(X) :- \+(woman(X)).
+
 
 dated(george, mum).
 dated(spencer, kydd).
@@ -64,4 +66,13 @@ couple(X, Y) :- dated(Y, X).
 
 grandchild(X, Y) :- parent(Y, Z), parent(Z, X).
 
+
 greatgrandparent(X, Y) :- parent(X, Z), parent(Z, W), parent(W, Y).
+
+
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Y) :- parent(X, W), ancestor(W, Y).
+
+
+brother(X, Y) :- man(X), parent(W, X), parent(W, Y).
+sister(X, Y) :- woman(X), parent(W, X), parent(W, Y).

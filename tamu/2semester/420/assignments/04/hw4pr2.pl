@@ -63,3 +63,5 @@ couple(X, Y) :- dated(Y, X).
 
 
 grandchild(X, Y) :- parent(Y, Z), parent(Z, X).
+
+greatgrandparent(X, Y) :- parent(X, Z), parent(Z, W), parent(W, Y).

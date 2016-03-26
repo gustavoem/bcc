@@ -83,9 +83,13 @@ sibling(X, Y) :- sister(X, Y).
 daughter(X, Y) :- parent(Y, X), woman(X).
 son(X, Y) :- parent(Y, X), man(X).
 
-first_cousin(X, Y) :- grandchild(X, W), grandchild(Y, W), woman(W), X \= Y.
+first_cousin(X, Y) :- parent(W, X), parent(U, Y), sibling(W, U).
 
 brother_in_law(X, Y) :- couple(W, Y), brother(X, W).
 brother_in_law(X, Y) :- couple(X, W), sister(W, Y).
 
 aunt(X, Y) :- parent(W, Y), sister(X, W).
+aunt(X, Y) :- parent(W, Y), brother(U, W), couple(X, U).
+
+uncle(X, Y) :- parent(W, Y), brother(X, W).
+uncle(X, Y) :- parent(W, Y), sister(U, W), couple(X, U).

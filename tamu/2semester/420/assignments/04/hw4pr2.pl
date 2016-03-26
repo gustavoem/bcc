@@ -20,8 +20,8 @@ parent(diana, harry).
 parent(charles, william).
 parent(charles, harry).
 
-parent(anne, peter).
 parent(anne, zara).
+parent(anne, peter).
 parent(mark, peter).
 parent(mark, zara).
 
@@ -76,3 +76,6 @@ ancestor(X, Y) :- parent(X, W), ancestor(W, Y).
 
 brother(X, Y) :- man(X), parent(W, X), parent(W, Y).
 sister(X, Y) :- woman(X), parent(W, X), parent(W, Y).
+
+daughter(X, Y) :- woman(X), parent(Y, X).
+son(X, Y) :- man(X), parent(Y, X).

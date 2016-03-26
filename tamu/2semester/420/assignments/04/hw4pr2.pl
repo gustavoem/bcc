@@ -60,8 +60,8 @@ dated(mark, anne).
 dated(andrew, sarah).
 dated(edward, sophie).
 
-couple(X, Y) :- dated(X, Y).
 couple(X, Y) :- dated(Y, X).
+couple(X, Y) :- dated(X, Y).
 
 
 grandchild(X, Y) :- parent(Y, Z), parent(Z, X).
@@ -84,3 +84,6 @@ daughter(X, Y) :- parent(Y, X), woman(X).
 son(X, Y) :- parent(Y, X), man(X).
 
 first_cousin(X, Y) :- grandchild(X, W), grandchild(Y, W), woman(W), X \= Y.
+
+brother_in_law(X, Y) :- couple(W, Y), brother(X, W).
+brother_in_law(X, Y) :- couple(X, W), sister(W, Y).

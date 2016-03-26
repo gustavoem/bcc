@@ -74,8 +74,8 @@ ancestor(X, Y) :- parent(X, Y).
 ancestor(X, Y) :- parent(X, W), ancestor(W, Y).
 
 
-brother(X, Y) :- parent(W, X), parent(W, Y), man(X), X\= Y.
-sister(X, Y) :- parent(W, X), parent(W, Y), woman(X), X \= Y.
+brother(X, Y) :- parent(W, X), woman(W), parent(W, Y), man(X), X\= Y.
+sister(X, Y) :- parent(W, X), woman(W), parent(W, Y), woman(X), X \= Y.
 sibling(X, Y) :- brother(X, Y).
 sibling(X, Y) :- sister(X, Y).
 

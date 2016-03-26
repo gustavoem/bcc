@@ -74,9 +74,12 @@ ancestor(X, Y) :- parent(X, Y).
 ancestor(X, Y) :- parent(X, W), ancestor(W, Y).
 
 
-brother(X, Y) :- parent(W, X), parent(W, Y), man(X).
-sister(X, Y) :- parent(W, X), parent(W, Y), woman(X).
+brother(X, Y) :- parent(W, X), parent(W, Y), man(X), X\= Y.
+sister(X, Y) :- parent(W, X), parent(W, Y), woman(X), X \= Y.
 
 daughter(X, Y) :- parent(Y, X), woman(X).
 son(X, Y) :- parent(Y, X), man(X).
+sibling(X, Y) :- brother(X, Y).
+sibling(X, Y) :- sister(X, Y).
 
+first_cousin(X, Y) :- parent(W, X), sibling(U, W), parent(U, Y).

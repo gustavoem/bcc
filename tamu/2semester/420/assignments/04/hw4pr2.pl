@@ -87,3 +87,5 @@ first_cousin(X, Y) :- grandchild(X, W), grandchild(Y, W), woman(W), X \= Y.
 
 brother_in_law(X, Y) :- couple(W, Y), brother(X, W).
 brother_in_law(X, Y) :- couple(X, W), sister(W, Y).
+
+aunt(X, Y) :- parent(W, Y), sister(X, W).

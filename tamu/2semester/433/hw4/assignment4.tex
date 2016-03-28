@@ -38,6 +38,10 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 \question{2}{}
 
 \part{a} 
+
+\par Describing each state with a regular expression with strings that take us to an acceptance state we can build the system:
+
+\begin{center}
 $
 \begin{cases}
 q_0 = \epsilon q_1 + bq_2 \\
@@ -45,19 +49,78 @@ q_1 = a q_1 + \epsilon q_2 + \epsilon \\
 q_2 = \epsilon
 \end{cases}
 $
+\end{center}
 
 \begin{itemize}
-    \item{Substitute $q_2$ into the second equation}
+    \item{Substitute $q_2$ into the second equation
+    \begin{flalign*}
+        q_1 &= a q_1 + \epsilon + \epsilon \\
+            &= a^* \textup{ (by Arden's Lemma)}
+    \end{flalign*}
+    }
+
+    \item{Substitute $q_1$ into the first equation
+    \begin{flalign*}
+       q_0 &= \epsilon a^* + b \epsilon \\
+           &= a^* + b
+    \end{flalign*}
+    }
 \end{itemize}
 
-\begin{flushleft}
-\begin{equation*}
-\begin{aligned}
-    q_1 &= a q_1 + \epsilon + \epsilon \\
-        &= a^* \textup{(by Arden's Lemma)}
-\end{aligned}
-\end{equation*}
-\end{flushleft}
+\par Since $q_0$ is the start state of the NFA, we have that the regular expression that describes this NFA is $a^* + b$.
+
+
+\part{b}
+
+\par Describing each state with a regular expression with strings that take us to an acceptance state we can build the system:
+
+\begin{center}
+$
+\begin{cases}
+q_0 = 0 q_1 + 1 q_2 + \epsilon \\
+q_1 = 0 q_0 + 1 q_3 \\
+q_2 = 0 q_3 + 1 q_0 \\
+q_3 = 0 q_2 + 1 q_1
+\end{cases}
+$
+\end{center}
+
+\begin{itemize}
+    \item{Substitute $q_1$ and $q_2$ into the last equation
+    \begin{flalign*}
+        q_3 &= 0 (0 q_3 + 1 q_0) + 1 (0 q_0 + 1 q_3) \\
+            &= 00 q_3 + 01 q_0 + 10 q_0 + 11 q_3 \\
+            &= (00 + 11) q_3 + (01 + 10) q_0 \\
+            &= (00 + 11)^*(01 + 10) q_0 \textup{ (by Arden's Lemma)}
+    \end{flalign*}
+    }
+
+    \item{Substitute $q_3$ into the second and third equation
+    \begin{flalign*}
+        q_1 &= 0 q_0 + 1 ((00 + 11)^* (01 + 10) q_0) \\
+            &= 0 q_0 + 1 (00 + 11)^* (01 + 10) q_0   \\
+            &= (1 (00 + 11)^* (01 + 10) + 0)q_0  \\
+        \\
+        q_2 &= 1 q_0 + 0 ((00 + 11)^* (01 + 10) q_0) \\
+            &= 1 q_0 + 0 (00 + 11)^* (01 + 10) q_0   \\
+            &= (0 (00 + 11)^* (01 + 10) + 1)q_0  
+    \end{flalign*}
+    }
+
+    \item{Substitute $q_1$ and $q_2$ into the first equation
+    \begin{flalign*}
+        q_0 &= 0 ((1 (00 + 11)^* (01 + 10) + 0)q_0) + 1 ((0 (00 + 11)^* (01 + 10) + 1)q_0) \\
+            &= (01 (00 + 11)^* (01 + 10) + 00)q_0 + (10 (00 + 11)^* (01 + 10) + 11)q_0 \\
+            &= (01 (00 + 11)^* (01 + 10) + 00 + 10 (00 + 11)^* (01 + 10) + 11) q_0 \\
+            &= ((01 + 10) (00 + 11)^* (01 + 10) + 00 + 11) q_0 \\
+            &= ((01 + 10) (00 + 11)^* (01 + 10) + 00 + 11)^* \textup{ (by Arden's Lemma)} 
+    \end{flalign*}
+        
+        }
+\end{itemize}
+
+\par Since $q_0$ is the start state of the NFA, we have that the regular expression that describes this NFA is $((01 + 10) (00 + 11)^* (01 + 10) + 00 + 11)^*$.
+
 
 
 

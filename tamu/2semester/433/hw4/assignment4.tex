@@ -229,16 +229,273 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 
 \part{b}
 \begin{itemize}
-    \item{$a:$}
-    \item{$b:$}
-    \item{$c:$}
-    \item{$d:$}
-    \item{$c^*:$}
-    \item{$bc^*:$}
-    \item{$bc^*d:$}
-    \item{$a + bc^*d:$}
-    \item{$(a + bc^*d)^*:$}
-    \item{$(a + bc^*d)^*bc^*:$}
+    \item{$a:$
+
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+
+    \node[initial,state]    (0)              {};
+    \node[accepting, state] (1) [right of=0] {};
+ 
+    \path (0) edge node {$a$} (1)
+    ;                      
+    \end{tikzpicture}    
+    }
+    \item{$b:$
+        
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+
+    \node[initial,state]    (0)              {};
+    \node[accepting, state] (1) [right of=0] {};
+ 
+    \path (0) edge node {$b$} (1)
+    ;                      
+    \end{tikzpicture}                                          
+    }
+    \item{$c:$
+        
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+
+    \node[initial,state]    (0)              {};
+    \node[accepting, state] (1) [right of=0] {};
+ 
+    \path (0) edge node {$c$} (1)
+    ;                      
+    \end{tikzpicture}        
+    }
+    \item{$d:$
+        
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+
+    \node[initial,state]    (0)              {};
+    \node[accepting, state] (1) [right of=0] {};
+ 
+    \path (0) edge node {$d$} (1)
+       
+    ;                      
+    \end{tikzpicture}    
+    }
+    \item{$c^*:$
+        
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+    
+    \node[initial, state]  (2)       {};
+    \node[state]            (0) [right of = 2]  {};
+    \node[state] (1) [right of = 0]  {};
+    \node[accepting, state] (3) [right of = 1]  {};
+    
+    \path (2)  edge node {$\epsilon$} (0)
+          (0)  edge node {$c$}        (1)
+          (1)  edge node {$\epsilon$} (3)
+          (3)  edge [bend left=30] node {$\epsilon$} (0)
+          (2)  edge [bend left=30] node {$\epsilon$} (3)
+    ;                      
+    \end{tikzpicture}    
+    }
+    \item{$bc^*:$
+         
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+    
+    \node[initial, state]   (4)                 {};
+    \node[state]            (5) [right of = 4]  {};
+    \node[state]            (2) [right of = 5]  {};
+    \node[state]            (0) [right of = 2]  {};
+    \node[state]            (1) [right of = 0]  {};
+    \node[accepting, state] (3) [right of = 1]  {};
+    
+    \path (2)  edge node {$\epsilon$} (0)
+          (0)  edge node {$c$}        (1)
+          (1)  edge node {$\epsilon$} (3)
+          (3)  edge [bend left=30] node {$\epsilon$} (0)
+          (2)  edge [bend left=30] node {$\epsilon$} (3)
+          (4)  edge node {$b$} (5)
+          (5)  edge node {$\epsilon$} (2)
+    ;                      
+    \end{tikzpicture}    
+
+    }
+    \item{$bc^*d:$
+        
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+    
+    \node[initial, state]   (4)                 {};
+    \node[state]            (5) [right of = 4]  {};
+    \node[state]            (2) [right of = 5]  {};
+    \node[state]            (0) [right of = 2]  {};
+    \node[state]            (1) [right of = 0]  {};
+    \node[state]            (3) [right of = 1]  {};
+    \node[state]            (6) [right of = 3]  {};
+    \node[accepting, state] (7) [right of = 6]  {};
+    
+    \path (2)  edge node {$\epsilon$} (0)
+          (0)  edge node {$c$}        (1)
+          (1)  edge node {$\epsilon$} (3)
+          (3)  edge [bend left=35] node {$\epsilon$} (0)
+          (2)  edge [bend left=35] node {$\epsilon$} (3)
+          (4)  edge node {$b$} (5)
+          (5)  edge node {$\epsilon$} (2)
+          (3)  edge node {$\epsilon$} (6)
+          (6)  edge node {$d$}        (7)
+    ;
+    \end{tikzpicture}    
+    }
+        
+    \item{$a + bc^*d:$
+        
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+    
+    \node[initial, state]   (8)                 {};
+    \node[state]            (9) [right of = 8]  {};
+    \node[state]           (10) [right of = 9]  {};
+    \node[accepting, state](11) [right of = 7]  {};
+    \node[state]            (4) [above of = 8, right of = 8]  {};
+    \node[state]            (5) [right of = 4]  {};
+    \node[state]            (2) [right of = 5]  {};
+    \node[state]            (0) [right of = 2]  {};
+    \node[state]            (1) [right of = 0]  {};
+    \node[state]            (3) [right of = 1]  {};
+    \node[state]            (6) [right of = 3]  {};
+    \node[state]            (7) [right of = 6]  {};
+    
+    \path (2)  edge node {$\epsilon$} (0)
+          (0)  edge node {$c$}        (1)
+          (1)  edge node {$\epsilon$} (3)
+          (3)  edge [bend left=30] node {$\epsilon$} (0)
+          (2)  edge [bend left=30] node {$\epsilon$} (3)
+          (4)  edge node {$b$} (5)
+          (5)  edge node {$\epsilon$} (2)
+          (3)  edge node {$\epsilon$} (6)
+          (6)  edge node {$d$}        (7)
+          (8)  edge node {$\epsilon$} (4)
+          (8)  edge node {$\epsilon$} (9)
+          (9)  edge node {$a$}        (10)
+          (10) edge node {$\epsilon$} (11)
+          (7)  edge node {$\epsilon$} (11)
+    ;
+    \end{tikzpicture}    
+    
+    }
+
+    \item{$(a + bc^*d)^*:$
+         
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+    
+    \node[initial, state]  (12)                 {};
+    \node[accepting, state](13) [below of = 11] {};
+    \node[state]            (8) [right of = 12] {};
+    \node[state]            (9) [right of = 8]  {};
+    \node[state]           (10) [right of = 9]  {};
+    \node[state]           (11) [below of = 7, right of = 7]  {};
+    \node[state]            (4) [above of = 8, right of = 8]  {};
+    \node[state]            (5) [right of = 4]  {};
+    \node[state]            (2) [right of = 5]  {};
+    \node[state]            (0) [right of = 2]  {};
+    \node[state]            (1) [right of = 0]  {};
+    \node[state]            (3) [right of = 1]  {};
+    \node[state]            (6) [right of = 3]  {};
+    \node[state]            (7) [right of = 6]  {};
+    
+    \path (2)  edge node {$\epsilon$} (0)
+          (0)  edge node {$c$}        (1)
+          (1)  edge node {$\epsilon$} (3)
+          (3)  edge [bend left=30] node {$\epsilon$} (0)
+          (2)  edge [bend left=30] node {$\epsilon$} (3)
+          (4)  edge node {$b$} (5)
+          (5)  edge node {$\epsilon$} (2)
+          (3)  edge node {$\epsilon$} (6)
+          (6)  edge node {$d$}        (7)
+          (8)  edge node {$\epsilon$} (4)
+          (8)  edge node {$\epsilon$} (9)
+          (9)  edge node {$a$}        (10)
+          (10) edge node {$\epsilon$} (11)
+          (7)  edge node {$\epsilon$} (11)
+          (12) edge node {$\epsilon$} (8)
+          (12) edge [bend right=30] node {$\epsilon$} (13)
+          (13) edge [bend left=20] node {$\epsilon$} (8)
+          (11) edge node {$\epsilon$} (13)
+    ;
+    \end{tikzpicture}    
+    
+
+    }
+    \item{$(a + bc^*d)^*bc^*:$
+         
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.2cm, semithick, initial text={}]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+   
+    \node[state]           (14) [below of = 13] {};
+    \node[state]           (15) [left of = 14]  {};
+    \node[state]           (16) [left of = 15]  {};
+    \node[state]           (17) [left of = 16]  {};
+    \node[state]           (18) [left of = 17]  {};
+    \node[accepting, state]           (19) [left of = 18]  {};
+
+    \node[initial, state]  (12)                 {};
+    \node[state]           (13) [below of = 11] {};
+    \node[state]            (8) [right of = 12] {};
+    \node[state]            (9) [right of = 8]  {};
+    \node[state]           (10) [right of = 9]  {};
+    \node[state]           (11) [below of = 7, right of = 7]  {};
+    \node[state]            (4) [above of = 8, right of = 8]  {};
+    \node[state]            (5) [right of = 4]  {};
+    \node[state]            (2) [right of = 5]  {};
+    \node[state]            (0) [right of = 2]  {};
+    \node[state]            (1) [right of = 0]  {};
+    \node[state]            (3) [right of = 1]  {};
+    \node[state]            (6) [right of = 3]  {};
+    \node[state]            (7) [right of = 6]  {};
+    
+    \path (2)  edge node {$\epsilon$} (0)
+          (0)  edge node {$c$}        (1)
+          (1)  edge node {$\epsilon$} (3)
+          (3)  edge [bend left=30] node {$\epsilon$} (0)
+          (2)  edge [bend left=30] node {$\epsilon$} (3)
+          (4)  edge node {$b$} (5)
+          (5)  edge node {$\epsilon$} (2)
+          (3)  edge node {$\epsilon$} (6)
+          (6)  edge node {$d$}        (7)
+          (8)  edge node {$\epsilon$} (4)
+          (8)  edge node {$\epsilon$} (9)
+          (9)  edge node {$a$}        (10)
+          (10) edge node {$\epsilon$} (11)
+          (7)  edge node {$\epsilon$} (11)
+          (12) edge node {$\epsilon$} (8)
+          (12) edge [bend right=20] node {$\epsilon$} (13)
+          (13) edge [bend left=10] node {$\epsilon$} (8)
+          (11) edge node {$\epsilon$} (13)
+
+          (13) edge [bend left=5] node {$\epsilon$} (14)
+          (14) edge node {$b$} (15)
+          (15) edge node {$\epsilon$} (16)
+          (16) edge node {$\epsilon$} (17)
+          (17) edge node {$c$} (18)
+          (18) edge node {$\epsilon$} (19)
+          (19) edge [bend right=50] node {$\epsilon$} (17)
+          (16) edge [bend left=60]  node {$\epsilon$} (19)
+    ;
+    \end{tikzpicture}    
+    
+
+
+    }
 \end{itemize}
 
 \question{2}{}

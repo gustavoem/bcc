@@ -139,7 +139,65 @@ Finally, the PDA:
 \end{tikzpicture}    
 
 
-\question{2}{}
+\question{2}{
+    Consider the following context-free grammar $G = (\{S, S_1, S_2, X\}, \{a, b\}, R, S)$, where $R$ consists of the following rules:
+\begin{center}
+\begin{tabular}{l c l}
+    $S$   & $\rightarrow$ & $S_1 | S_2 $ \\
+    $S_1$ & $\rightarrow$ & $aS_1a | bS_1b | \epsilon $ \\
+    $S_2$ & $\rightarrow$ & $XXS_2 | X$ \\
+    $X$   & $\rightarrow$ & $a | b$ \\
+\end{tabular}
+\end{center}
+\part{a} Give a succinct English description of $L(G)$. \\
+\part{b} Is the context-free grammar $G$ ambiguous? Justify your answer. \\
+\part{c} Give a one-state PDA $M$ that accepts $L(G)$. \\
+\part{d} For your PDA $M$, show an accepting computation path for the string $abba$.\\
+\part{e} For your PDA $M$, show an accepting computation path for the string $bbb$.
+}
+
+\part{a}
+This CFL represents strings of $a$s and $b$s that are palindromo or with odd length.
+
+\part{b} 
+Considering the CFLs with starting symbol $S_1$ and $S_2$ we can see that both are not ambiguous. Since $S$ is the union of these two CFLs and they don't have any string in common (because one has only strings of odd length and other only with even length) we can say that $S$ is also not ambiguous.
+
+\part{c}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm, semithick, initial text={}, align=left]
+  
+    \tikzstyle{every state}=[fill=white,draw=black,text=black, minimum size=15pt]
+
+    \node[initial, accepting, state] (0) {$q_0$};
+ 
+    \path (0) edge [loop above] node {$a, a \rightarrow \epsilon$ \\
+                         $b, b \rightarrow \epsilon$ \\
+                         $\epsilon, S \rightarrow S_1$ \\
+                         $\epsilon, S \rightarrow S_2$ \\
+                         $\epsilon, S_1 \rightarrow aS_1a$ \\
+                         $\epsilon, S_1 \rightarrow bS_1b$ \\
+                         $\epsilon, S_1 \rightarrow \epsilon$ \\
+                         $\epsilon, S_2 \rightarrow XXS_2$ \\
+                         $\epsilon, S_2 \rightarrow X$ \\
+                         $\epsilon, X \rightarrow a$ \\
+                         $\epsilon, X \rightarrow b$ \\
+    }      (0)
+    ;                      
+\end{tikzpicture}    
+\end{center}
+
+\part{d}
+$(q, abba, S) \vdash (q, abba, S_1) \vdash (q, abba, aS_1a) \vdash (q, bba, S_1a) \vdash (q, bba, bS_1ba) \vdash (q, ba, S_1ba) \vdash (q, ba, ba) \vdash (q, a, a) \vdash (q, \epsilon, \epsilon)$.
+
+\part{e}
+$(q, bbb, S) \vdash (q, bbb, S_2) \vdash (q, bbb, XXS_2) \vdash (q, bbb, bXS_2) \vdash (q, bb, XS_2) \vdash (q, bb, bS_2) 
+\vdash (q, b, S_2)
+\vdash (q, b, X)
+\vdash (q, b, b)
+\vdash (q, \epsilon, \epsilon)
+$
+
+
 \question{3}{}
 \question{4}{}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.21)  8 APR 2016 19:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.21)  8 APR 2016 21:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -815,20 +815,29 @@ Underfull \vbox (badness 10000) detected at line 324
  []
 
 [5] [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 337.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 337.
+Overfull \hbox (8.1581pt too wide) in alignment at lines 358--403
+ [] [] [] [] [] [] 
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 403
+ []
+
+[7] [8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 420.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 420.
  (./assignment5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 337.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 337.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 420.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 420.
 Package rerunfilecheck Info: File `assignment5.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 337.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 420.
  ) 
 Here is how much of TeX's memory you used:
- 18803 strings out of 493085
- 356782 string characters out of 6136917
- 463724 words of memory out of 5000000
- 21934 multiletter control sequences out of 15000+600000
+ 18807 strings out of 493085
+ 356807 string characters out of 6136917
+ 462822 words of memory out of 5000000
+ 21935 multiletter control sequences out of 15000+600000
  11899 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,14n,76p,993b,914s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -843,10 +852,10 @@ public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy8.pfb>
-Output written on assignment5.pdf (6 pages, 147645 bytes).
+Output written on assignment5.pdf (8 pages, 157210 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
- 69 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
+ 100 PDF objects out of 1000 (max. 8388607)
+ 78 compressed objects within 1 object stream
+ 16 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

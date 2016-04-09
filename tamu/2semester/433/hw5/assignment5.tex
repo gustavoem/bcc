@@ -234,7 +234,7 @@ We must consider the following ways of partitioning the string $s$ into $u,v,x,y
 \rowcolor{tableheadcolor} 
    & $v$ & $y$ & $i$ & $s'=uv^ixw^iy$ & Why is $s' \notin L$?\\ \hline 
 \rowcolor{tablerowcolor}
-\multicolumn{6}{|c|}{$vx$ contains a single distinct symbol} \\ \hline 
+\multicolumn{6}{|c|}{$v$ and $y$ contains a single distinct symbol} \\ \hline 
 1. & $a^l$ & $a^m$ & 2 & $a^{p+l+m)}b^pc^p$ & Number of $a$'s is greater than the number of $c$'s. \\ [0.3cm]
 
 2. & $b^l$ & $b^m$ & 2 & $a^pb^{p+l+m}c^p$ & Number of $b$'s is greater than the number of $c$'s. \\ [0.3cm]
@@ -252,7 +252,7 @@ We must consider the following ways of partitioning the string $s$ into $u,v,x,y
 \hline 
 
 \rowcolor{tablerowcolor}
-\multicolumn{6}{|c|}{$v$ or $x$ contain 2 distinct symbols} \\ \hline 
+\multicolumn{6}{|c|}{$v$ or $y$ contain 2 distinct symbols} \\ \hline 
 
 6. & $a^l$ & $a^mb^n$  & 0 & $a^{p - (l + m)}b^{p-n}c^p$ & Since $l$, $m$ and $n$ are greater than zero (othewise, case 1, 2, 4) we have that the number of $c$'s is greater than $max (p - (l + m), p - n)$\\ [0.7cm]
 
@@ -288,7 +288,7 @@ We must consider the following ways of partitioning the string $s$ into $u,v,x,y
 \rowcolor{tableheadcolor} 
    & $v$ & $y$ & $i$ & $s'=uv^ixw^iy$ & Why is $s' \notin L$?\\ \hline 
 \rowcolor{tablerowcolor}
-\multicolumn{6}{|c|}{$vx$ contains a single distinct symbol} \\ \hline 
+\multicolumn{6}{|c|}{$v$ and $y$ contains a single distinct symbol} \\ \hline 
 1. & $a^l$ & $a^m$ & 2 & $a^{p+l+m}b^{p+1}c^{p+2}$ & Since $l + m > 0$, the number of $a$'s is greater  or equal than the number of $b$'s. \\ [0.3cm]
 
 2. & $b^l$ & $b^m$ & 2 & $a^pb^{p+l+m}c^p$ & Since $l + m > 0$, the number of $b$'s is greater or equal than the number of $c$'s. \\ [0.3cm]
@@ -306,7 +306,7 @@ We must consider the following ways of partitioning the string $s$ into $u,v,x,y
 \hline 
 
 \rowcolor{tablerowcolor}
-\multicolumn{6}{|c|}{$v$ or $x$ contain 2 distinct symbols} \\ \hline 
+\multicolumn{6}{|c|}{$v$ or $y$ contain 2 distinct symbols} \\ \hline 
 
 6. & $a^l$ & $a^mb^n$  & 2 & $a^{p  + l + m}b^{p + n + 1}c^{p + 2}$ & Since $n$ is greater than zero (othewise, case 1) we have that the number of $b$'s is greater or equal to the number of $c$'s \\ [0.7cm]
 
@@ -330,8 +330,91 @@ The above cases show that no matter how we partition the string $s$ into $u,v,x,
 
 \question{4}{For each of the following languages, determine whether it is context-free or not, and a proof for your answer. \\
 \part{a} $L = \{xayb \mid x, y \in \{a,b\}^*$ and $|x| = |y|\}$ \\
-\part{b} $L = \{xyx \mid x, y \in \{a, b\}^*$ and $|x| \geq 1\}$ \\
+\part{b} $L = \{\alpha \beta \alpha \mid \alpha, \beta \in \{a, b\}^*$ and $|\alpha| \geq 1\}$ (changed variable names to avoid conflict with pumping lemma variables) \\
 \part{c} $L = \{(ab^n)^n \mid n \geq 0\}$
 }
+
+\part{a} This language is a CFL and to prove this we are going to build a CFG $G = (V, \Sigma, R, S)$ that represents this language.
+\begin{itemize}
+    \item{$V = \{S, A, T\}$}
+    \item{$\Sigma = \{a, b\}$}
+    \item{$ R = \{S \rightarrow Ab, A \rightarrow TAT, A \rightarrow a, T \rightarrow a, T \rightarrow b \}$}
+\end{itemize}
+
+\part{b}
+
+Assume that $L$ is a CFL.  Let $p$ be the pumping constant.  Choose the string $s$ to be $a^pb^pc^p$.  Since the $|s| \geq p$, then $s$ can be broken up into 5 pieces $u,v,x,y$ and $z$, such that:
+\begin{itemize}
+	\item $|vy| \geq 1$,
+	\item $|vxy| \leq p$, and
+	\item for all $i \geq 0$, $uv^ixy^iz \in L$.
+\end{itemize} 
+
+\noindent 
+We must consider the following ways of partitioning the string $s$ into $u,v,x,y$, and $z$. We list partitions based on the contents of $v$ and $y$ since they affect the pumped string $s'$.
+
+Note that if we pump $s$ and get $s'$ and if  $s'$ can be written as $a_1^ib_1^ja_2^kb_2^l$ the $\beta$ part of the string can't do more than subtract $b_1$'s or $a_2's$, therefore, if the pumped string has more $b_2$'s than $b_1$'s or more $a_1$'s than $a_2$'s we can say that $s'$ is not in L.
+
+\begin{longtable}{|c|c|c|c|p{2in}|p{2.75in}|} \hline
+%\multicolumn{6}{|c|}{Let $s = a^pb^pc^p$.} \\ \hline 
+\rowcolor{tableheadcolor} 
+   & $v$ & $y$ & $i$ & $s'=uv^ixw^iy$ & Why is $s' \notin L$?\\ \hline 
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ and $y$ contains a single distinct symbol} \\ \hline 
+1. & $a_1^i$ & $a_1^j$ & 2 & $a^{p + i + j}b^pa^pb^p$ & More $a_1$'s than $a_2$'s. \\ [0.3cm]
+
+2. & $b_1^i$ & $b_1^j$ & 0 & $a^pb^{p - (i + j)}a^pb^p$ & More $b_2$'s than $b_1$'s. \\ [0.3cm]
+	
+3. & $a_2^i$ & $a_2^j$ & 0 & $a^pb^pa^{p - (i + j)}b^p $ & More $a_1$'s than $a_2$'s. \\ [0.3cm]
+
+4. & $b_2^i$ & $b_2^j$ & 2 & $a^pb^pa^pb^{p + i + j}$ & More $b_2$'s than $b_1$'s. \\ [0.3cm]
+
+\hline
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ and $y$ contain two different distinct symbols} \\ \hline 
+
+5. & $a_1^i$ & $b_1^j$ & 0 & $a^{p - i}b^{p - j}a^pb^p$ & More $b_2$'s than $b_1$'s. \\ [0.3cm]	
+
+6. & $b_1^i$ & $a_2^j$ & 0 & $a^pb^{p - i}a^{p - j}b^p$ & More $a_1$'s than $a_2$'s. \\ [0.3cm]
+
+7. & $a_2^i$ & $b_2^j$ & 0 & $a^pb^pa^{p - i}b^{p - j}$ & More $a_1$'s than $a_2$'s. \\ [0.3cm]
+
+
+
+\hline 
+
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ or $y$ contain 2 distinct symbols} \\ \hline 
+
+8. & $a_1^i$ & $a_1^jb_1^k$  & 0 & $a^{p - (i + j)}b^{p - k}a^pb^p$ & More $b_2$'s than $b_1$'s. \\ [0.7cm]
+
+9. & $b_1^i$ & $b_1^ja_2^k$  & 0 & $a^pb^{p - (i + j)}a^{p - k}b^p$ & More $b_2$'s than $b_1$'s.  \\ [0.7cm] 
+
+10. & $a_2^i$ & $a_2^jb_2^k$  & 0 & $a^pb^pa^{p - (i + j)}b^{p - k}$ & More $a_1$'s than $a_2$'s.  \\ [0.7cm] 
+
+11. & $a_1^ib_1^j$ & $b_1^k$  & 0 & $a^{p - i}b^{p - (j + k)}a^pb^p$ & More $b_2$'s than $b_1$'s. \\ [0.7cm]
+
+12. & $b_1^ia_2^j$ & $a_2^k$  & 0 & $a^pb^{p - i}a^{p - (j + k)}b^p$ & More $b_2$'s than $b_1$'s. \\ [0.7cm]
+
+13. & $a_2^ib_2^j$ & $b_2^k$  & 0 & $a^pb^pa^{p - i}b^{p - (j + k)}$ & More $a_1$'s than $a_2$'s. \\ [0.7cm]
+
+
+\hline 
+\end{longtable}
+
+The above cases show that no matter how we partition the string $s$ into $u,v,x, y$, and $z$, the resulting pumped string $s'$ will not be in the language $L$.  Thus, our assumption that $L$ is context-free is false. 
+
+
+\part{c}
+This language is not a CFL. To prove this we are going to use the pumping lemma.
+
+Assume that $L$ is a CFL.  Let $p$ be the pumping constant.  Choose the string $s$ to be $(ab^p)^p$.  Since the $|s| \geq p$, then $s$ can be broken up into 5 pieces $u,v,x,y$ and $z$, such that:
+\begin{itemize}
+	\item $|vy| \geq 1$,
+	\item $|vxy| \leq p$, and
+	\item for all $i \geq 0$, $uv^ixy^iz \in L$.
+\end{itemize} 
+
+According to the pumping lemma, $s'= uxz \in L$, but note that $|s'| = |s| - (|v| + |x|)$ and since $|vxy| \leq p$ and $|vy| \geq 1$ we have that $ |s| = (1 + p)p =$ \underline{$ p^2 + p > |s'| \geq p^2$} $ = |s| - p$. Also, the biggest string of $L$ that is smaller than $|s|$ is $(ab^{n-1})^{n-1}$, which has length $((p-1) + 1)(p - 1) = p^2 - p$. Therefore, there is no string in $L$ with length in the interval $(p^2 + p, p^2]$ and $|s'|$ is not in $L$, a contradiction caused by the assumption that this language is a CFL. Then, $L$ is not a CFL.
 
 \end{document}

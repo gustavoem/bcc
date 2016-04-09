@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.21)  8 APR 2016 21:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.21)  8 APR 2016 22:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -774,8 +774,8 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 111.
-
-Overfull \hbox (38.15796pt too wide) in paragraph at lines 171--171
+ [2]
+Overfull \hbox (38.15796pt too wide) in paragraph at lines 172--172
 [][]\OT1/cmr/bx/n/12 Question 2.  Con-sider the fol-low-ing context-free gram-m
 ar $\OML/cmm/m/it/12 G \OT1/cmr/m/n/12 = (\OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 S;
  S[]; S[]; X\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ; \OMS/cmsy/m/n/12 f\OML/cmm/m/i
@@ -783,8 +783,8 @@ t/12 a; b\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ; R; S\OT1/cmr/m/n/12 )$\OT1/cmr/bx
 /n/12 ,
  []
 
-[2] [3]
-Overfull \hbox (2.94557pt too wide) in paragraph at lines 206--213
+[3]
+Overfull \hbox (2.94557pt too wide) in paragraph at lines 207--214
 \OT1/cmr/bx/n/10.95 (\OT1/cmr/m/n/10.95 e) $(\OML/cmm/m/it/10.95 q; bbb; S\OT1/
 cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ` \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 q
 ; bbb; S[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ` \OT1/cmr/m/n/10.95 (\OML/c
@@ -797,46 +797,46 @@ cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ` \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 q
  []
 
 
-Overfull \hbox (8.12062pt too wide) in alignment at lines 232--270
+Overfull \hbox (8.12062pt too wide) in alignment at lines 233--271
  [] [] [] [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 270
+Underfull \vbox (badness 10000) detected at line 271
  []
 
-[4]
-Overfull \hbox (8.12062pt too wide) in alignment at lines 286--324
+[4] [5]
+Overfull \hbox (8.12062pt too wide) in alignment at lines 287--325
  [] [] [] [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 324
+Underfull \vbox (badness 10000) detected at line 325
  []
 
-[5] [6]
-Overfull \hbox (8.1581pt too wide) in alignment at lines 358--403
+[6]
+Overfull \hbox (8.1581pt too wide) in alignment at lines 359--404
  [] [] [] [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 403
+Underfull \vbox (badness 10000) detected at line 404
  []
 
-[7] [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 420.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 420.
+[7] [8] [9]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 421.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 421.
  (./assignment5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 420.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 420.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 421.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 421.
 Package rerunfilecheck Info: File `assignment5.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 420.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 421.
  ) 
 Here is how much of TeX's memory you used:
- 18807 strings out of 493085
- 356807 string characters out of 6136917
- 462822 words of memory out of 5000000
+ 18808 strings out of 493085
+ 356813 string characters out of 6136917
+ 462381 words of memory out of 5000000
  21935 multiletter control sequences out of 15000+600000
  11899 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -852,10 +852,10 @@ public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy8.pfb>
-Output written on assignment5.pdf (8 pages, 157210 bytes).
+Output written on assignment5.pdf (9 pages, 156950 bytes).
 PDF statistics:
- 100 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
+ 104 PDF objects out of 1000 (max. 8388607)
+ 81 compressed objects within 1 object stream
+ 17 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

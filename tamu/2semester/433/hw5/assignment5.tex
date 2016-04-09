@@ -8,6 +8,15 @@
 \usepackage{graphicx}
 \usepackage{pgf}
 \usepackage{tikz}
+\usepackage{longtable}
+\usepackage{wasysym}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{color, colortbl}
+\usepackage{longtable}
+\usepackage{datetime}
+
+
 \usetikzlibrary{arrows,automata}
 
 \usepackage{indentfirst}
@@ -15,6 +24,11 @@
 \newcommand{\question}[2] {\vspace{0.3in}\noindent{\subsection*{Question #1. #2} \vspace{0.15in}}}
 
 \renewcommand{\part}[1] {{\vspace{0.15in}\noindent\textbf (#1)} \vspace{0.10in}}
+
+\definecolor{dark-blue}{RGB}{23,20,119}
+\definecolor{dark-green}{RGB}{2,101,15}
+\definecolor{tableheadcolor}{gray}{0.65}
+\definecolor{tablerowcolor}{gray}{0.90} 
 
 
 
@@ -198,7 +212,126 @@ $(q, bbb, S) \vdash (q, bbb, S_2) \vdash (q, bbb, XXS_2) \vdash (q, bbb, bXS_2) 
 $
 
 
-\question{3}{}
-\question{4}{}
+\question{3}{In each case, use the pumping lemma to show that the given language is not a CFL.\\
+\part{a} $L = \{a^ib^jc^k \mid k = max (i, j)\}$ \\
+\part{b} $L = \{w \in \{a, b, c\}^* \mid \eta_a(w) < \eta_b(w) < eta_c(w)\}$. The number of $a$'s, $b$'s, and $c$'s in the string $w$ are represented by $\eta_a(w)$, $\eta_b(w)$ and $\eta_c(w)\}$ respectively.
+}
+
+\part{a}
+
+Assume that $L$ is a CFL.  Let $p$ be the pumping constant.  Choose the string $s$ to be $a^pb^pc^p$.  Since the $|s| \geq p$, then $s$ can be broken up into 5 pieces $u,v,x,y$ and $z$, such that:
+\begin{itemize}
+	\item $|vy| \geq 1$,
+	\item $|vxy| \leq p$, and
+	\item for all $i \geq 0$, $uv^ixy^iz \in L$.
+\end{itemize} 
+
+\noindent 
+We must consider the following ways of partitioning the string $s$ into $u,v,x,y$, and $z$. We list partitions based on the contents of $v$ and $y$ since they affect the pumped string $s'$.
+
+\begin{longtable}{|c|c|c|c|p{2in}|p{2.75in}|} \hline
+%\multicolumn{6}{|c|}{Let $s = a^pb^pc^p$.} \\ \hline 
+\rowcolor{tableheadcolor} 
+   & $v$ & $y$ & $i$ & $s'=uv^ixw^iy$ & Why is $s' \notin L$?\\ \hline 
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$vx$ contains a single distinct symbol} \\ \hline 
+1. & $a^l$ & $a^m$ & 2 & $a^{p+l+m)}b^pc^p$ & Number of $a$'s is greater than the number of $c$'s. \\ [0.3cm]
+
+2. & $b^l$ & $b^m$ & 2 & $a^pb^{p+l+m}c^p$ & Number of $b$'s is greater than the number of $c$'s. \\ [0.3cm]
+	
+3. & $c^l$ & $c^m$ & 0 & $a^pb^pc^{p-(l+m)}$ & Number of $c$'s is less than $p = max (p, p)$. \\ [0.3cm]
+
+\hline
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ and $y$ contain two different distinct symbols} \\ \hline 
+
+4. & $a^l$ & $b^m$ & 2 & $a^{p+l}b^{p+m}c^p$ & Since $l$ and $m$ are greater than zero (otherwise, case 1 or 2)we have that $p$ can't be $max(p + l, p + m)$. \\ [0.3cm]	
+
+5. & $b^l$ & $c^m$ & 0 & $a^pb^{p-l}c^{p-m}$ & Since $m$ is greater than zero (otherwise, case 2) we have that $p - m$ can't be $max (p, p - l)$. \\ [0.3cm] 
+
+\hline 
+
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ or $x$ contain 2 distinct symbols} \\ \hline 
+
+6. & $a^l$ & $a^mb^n$  & 0 & $a^{p - (l + m)}b^{p-n}c^p$ & Since $l$, $m$ and $n$ are greater than zero (othewise, case 1, 2, 4) we have that the number of $c$'s is greater than $max (p - (l + m), p - n)$\\ [0.7cm]
+
+7. & $a^l b^m$ & $b^n$  & 0 & $a^{p-l}b^{p-(m + n)}c^p$ &  Since $l$, $m$ and $n$ are greater than zero (othewise, case 1, 2, 4) we have that the number of $c$'s is greater than $max (p - l, p - (n + m))$. \\ [0.7cm]	
+
+\hline 
+
+8. & $b^l$ & $b^mc^n$  & 0 & $a^pb^{p-(l + m)}c^{p-n}$ & Since $n$ is greater than zero (otherwise, case 2) we have that the number of $c$'s is less than $max (p, p - (l + m))$  \\ [0.7cm] 
+
+\hline 
+
+9. & $b^l c^m$ & $c^n$  & 2 & $a^{p} b^{p-l} c^{p - (m + n)}$ & Since $n$ and $m$ are greater than zero (otherwise, case 2 or 5) we have that the number of $c$'s is less than $max (p, p - l)$ \\ 
+
+\hline 
+\end{longtable}
+
+The above cases show that no matter how we partition the string $s$ into $u,v,x, y$, and $z$, the resulting pumped string $s'$ will not be in the language $L$.  Thus, our assumption that $L$ is context-free is false. 
+
+\part{b}
+
+Assume that $L$ is a CFL.  Let $p$ be the pumping constant.  Choose the string $s$ to be $a^pb^{p+1}c^{p+2}$.  Since the $|s| \geq p$, then $s$ can be broken up into 5 pieces $u,v,x,y$ and $z$, such that:
+\begin{itemize}
+	\item $|vy| \geq 1$,
+	\item $|vxy| \leq p$, and
+	\item for all $i \geq 0$, $uv^ixy^iz \in L$.
+\end{itemize} 
+
+\noindent 
+We must consider the following ways of partitioning the string $s$ into $u,v,x,y$, and $z$. We list partitions based on the contents of $v$ and $y$ since they affect the pumped string $s'$.
+
+\begin{longtable}{|c|c|c|c|p{2in}|p{2.75in}|} \hline
+%\multicolumn{6}{|c|}{Let $s = a^pb^pc^p$.} \\ \hline 
+\rowcolor{tableheadcolor} 
+   & $v$ & $y$ & $i$ & $s'=uv^ixw^iy$ & Why is $s' \notin L$?\\ \hline 
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$vx$ contains a single distinct symbol} \\ \hline 
+1. & $a^l$ & $a^m$ & 2 & $a^{p+l+m}b^{p+1}c^{p+2}$ & Since $l + m > 0$, the number of $a$'s is greater  or equal than the number of $b$'s. \\ [0.3cm]
+
+2. & $b^l$ & $b^m$ & 2 & $a^pb^{p+l+m}c^p$ & Since $l + m > 0$, the number of $b$'s is greater or equal than the number of $c$'s. \\ [0.3cm]
+	
+3. & $c^l$ & $c^m$ & 0 & $a^pb^{p + 1}c^{p + 2 -(l+m)}$ & Since $l + m >0$, the number of $c$'s is less or equal than the number of $b$'s. \\ [0.3cm]
+
+\hline
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ and $y$ contain two different distinct symbols} \\ \hline 
+
+4. & $a^l$ & $b^m$ & 2 & $a^{p+l}b^{p+1+m}c^{p+2}$ & Since $m$ is greater than zero (otherwise, case 1) we have that the number of $b$'s is greater or equal to the number of $c$'s. \\ [0.3cm]	
+
+5. & $b^l$ & $c^m$ & 0 & $a^pb^{p - l + 1}c^{p - m + 2}$ & Since $l$ is greater than zero (otherwise, case 3) we have that the number of $b$'s is less or equal than the number of $a$'s. \\ [0.3cm] 
+
+\hline 
+
+\rowcolor{tablerowcolor}
+\multicolumn{6}{|c|}{$v$ or $x$ contain 2 distinct symbols} \\ \hline 
+
+6. & $a^l$ & $a^mb^n$  & 2 & $a^{p  + l + m}b^{p + n + 1}c^{p + 2}$ & Since $n$ is greater than zero (othewise, case 1) we have that the number of $b$'s is greater or equal to the number of $c$'s \\ [0.7cm]
+
+7. & $a^l b^m$ & $b^n$  & 2 & $a^{p + l}b^{p + m + n + 1}c^{p + 2}$ &  Since $m$ and $n$ are greater than zero (othewise, case 1, 4) we have that the number of $b$'s is greater or equal than the number of $c$'s. \\ [0.7cm]	
+
+\hline 
+
+8. & $b^l$ & $b^mc^n$  & 0 & $a^pb^{p - (l + m) + 1}c^{p + 2 - n}$ & Since $l$ and $m$ are greater than zero (otherwise, case 3 or 5) we have that the number of $b$'s is less than the number of $a$'s  \\ [0.7cm] 
+
+\hline 
+
+9. & $b^l c^m$ & $c^n$  & 0 & $a^{p} b^{p - l + 1} c^{p - (m + n) + 2}$ & Since $n$ and $m$ are greater than zero (otherwise, case 3 or 5) we have that the number of $c$'s is less than the number of $b$'s. \\ 
+
+\hline 
+\end{longtable}
+
+The above cases show that no matter how we partition the string $s$ into $u,v,x, y$, and $z$, the resulting pumped string $s'$ will not be in the language $L$.  Thus, our assumption that $L$ is context-free is false. 
+
+
+
+
+\question{4}{For each of the following languages, determine whether it is context-free or not, and a proof for your answer. \\
+\part{a} $L = \{xayb \mid x, y \in \{a,b\}^*$ and $|x| = |y|\}$ \\
+\part{b} $L = \{xyx \mid x, y \in \{a, b\}^*$ and $|x| \geq 1\}$ \\
+\part{c} $L = \{(ab^n)^n \mid n \geq 0\}$
+}
 
 \end{document}

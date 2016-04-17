@@ -12,6 +12,8 @@
 class Multiplier
 {
     private:
+    
+    protected:
 
         // Stores a list of toffoli gates
         //

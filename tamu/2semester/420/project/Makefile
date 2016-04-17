@@ -1,6 +1,6 @@
 FLAGS = -O2 -Wall -pedantic -std=c++14 -g
 
-OBJS = ToffoliGate.o Multiplier.o
+OBJS = ToffoliGate.o Multiplier.o GAMultiplier.o GeneticAlgorithm.o FitnessFunction.o
 
 TARGET = main
 

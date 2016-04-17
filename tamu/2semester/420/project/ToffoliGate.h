@@ -55,9 +55,9 @@ class ToffoliGate
         void removeControl (unsigned int);
 
         
-        // Appplies the toffoli gate to a number
+        // Tests the gate agains the first parameter and applies it to the second parameter
         //
-        unsigned int applyGate (unsigned int);
+        unsigned int applyGate (unsigned int, unsigned int);
 
         // Returns string representation of the gate
         //

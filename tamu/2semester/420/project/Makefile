@@ -1,6 +1,6 @@
 FLAGS = -O2 -Wall -pedantic -std=c++14 -g
 
-OBJS = ToffoliGate.o
+OBJS = ToffoliGate.o Multiplier.o
 
 TARGET = main
 

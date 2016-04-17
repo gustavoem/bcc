@@ -10,7 +10,7 @@
 #include "Multiplier.h"
 #include <vector>
 
-class GAMultiplier : Multiplier
+class GAMultiplier : public Multiplier
 {
     private:
 

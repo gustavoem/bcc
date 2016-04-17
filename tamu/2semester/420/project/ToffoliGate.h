@@ -26,17 +26,33 @@ class ToffoliGate
         //
         unsigned int gate;
 
+
+        // Stores the output bit index
+        //
+        unsigned int controlled_bit;
+
+
     public:
         
         // Default constructor
         //
-        ToffoliGate (unsigned int);
+        ToffoliGate (unsigned int, unsigned int);
 
 
         // Default destructor
         //
         virtual ~ToffoliGate ();
+    
 
+        // Sets a closed or open (first argument) control on (second argument)-th bit
+        // Does nothing if arguments are invalid
+        //
+        void setControl (bool, unsigned int);
+
+        
+        // Appplies the toffoli gate to a number
+        //
+        unsigned int applyGate (unsigned int);
 
         // Returns string representation of the gate
         //

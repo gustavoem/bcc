@@ -26,6 +26,15 @@ void ToffoliGate::setControl (bool open, unsigned int index)
 }
 
 
+void ToffoliGate::removeControl (unsigned int index)
+{
+    unsigned int index_help = pow (3, index);
+    unsigned int divided_gate = gate / index_help;
+    
+    gate -= (divided_gate % 3) * index_help;
+}
+
+
 unsigned int ToffoliGate::applyGate (unsigned int number)
 {
     bool should_change = true;

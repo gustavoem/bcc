@@ -49,6 +49,11 @@ class ToffoliGate
         //
         void setControl (bool, unsigned int);
 
+
+        // Removes a control point from the gate
+        //
+        void removeControl (unsigned int);
+
         
         // Appplies the toffoli gate to a number
         //

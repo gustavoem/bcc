@@ -13,10 +13,14 @@ int main ()
     tf_gate.setControl (true, 0);
     tf_gate.setControl (true, 2);
     tf_gate.setControl (false, 4);
-    cout << tf_gate.toString() << endl;
+    cout << tf_gate.toString () << endl;
 
     cout << number << endl;
     cout << tf_gate.applyGate (number) << endl;
-    
+   
+    tf_gate.removeControl (1);
+    tf_gate.removeControl (2);
+    cout << tf_gate.toString () << endl;
+
     return 0;
 }

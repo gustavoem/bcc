@@ -41,15 +41,15 @@ unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int appl
     unsigned int gate_copy = gate;
     unsigned int result = apply_number;
     
-    // std::cout << "applying gate: " << toString () << std::endl;
-    // std::cout << "test, apply: " << test_number << ", "<< apply_number << std::endl;
+    std::cout << "applying gate: " << toString () << std::endl;
+    std::cout << "test, apply: " << test_number << ", "<< apply_number << std::endl;
     
     while (test_number > 0 || gate_copy > 0)
     {
         unsigned int gate_bit = gate_copy % 3;
         unsigned int number_bit = test_number % 2; 
         
-        // std::cout << "  gate_bit, number_bit: " << gate_bit << ", " << number_bit << std::endl;
+        std::cout << "  gate_bit, number_bit: " << gate_bit << ", " << number_bit << std::endl;
 
         if (gate_bit)
             if (number_bit != (2 - gate_bit))
@@ -67,7 +67,7 @@ unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int appl
         result ^= (1 << controlled_bit);
     }
     
-    // std::cout << "result: " << result << std::endl;
+    std::cout << "result: " << result << std::endl;
     return result;
 }
 

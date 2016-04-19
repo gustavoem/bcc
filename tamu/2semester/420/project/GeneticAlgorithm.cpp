@@ -14,6 +14,11 @@ GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBits
 }
 
 
+void GeneticAlgorithm::startPopulation ()
+{
+}
+
+
 GeneticAlgorithm::~GeneticAlgorithm ()
 {
     return;

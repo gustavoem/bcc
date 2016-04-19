@@ -43,6 +43,14 @@ class GeneticAlgorithm
         //
         float weightedRandom ();
 
+
+
+        // Creates the first population with multipliers that work for at least one case
+        // We do this by choosing 2 random primes in our list of primes and making a  
+        // multiplier that work for this case
+        //
+        void startPopulation ();
+
     public:
 
         // Default constructor

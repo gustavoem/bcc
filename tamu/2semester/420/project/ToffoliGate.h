@@ -13,18 +13,16 @@ class ToffoliGate
     
     private:
 
-        // Stores the index of the highest bit that this toffoli gate applies to
-        //
-        unsigned int domain_size;
-        
-
         // Stores the toffoli gate itself
         // We use a base_3 number to represent a toffoli gate here, where:
         // - 0 represents don't care
         // - 1 represents regular control bit (contributes if bit is one)
         // - 2 represents inverted control bit (contributes if bit is zero)
         //
-        long long unsigned int gate;
+        // We represent control points from 0 to 14 in gate[0] and 
+        //              control points from 15 to 30 in gate[1]
+        //
+        long long unsigned int gate[2];
 
 
         // Stores the output bit index
@@ -36,7 +34,7 @@ class ToffoliGate
         
         // Default constructor
         //
-        ToffoliGate (unsigned int, unsigned int);
+        ToffoliGate (unsigned int);
 
 
         // Default destructor

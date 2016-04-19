@@ -39,7 +39,7 @@ void GeneticAlgorithm::startPopulation ()
             
             if (input_bit != output_bit)
             {
-                ToffoliGate * gate = new ToffoliGate (30, bit_index);
+                ToffoliGate * gate = new ToffoliGate (bit_index);
                 gates.push_back (gate);
                 control_points.push_back (std::make_pair (input_bit, bit_index));
             }
@@ -70,9 +70,9 @@ GeneticAlgorithm::~GeneticAlgorithm ()
 Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
     std::vector<ToffoliGate *> gates;
-    ToffoliGate * test_gate = new ToffoliGate (30, 0);
-    ToffoliGate * test_gate2 = new ToffoliGate (30, 2);
-    ToffoliGate * test_gate3 = new ToffoliGate (30, 16);
+    ToffoliGate * test_gate = new ToffoliGate (0);
+    ToffoliGate * test_gate2 = new ToffoliGate (2);
+    ToffoliGate * test_gate3 = new ToffoliGate (16);
     gates.push_back (test_gate);
     gates.push_back (test_gate2);
     gates.push_back (test_gate3);
@@ -109,7 +109,7 @@ GAMultiplier * GeneticAlgorithm::createRandomIndividual ()
     {
         std::cout << "rand: " << weightedRandom () << std::endl;
         unsigned int controlled_bit = weightedRandom () * 15 + (rand () % 2) * 15 * weightedRandom ();
-        ToffoliGate * tf_gate = new ToffoliGate (30, controlled_bit);
+        ToffoliGate * tf_gate = new ToffoliGate (controlled_bit);
 
         unsigned int nof_control_points = rand () % kControlBitsLimitk / 2;
         for (unsigned int j = 0; j < nof_control_points / 2; j++)

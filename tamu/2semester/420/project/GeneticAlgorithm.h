@@ -11,6 +11,7 @@
 #include "ToffoliGate.h"
 #include "GAMultiplier.h"
 #include "FitnessFunction.h"
+#include "PrimeList.h"
 
 
 class GeneticAlgorithm

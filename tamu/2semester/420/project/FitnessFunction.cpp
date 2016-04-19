@@ -8,7 +8,7 @@ unsigned int FitnessFunction::eval (GAMultiplier * mp, unsigned int tries)
     unsigned int expected_result;
     
     if (tries == 0)
-        tries = 6541;
+        tries = NUMBER_OF_PRIMES;
 
     for (unsigned int i = 1; i < tries; i++)
     {

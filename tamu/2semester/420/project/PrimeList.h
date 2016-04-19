@@ -7,6 +7,10 @@
 #define PRIME_LIST_H_
 
 
+// Number of primes in the list
+//
+#define NUMBER_OF_PRIMES 6541
+
 // List of all 15-bit primes
 //
 const unsigned int primes[] = {

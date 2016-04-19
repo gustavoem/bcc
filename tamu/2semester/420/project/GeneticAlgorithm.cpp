@@ -16,6 +16,44 @@ GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBits
 
 void GeneticAlgorithm::startPopulation ()
 {
+    std::cout << "Starting population: " << std::endl;
+    for (unsigned int i = 0; i < population_size; i++)
+    {
+        unsigned int p1i = rand () % NUMBER_OF_PRIMES;
+        unsigned int p2i = i + rand () % (NUMBER_OF_PRIMES - i);
+        unsigned int prime1 = primes[p1i];
+        unsigned int prime2 = primes[p2i];
+        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
+        unsigned int input = (prime1 << 15) + prime2;
+        unsigned int output = prime1 * prime2;
+        std::vector<ToffoliGate *> gates;
+        std::vector< std::pair<bool, unsigned int> > control_points;
+        
+        unsigned int bit_index = 0;
+        while (input > 0 || output > 0)
+        {
+            unsigned int input_bit = input % 2;
+            unsigned int output_bit = output % 2;
+            
+            if (input_bit != output_bit)
+            {
+                ToffoliGate * gate = new ToffoliGate (30, bit_index);
+                gates.push_back (gate);
+                control_points.push_back (std::make_pair (input_bit, bit_index));
+            }
+
+            input /= 2;
+            output /= 2;
+            bit_index++;
+        }
+        
+        for (unsigned int i = 0; i < gates.size (); i++)
+            for (unsigned int j = 0; j < control_points.size (); j++)
+                gates[i]->setControl (control_points[j].first, control_points[j].second);
+
+        GAMultiplier * mp = new GAMultiplier (gates);
+        population.push_back (mp);
+    }
 }
 
 

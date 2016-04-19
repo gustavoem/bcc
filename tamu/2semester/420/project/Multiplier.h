@@ -8,6 +8,7 @@
 
 #include "ToffoliGate.h"
 #include <vector>
+#include <string>
 
 class Multiplier
 {
@@ -40,6 +41,11 @@ class Multiplier
         // Add a toffoli gate
         //
         void addGate (ToffoliGate *);
+
+
+        // Returns string representation
+        //
+        std::string toString ();
 };
 
 #endif

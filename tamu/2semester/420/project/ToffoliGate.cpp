@@ -22,9 +22,8 @@ void ToffoliGate::setControl (bool open, unsigned int index)
 {
     // if open (true) then bit value should be one
     // if !open (false) then bit value should be 2
-     std::cout << "setting " << open << " on " << index << std::endl;
+    std::cout << "setting " << open << " on " << index << std::endl;
     // gate += (2 - open) * pow (3, index); 
-    std::cout << "   me: " << toString () << std::endl;
     
     unsigned int half = index > 14;
     unsigned int gate_bit = (index % 15) * 2;
@@ -34,6 +33,9 @@ void ToffoliGate::setControl (bool open, unsigned int index)
     unsigned int set_mask = ((2 - open) << gate_bit);
     gate[half] &= clean_mask;
     gate[half] |= set_mask;
+
+    std::cout << "   me: " << toString () << std::endl;
+    // std::cout << "after setting: " << gate[1] << "|" << gate[0] << std::endl;
 }
 
 
@@ -53,38 +55,41 @@ void ToffoliGate::removeControl (unsigned int index)
 
 unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int apply_number)
 {
-    // bool should_change = true;
-    // unsigned int gate_copy = gate;
-    // unsigned int result = apply_number;
+    bool should_change = true;
+    unsigned int result = apply_number;
     
     // std::cout << "applying gate: " << toString () << std::endl;
     // std::cout << "test, apply: " << test_number << ", "<< apply_number << std::endl;
     
-    // while (test_number > 0 || gate_copy > 0)
-    // {
-        // unsigned int gate_bit = gate_copy % 3;
-        // unsigned int number_bit = test_number % 2; 
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        unsigned int gate_copy = gate[i];
+        for (unsigned int j = 0; j < 15; j++)
+        {
+            unsigned int gate_bit = gate_copy & 3;
+            unsigned int number_bit = test_number % 2; 
         
-        // std::cout << "  gate_bit, number_bit: " << gate_bit << ", " << number_bit << std::endl;
+            // std::cout << "  gate_bit, number_bit: " << gate_bit << ", " << number_bit << std::endl;
 
-        // if (gate_bit)
-            // if (number_bit != (2 - gate_bit))
-            // {
-                // should_change = false;
-                // break;
-            // }
+            if (gate_bit)
+                if (number_bit != (2 - gate_bit))
+                {
+                    should_change = false;
+                    break;
+                }
         
-       // gate_copy /= 3;
-       // test_number /= 2;
-    // }
+            gate_copy /= 4;
+            test_number /= 2;
+        }
+    }
     
-    // if (should_change)
-    // {
-        // result ^= (1 << controlled_bit);
-    // }
+    if (should_change)
+    {
+        result ^= (1 << controlled_bit);
+    }
     
     // std::cout << "result: " << result << std::endl;
-    // return result;
+    return result;
 }
 
 
@@ -97,7 +102,7 @@ std::string ToffoliGate::toString ()
     {
         unsigned int half = i > 14;
         unsigned int gate_bit = (i % 15) * 2;
-        unsigned int bit_content = (gate[half] >> gate_bit) % 3;
+        unsigned int bit_content = (gate[half] >> gate_bit) & 3;
         ss << map[bit_content];
     }
 

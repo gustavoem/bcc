@@ -10,6 +10,6 @@ using namespace std;
 int main ()
 {
     GeneticAlgorithm ga (300);
-    ga.bestMultiplier ();
+    // ga.bestMultiplier ();
     return 0;
 }

@@ -6,18 +6,20 @@ GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBits
 {
     this->population_size = population_size;
 
-    for (unsigned int i = 0; i < population_size; i++)
-    {
-        GAMultiplier * new_individual = createRandomIndividual ();
-        population.push_back (new_individual);
-    }
+    // for (unsigned int i = 0; i < population_size; i++)
+    // {
+        // GAMultiplier * new_individual = createRandomIndividual ();
+        // population.push_back (new_individual);
+    // }
+    
+    startPopulation ();
 }
 
 
 void GeneticAlgorithm::startPopulation ()
 {
     std::cout << "Starting population: " << std::endl;
-    for (unsigned int i = 0; i < population_size; i++)
+    for (unsigned int i = 0; i < 1; i++)
     {
         unsigned int p1i = rand () % NUMBER_OF_PRIMES;
         unsigned int p2i = i + rand () % (NUMBER_OF_PRIMES - i);
@@ -53,6 +55,8 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (gates);
         population.push_back (mp);
+        std::cout << mp->toString () << std::endl;
+        std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
     }
 }
 

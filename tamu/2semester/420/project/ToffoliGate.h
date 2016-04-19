@@ -24,7 +24,7 @@ class ToffoliGate
         // - 1 represents regular control bit (contributes if bit is one)
         // - 2 represents inverted control bit (contributes if bit is zero)
         //
-        unsigned int gate;
+        long long unsigned int gate;
 
 
         // Stores the output bit index

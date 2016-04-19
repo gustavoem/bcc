@@ -10,11 +10,11 @@ unsigned int FitnessFunction::eval (GAMultiplier * mp, unsigned int tries)
     if (tries == 0)
         tries = 6541;
 
-    for (unsigned int i = 1; i < 2; i++)
+    for (unsigned int i = 1; i < tries; i++)
     {
-        for (unsigned int j = 0; j < 1; j++)
+        for (unsigned int j = 0; j < i; j++)
         {
-            std::cout << "p_i, p_j: " << primes[i] << ", " << primes[j] << std::endl;
+            // std::cout << "p_i, p_j: " << primes[i] << ", " << primes[j] << std::endl;
             input = (primes[j] << 15) + primes[i];
             expected_result = primes[i] * primes[j];
             if (mp->multiply (input) == expected_result)

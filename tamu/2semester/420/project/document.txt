@@ -1,0 +1,2 @@
+Generating random individuals was not enough for the algorithm
+

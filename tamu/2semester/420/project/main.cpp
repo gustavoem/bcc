@@ -9,7 +9,7 @@ using namespace std;
 
 int main ()
 {
-    GeneticAlgorithm ga (100);
+    GeneticAlgorithm ga (300);
     ga.bestMultiplier ();
     return 0;
 }

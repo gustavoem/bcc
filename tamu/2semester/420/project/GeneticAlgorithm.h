@@ -37,6 +37,12 @@ class GeneticAlgorithm
         const unsigned int kGatesLimitk; 
         const unsigned int kControlBitsLimitk;
 
+        
+        // This is a distribution that looks exponential the has more weight for values
+        // between 0 and 0.5 than of 0.5 to 1
+        //
+        float weightedRandom ();
+
     public:
 
         // Default constructor

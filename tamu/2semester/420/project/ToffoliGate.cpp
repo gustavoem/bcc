@@ -12,6 +12,14 @@ ToffoliGate::ToffoliGate (unsigned int controlled_bit)
 }
 
 
+ToffoliGate::ToffoliGate (ToffoliGate& original)
+{
+    this->gate[0] = original.gate[0];
+    this->gate[1] = original.gate[1];
+    this->controlled_bit = original.controlled_bit;
+}
+
+
 ToffoliGate::~ToffoliGate ()
 {
     return;

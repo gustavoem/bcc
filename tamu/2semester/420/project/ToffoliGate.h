@@ -37,10 +37,15 @@ class ToffoliGate
         ToffoliGate (unsigned int);
 
 
+        // Copy constructor
+        //
+        ToffoliGate (ToffoliGate&);
+
+
         // Default destructor
         //
         virtual ~ToffoliGate ();
-    
+
 
         // Sets a closed or open (first argument) control on (second argument)-th bit
         // Does nothing if arguments are invalid

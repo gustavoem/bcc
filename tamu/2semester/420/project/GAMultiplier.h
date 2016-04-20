@@ -57,6 +57,11 @@ class GAMultiplier : public Multiplier
         // Score getter
         //
         unsigned int getFitness ();
+
+
+        // Makes a crossover of this gate with another multiplier 
+        //
+        vector<ToffoliGate *>
 };
 
 #endif

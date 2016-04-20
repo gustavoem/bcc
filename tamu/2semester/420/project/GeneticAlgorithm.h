@@ -52,6 +52,15 @@ class GeneticAlgorithm
         //
         void startPopulation ();
 
+
+        // Defines a multiplier comparator. This is used to mainain the population ordered
+        // by fitness
+        //
+        struct multiplierCompare 
+        {
+            bool operator() (const GAMultiplier&, const GAMultiplier&) const;
+        };
+
     public:
 
         // Default constructor

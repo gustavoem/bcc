@@ -66,6 +66,11 @@ class GAMultiplier : public Multiplier
         //  with another one 
         //
         std::vector<ToffoliGate *> getCrossoverWith (GAMultiplier *);
+
+
+        // Defines the comparator, which is given by the fitness of the multiplier
+        //
+        bool operator < (const GAMultiplier&) const;  
 };
 
 #endif

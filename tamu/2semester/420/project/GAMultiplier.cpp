@@ -107,6 +107,10 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
         for (unsigned int j = 0; j < selected_column.size (); j++)
             child_gates.push_back (new ToffoliGate (*(selected_column[j])));
     }
-         
     return child_gates;
+}
+
+bool GAMultiplier::operator < (const GAMultiplier& other) const 
+{
+    return this->score < other.score;
 }

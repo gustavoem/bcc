@@ -57,6 +57,12 @@ void GeneticAlgorithm::startPopulation ()
 }
 
 
+bool GeneticAlgorithm::multiplierCompare::operator () 
+    (const GAMultiplier& lhs, const GAMultiplier& rhs) const 
+{
+    return lhs < rhs; 
+}
+
 GeneticAlgorithm::~GeneticAlgorithm ()
 {
     return;

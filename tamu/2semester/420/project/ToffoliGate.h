@@ -67,6 +67,12 @@ class ToffoliGate
         //
         unsigned int applyGate (unsigned int, unsigned int);
 
+
+        // Returns the control bit of this gate
+        //
+        unsigned int getControlBit ();
+
+
         // Returns string representation of the gate
         //
         std::string toString ();

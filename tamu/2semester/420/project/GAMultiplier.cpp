@@ -52,8 +52,29 @@ void GAMultiplier::eval ()
 }
 
 
-std::vector<ToffoliGate *> getCrossoverWith (GAMultiplier * partner)
+// We don't need to be super-careful with complexity here because there are certainly
+// less than 60 gates.
+std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partner)
 {
+    float rel_fit1;
+    float rel_fit2;
+    vector<ToffoliGate *> child_gates;
+    map<ToffoliGate *> parents_gates;  // use control bit as key 
+
+    if (this->score == 0 && partner->score == 0)
+    {
+        rel_fit1 = .5;
+        rel_fit2 = .5;
+    }
+    else
+    {
+        rel_fit1 = this->score / (this->score + partner->score);
+        rel_fit2 = partner->score / (this->score + partner->score);
+    }
+    
+    for (unsigned int i = 0; i < this->gates.size (); i++) 
+        
+         
     std::vector<ToffoliGate *> crossover_gates;
     return crossover_gates;
 }

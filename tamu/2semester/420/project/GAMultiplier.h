@@ -11,6 +11,7 @@
 #include "PrimeList.h"
 #include <vector>
 #include <stdlib.h>
+#include <map>
 
 #define MAX_GATES 60
 

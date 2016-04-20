@@ -107,6 +107,12 @@ unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int appl
 }
 
 
+unsigned int ToffoliGate::getControlBit ()
+{
+    return this->controlled_bit;
+}
+
+
 std::string ToffoliGate::toString ()
 {
     std::stringstream ss;

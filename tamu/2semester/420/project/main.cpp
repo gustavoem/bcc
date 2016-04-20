@@ -10,14 +10,14 @@ using namespace std;
 int main ()
 {
     ToffoliGate * a = new ToffoliGate (1);
-    ToffoliGate * b = new ToffoliGate (10);
     ToffoliGate * c = new ToffoliGate (12);
-    set<ToffoliGate *> v;
-    v.insert (a);
-    v.insert (b);
-    v.insert (c);
+    ToffoliGate * b = new ToffoliGate (10);
+    vector<ToffoliGate *> v;
+    v.push_back (a);
+    v.push_back (b);
+    v.push_back (c);
 
-    for (std::set<ToffoliGate *>::iterator it = v.begin (); it != v.end (); ++it)
+    for (std::vector<ToffoliGate *>::iterator it = v.begin (); it != v.end (); ++it)
         std::cout << (*it)->toString () << endl;
 
     GeneticAlgorithm ga (300);

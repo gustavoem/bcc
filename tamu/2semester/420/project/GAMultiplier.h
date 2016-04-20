@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <map>
 
-#define MAX_GATES 60
+#define MAX_GATES_PER_COLUMN 5
 
 class GAMultiplier : public Multiplier
 {

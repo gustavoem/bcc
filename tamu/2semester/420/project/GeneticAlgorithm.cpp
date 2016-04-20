@@ -46,12 +46,13 @@ void GeneticAlgorithm::startPopulation ()
         for (unsigned int i = 0; i < gates.size (); i++)
             for (unsigned int j = 0; j < control_points.size (); j++)
                 if (rand () % 2)
-                gates[i]->setControl (control_points[j].first, control_points[j].second);
+                    gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         population.push_back (mp);
         // std::cout << mp->toString () << std::endl;
         // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
+        // std::cout << "Fitness: " << mp->getFitness () << std::endl;
     }
 }
 
@@ -69,7 +70,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
 
     for (unsigned int i = 0; i < population.size (); i++)
     {
-        unsigned int score = population[i].getFitness ();
+        unsigned int score = population[i]->getFitness ();
         if (score > best_score)
         {
             best_score = score;

@@ -12,8 +12,8 @@ GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBits
 
 void GeneticAlgorithm::startPopulation ()
 {
-    std::cout << "Starting population: " << std::endl;
-    for (unsigned int i = 0; i < 1; i++)
+    // std::cout << "Starting population: " << std::endl;
+    for (unsigned int i = 0; i < population_size; i++)
     {
 
         unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);
@@ -25,7 +25,7 @@ void GeneticAlgorithm::startPopulation ()
         std::vector<ToffoliGate *> gates;
         std::vector< std::pair<bool, unsigned int> > control_points;
         
-        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
+        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int bit_index = 0;
         while (input > 0 || output > 0)
         {
@@ -51,9 +51,9 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         population.push_back (mp);
-        std::cout << mp->toString () << std::endl;
-        std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
-        std::cout << "Fitness: " << mp->getFitness () << std::endl;
+        // std::cout << mp->toString () << std::endl;
+        // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
+        // std::cout << "Fitness: " << mp->getFitness () << std::endl;
     }
     std::sort (population.begin (), population.end (), multiplierCompare);
 }
@@ -62,12 +62,24 @@ void GeneticAlgorithm::startPopulation ()
 bool GeneticAlgorithm::multiplierCompare::operator () 
     (GAMultiplier * lhs, GAMultiplier * rhs) const 
 {
-    return *lhs < *rhs; 
+    // we  want > 
+    return !(*lhs < *rhs); 
 }
+
 
 GeneticAlgorithm::~GeneticAlgorithm ()
 {
-    return;
+    for (unsigned int i = 0; i < population.size (); i++)
+        delete population[i];
+}
+
+
+// Population is not so big so let's not care about exploiting the fact that
+// the vector is almost sorted
+void GeneticAlgorithm::insertIndividual (GAMultiplier * new_individual)
+{
+    population.push_back (new_individual);
+    // std::sort (population.begin (), population.end (), multiplierCompare);
 }
 
 
@@ -83,17 +95,20 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         population.pop_back ();
         
         // crossover 
-        std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
-        std::cout << "Parent 2:\n" << population[1]->toString () << std::endl;
+        // std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
+        std::cout << "Parent 1 score:" << population[0]->getFitness () << std::endl;
+        // std::cout << "Parent 2:\n" << population[1]->toString () << std::endl;
+        std::cout << "Parent 2 score:" << population[1]->getFitness () << std::endl;
         std::vector<ToffoliGate *> child_gates = 
             population[0]->getCrossoverWith (population[1]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
-        std::cout << "Child:\n" << new_individual->toString () << std::endl;
-        std::cout << new_individual->getFitness () << std::endl;
+        // insertIndividual (new_individual);
+
+        // std::cout << "Child:\n" << new_individual->toString () << std::endl;
+        std::cout << "new score: " << new_individual->getFitness () << std::endl;
         iterations++;
+        // std::cout << "Best score: " << population[0]->getFitness () << std::endl;
     }
-    
-    std::cout << "Best score: " << population[0]->getFitness () << std::endl;
 }
 
 

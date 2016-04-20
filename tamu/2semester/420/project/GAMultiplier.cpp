@@ -34,15 +34,15 @@ unsigned int GAMultiplier::getFitness ()
 void GAMultiplier::eval ()
 {
     unsigned int points = 0;
-    std::cout << "Number of primes: " << NUMBER_OF_PRIMES << std::endl;
+    // std::cout << "Number of primes: " << NUMBER_OF_PRIMES << std::endl;
 
-    for (unsigned int i = 0; i < 5; i++)
+    for (unsigned int i = 0; i < eval_reps; i++)
     {
         unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);
         unsigned int p2i = p1i + rand () % (NUMBER_OF_PRIMES - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
-        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
+        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int input = (prime1 << 15) + prime2;
         if (multiply (input) == (prime1 * prime2))
             points++;

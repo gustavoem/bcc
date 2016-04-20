@@ -9,9 +9,10 @@
 #include "ToffoliGate.h"
 #include "Multiplier.h"
 #include "PrimeList.h"
-#include <vector>
-#include <stdlib.h>
+#include <iostream>
 #include <map>
+#include <stdlib.h>
+#include <vector>
 
 #define MAX_GATES_PER_COLUMN 5
 

@@ -34,18 +34,18 @@ unsigned int GAMultiplier::getFitness ()
 void GAMultiplier::eval ()
 {
     unsigned int points = 0;
-    // std::cout << "Number of primes: " << NUMBER_OF_PRIMES;
+    std::cout << "Number of primes: " << NUMBER_OF_PRIMES << std::endl;
 
-    for (unsigned int i = 0; i < eval_reps; i++)
+    for (unsigned int i = 0; i < 5; i++)
     {
         unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);
         unsigned int p2i = p1i + rand () % (NUMBER_OF_PRIMES - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
-        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
+        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int input = (prime1 << 15) + prime2;
-        if (multiply (input) == prime1 * prime2)
-            score++;
+        if (multiply (input) == (prime1 * prime2))
+            points++;
     }
     
     this->score = points;
@@ -93,7 +93,8 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
         std::vector<ToffoliGate *> selected_column;
         std::vector<ToffoliGate *> * column1 = parents1_gates[i];
         std::vector<ToffoliGate *> * column2 = parents2_gates[i];
-        if (column1->size () + column2->size () < MAX_GATES_PER_COLUMN)
+        if (column1->size () + column2->size () < MAX_GATES_PER_COLUMN &&
+            ((column1->size () + column2->size ()) % 2))
         {
             selected_column = *column1;
             selected_column.insert (selected_column.end (), column2->begin (), column2->end ());

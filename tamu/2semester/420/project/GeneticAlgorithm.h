@@ -64,6 +64,12 @@ class GeneticAlgorithm
         //
         void startPopulation ();
 
+
+        // Inserts new individual in the correct place, keeping population ordered by 
+        // individual fitness
+        //
+        void insertIndividual (GAMultiplier *);
+
     public:
 
         // Default constructor

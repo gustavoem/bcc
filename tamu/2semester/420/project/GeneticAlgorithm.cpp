@@ -3,7 +3,7 @@
 #include <math.h>
 
 GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBitsLimitk (60), kGatesLimitk (20),
-    kPrimesToTestk (1000)
+    kPrimesToTestk (100)
 {
     this->population_size = population_size;
     startPopulation ();
@@ -12,10 +12,11 @@ GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBits
 
 void GeneticAlgorithm::startPopulation ()
 {
-    // std::cout << "Starting population: " << std::endl;
-    for (unsigned int i = 0; i < population_size; i++)
+    std::cout << "Starting population: " << std::endl;
+    for (unsigned int i = 0; i < 1; i++)
     {
-        unsigned int p1i = rand () % NUMBER_OF_PRIMES;
+
+        unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);
         unsigned int p2i = p1i + rand () % (NUMBER_OF_PRIMES - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
@@ -24,7 +25,7 @@ void GeneticAlgorithm::startPopulation ()
         std::vector<ToffoliGate *> gates;
         std::vector< std::pair<bool, unsigned int> > control_points;
         
-        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
+        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int bit_index = 0;
         while (input > 0 || output > 0)
         {
@@ -50,9 +51,9 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         population.push_back (mp);
-        // std::cout << mp->toString () << std::endl;
-        // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
-        // std::cout << "Fitness: " << mp->getFitness () << std::endl;
+        std::cout << mp->toString () << std::endl;
+        std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
+        std::cout << "Fitness: " << mp->getFitness () << std::endl;
     }
     std::sort (population.begin (), population.end (), multiplierCompare);
 }
@@ -73,12 +74,26 @@ GeneticAlgorithm::~GeneticAlgorithm ()
 Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int best_score = 0;
-    unsigned int best_index = 0;
+    unsigned int iterations = 0;
+    while (iterations < 1) 
+    {
+        // delete individual with less fitness
+        GAMultiplier * dead_individual = population.back ();
+        delete dead_individual;
+        population.pop_back ();
+        
+        // crossover 
+        std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
+        std::cout << "Parent 2:\n" << population[1]->toString () << std::endl;
+        std::vector<ToffoliGate *> child_gates = 
+            population[0]->getCrossoverWith (population[1]);
+        GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
+        std::cout << "Child:\n" << new_individual->toString () << std::endl;
+        std::cout << new_individual->getFitness () << std::endl;
+        iterations++;
+    }
     
-    for (unsigned int i = 0; i < population.size (); i++)
-        std::cout << "score: " << population[i]->getFitness () << std::endl;
-    
-    std::cout << "Best score: " << best_score << std::endl;
+    std::cout << "Best score: " << population[0]->getFitness () << std::endl;
 }
 
 

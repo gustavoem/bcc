@@ -49,11 +49,12 @@ void GeneticAlgorithm::startPopulation ()
                     gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
-        population.insert (mp);
+        population.push_back (mp);
         // std::cout << mp->toString () << std::endl;
         // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
         // std::cout << "Fitness: " << mp->getFitness () << std::endl;
     }
+    std::sort (population.begin (), population.end (), multiplierCompare);
 }
 
 
@@ -74,15 +75,9 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
     unsigned int best_score = 0;
     unsigned int best_index = 0;
     
-    std::set<GAMultiplier *>::iterator individual;
-    for (individual = population.begin (); individual != population.end(); ++individual)
-    {
-        unsigned int score = (*individual)->getFitness ();
-        if (score > best_score)
-            best_score = score;
-        std::cout << "Score: " << score;
-    }
-
+    for (unsigned int i = 0; i < population.size (); i++)
+        std::cout << "score: " << population[i]->getFitness () << std::endl;
+    
     std::cout << "Best score: " << best_score << std::endl;
 }
 

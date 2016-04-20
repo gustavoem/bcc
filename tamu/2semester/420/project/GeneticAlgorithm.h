@@ -12,6 +12,7 @@
 #include "GAMultiplier.h"
 #include "PrimeList.h"
 #include <set>
+#include <algorithm>
 
 
 class GeneticAlgorithm
@@ -29,12 +30,14 @@ class GeneticAlgorithm
         struct multiplierCompare 
         {
             bool operator() (GAMultiplier *, GAMultiplier *) const;
-        };
+        } multiplierCompare;
 
         
         // Stores the population
+        // 
+        // OBS: Keep this sorted
         //
-        std::set<GAMultiplier *, multiplierCompare> population;
+        std::vector<GAMultiplier *> population;
 
 
         // Creates a random individual

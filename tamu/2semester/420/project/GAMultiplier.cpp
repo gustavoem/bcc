@@ -16,9 +16,6 @@ GAMultiplier::GAMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> g
 
     this->gates = gates;
     eval ();
-
-    // just for testing
-    score = rand () % 100;
 }
 
 

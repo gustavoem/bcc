@@ -22,7 +22,7 @@ void ToffoliGate::setControl (bool open, unsigned int index)
 {
     // if open (true) then bit value should be one
     // if !open (false) then bit value should be 2
-    std::cout << "setting " << open << " on " << index << std::endl;
+    // std::cout << "setting " << open << " on " << index << std::endl;
     // gate += (2 - open) * pow (3, index); 
     
     unsigned int half = index > 14;
@@ -34,7 +34,7 @@ void ToffoliGate::setControl (bool open, unsigned int index)
     gate[half] &= clean_mask;
     gate[half] |= set_mask;
 
-    std::cout << "   me: " << toString () << std::endl;
+    // std::cout << "   me: " << toString () << std::endl;
     // std::cout << "after setting: " << gate[1] << "|" << gate[0] << std::endl;
 }
 

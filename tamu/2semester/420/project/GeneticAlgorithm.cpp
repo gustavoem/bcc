@@ -2,35 +2,29 @@
 #include <iostream>
 #include <math.h>
 
-GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBitsLimitk (60), kGatesLimitk (20)
+GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBitsLimitk (60), kGatesLimitk (20),
+    kPrimesToTestk (1000)
 {
     this->population_size = population_size;
-
-    // for (unsigned int i = 0; i < population_size; i++)
-    // {
-        // GAMultiplier * new_individual = createRandomIndividual ();
-        // population.push_back (new_individual);
-    // }
-    
     startPopulation ();
 }
 
 
 void GeneticAlgorithm::startPopulation ()
 {
-    std::cout << "Starting population: " << std::endl;
-    for (unsigned int i = 0; i < 1; i++)
+    // std::cout << "Starting population: " << std::endl;
+    for (unsigned int i = 0; i < population_size; i++)
     {
         unsigned int p1i = rand () % NUMBER_OF_PRIMES;
-        unsigned int p2i = i + rand () % (NUMBER_OF_PRIMES - i);
+        unsigned int p2i = p1i + rand () % (NUMBER_OF_PRIMES - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
-        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int input = (prime1 << 15) + prime2;
         unsigned int output = prime1 * prime2;
         std::vector<ToffoliGate *> gates;
         std::vector< std::pair<bool, unsigned int> > control_points;
         
+        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int bit_index = 0;
         while (input > 0 || output > 0)
         {
@@ -51,12 +45,13 @@ void GeneticAlgorithm::startPopulation ()
         
         for (unsigned int i = 0; i < gates.size (); i++)
             for (unsigned int j = 0; j < control_points.size (); j++)
+                if (rand () % 2)
                 gates[i]->setControl (control_points[j].first, control_points[j].second);
 
-        GAMultiplier * mp = new GAMultiplier (gates);
+        GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         population.push_back (mp);
-        std::cout << mp->toString () << std::endl;
-        std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
+        // std::cout << mp->toString () << std::endl;
+        // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
     }
 }
 
@@ -69,24 +64,12 @@ GeneticAlgorithm::~GeneticAlgorithm ()
 
 Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
-    std::vector<ToffoliGate *> gates;
-    ToffoliGate * test_gate = new ToffoliGate (0);
-    ToffoliGate * test_gate2 = new ToffoliGate (2);
-    ToffoliGate * test_gate3 = new ToffoliGate (16);
-    gates.push_back (test_gate);
-    gates.push_back (test_gate2);
-    gates.push_back (test_gate3);
-    GAMultiplier * mp = new GAMultiplier (gates);
-    // population.push_back (mp);
-    // GAMultiplier * mp = createRandomIndividual ();
-    // std::cout << "value: " << FitnessFunction::eval (mp, 1000);
-    
     unsigned int best_score = 0;
     unsigned int best_index = 0;
 
     for (unsigned int i = 0; i < population.size (); i++)
     {
-        unsigned int score = FitnessFunction::eval (population[i], 1000);
+        unsigned int score = population[i].getFitness ();
         if (score > best_score)
         {
             best_score = score;
@@ -123,7 +106,7 @@ GAMultiplier * GeneticAlgorithm::createRandomIndividual ()
         std::cout << "gate: " << tf_gate->toString () << std::endl;
     }
         
-    return new GAMultiplier (gates);
+    return new GAMultiplier (kPrimesToTestk, gates);
 }
 
 

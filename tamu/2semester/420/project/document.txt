@@ -1,2 +1,2 @@
 Generating random individuals was not enough for the algorithm
-
+Decided to generate individuals that are certain to get at least one combination right

@@ -8,22 +8,40 @@
 
 #include "ToffoliGate.h"
 #include "Multiplier.h"
+#include "PrimeList.h"
 #include <vector>
+#include <stdlib.h>
 
 class GAMultiplier : public Multiplier
 {
     private:
 
+        // Stores the fitness of this value
+        //
+        unsigned int score;
+
+
+
+        // Stores the number of primes that should be tested to evaluate this multiplier
+        //
+        unsigned int eval_reps;
+
+
+        // Determines the fitness of this multiplier
+        // 
+        void eval ();
+
+
     public:
 
         // Default constructor
         //
-        GAMultiplier ();
+        GAMultiplier (unsigned int);
         
 
         // Constructor with number of random toffoli gates
         //
-        GAMultiplier (std::vector<ToffoliGate *>);
+        GAMultiplier (unsigned int, std::vector<ToffoliGate *>);
 
 
         // Default destructor
@@ -34,6 +52,11 @@ class GAMultiplier : public Multiplier
         // Makes a crossover with another individual
         //
         void crossOver (GAMultiplier *);
+
+
+        // Score getter
+        //
+        unsigned int getFitness ();
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include "ToffoliGate.h"
 #include "GAMultiplier.h"
 #include "PrimeList.h"
+#include <set>
 
 
 class GeneticAlgorithm
@@ -24,7 +25,7 @@ class GeneticAlgorithm
 
         // Stores the population
         //
-        std::vector<GAMultiplier *> population;
+        std::set<GAMultiplier *> population;
 
 
         // Creates a random individual

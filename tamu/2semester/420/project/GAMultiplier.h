@@ -24,7 +24,6 @@ class GAMultiplier : public Multiplier
         unsigned int score;
 
 
-
         // Stores the number of primes that should be tested to evaluate this multiplier
         //
         unsigned int eval_reps;

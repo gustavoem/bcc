@@ -58,9 +58,9 @@ void GeneticAlgorithm::startPopulation ()
 
 
 bool GeneticAlgorithm::multiplierCompare::operator () 
-    (const GAMultiplier& lhs, const GAMultiplier& rhs) const 
+    (GAMultiplier * lhs, GAMultiplier * rhs) const 
 {
-    return lhs < rhs; 
+    return *lhs < *rhs; 
 }
 
 GeneticAlgorithm::~GeneticAlgorithm ()
@@ -80,6 +80,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         unsigned int score = (*individual)->getFitness ();
         if (score > best_score)
             best_score = score;
+        std::cout << "Score: " << score;
     }
 
     std::cout << "Best score: " << best_score << std::endl;

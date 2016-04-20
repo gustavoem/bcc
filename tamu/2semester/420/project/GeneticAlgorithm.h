@@ -21,11 +21,20 @@ class GeneticAlgorithm
         // Stores the population size
         //
         unsigned int population_size;
+        
+        
+        // Defines a multiplier comparator. This is used to mainain the population ordered
+        // by fitness
+        //
+        struct multiplierCompare 
+        {
+            bool operator() (GAMultiplier *, GAMultiplier *) const;
+        };
 
-
+        
         // Stores the population
         //
-        std::set<GAMultiplier *> population;
+        std::set<GAMultiplier *, multiplierCompare> population;
 
 
         // Creates a random individual
@@ -51,15 +60,6 @@ class GeneticAlgorithm
         // multiplier that work for this case
         //
         void startPopulation ();
-
-
-        // Defines a multiplier comparator. This is used to mainain the population ordered
-        // by fitness
-        //
-        struct multiplierCompare 
-        {
-            bool operator() (const GAMultiplier&, const GAMultiplier&) const;
-        };
 
     public:
 

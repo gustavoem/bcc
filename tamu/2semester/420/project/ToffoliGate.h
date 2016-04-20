@@ -47,6 +47,11 @@ class ToffoliGate
         virtual ~ToffoliGate ();
 
 
+        // Comparator
+        //
+        bool operator < (const ToffoliGate&) const;
+
+
         // Sets a closed or open (first argument) control on (second argument)-th bit
         // Does nothing if arguments are invalid
         //

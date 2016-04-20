@@ -12,6 +12,8 @@
 #include <vector>
 #include <stdlib.h>
 
+#define MAX_GATES 60
+
 class GAMultiplier : public Multiplier
 {
     private:
@@ -59,9 +61,10 @@ class GAMultiplier : public Multiplier
         unsigned int getFitness ();
 
 
-        // Makes a crossover of this gate with another multiplier 
+        // Returns a vector of gates that would compose a crossover of this multiplier
+        //  with another one 
         //
-        vector<ToffoliGate *>
+        std::vector<ToffoliGate *> getCrossoverWith (GAMultiplier *);
 };
 
 #endif

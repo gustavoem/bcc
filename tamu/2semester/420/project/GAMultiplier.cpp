@@ -50,3 +50,10 @@ void GAMultiplier::eval ()
     
     this->score = points;
 }
+
+
+std::vector<ToffoliGate *> getCrossoverWith (GAMultiplier * partner)
+{
+    std::vector<ToffoliGate *> crossover_gates;
+    return crossover_gates;
+}

@@ -26,6 +26,12 @@ ToffoliGate::~ToffoliGate ()
 }
 
 
+bool ToffoliGate::operator < (const ToffoliGate& other) const
+{
+    return controlled_bit < other.controlled_bit;
+}
+
+
 void ToffoliGate::setControl (bool open, unsigned int index)
 {
     // if open (true) then bit value should be one

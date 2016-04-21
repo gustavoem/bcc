@@ -1,14 +1,14 @@
-FLAGS = -ggdb -O2 -Wall -pedantic -std=c++14 
+CXXFLAGS = -O0 -g -Wall -std=c++14 
 
 OBJS = ToffoliGate.o Multiplier.o GAMultiplier.o GeneticAlgorithm.o
 
 TARGET = main
 
 $(TARGET): main.o $(OBJS)
-	g++ -o $(TARGET) main.o $(OBJS) $(FLAGS)
+	g++  $(FLAGS) -o $(TARGET) main.o $(OBJS)
 
 main.o: main.cpp
-	g++ -c -o main.o main.cpp $(FLAGS)
+	g++ $(FLAGS) -c -o main.o main.cpp 
 
 all: $(TARGET)
 

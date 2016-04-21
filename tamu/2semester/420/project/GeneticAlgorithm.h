@@ -30,7 +30,7 @@ class GeneticAlgorithm
         struct multiplierCompare 
         {
             bool operator() (GAMultiplier *, GAMultiplier *) const;
-        } multiplierCompare;
+        } mp_compare;
 
         
         // Stores the population

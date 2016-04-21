@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h>
 
-GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) : kControlBitsLimitk (60), kGatesLimitk (20),
+GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) :  kGatesLimitk (20), kControlBitsLimitk (60),
     kPrimesToTestk (100)
 {
     this->population_size = population_size;
@@ -50,27 +50,29 @@ void GeneticAlgorithm::startPopulation ()
                     gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
+        std::cout << "Inserting object: " << mp << std::endl;
         population.push_back (mp);
         // std::cout << mp->toString () << std::endl;
         // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
         // std::cout << "Fitness: " << mp->getFitness () << std::endl;
     }
-    std::sort (population.begin (), population.end (), multiplierCompare);
+    std::sort (population.begin (), population.end (), mp_compare);
 }
 
 
 bool GeneticAlgorithm::multiplierCompare::operator () 
     (GAMultiplier * lhs, GAMultiplier * rhs) const 
 {
+    std::cout << "Comparing: " << lhs << " x " << rhs << std::endl;
     // we  want > 
-    return !(*lhs < *rhs); 
+    return *rhs < *lhs; 
 }
 
 
 GeneticAlgorithm::~GeneticAlgorithm ()
 {
-    for (unsigned int i = 0; i < population.size (); i++)
-        delete population[i];
+    // for (unsigned int i = 0; i < population.size (); i++)
+        // delete population[i];
 }
 
 
@@ -85,7 +87,6 @@ void GeneticAlgorithm::insertIndividual (GAMultiplier * new_individual)
 
 Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
-    unsigned int best_score = 0;
     unsigned int iterations = 0;
     while (iterations < 1) 
     {
@@ -109,6 +110,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         iterations++;
         // std::cout << "Best score: " << population[0]->getFitness () << std::endl;
     }
+    return NULL;
 }
 
 

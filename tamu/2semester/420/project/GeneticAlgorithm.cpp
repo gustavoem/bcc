@@ -50,7 +50,7 @@ void GeneticAlgorithm::startPopulation ()
                     gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
-        std::cout << "Inserting object: " << mp << std::endl;
+        // std::cout << "Inserting object: " << mp << std::endl;
         population.push_back (mp);
         // std::cout << mp->toString () << std::endl;
         // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
@@ -63,7 +63,6 @@ void GeneticAlgorithm::startPopulation ()
 bool GeneticAlgorithm::multiplierCompare::operator () 
     (GAMultiplier * lhs, GAMultiplier * rhs) const 
 {
-    std::cout << "Comparing: " << lhs << " x " << rhs << std::endl;
     // we  want > 
     return *rhs < *lhs; 
 }
@@ -71,8 +70,8 @@ bool GeneticAlgorithm::multiplierCompare::operator ()
 
 GeneticAlgorithm::~GeneticAlgorithm ()
 {
-    // for (unsigned int i = 0; i < population.size (); i++)
-        // delete population[i];
+    for (unsigned int i = 0; i < population.size (); i++)
+        delete population[i];
 }
 
 
@@ -81,7 +80,7 @@ GeneticAlgorithm::~GeneticAlgorithm ()
 void GeneticAlgorithm::insertIndividual (GAMultiplier * new_individual)
 {
     population.push_back (new_individual);
-    // std::sort (population.begin (), population.end (), multiplierCompare);
+    std::sort (population.begin (), population.end (), mp_compare);
 }
 
 
@@ -103,7 +102,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         std::vector<ToffoliGate *> child_gates = 
             population[0]->getCrossoverWith (population[1]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
-        // insertIndividual (new_individual);
+        insertIndividual (new_individual);
 
         // std::cout << "Child:\n" << new_individual->toString () << std::endl;
         std::cout << "new score: " << new_individual->getFitness () << std::endl;

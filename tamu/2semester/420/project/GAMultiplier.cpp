@@ -62,56 +62,37 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
     float rel_fit1;
     std::vector<ToffoliGate *> child_gates;
     // this map has a bit index as key and a vector of all gates that controls this bit 
-    // std::map<unsigned int, std::vector<ToffoliGate *> *> parents1_gates; 
-    // std::map<unsigned int, std::vector<ToffoliGate *> *> parents2_gates; 
-
-    // starts the map
-    // for (unsigned int i = 0; i < 30; i++)
-    // {
-        // parents1_gates[i] = new std::vector<ToffoliGate *> ();
-        // parents2_gates[i] = new std::vector<ToffoliGate *> ();
-    // }
-    
-    // fill gate map
-    // for (unsigned int i = 0; i < this->gates.size (); i++)
-    // {
-        // unsigned int gate_control_bit = this->gates[i]->getControlBit ();
-        // parents1_gates[gate_control_bit]->push_back (this->gates[i]);
-    // }
-    // for (unsigned int i = 0; i < partner->gates.size (); i++)
-    // {
-        // unsigned int gate_control_bit = partner->gates[i]->getControlBit ();
-        // parents2_gates[gate_control_bit]->push_back (partner->gates[i]);
-    // }
+    std::map<unsigned int, std::vector<ToffoliGate *> *> parents1_gates = this->getGates ();
+    std::map<unsigned int, std::vector<ToffoliGate *> *> parents2_gates = partner->getGates ();
 
     // calculate relative fitness
-    // if (this->score == 0 && partner->score == 0)
-        // rel_fit1 = .5;
-    // else
-        // rel_fit1 = this->score / (this->score + partner->score);
+    if (this->score == 0 && partner->score == 0)
+        rel_fit1 = .5;
+    else
+        rel_fit1 = this->score / (this->score + partner->score);
     
     
     // decides which columns of gate to add
-    // for (unsigned int i = 0; i < 30; i++)
-    // {
-        // std::vector<ToffoliGate *> selected_column;
-        // std::vector<ToffoliGate *> * column1 = parents1_gates[i];
-        // std::vector<ToffoliGate *> * column2 = parents2_gates[i];
-        // if (column1->size () + column2->size () < MAX_GATES_PER_COLUMN &&
-            // ((column1->size () + column2->size ()) % 2))
-        // {
-            // selected_column = *column1;
-            // selected_column.insert (selected_column.end (), column2->begin (), column2->end ());
-        // }
-        // else if ((rand () / (float) RAND_MAX) < rel_fit1)
-            // selected_column = *column1;
-        // else
-            // selected_column = *column2;
+    for (unsigned int i = 0; i < 30; i++)
+    {
+        std::vector<ToffoliGate *> selected_column;
+        std::vector<ToffoliGate *> * column1 = parents1_gates[i];
+        std::vector<ToffoliGate *> * column2 = parents2_gates[i];
+        if (column1->size () + column2->size () < MAX_GATES_PER_COLUMN &&
+            ((column1->size () + column2->size ()) % 2))
+        {
+            selected_column = *column1;
+            selected_column.insert (selected_column.end (), column2->begin (), column2->end ());
+        }
+        else if ((rand () / (float) RAND_MAX) < rel_fit1)
+            selected_column = *column1;
+        else
+            selected_column = *column2;
 
         // copies gates to the answer
-        // for (unsigned int j = 0; j < selected_column.size (); j++)
-            // child_gates.push_back (new ToffoliGate (*(selected_column[j])));
-    // }
+        for (unsigned int j = 0; j < selected_column.size (); j++)
+            child_gates.push_back (new ToffoliGate (*(selected_column[j])));
+    }
     return child_gates;
 }
 

@@ -51,9 +51,15 @@ class Multiplier
         void addGate (ToffoliGate *);
 
 
+        // Get gates in format of a map
+        //
+        std::map<unsigned int, std::vector<ToffoliGate *> *> getGates ();
+
+
         // Returns string representation
         //
         std::string toString ();
+
 };
 
 #endif

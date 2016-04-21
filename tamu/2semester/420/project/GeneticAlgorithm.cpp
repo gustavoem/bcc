@@ -50,6 +50,10 @@ void GeneticAlgorithm::startPopulation ()
                     gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
+        
+        // delete mp;
+        // mp = createRandomIndividual ();
+
         // std::cout << "Inserting object: " << mp << std::endl;
         population.push_back (mp);
         // std::cout << mp->toString () << std::endl;
@@ -87,7 +91,7 @@ void GeneticAlgorithm::insertIndividual (GAMultiplier * new_individual)
 Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
-    while (iterations < 1) 
+    while (iterations < 10000000) 
     {
         // delete individual with less fitness
         GAMultiplier * dead_individual = population.back ();
@@ -96,9 +100,10 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         
         // crossover 
         // std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
-        std::cout << "Parent 1 score:" << population[0]->getFitness () << std::endl;
+        // std::cout << "Parent 1 address:\n" << population[0]->toString () << std::endl;
+        std::cout << "Parent 1 score:" << population[weightedRandom () * 10]->getFitness () << std::endl;
         // std::cout << "Parent 2:\n" << population[1]->toString () << std::endl;
-        std::cout << "Parent 2 score:" << population[1]->getFitness () << std::endl;
+        std::cout << "Parent 2 score:" << population[weightedRandom () * 10]->getFitness () << std::endl;
         std::vector<ToffoliGate *> child_gates = 
             population[0]->getCrossoverWith (population[1]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
@@ -107,7 +112,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         // std::cout << "Child:\n" << new_individual->toString () << std::endl;
         std::cout << "new score: " << new_individual->getFitness () << std::endl;
         iterations++;
-        // std::cout << "Best score: " << population[0]->getFitness () << std::endl;
+        std::cout << "Best score: " << population[0]->getFitness () << std::endl;
     }
     return NULL;
 }

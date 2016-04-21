@@ -59,6 +59,12 @@ void Multiplier::addGate (ToffoliGate * gate)
 }
 
 
+std::map<unsigned int, std::vector<ToffoliGate *> *> Multiplier::getGates ()
+{
+    return gates;
+}
+
+
 std::string Multiplier::toString ()
 {
     std::stringstream ss;

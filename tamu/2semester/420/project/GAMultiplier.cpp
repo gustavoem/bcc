@@ -47,8 +47,16 @@ void GAMultiplier::eval ()
         unsigned int prime2 = primes[p2i];
         // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int input = (prime1 << 15) + prime2;
-        if (multiply (input) == (prime1 * prime2))
-            points++;
+        unsigned int output = multiply (input);
+        unsigned int expected_output = prime1 * prime2;
+        // if (multiply (input) == (prime1 * prime2))
+        for (unsigned int i = 0; i < 30; i++)
+        {
+            if (expected_output % 2 == output % 2)
+                points++;
+            expected_output /= 2;
+            output /= 2;
+        }
     }
     
     this->score = points;
@@ -78,20 +86,30 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
         std::vector<ToffoliGate *> selected_column;
         std::vector<ToffoliGate *> * column1 = parents1_gates[i];
         std::vector<ToffoliGate *> * column2 = parents2_gates[i];
-        if (column1->size () + column2->size () < MAX_GATES_PER_COLUMN &&
-            ((column1->size () + column2->size ()) % 2))
-        {
-            selected_column = *column1;
-            selected_column.insert (selected_column.end (), column2->begin (), column2->end ());
-        }
-        else if ((rand () / (float) RAND_MAX) < rel_fit1)
-            selected_column = *column1;
-        else
-            selected_column = *column2;
+        // if (column1->size () + column2->size () < MAX_GATES_PER_COLUMN &&
+            // ((column1->size () + column2->size ()) % 2))
+        // {
+            // selected_column = *column1;
+            // selected_column.insert (selected_column.end (), column2->begin (), column2->end ());
+        // }
+        // else 
+            // if ((rand () / (float) RAND_MAX) < rel_fit1)
+            // selected_column = *column1;
+        // else
+            // selected_column = *column2;
 
         // copies gates to the answer
-        for (unsigned int j = 0; j < selected_column.size (); j++)
-            child_gates.push_back (new ToffoliGate (*(selected_column[j])));
+        // for (unsigned int j = 0; j < selected_column.size (); j++)
+            // if (rand () % 2)
+                // child_gates.push_back (new ToffoliGate (*(selected_column[j])));
+        
+        for (unsigned int i = 0; i < column1->size (); i++)
+            if ((rand () / (float) RAND_MAX) < rel_fit1)
+                child_gates.push_back (new ToffoliGate (*(*column1)[i]));
+        for (unsigned int i = 0; i < column2->size (); i++)
+            if ((rand () / (float) RAND_MAX) > rel_fit1)
+                child_gates.push_back (new ToffoliGate (*(*column2)[i]));
+
     }
     return child_gates;
 }

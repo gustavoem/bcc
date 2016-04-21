@@ -1,12 +1,14 @@
 #include "GeneticAlgorithm.h"
-#include <iostream>
-#include <math.h>
 
 GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) :  kGatesLimitk (20), kControlBitsLimitk (60),
-    kPrimesToTestk (100)
+    kPrimesToTestk (1000)
 {
     this->population_size = population_size;
     startPopulation ();
+
+    output_file.open ("data.txt");
+
+    srand (time (NULL));
 }
 
 
@@ -51,8 +53,8 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         
-        // delete mp;
-        // mp = createRandomIndividual ();
+        delete mp;
+        mp = createRandomIndividual ();
 
         // std::cout << "Inserting object: " << mp << std::endl;
         population.push_back (mp);
@@ -91,7 +93,8 @@ void GeneticAlgorithm::insertIndividual (GAMultiplier * new_individual)
 Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
-    while (iterations < 10000000) 
+
+    while (iterations < 5000) 
     {
         // delete individual with less fitness
         GAMultiplier * dead_individual = population.back ();
@@ -101,19 +104,29 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         // crossover 
         // std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
         // std::cout << "Parent 1 address:\n" << population[0]->toString () << std::endl;
-        std::cout << "Parent 1 score:" << population[weightedRandom () * 10]->getFitness () << std::endl;
+        unsigned int p1_i = 30 - weightedRandom () * 30;
+        unsigned int p2_i = 30 - weightedRandom () * 30;
+        // std::cout << "p1, p2: " << p1_i << ", " << p2_i << std::endl;
+        // std::cout << "Parent 1 score:" << population[p1_i]->getFitness () << std::endl;
         // std::cout << "Parent 2:\n" << population[1]->toString () << std::endl;
-        std::cout << "Parent 2 score:" << population[weightedRandom () * 10]->getFitness () << std::endl;
+        // std::cout << "Parent 2 score:" << population[p2_i]->getFitness () << std::endl;
         std::vector<ToffoliGate *> child_gates = 
-            population[0]->getCrossoverWith (population[1]);
+            population[p1_i]->getCrossoverWith (population[p2_i]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
         insertIndividual (new_individual);
 
         // std::cout << "Child:\n" << new_individual->toString () << std::endl;
-        std::cout << "new score: " << new_individual->getFitness () << std::endl;
+        // std::cout << "New score: " << new_individual->getFitness () << std::endl;
         iterations++;
-        std::cout << "Best score: " << population[0]->getFitness () << std::endl;
+        if (iterations % 1000 == 0)
+        {
+            std::cout << "Iteration " << iterations << " done.\n" ;
+            std::cout << "Best score: " << population[0]->getFitness () << std::endl;
+        }
+         
+        output_file << iterations << " " << population[0]->getFitness () << "\n";
     }
+    output_file.close ();
     return NULL;
 }
 

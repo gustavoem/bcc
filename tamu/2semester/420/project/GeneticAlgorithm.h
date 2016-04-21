@@ -13,7 +13,10 @@
 #include "PrimeList.h"
 #include <set>
 #include <algorithm>
-
+#include <math.h>
+#include <iostream>
+#include <fstream>
+#include <time.h>
 
 class GeneticAlgorithm
 {
@@ -69,6 +72,11 @@ class GeneticAlgorithm
         // individual fitness
         //
         void insertIndividual (GAMultiplier *);
+
+
+        // Stores the file stream to the output file
+        //
+        std::ofstream output_file;
 
     public:
 

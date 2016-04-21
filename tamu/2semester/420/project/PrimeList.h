@@ -9,7 +9,7 @@
 
 // Number of primes in the list
 //
-#define NUMBER_OF_PRIMES 10
+#define NUMBER_OF_PRIMES 20
 
 // List of all 15-bit primes
 //

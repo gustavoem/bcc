@@ -9,17 +9,21 @@
 #include "ToffoliGate.h"
 #include <vector>
 #include <string>
+#include <map>
 
 class Multiplier
 {
     private:
+
+        // Starts the map of gates
+        //
+        void initGates ();
     
     protected:
 
-        // Stores a list of toffoli gates
+        // Stores a list of toffoli gates organized by column
         //
-        std::vector<ToffoliGate *> gates;
-
+        std::map <unsigned int, std::vector<ToffoliGate *> *> gates;
 
     public:
 
@@ -27,6 +31,10 @@ class Multiplier
         //
         Multiplier ();
 
+
+        // Constructor with a vector of gates
+        //
+        Multiplier (std::vector<ToffoliGate *>);
 
         // Default destructor
         //

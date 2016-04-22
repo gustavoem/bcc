@@ -65,9 +65,10 @@ class GAMultiplier : public Multiplier
         void crossOver (GAMultiplier *);
 
 
-        // Score getter
+        // Score getters
         //
         unsigned int getFitness ();
+        unsigned int getBitFitness ();
 
 
         // Returns a vector of gates that would compose a crossover of this multiplier

@@ -34,6 +34,11 @@ unsigned int GAMultiplier::getFitness ()
     return this->score;
 }
 
+unsigned int GAMultiplier::getBitFitness ()
+{
+    return this->bit_score;
+}
+
 
 void GAMultiplier::eval ()
 {
@@ -51,16 +56,17 @@ void GAMultiplier::eval ()
         unsigned int expected_output = prime1 * prime2;
         for (unsigned int i = 0; i < 30; i++)
         {
-            if (expected_output % 2 == output % 2)
-                points++;
-            expected_output /= 2;
-            output /= 2;
+            // std::cout << ((output >> i) & 1) << "|" << ((expected_output >> i) & 1) << std::endl;
+            // std::cout << "  " << (output >> i) << "|" << (expected_output >> i) << std::endl;
+            if (((output >> i) & 1) == ((expected_output >> i) & 1))
+                bit_score++;
         }
         if (output == expected_output)
-           points *= 2; 
+        {
+            score++;
+            bit_score *= 2; 
+        }
     }
-    
-    this->score = points;
 }
 
 

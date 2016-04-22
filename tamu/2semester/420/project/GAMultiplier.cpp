@@ -8,6 +8,7 @@ GAMultiplier::GAMultiplier (unsigned int eval_reps) : Multiplier ()
         eval_reps = NUMBER_OF_PRIMES;
 
     score = 0;
+    bit_score = 0;
 }
 
 
@@ -36,9 +37,8 @@ unsigned int GAMultiplier::getFitness ()
 
 void GAMultiplier::eval ()
 {
-    unsigned int points = 0;
-    // std::cout << "Number of primes: " << NUMBER_OF_PRIMES << std::endl;
-
+    score = 0;
+    bit_score = 0;
     for (unsigned int i = 0; i < eval_reps; i++)
     {
         unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);

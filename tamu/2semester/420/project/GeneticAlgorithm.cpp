@@ -53,8 +53,8 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         
-        delete mp;
-        mp = createRandomIndividual ();
+        // delete mp;
+        // mp = createRandomIndividual ();
 
         // std::cout << "Inserting object: " << mp << std::endl;
         population.push_back (mp);

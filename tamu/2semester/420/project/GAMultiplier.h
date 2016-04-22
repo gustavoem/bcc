@@ -21,9 +21,17 @@ class GAMultiplier : public Multiplier
     private:
 
         // Stores the fitness of this value
+        // The fitness function is the number of successful multiplications
         //
         unsigned int score;
 
+
+        // Stores the score by bit
+        // This score is the number pairs of bits of output and expected output
+        // When all bits of a multiplication are correct the score is summed by 30 * 2
+        // When n < 30 bits are correct the score is summed by n
+        //
+        unsigned int bit_score;
 
         // Stores the number of primes that should be tested to evaluate this multiplier
         //

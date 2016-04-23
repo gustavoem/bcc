@@ -18,7 +18,13 @@ class BitEntropy
         // multiplication output and expected output
         //
         static unsigned int wrong_bit_occurrences[30];
+        
 
+        struct EntropyComparator 
+        {
+            bool operator () (std::pair<unsigned, unsigned>, 
+                    std::pair<unsigned int, unsigned int>) const;
+        };
 
     public:
        

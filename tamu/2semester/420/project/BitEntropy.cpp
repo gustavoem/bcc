@@ -2,6 +2,19 @@
 
 unsigned int BitEntropy::wrong_bit_occurrences[30];
 
+
+bool BitEntropy::EntropyComparator::operator () 
+    (std::pair<unsigned int, unsigned int> lhs, 
+     std::pair<unsigned int, unsigned int> rhs) const 
+{
+    if (lhs.first < rhs.first)
+        return true;
+    else if (lhs.first == rhs.first && lhs.second < rhs.second)
+        return true;
+    else
+        return false;
+}
+
 void BitEntropy::initBitEntropy ()
 {
     for (unsigned int i = 0; i < 30; i++)
@@ -18,27 +31,25 @@ void BitEntropy::addBitOccurence (unsigned int bit_index, bool correct)
 
 unsigned int BitEntropy::getHighEntropyBit ()
 {
-    std::set<unsigned int> indexes;
-    for (unsigned int i = 0; i < 30; i++)
-    {
-        std::set<unsigned int>::iterator worst_best (indexes.end ());
-        worst_best--;
-        if (!(worst_best == indexes.begin ()) && 
-            wrong_bit_occurrences[*worst_best] < wrong_bit_occurrences[i])
-            indexes.insert (i);
-        
-        worst_best = indexes.end ();
-        worst_best--;
-        if (indexes.size () > 5)
-            indexes.erase (worst_best);
-    }
-    std::set<unsigned int>::iterator it (indexes.begin ());
+    std::set<std::pair<unsigned int, unsigned int>, EntropyComparator> entropies;
+    for (unsigned int i = 0; i < 30; i++) 
+        entropies.insert (std::make_pair (wrong_bit_occurrences[i], i));
+
+    std::set<std::pair<unsigned int, 
+        unsigned int> >::reverse_iterator it (entropies.rbegin ());
     advance (it, rand () % 5);
-    return *it;
+    return it->second;
 }
 
 
 unsigned int BitEntropy::getLowEntropyBit ()
 {
-    return 0;
+    std::set<std::pair<unsigned int, unsigned int>, EntropyComparator> entropies;
+    for (unsigned int i = 0; i < 30; i++) 
+        entropies.insert (std::make_pair (wrong_bit_occurrences[i], i));
+
+    std::set<std::pair<unsigned int, unsigned int> >::iterator it (entropies.begin ());
+    advance (it, rand () % 5);
+    return it->second;
+
 }

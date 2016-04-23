@@ -8,6 +8,8 @@
 
 #include <set>
 #include <stdlib.h>
+#include <string>
+#include <sstream>
 
 class BitEntropy
 {
@@ -36,17 +38,22 @@ class BitEntropy
 
         // Updates entropy and mapping with a new bit occurence
         //
-        static void addBitOccurence (unsigned int, bool);
+        static void addBitOccurrence (unsigned int, bool);
 
 
         // Returns the index of a bit with high entropy
         //
-        unsigned int getHighEntropyBit ();
+        static unsigned int getHighEntropyBit ();
 
 
         // Returns the index of a bit with low entropy
         //
-        unsigned int getLowEntropyBit ();
+        static unsigned int getLowEntropyBit ();
+
+
+        // Returns a string representation of bit entropy
+        //
+        static std::string toString ();
 };
 
 #endif

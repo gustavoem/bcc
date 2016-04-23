@@ -52,7 +52,7 @@ void GeneticAlgorithm::startPopulation ()
                     gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
-        
+     
 
         // delete mp;
         // mp = createRandomIndividual ();

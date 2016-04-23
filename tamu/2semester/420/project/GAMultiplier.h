@@ -9,6 +9,7 @@
 #include "ToffoliGate.h"
 #include "Multiplier.h"
 #include "PrimeList.h"
+#include "BitEntropy.h"
 #include <iostream>
 #include <map>
 #include <stdlib.h>

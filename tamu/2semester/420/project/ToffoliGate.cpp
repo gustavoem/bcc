@@ -37,7 +37,6 @@ void ToffoliGate::setControl (bool open, unsigned int index)
     // if open (true) then bit value should be one
     // if !open (false) then bit value should be 2
     // std::cout << "setting " << open << " on " << index << std::endl;
-    // gate += (2 - open) * pow (3, index); 
     
     unsigned int half = index > 14;
     unsigned int gate_bit = (index % 15) * 2;
@@ -55,9 +54,6 @@ void ToffoliGate::setControl (bool open, unsigned int index)
 
 void ToffoliGate::removeControl (unsigned int index)
 {
-    // unsigned int index_help = pow (3, index);
-    // unsigned int divided_gate = gate / index_help;
-    // gate -= (divided_gate % 3) * index_help;
     unsigned int half = index > 14;
     unsigned int gate_bit = (index - (half * 15)) * 2;
     

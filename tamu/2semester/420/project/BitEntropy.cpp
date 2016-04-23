@@ -22,7 +22,7 @@ void BitEntropy::initBitEntropy ()
 }
 
 
-void BitEntropy::addBitOccurence (unsigned int bit_index, bool correct)
+void BitEntropy::addBitOccurrence (unsigned int bit_index, bool correct)
 {
     if (!correct)
         wrong_bit_occurrences[bit_index]++;
@@ -51,5 +51,15 @@ unsigned int BitEntropy::getLowEntropyBit ()
     std::set<std::pair<unsigned int, unsigned int> >::iterator it (entropies.begin ());
     advance (it, rand () % 5);
     return it->second;
+}
 
+
+std::string BitEntropy::toString ()
+{
+    std::stringstream ss;
+    ss << "|";
+    for (unsigned int i = 0; i < 30; i++)
+        ss << wrong_bit_occurrences[i] << "|";
+    ss << std::endl;
+    return ss.str ();
 }

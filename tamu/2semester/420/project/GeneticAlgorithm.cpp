@@ -95,7 +95,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
-    while (iterations < 20000) 
+    while (iterations < 40000) 
     {
         // delete individual with less fitness
         GAMultiplier * dead_individual = population.back ();
@@ -129,8 +129,11 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         unsigned int best_score = population[0]->getFitness ();
         output_file << population[0]->getFitness () << " " << population[0]->getBitFitness () << "\n";
         // this is impirical
-        if (best_score > 3)
+        if (best_score > 2 && g_number_of_primes < 30)
+        {
+            std::cout << "Changed prime list to 30 primes" << std::endl;
             g_number_of_primes = 30;
+        }
     }
     output_file.close ();
     return NULL;

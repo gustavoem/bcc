@@ -5,7 +5,7 @@ GAMultiplier::GAMultiplier (unsigned int eval_reps) : Multiplier ()
 {
     this->eval_reps = eval_reps;
     if (eval_reps == 0)
-        eval_reps = NUMBER_OF_PRIMES;
+        eval_reps = g_number_of_primes;
 
     bit_score = 0;
 }
@@ -16,7 +16,7 @@ GAMultiplier::GAMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> g
 {
     this->eval_reps = eval_reps;
     if (eval_reps == 0)
-        eval_reps = NUMBER_OF_PRIMES;
+        eval_reps = g_number_of_primes;
 
     eval ();
 }
@@ -42,10 +42,11 @@ unsigned int GAMultiplier::getBitFitness ()
 void GAMultiplier::eval ()
 {
     bit_score = 0;
+
     for (unsigned int i = 0; i < eval_reps; i++)
     {
-        unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);
-        unsigned int p2i = p1i + rand () % (NUMBER_OF_PRIMES - p1i);
+        unsigned int p1i = rand () % (g_number_of_primes / 2);
+        unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
         // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
@@ -119,6 +120,15 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
     }
     return child_gates;
 }
+
+
+
+std::vector<ToffoliGate *> GAMultiplier::mutate (std::vector<ToffoliGate *> gates)
+{
+
+}
+
+
 
 bool GAMultiplier::operator < (const GAMultiplier& other) const 
 {

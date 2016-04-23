@@ -18,8 +18,8 @@ void GeneticAlgorithm::startPopulation ()
     for (unsigned int i = 0; i < population_size; i++)
     {
 
-        unsigned int p1i = rand () % (NUMBER_OF_PRIMES / 2);
-        unsigned int p2i = p1i + rand () % (NUMBER_OF_PRIMES - p1i);
+        unsigned int p1i = rand () % (g_number_of_primes / 2);
+        unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
         unsigned int input = (prime1 << 15) + prime2;
@@ -53,6 +53,7 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
         
+
         // delete mp;
         // mp = createRandomIndividual ();
 
@@ -125,7 +126,11 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
             std::cout << "Best score: " << population[0]->getFitness () << std::endl;
         }
          
+        unsigned int best_score = population[0]->getFitness ();
         output_file << population[0]->getFitness () << " " << population[0]->getBitFitness () << "\n";
+        // this is impirical
+        if (best_score > 3)
+            g_number_of_primes = 30;
     }
     output_file.close ();
     return NULL;

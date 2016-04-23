@@ -9,7 +9,7 @@
 
 // Number of primes in the list
 //
-#define NUMBER_OF_PRIMES 10
+extern unsigned int g_number_of_primes;
 
 // List of all 15-bit primes
 //

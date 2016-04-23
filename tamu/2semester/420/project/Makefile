@@ -1,6 +1,6 @@
 CXXFLAGS = -O0 -g -Wall -std=c++14 
 
-OBJS = ToffoliGate.o Multiplier.o GAMultiplier.o GeneticAlgorithm.o
+OBJS = ToffoliGate.o Multiplier.o GAMultiplier.o GeneticAlgorithm.o PrimeList.o
 
 TARGET = main
 

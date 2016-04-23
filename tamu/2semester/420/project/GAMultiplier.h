@@ -64,6 +64,12 @@ class GAMultiplier : public Multiplier
         void crossOver (GAMultiplier *);
 
 
+        // Makes a mutation on a vector of gates adding or removing a gate
+        // When adding a gate it shoudl control the bit that has most variations
+        // 1->0 or 0->1 and we should control this gate with bits that varies the least
+        //
+        std::vector<ToffoliGate *> mutate (std::vector<ToffoliGate *>);
+
         // Score getters
         //
         unsigned int getFitness ();

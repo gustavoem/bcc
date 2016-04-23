@@ -49,13 +49,13 @@ void GAMultiplier::eval ()
         unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
-        std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
+        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int input = (prime1 << 15) + prime2;
         unsigned int output = multiply (input);
         unsigned int expected_output = prime1 * prime2;
         for (unsigned int i = 0; i < 30; i++)
         {
-            std::cout << ((output >> i) & 1) << "|" << ((expected_output >> i) & 1) << std::endl;
+            // std::cout << ((output >> i) & 1) << "|" << ((expected_output >> i) & 1) << std::endl;
             bool bit_match = ((output >> i) & 1) == ((expected_output >> i) & 1);
             if (bit_match)
                 bit_score++;
@@ -120,14 +120,33 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
                 // child_gates.push_back (new ToffoliGate (*(*column2)[i]));
 
     }
+
+    mutate (&child_gates);
     return child_gates;
 }
 
 
 
-std::vector<ToffoliGate *> GAMultiplier::mutate (std::vector<ToffoliGate *> gates)
+void GAMultiplier::mutate (std::vector<ToffoliGate *> * gates)
 {
-
+    if (rand () % 2)      // does nothing
+        return;
+    else if (rand () % 2) // adds a gate based on entropy
+    {
+        unsigned int control_bit = BitEntropy::getHighEntropyBit ();
+        ToffoliGate * new_gate = new ToffoliGate (control_bit);
+        new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
+        if (rand () % 2)
+            new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
+        if (rand () % 2)
+            new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
+        while (true);
+        gates->push_back (new_gate);
+    }
+    else                  // removes a gate
+    {
+        gates->erase (gates->begin () + rand () % gates->size ());
+    }
 }
 
 

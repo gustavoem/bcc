@@ -69,7 +69,7 @@ class GAMultiplier : public Multiplier
         // When adding a gate it shoudl control the bit that has most variations
         // 1->0 or 0->1 and we should control this gate with bits that varies the least
         //
-        std::vector<ToffoliGate *> mutate (std::vector<ToffoliGate *>);
+        void mutate (std::vector<ToffoliGate *> *);
 
         // Score getters
         //

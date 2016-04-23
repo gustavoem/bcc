@@ -7,7 +7,6 @@ GAMultiplier::GAMultiplier (unsigned int eval_reps) : Multiplier ()
     if (eval_reps == 0)
         eval_reps = NUMBER_OF_PRIMES;
 
-    score = 0;
     bit_score = 0;
 }
 
@@ -31,7 +30,7 @@ GAMultiplier::~GAMultiplier ()
 
 unsigned int GAMultiplier::getFitness ()
 {
-    return this->score;
+    return this->correct_answers.size ();
 }
 
 unsigned int GAMultiplier::getBitFitness ()
@@ -42,7 +41,6 @@ unsigned int GAMultiplier::getBitFitness ()
 
 void GAMultiplier::eval ()
 {
-    score = 0;
     bit_score = 0;
     for (unsigned int i = 0; i < eval_reps; i++)
     {
@@ -63,10 +61,11 @@ void GAMultiplier::eval ()
         }
         if (output == expected_output)
         {
-            score++;
             bit_score *= 2; 
+            correct_answers.insert (std::make_pair (prime1, prime2));
         }
     }
+    bit_score >>= 7;
 }
 
 
@@ -81,10 +80,10 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
     std::map<unsigned int, std::vector<ToffoliGate *> *> parents2_gates = partner->getGates ();
 
     // calculate relative fitness
-    if (this->score == 0 && partner->score == 0)
+    if (this->getFitness () == 0 && partner->getFitness () == 0)
         rel_fit1 = .5;
     else
-        rel_fit1 = this->score / (this->score + partner->score);
+        rel_fit1 = this->getFitness () / (this->getFitness () + partner->getFitness ());
     
     
     // decides which columns of gate to add
@@ -123,5 +122,5 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
 
 bool GAMultiplier::operator < (const GAMultiplier& other) const 
 {
-    return this->score < other.score;
+    return this->correct_answers.size () < other.correct_answers.size ();
 }

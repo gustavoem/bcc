@@ -1,7 +1,7 @@
 #include "GeneticAlgorithm.h"
 
 GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) :  kGatesLimitk (20), kControlBitsLimitk (60),
-    kPrimesToTestk (1000)
+    kPrimesToTestk (600)
 {
     this->population_size = population_size;
     startPopulation ();
@@ -94,7 +94,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
-    while (iterations < 5000) 
+    while (iterations < 20000) 
     {
         // delete individual with less fitness
         GAMultiplier * dead_individual = population.back ();
@@ -104,18 +104,20 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         // crossover 
         // std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
         // std::cout << "Parent 1 address:\n" << population[0]->toString () << std::endl;
-        unsigned int p1_i = 30 - weightedRandom () * 30;
+        unsigned int p1_i = 20 - weightedRandom () * 20;
         unsigned int p2_i = 30 - weightedRandom () * 30;
-        std::cout << "p1, p2: " << p1_i << ", " << p2_i << std::endl;
-        std::cout << "Parent 1 score:" << population[p1_i]->getFitness () << ", " <<  population[p1_i]->getBitFitness () << std::endl;
-        std::cout << "Parent 2 score:" << population[p2_i]->getFitness () << ", " << population[p2_i]->getBitFitness ()  << std::endl;
+        // std::cout << "p1, p2: " << p1_i << ", " << p2_i << std::endl;
+        // std::cout << "Parent 1 score:" << population[p1_i]->getFitness () << ", " <<  population[p1_i]->getBitFitness () << std::endl;
+        // std::cout << "Parent 2 score:" << population[p2_i]->getFitness () << ", " << population[p2_i]->getBitFitness ()  << std::endl;
         std::vector<ToffoliGate *> child_gates = 
             population[p1_i]->getCrossoverWith (population[p2_i]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
+        if (new_individual->getFitness () > population[0]->getFitness ())
+            std::cout << "Better child for p1i and p2i:" << p1_i << ", " << p2_i << std::endl;
         insertIndividual (new_individual);
 
         // std::cout << "Child:\n" << new_individual->toString () << std::endl;
-        std::cout << "New score: " << new_individual->getFitness () << ", " << population[p1_i]->getBitFitness ()  << std::endl;
+        // std::cout << "New score: " << new_individual->getFitness () << ", " << population[p1_i]->getBitFitness ()  << std::endl;
         iterations++;
         if (iterations % 1000 == 0)
         {

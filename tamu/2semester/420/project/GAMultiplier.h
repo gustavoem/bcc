@@ -13,6 +13,7 @@
 #include <map>
 #include <stdlib.h>
 #include <vector>
+#include <set>
 
 #define MAX_GATES_PER_COLUMN 5
 
@@ -20,13 +21,6 @@ class GAMultiplier : public Multiplier
 {
     private:
 
-        // Stores the fitness of this value
-        // The fitness function is the number of successful multiplications
-        //
-        unsigned int score;
-
-
-        // Stores the score by bit
         // This score is the number pairs of bits of output and expected output
         // When all bits of a multiplication are correct the score is summed by 30 * 2
         // When n < 30 bits are correct the score is summed by n
@@ -42,6 +36,11 @@ class GAMultiplier : public Multiplier
         // 
         void eval ();
 
+
+        // Set of all correct combination of primes that this gate is guaranteed to
+        // multilpy correctly
+        // 
+        std::set<std::pair <unsigned int, unsigned int> > correct_answers;
 
     public:
 

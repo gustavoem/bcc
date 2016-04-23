@@ -1,7 +1,7 @@
 #include "GeneticAlgorithm.h"
 
 GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) :  kGatesLimitk (20), kControlBitsLimitk (60),
-    kPrimesToTestk (600)
+    kPrimesToTestk (500)
 {
     this->population_size = population_size;
     startPopulation ();
@@ -129,10 +129,10 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         unsigned int best_score = population[0]->getFitness ();
         output_file << population[0]->getFitness () << " " << population[0]->getBitFitness () << "\n";
         // this is impirical
-        if (best_score > 2 && g_number_of_primes < 30)
+        if (best_score > 2 && g_number_of_primes < 25)
         {
             std::cout << "Changed prime list to 30 primes" << std::endl;
-            g_number_of_primes = 30;
+            g_number_of_primes = 25;
         }
     }
     output_file.close ();

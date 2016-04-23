@@ -71,6 +71,7 @@ class GAMultiplier : public Multiplier
         //
         void mutate (std::vector<ToffoliGate *> *);
 
+
         // Score getters
         //
         unsigned int getFitness ();

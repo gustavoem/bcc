@@ -6,7 +6,7 @@ set output 'image_plot.png'
 # color definitions
 set border linewidth .5
 set style line 1 lc rgb '#19194d' lt 1 lw 2 pt 7 pi -1 ps 1
-set style line 2 lc rgb '#09094d' lt 1 lw 2 pt 7 pi -1 ps 1
+set style line 2 lc rgb '#09094d' lt 1 lw 0 pt 7 pi -1 ps 1
 set pointintervalbox 1
 
 # unset key
@@ -19,5 +19,5 @@ set title "Score";
 plot 'data.txt' using 1 title 'Score' with linespoints ls 1
 
 set title "Bit Score";
-plot 'data.txt' using 2 title 'Bit Score' with linespoints ls 2 
+plot 'data.txt' using 2 title 'Bit Score' with points 
 unset multiplot

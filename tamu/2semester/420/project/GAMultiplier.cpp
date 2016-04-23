@@ -33,6 +33,7 @@ unsigned int GAMultiplier::getFitness ()
     return this->correct_answers.size ();
 }
 
+
 unsigned int GAMultiplier::getBitFitness ()
 {
     return this->bit_score;
@@ -65,7 +66,6 @@ void GAMultiplier::eval ()
         if (output == expected_output)
             correct_answers.insert (std::make_pair (prime1, prime2));
     }
-    bit_score >>= 7;
 }
 
 
@@ -118,7 +118,7 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
 
     }
 
-    mutate (&child_gates);
+    // mutate (&child_gates);
     return child_gates;
 }
 
@@ -128,18 +128,16 @@ void GAMultiplier::mutate (std::vector<ToffoliGate *> * gates)
 {
     if (rand () % 2) // does nothing
         return;
-    else if (rand () % 3) // adds a gate based on entropy
+    else if (rand() % 2) // adds a gate based on entropy
     {
         unsigned int control_bit = BitEntropy::getHighEntropyBit ();
         ToffoliGate * new_gate = new ToffoliGate (control_bit);
         new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
-        if (rand () % 2)
-            new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
-        if (rand () % 2)
+        for (unsigned int i = rand () % 5; i > 0; i--)
             new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
         gates->push_back (new_gate);
     }
-    // else if (gates->size () > 1) // removes a gate
+    // else // removes a gate
     // {
         // gates->erase (gates->begin () + 1 + rand () % (gates->size () - 1));
     // }

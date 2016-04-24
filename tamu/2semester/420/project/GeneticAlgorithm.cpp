@@ -1,7 +1,7 @@
 #include "GeneticAlgorithm.h"
 
 GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) :  kGatesLimitk (20), kControlBitsLimitk (60),
-    kPrimesToTestk (500)
+    kPrimesToTestk (600)
 {
     this->population_size = population_size;
     startPopulation ();
@@ -95,7 +95,7 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
         // std::cout << "Parent 1 address:\n" << population[0]->toString () << std::endl;
         // crossover 
         unsigned int p1_i = 20 - weightedRandom () * 20;
-        unsigned int p2_i = 30 - weightedRandom () * 30;
+        unsigned int p2_i = 60 - weightedRandom () * 60;
         
         // std::cout << "p1, p2: " << p1_i << ", " << p2_i << std::endl;
         // std::cout << "Parent 1 score:" << population[p1_i]->getFitness () << ", " <<  population[p1_i]->getBitFitness () << std::endl;
@@ -124,7 +124,7 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
         // this is impirical
         if (best_score > 2 && g_number_of_primes < 25)
         {
-            std::cout << "Changed prime list to 30 primes" << std::endl;
+            std::cout << "Changed prime list to 25 primes" << std::endl;
             g_number_of_primes = 25;
         }
     }

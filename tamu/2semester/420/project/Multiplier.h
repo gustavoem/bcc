@@ -11,6 +11,8 @@
 #include <string>
 #include <map>
 #include <set>
+#include "PrimeList.h"
+#include "BitEntropy.h"
 
 class Multiplier
 {
@@ -32,17 +34,34 @@ class Multiplier
         // 
         std::set<std::pair<unsigned int, unsigned int> > correct_answers;
 
+        
+        // This score is the number pairs of bits of output and expected output
+        // When all bits of a multiplication are correct the score is summed by 30 * 2
+        // When n < 30 bits are correct the score is summed by n
+        //
+        unsigned int bit_score;
 
+       
+        // Stores the number of primes that should be tested to evaluate this multiplier
+        //
+        unsigned int eval_reps;
+
+
+        // Determines the fitness of this multiplier
+        // 
+        void eval ();
+
+        
     public:
 
         // Default constructor
         //
-        Multiplier ();
+        Multiplier (unsigned int);
 
 
         // Constructor with a vector of gates
         //
-        Multiplier (std::vector<ToffoliGate *>);
+        Multiplier (unsigned int, std::vector<ToffoliGate *>);
 
 
         // Default destructor
@@ -74,6 +93,12 @@ class Multiplier
         // multiply
         //
         std::set<std::pair<unsigned int, unsigned int> > getCorrectAnswers ();
+
+
+        // Score getters
+        //
+        unsigned int getFitness ();
+        unsigned int getBitFitness ();
 
 
         // Returns string representation

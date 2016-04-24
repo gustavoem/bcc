@@ -84,7 +84,7 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
-    while (iterations < 40000) 
+    while (iterations < 1000) 
     {
         // delete individual with least fitness
         GAMultiplier * dead_individual = population.back ();
@@ -126,6 +126,11 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
         {
             std::cout << "Changed prime list to 25 primes" << std::endl;
             g_number_of_primes = 25;
+        }
+        if (best_score > 3 && g_number_of_primes < 40)
+        {
+            std::cout << "Changed prime list to 40 primes" << std::endl;
+            g_number_of_primes = 40;
         }
     }
     output_file.close ();

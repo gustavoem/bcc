@@ -1,24 +1,16 @@
 #include "GAMultiplier.h"
 
 
-GAMultiplier::GAMultiplier (unsigned int eval_reps) : Multiplier ()
+GAMultiplier::GAMultiplier (unsigned int eval_reps) : Multiplier (eval_reps)
 {
-    this->eval_reps = eval_reps;
-    if (eval_reps == 0)
-        eval_reps = g_number_of_primes;
-
-    bit_score = 0;
+    return;
 }
 
 
 GAMultiplier::GAMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> gates) : 
-    Multiplier (gates)
+    Multiplier (eval_reps, gates)
 {
-    this->eval_reps = eval_reps;
-    if (eval_reps == 0)
-        eval_reps = g_number_of_primes;
-
-    eval ();
+    return;
 }
 
 
@@ -27,46 +19,6 @@ GAMultiplier::~GAMultiplier ()
     return;
 }
 
-
-unsigned int GAMultiplier::getFitness ()
-{
-    return this->correct_answers.size ();
-}
-
-
-unsigned int GAMultiplier::getBitFitness ()
-{
-    return this->bit_score;
-}
-
-
-void GAMultiplier::eval ()
-{
-    bit_score = 0;
-
-    for (unsigned int i = 0; i < eval_reps; i++)
-    {
-        unsigned int p1i = rand () % (g_number_of_primes / 2);
-        unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
-        unsigned int prime1 = primes[p1i];
-        unsigned int prime2 = primes[p2i];
-        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
-        unsigned int input = (prime1 << 15) + prime2;
-        unsigned int output = multiply (input);
-        unsigned int expected_output = prime1 * prime2;
-        for (unsigned int i = 0; i < 30; i++)
-        {
-            // std::cout << ((output >> i) & 1) << "|" << ((expected_output >> i) & 1) << std::endl;
-            bool bit_match = ((output >> i) & 1) == ((expected_output >> i) & 1);
-            if (bit_match)
-                bit_score++;
-            
-            BitEntropy::addBitOccurrence (i, bit_match);
-        }
-        if (output == expected_output)
-            correct_answers.insert (std::make_pair (prime1, prime2));
-    }
-}
 
 
 // We don't need to be super-careful with complexity here because there are certainly

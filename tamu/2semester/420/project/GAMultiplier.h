@@ -20,23 +20,6 @@
 
 class GAMultiplier : public Multiplier
 {
-    private:
-
-        // This score is the number pairs of bits of output and expected output
-        // When all bits of a multiplication are correct the score is summed by 30 * 2
-        // When n < 30 bits are correct the score is summed by n
-        //
-        unsigned int bit_score;
-
-        // Stores the number of primes that should be tested to evaluate this multiplier
-        //
-        unsigned int eval_reps;
-
-
-        // Determines the fitness of this multiplier
-        // 
-        void eval ();
-
     public:
 
         // Default constructor
@@ -64,12 +47,6 @@ class GAMultiplier : public Multiplier
         // 1->0 or 0->1 and we should control this gate with bits that varies the least
         //
         void mutate (std::vector<ToffoliGate *> *);
-
-
-        // Score getters
-        //
-        unsigned int getFitness ();
-        unsigned int getBitFitness ();
 
 
         // Returns a vector of gates that would compose a crossover of this multiplier

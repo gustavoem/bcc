@@ -16,6 +16,18 @@
 
 class HCMultiplier : public Multiplier
 {
+    private:
+
+        // Adds a random gate to the solution
+        // The new gate is placed in a high entropy bit
+        //
+        void addRandomGate (std::vector<ToffoliGate *> *);
+
+
+        // Adds a random control point to a gate
+        //
+        void addRandomControlPoint (std::vector<ToffoliGate *> *);
+
     public:
 
         // Default constructor

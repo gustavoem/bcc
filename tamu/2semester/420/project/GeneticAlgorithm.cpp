@@ -47,9 +47,12 @@ void GeneticAlgorithm::startPopulation ()
                     gates[i]->setControl (control_points[j].first, control_points[j].second);
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
-     
-        // delete mp;
-        // mp = createRandomIndividual ();
+        
+        if (i > 5)
+        {
+            delete mp;
+            mp = createRandomIndividual ();
+        }
         population.push_back (mp);
     }
     std::sort (population.begin (), population.end (), mp_compare);
@@ -84,7 +87,7 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
-    while (iterations < 1000) 
+    while (iterations < 1000000) 
     {
         // delete individual with least fitness
         GAMultiplier * dead_individual = population.back ();

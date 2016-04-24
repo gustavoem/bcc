@@ -70,7 +70,7 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
 
     }
 
-    // mutate (&child_gates);
+    mutate (&child_gates);
     return child_gates;
 }
 

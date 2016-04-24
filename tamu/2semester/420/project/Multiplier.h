@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <set>
 
 class Multiplier
 {
@@ -24,6 +25,13 @@ class Multiplier
         // Stores a list of toffoli gates organized by column
         //
         std::map <unsigned int, std::vector<ToffoliGate *> *> gates;
+        
+       
+        // Set of all correct combination of primes that this gate is guaranteed to
+        // multilpy correctly
+        // 
+        std::set<std::pair<unsigned int, unsigned int> > correct_answers;
+
 
     public:
 
@@ -35,6 +43,7 @@ class Multiplier
         // Constructor with a vector of gates
         //
         Multiplier (std::vector<ToffoliGate *>);
+
 
         // Default destructor
         //
@@ -56,10 +65,20 @@ class Multiplier
         std::map<unsigned int, std::vector<ToffoliGate *> *> getGates ();
 
 
+        // Get a vector of copies of all gates
+        // 
+        std::vector<ToffoliGate *> getGatesCopy ();
+
+        
+        // Returns all the guaranteed inputs that this multiplier can succsesfully 
+        // multiply
+        //
+        std::set<std::pair<unsigned int, unsigned int> > getCorrectAnswers ();
+
+
         // Returns string representation
         //
         std::string toString ();
-
 };
 
 #endif

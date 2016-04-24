@@ -65,6 +65,28 @@ std::map<unsigned int, std::vector<ToffoliGate *> *> Multiplier::getGates ()
 }
 
 
+std::vector<ToffoliGate *> Multiplier::getGatesCopy ()
+{
+    std::vector<ToffoliGate *> allGates;
+    for (unsigned int i = 0; i < 30; i++)
+    {
+        std::vector<ToffoliGate *> * column = gates[i];
+        for (unsigned int j = 0; j < column->size (); j++)
+        {
+            ToffoliGate * new_gate = new ToffoliGate (*(*column)[j]);
+            allGates.push_back (new_gate);
+        }
+    }
+    return allGates;
+}
+
+
+std::set<std::pair<unsigned int, unsigned int> > Multiplier::getCorrectAnswers ()
+{
+    return this->correct_answers;
+}
+
+
 std::string Multiplier::toString ()
 {
     std::stringstream ss;

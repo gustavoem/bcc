@@ -92,7 +92,7 @@ class GeneticAlgorithm
 
         // Finds the best multiplier
         //        
-        Multiplier * bestMultiplier ();
+        GAMultiplier * bestMultiplier ();
 };
 
 #endif

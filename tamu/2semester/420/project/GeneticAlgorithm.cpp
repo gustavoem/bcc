@@ -5,9 +5,7 @@ GeneticAlgorithm::GeneticAlgorithm (unsigned int population_size) :  kGatesLimit
 {
     this->population_size = population_size;
     startPopulation ();
-
     output_file.open ("data.txt");
-
     srand (time (NULL));
 }
 
@@ -17,7 +15,6 @@ void GeneticAlgorithm::startPopulation ()
     // std::cout << "Starting population: " << std::endl;
     for (unsigned int i = 0; i < population_size; i++)
     {
-
         unsigned int p1i = rand () % (g_number_of_primes / 2);
         unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
         unsigned int prime1 = primes[p1i];
@@ -33,16 +30,14 @@ void GeneticAlgorithm::startPopulation ()
         {
             unsigned int input_bit = input % 2;
             unsigned int output_bit = output % 2;
-            
             if (input_bit != output_bit)
             {
                 ToffoliGate * gate = new ToffoliGate (bit_index);
                 gates.push_back (gate);
                 control_points.push_back (std::make_pair (input_bit, bit_index));
             }
-
-            input /= 2;
-            output /= 2;
+            input >>= 1;
+            output >>= 1;
             bit_index++;
         }
         
@@ -53,15 +48,9 @@ void GeneticAlgorithm::startPopulation ()
 
         GAMultiplier * mp = new GAMultiplier (kPrimesToTestk, gates);
      
-
         // delete mp;
         // mp = createRandomIndividual ();
-
-        // std::cout << "Inserting object: " << mp << std::endl;
         population.push_back (mp);
-        // std::cout << mp->toString () << std::endl;
-        // std::cout << (mp->multiply ((prime1 << 15) + prime2) == (prime1 * prime2)) << std::endl;
-        // std::cout << "Fitness: " << mp->getFitness () << std::endl;
     }
     std::sort (population.begin (), population.end (), mp_compare);
 }
@@ -91,25 +80,27 @@ void GeneticAlgorithm::insertIndividual (GAMultiplier * new_individual)
 }
 
 
-Multiplier * GeneticAlgorithm::bestMultiplier ()
+GAMultiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
     while (iterations < 40000) 
     {
-        // delete individual with less fitness
+        // delete individual with least fitness
         GAMultiplier * dead_individual = population.back ();
         delete dead_individual;
         population.pop_back ();
         
-        // crossover 
         // std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
         // std::cout << "Parent 1 address:\n" << population[0]->toString () << std::endl;
+        // crossover 
         unsigned int p1_i = 20 - weightedRandom () * 20;
         unsigned int p2_i = 30 - weightedRandom () * 30;
+        
         // std::cout << "p1, p2: " << p1_i << ", " << p2_i << std::endl;
         // std::cout << "Parent 1 score:" << population[p1_i]->getFitness () << ", " <<  population[p1_i]->getBitFitness () << std::endl;
         // std::cout << "Parent 2 score:" << population[p2_i]->getFitness () << ", " << population[p2_i]->getBitFitness ()  << std::endl;
+       
         std::vector<ToffoliGate *> child_gates = 
             population[p1_i]->getCrossoverWith (population[p2_i]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
@@ -119,6 +110,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
 
         // std::cout << "Child:\n" << new_individual->toString () << std::endl;
         // std::cout << "New score: " << new_individual->getFitness () << ", " << population[p1_i]->getBitFitness ()  << std::endl;
+        
         iterations++;
         if (iterations % 1000 == 0)
         {
@@ -127,7 +119,8 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         }
          
         unsigned int best_score = population[0]->getFitness ();
-        output_file << population[0]->getFitness () << " " << population[0]->getBitFitness () << "\n";
+        output_file << best_score << " " << population[0]->getBitFitness () << "\n";
+        
         // this is impirical
         if (best_score > 2 && g_number_of_primes < 25)
         {
@@ -136,7 +129,7 @@ Multiplier * GeneticAlgorithm::bestMultiplier ()
         }
     }
     output_file.close ();
-    return NULL;
+    return population[0];
 }
 
 

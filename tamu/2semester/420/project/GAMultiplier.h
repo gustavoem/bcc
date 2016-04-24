@@ -37,12 +37,6 @@ class GAMultiplier : public Multiplier
         // 
         void eval ();
 
-
-        // Set of all correct combination of primes that this gate is guaranteed to
-        // multilpy correctly
-        // 
-        std::set<std::pair <unsigned int, unsigned int> > correct_answers;
-
     public:
 
         // Default constructor

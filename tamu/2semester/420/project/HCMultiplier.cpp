@@ -65,5 +65,5 @@ std::vector<ToffoliGate *> HCMultiplier::getRandomNeighbour ()
 
 bool HCMultiplier::operator < (const HCMultiplier& other) const
 {
-    return this->bit_score < other.bit_score;
+    return this->correct_answers.size () < other.correct_answers.size ();
 }

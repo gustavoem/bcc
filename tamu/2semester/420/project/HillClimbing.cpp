@@ -6,8 +6,9 @@
 #include "HillClimbing.h"
 
 HillClimbing::HillClimbing () : kPrimesToTestk (600), kNeighboursToGenk (100),
-   kNumberOfRunsk (1), kMaxNoImprovementk (100)
+   kNumberOfRunsk (1), kMaxNoImprovementk (300), kMaxIterationsk (10000)
 {
+    output_file.open ("data.txt");
     srand (time (NULL));
 }
 
@@ -20,7 +21,7 @@ HillClimbing::~HillClimbing ()
 
 bool HillClimbing::multiplierCompare::operator () (HCMultiplier * lhs, HCMultiplier * rhs) const 
 {
-    return rhs < lhs;
+    return *rhs < *lhs;
 }
 
 
@@ -61,19 +62,23 @@ void HillClimbing::startIndividual ()
 }
 
 
-std::set<HCMultiplier *, HillClimbing::multiplierCompare> HillClimbing::findNeighbours ()
+std::vector<HCMultiplier *> HillClimbing::findNeighbours ()
 {
-    std::set<HCMultiplier *, multiplierCompare> neighbours;
-    for (unsigned int i = 0; i < 2; i++)
-        neighbours.insert (new HCMultiplier (kPrimesToTestk, current_best->getRandomNeighbour ()));
+    std::vector<HCMultiplier *> neighbours;
+    for (unsigned int i = 0; i < kNeighboursToGenk; i++)
+        neighbours.push_back (new HCMultiplier (kPrimesToTestk, current_best->getRandomNeighbour ()));
 
-    std::set<HCMultiplier *, multiplierCompare>::iterator it = neighbours.begin ();
-    while (it != neighbours.end ())
-    {
-        std::cout << (*it)->toString () << std::endl;
-        it++;
-    }
     return neighbours;
+}
+
+
+void HillClimbing::deleteNeighbours (std::vector<HCMultiplier *> * neighbours)
+{
+    while (neighbours->size () > 0)
+    {
+        delete (*neighbours)[0];
+        neighbours->erase (neighbours->begin ());
+    }
 }
 
 
@@ -82,14 +87,39 @@ HCMultiplier * HillClimbing::bestMultiplier ()
     for (unsigned int i = 0; i < kNumberOfRunsk; i++)
     {
         unsigned int tries_left = kMaxNoImprovementk;
+        unsigned int iterations = 0;
         startIndividual ();
         std::cout << current_best->toString () << std::endl;
-        while (tries_left)
+        while (tries_left && iterations < kMaxIterationsk)
         {
-            std::set<HCMultiplier *, multiplierCompare> neighbors;
-            neighbors = findNeighbours ();
-            tries_left = 0;
+            std::vector<HCMultiplier *> neighbours;
+            neighbours = findNeighbours ();
+            std::sort (neighbours.begin (), neighbours.end (), mp_compare);
+             
+            // for (unsigned int j = 0; j < neighbours.size (); j++) 
+                // std::cout << neighbours[j]->getBitFitness () << std::endl;
+            
+            if (neighbours[0]->getBitFitness () > current_best->getBitFitness ())
+            {
+                delete current_best;
+                current_best = neighbours[0];
+                neighbours.erase (neighbours.begin ());
+                tries_left = kMaxNoImprovementk;
+                std::cout << "New best found: " << current_best->getFitness () << std::endl;
+            }
+            else
+                tries_left--;
+            
+            if (iterations % 100 == 0)
+                std::cout << "Iteration " << iterations << " done." << std::endl;
+
+            output_file << current_best->getFitness () << " " << 
+                current_best->getBitFitness () << std::endl;
+                
+            deleteNeighbours (&neighbours);
+            iterations++;
         }
     }
+    output_file.close ();
     return current_best;
 }

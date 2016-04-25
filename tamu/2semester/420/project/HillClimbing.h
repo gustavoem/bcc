@@ -8,12 +8,13 @@
 
 #include <stdlib.h>
 
-#include "ToffoliGate.h"
-#include "HCMultiplier.h"
-#include "PrimeList.h"
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <algorithm>
+#include "ToffoliGate.h"
+#include "HCMultiplier.h"
+#include "PrimeList.h"
 
 class HillClimbing
 {
@@ -36,6 +37,7 @@ class HillClimbing
         const unsigned int kNeighboursToGenk;
         const unsigned int kNumberOfRunsk;
         const unsigned int kMaxNoImprovementk;
+        const unsigned int kMaxIterationsk;
 
 
         // Defines a multiplier comparator
@@ -48,7 +50,12 @@ class HillClimbing
 
         // Finds kNumberOfRunsk of random neighbours of the urrent best
         //
-        std::set<HCMultiplier *, multiplierCompare> findNeighbours ();
+        std::vector<HCMultiplier *> findNeighbours ();
+
+
+        // Deletes all the multipliers inside the vector
+        //
+        void deleteNeighbours (std::vector<HCMultiplier *> *);
 
 
         // Stores the file stream to the output file

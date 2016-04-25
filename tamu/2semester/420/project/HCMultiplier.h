@@ -24,6 +24,11 @@ class HCMultiplier : public Multiplier
         void addRandomGate (std::vector<ToffoliGate *> *);
 
 
+        // Removes a random gate
+        //
+        void removeRandomGate (std::vector<ToffoliGate *> *);
+
+
         // Adds a random control point to a gate
         //
         void addRandomControlPoint (std::vector<ToffoliGate *> *);

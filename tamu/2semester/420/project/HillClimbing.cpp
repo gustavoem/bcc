@@ -5,8 +5,8 @@
 
 #include "HillClimbing.h"
 
-HillClimbing::HillClimbing () : kPrimesToTestk (1000), kNeighboursToGenk (1000),
-   kNumberOfRunsk (1), kMaxNoImprovementk (600), kMaxIterationsk (10000)
+HillClimbing::HillClimbing () : kPrimesToTestk (500), kNeighboursToGenk (500),
+   kNumberOfRunsk (1), kMaxNoImprovementk (100), kMaxIterationsk (1000)
 {
     output_file.open ("data.txt");
     srand (time (NULL));
@@ -85,7 +85,6 @@ void HillClimbing::deleteNeighbours (std::vector<HCMultiplier *> * neighbours)
         neighbours->erase (neighbours->begin ());
         i++;
     }
-    std::cout << "deleted: " << i << std::endl;
 }
 
 
@@ -110,7 +109,8 @@ HCMultiplier * HillClimbing::bestMultiplier ()
                 neighbours.erase (neighbours.begin ());
                 // std::cout << "erased someone" << std::endl;
                 tries_left = kMaxNoImprovementk;
-                std::cout << "New best found: " << current_best->getFitness () << std::endl;
+                std::cout << "New best found: " << current_best->getFitness () << ", " 
+                    << current_best->getBitFitness () << std::endl;
             }
             else
                 tries_left--;

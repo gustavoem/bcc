@@ -27,14 +27,19 @@ HCMultiplier::~HCMultiplier ()
 
 void HCMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
 {
-    unsigned int i;
-    if (rand () % 3)
+    unsigned int i = rand () % 90;
+    if (i > 30)
         i = BitEntropy::getHighEntropyBit ();
-    else
-        i = rand () % 30;
 
     ToffoliGate * new_gate = new ToffoliGate (i);
     new_gates->push_back (new_gate);
+}
+
+
+void HCMultiplier::removeRandomGate (std::vector<ToffoliGate *> * new_gates)
+{
+    unsigned i = rand () % new_gates->size ();
+    new_gates->erase (new_gates->begin () + i);
 }
 
 
@@ -54,11 +59,14 @@ std::vector<ToffoliGate *> HCMultiplier::getRandomNeighbour ()
         for (unsigned int j = 0; j < column->size (); j++)
             new_gates.push_back (new ToffoliGate (*(*column)[j]));
     }
-
-    if (rand () % 2)
+    
+    unsigned int branch = rand () % 3;
+    if (branch == 0)
         addRandomGate (&new_gates);
-    else
+    else if (branch == 1)
         addRandomControlPoint (&new_gates);
+    else
+        removeRandomGate (&new_gates);
 
     return new_gates;
 }

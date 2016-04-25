@@ -39,19 +39,8 @@ void HCMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
 
 void HCMultiplier::addRandomControlPoint (std::vector<ToffoliGate *> * new_gates)
 {
-    unsigned int i;
-    if (rand () % 3)
-        i = BitEntropy::getHighEntropyBit ();
-    else
-        i = rand () % 30;
-    
-    std::vector<ToffoliGate *> * column = gates[i];
-    if (column->size () != 0)
-    {
-        unsigned int j;
-        j = BitEntropy::getLowEntropyBit ();
-        (*column)[j]->setControl (rand () % 2, j);
-    } 
+    unsigned int i = rand () % new_gates->size ();
+    (*new_gates)[i]->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
 }
 
 

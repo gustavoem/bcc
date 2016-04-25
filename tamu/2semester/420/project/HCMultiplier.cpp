@@ -20,6 +20,7 @@ HCMultiplier::HCMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> g
 
 HCMultiplier::~HCMultiplier ()
 {
+    std::cout << "deleting a multiplier" << std::endl;
     return;
 }
 
@@ -65,5 +66,12 @@ std::vector<ToffoliGate *> HCMultiplier::getRandomNeighbour ()
 
 bool HCMultiplier::operator < (const HCMultiplier& other) const
 {
-    return this->correct_answers.size () < other.correct_answers.size ();
+    // std::cout << "Comparing " << this << " to " << &other << std::endl;
+    if (this->correct_answers.size () < other.correct_answers.size ())
+        return true;
+    else if (this->correct_answers.size () == other.correct_answers.size () && 
+            this->bit_score < other.bit_score)
+        return true;
+    else
+        return false;
 }

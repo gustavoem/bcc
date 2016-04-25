@@ -5,8 +5,8 @@
 
 #include "HillClimbing.h"
 
-HillClimbing::HillClimbing () : kPrimesToTestk (600), kNeighboursToGenk (100),
-   kNumberOfRunsk (1), kMaxNoImprovementk (300), kMaxIterationsk (10000)
+HillClimbing::HillClimbing () : kPrimesToTestk (1000), kNeighboursToGenk (1000),
+   kNumberOfRunsk (1), kMaxNoImprovementk (600), kMaxIterationsk (10000)
 {
     output_file.open ("data.txt");
     srand (time (NULL));
@@ -66,7 +66,11 @@ std::vector<HCMultiplier *> HillClimbing::findNeighbours ()
 {
     std::vector<HCMultiplier *> neighbours;
     for (unsigned int i = 0; i < kNeighboursToGenk; i++)
-        neighbours.push_back (new HCMultiplier (kPrimesToTestk, current_best->getRandomNeighbour ()));
+    {
+        HCMultiplier * new_multiplier = 
+            new HCMultiplier (kPrimesToTestk, current_best->getRandomNeighbour ());
+        neighbours.push_back (new_multiplier);
+    }
 
     return neighbours;
 }
@@ -74,11 +78,14 @@ std::vector<HCMultiplier *> HillClimbing::findNeighbours ()
 
 void HillClimbing::deleteNeighbours (std::vector<HCMultiplier *> * neighbours)
 {
+    unsigned int i = 0;
     while (neighbours->size () > 0)
     {
-        delete (*neighbours)[0];
+        // delete (*neighbours)[0];
         neighbours->erase (neighbours->begin ());
+        i++;
     }
+    std::cout << "deleted: " << i << std::endl;
 }
 
 
@@ -96,14 +103,12 @@ HCMultiplier * HillClimbing::bestMultiplier ()
             neighbours = findNeighbours ();
             std::sort (neighbours.begin (), neighbours.end (), mp_compare);
              
-            // for (unsigned int j = 0; j < neighbours.size (); j++) 
-                // std::cout << neighbours[j]->getBitFitness () << std::endl;
-            
-            if (neighbours[0]->getBitFitness () > current_best->getBitFitness ())
+            if (*current_best < *(neighbours[0]))
             {
-                delete current_best;
+                // delete current_best;
                 current_best = neighbours[0];
                 neighbours.erase (neighbours.begin ());
+                // std::cout << "erased someone" << std::endl;
                 tries_left = kMaxNoImprovementk;
                 std::cout << "New best found: " << current_best->getFitness () << std::endl;
             }

@@ -11,17 +11,29 @@
 
 using namespace std;
 
+void showUsage ();
+
 int main (int argc, char * argv[])
 {
     if (argc < 2)
     {
-        cout << "Usage is -l for local beam search and -g for genetic algorithm" << endl;
+        showUsage ();
         return 0;
     }
 
     if (string (argv[1]) == "-l")
     {
-        LocalBeam hc;
+        unsigned int nof_beams = 0;
+        if (argc < 3)
+        {
+            showUsage ();
+            return 0;
+        }
+        else
+        {
+            nof_beams = atoi (argv[2]);
+        }
+        LocalBeam hc (nof_beams);
         LBMultiplier * multiplier = hc.bestMultiplier (); 
     }
     else if (string (argv[1]) == "-g")
@@ -38,4 +50,10 @@ int main (int argc, char * argv[])
             cout << it->first << " x " << it->second << endl;
     }
     return 0;
+}
+
+
+void showUsage ()
+{
+    cout << "Usage is -l <number of beams> for local beam search and -g for genetic algorithm" << endl;
 }

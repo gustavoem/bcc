@@ -20,15 +20,31 @@ class LocalBeam
 {
     private:
         
-        // Stores the population
+        // Stores the best multiplier seen in the algorithm
         // 
         LBMultiplier * current_best;
 
-        
-        // Starts the current_best with a circuit that works for at least
-        // one pair of primes
+
+        // Stores all opened nodes
         //
-        void startIndividual ();
+        // There should be number_of_beams elements in this vector
+        //
+        std::vector<LBMultiplier *> current_multipliers;
+
+
+        // Stores the number of beams
+        // 
+        unsigned int number_of_beams;
+
+        
+        // Starts all the beams
+        //
+        void startBeams ();
+
+
+        // Creates a first multiplier which is an empty multiplier
+        //
+        LBMultiplier * newBeam ();
 
 
         // Parameters for genetic algorithm
@@ -48,9 +64,9 @@ class LocalBeam
         } mp_compare;
 
 
-        // Finds kNumberOfRunsk of random neighbours of the urrent best
+        // Finds kNumberOfRunsk of random neighbours of a multiplier
         //
-        std::vector<LBMultiplier *> findNeighbours ();
+        std::vector<LBMultiplier *> findNeighbours (LBMultiplier *);
 
 
         // Deletes all the multipliers inside the vector
@@ -66,7 +82,7 @@ class LocalBeam
 
         // Default constructor
         //  
-        LocalBeam ();
+        LocalBeam (unsigned int);
         
 
         // Default destructor

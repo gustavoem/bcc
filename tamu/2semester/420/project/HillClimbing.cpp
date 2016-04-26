@@ -5,9 +5,10 @@
 
 #include "HillClimbing.h"
 
-HillClimbing::HillClimbing () : kPrimesToTestk (500), kNeighboursToGenk (500),
-   kNumberOfRunsk (1), kMaxNoImprovementk (100), kMaxIterationsk (1000)
+HillClimbing::HillClimbing () : kPrimesToTestk (50), kNeighboursToGenk (100),
+   kNumberOfRunsk (1), kMaxNoImprovementk (1000), kMaxIterationsk (10000)
 {
+    g_number_of_primes = 40;
     output_file.open ("data.txt");
     srand (time (NULL));
 }
@@ -45,7 +46,8 @@ void HillClimbing::startIndividual ()
         if (input_bit != output_bit)
         {
             ToffoliGate * gate = new ToffoliGate (bit_index);
-            gates.push_back (gate);
+            // if (rand () % 2)
+                // gates.push_back (gate);
             control_points.push_back (std::make_pair (input_bit, bit_index));
         }
         input >>= 1;
@@ -102,20 +104,20 @@ HCMultiplier * HillClimbing::bestMultiplier ()
             neighbours = findNeighbours ();
             std::sort (neighbours.begin (), neighbours.end (), mp_compare);
              
-            if (*current_best < *(neighbours[0]))
-            {
-                // delete current_best;
+            // if (*current_best < *(neighbours[0]))
+            // {
+                delete current_best;
                 current_best = neighbours[0];
                 neighbours.erase (neighbours.begin ());
-                // std::cout << "erased someone" << std::endl;
                 tries_left = kMaxNoImprovementk;
                 std::cout << "New best found: " << current_best->getFitness () << ", " 
                     << current_best->getBitFitness () << std::endl;
-            }
-            else
-                tries_left--;
+                std::cout << current_best->toString () << std::endl;
+            // }
+            // else
+                // tries_left--;
             
-            if (iterations % 100 == 0)
+            if (iterations % 10 == 0)
                 std::cout << "Iteration " << iterations << " done." << std::endl;
 
             output_file << current_best->getFitness () << " " << 

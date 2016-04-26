@@ -99,5 +99,11 @@ void GAMultiplier::mutate (std::vector<ToffoliGate *> * gates)
 
 bool GAMultiplier::operator < (const GAMultiplier& other) const 
 {
-    return this->correct_answers.size () < other.correct_answers.size ();
+    if (this->correct_answers.size () < other.correct_answers.size ())
+        return true;
+    // else if (this->correct_answers.size () == other.correct_answers.size () && 
+            // this->bit_score < other.bit_score)
+        // return true;
+    else
+        return false;
 }

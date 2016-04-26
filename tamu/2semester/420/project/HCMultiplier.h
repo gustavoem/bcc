@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <vector>
 
+
+#define MAX_GATES 60
+
 class HCMultiplier : public Multiplier
 {
     private:

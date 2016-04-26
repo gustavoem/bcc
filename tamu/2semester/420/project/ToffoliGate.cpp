@@ -46,9 +46,6 @@ void ToffoliGate::setControl (bool open, unsigned int index)
     unsigned int set_mask = ((2 - open) << gate_bit);
     gate[half] &= clean_mask;
     gate[half] |= set_mask;
-
-    // std::cout << "   me: " << toString () << std::endl;
-    // std::cout << "after setting: " << gate[1] << "|" << gate[0] << std::endl;
 }
 
 
@@ -67,19 +64,14 @@ unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int appl
 {
     bool should_change = true;
     unsigned int result = apply_number;
-    
-    // std::cout << "applying gate: " << toString () << std::endl;
-    // std::cout << "test, apply: " << test_number << ", "<< apply_number << std::endl;
-    
+
     for (unsigned int i = 0; i < 2; i++)
     {
         unsigned int gate_copy = gate[i];
         for (unsigned int j = 0; j < 15; j++)
         {
             unsigned int gate_bit = gate_copy & 3;
-            unsigned int number_bit = test_number % 2; 
-        
-            // std::cout << "  gate_bit, number_bit: " << gate_bit << ", " << number_bit << std::endl;
+            unsigned int number_bit = test_number & 1;
 
             if (gate_bit)
                 if (number_bit != (2 - gate_bit))
@@ -88,17 +80,14 @@ unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int appl
                     break;
                 }
         
-            gate_copy /= 4;
-            test_number /= 2;
+            gate_copy >>= 2;
+            test_number >>= 1;
         }
     }
     
     if (should_change)
-    {
         result ^= (1 << controlled_bit);
-    }
     
-    // std::cout << "result: " << result << std::endl;
     return result;
 }
 

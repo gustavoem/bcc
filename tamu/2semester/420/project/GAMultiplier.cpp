@@ -89,10 +89,6 @@ void GAMultiplier::mutate (std::vector<ToffoliGate *> * gates)
             new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
         gates->push_back (new_gate);
     }
-    // else // removes a gate
-    // {
-        // gates->erase (gates->begin () + 1 + rand () % (gates->size () - 1));
-    // }
 }
 
 
@@ -101,9 +97,6 @@ bool GAMultiplier::operator < (const GAMultiplier& other) const
 {
     if (this->correct_answers.size () < other.correct_answers.size ())
         return true;
-    // else if (this->correct_answers.size () == other.correct_answers.size () && 
-            // this->bit_score < other.bit_score)
-        // return true;
     else
         return false;
 }

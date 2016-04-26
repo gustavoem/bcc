@@ -61,7 +61,6 @@ void Multiplier::eval ()
         unsigned int expected_output = prime1 * prime2;
         for (unsigned int i = 0; i < 30; i++)
         {
-            // std::cout << ((output >> i) & 1) << "|" << ((expected_output >> i) & 1) << std::endl;
             bool bit_match = ((output >> i) & 1) == ((expected_output >> i) & 1);
             if (bit_match)
                 bit_score++;

@@ -38,8 +38,6 @@ unsigned int BitEntropy::getHighEntropyBit ()
     std::set<std::pair<unsigned int, 
         unsigned int> >::reverse_iterator it (entropies.rbegin ());
     advance (it, rand () % 5);
-    // std::cout << toString () << std::endl;
-    // std::cout << "Returning h.e.: " << it->second << std::endl;
     return it->second;
 }
 
@@ -52,7 +50,6 @@ unsigned int BitEntropy::getLowEntropyBit ()
 
     std::set<std::pair<unsigned int, unsigned int> >::iterator it (entropies.begin ());
     advance (it, rand () % 10);
-    // std::cout << "Returning l.e.: " << it->second << std::endl;
     return it->second;
 }
 

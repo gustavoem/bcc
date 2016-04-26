@@ -12,6 +12,8 @@
 extern unsigned int g_number_of_primes;
 
 // List of all 15-bit primes
+// 
+// https://primes.utm.edu/lists/small/10000.txt
 //
 const unsigned int primes[] = {
       2,      3,      5,      7,     11,     13,     17,     19,     23,     29, 

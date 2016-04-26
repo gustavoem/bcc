@@ -6,8 +6,8 @@
 #include "Multiplier.h"
 #include "GeneticAlgorithm.h"
 #include "GAMultiplier.h"
-#include "HillClimbing.h"
-#include "HCMultiplier.h"
+#include "LocalBeam.h"
+#include "LBMultiplier.h"
 
 using namespace std;
 
@@ -15,14 +15,14 @@ int main (int argc, char * argv[])
 {
     if (argc < 2)
     {
-        cout << "Usage is -h for hill climbing and -g for genetic algorithm" << endl;
+        cout << "Usage is -l for local beam search and -g for genetic algorithm" << endl;
         return 0;
     }
 
-    if (string (argv[1]) == "-h")
+    if (string (argv[1]) == "-l")
     {
-        HillClimbing hc;
-        HCMultiplier * multiplier = hc.bestMultiplier (); 
+        LocalBeam hc;
+        LBMultiplier * multiplier = hc.bestMultiplier (); 
     }
     else if (string (argv[1]) == "-g")
     {

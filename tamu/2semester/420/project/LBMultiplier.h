@@ -3,8 +3,8 @@
 //
 //
 
-#ifndef HC_MULTIPLIER_H_
-#define HC_MULTIPLIER_H_
+#ifndef LB_MULTIPLIER_H_
+#define LB_MULTIPLIER_H_
 
 #include "ToffoliGate.h"
 #include "Multiplier.h"
@@ -17,7 +17,7 @@
 
 #define MAX_GATES 60
 
-class HCMultiplier : public Multiplier
+class LBMultiplier : public Multiplier
 {
     private:
 
@@ -40,17 +40,17 @@ class HCMultiplier : public Multiplier
 
         // Default constructor
         //
-        HCMultiplier (unsigned int);
+        LBMultiplier (unsigned int);
         
 
         // Constructor with number of random toffoli gates
         //
-        HCMultiplier (unsigned int, std::vector<ToffoliGate *>);
+        LBMultiplier (unsigned int, std::vector<ToffoliGate *>);
 
 
         // Default destructor
         //
-        virtual ~HCMultiplier ();
+        virtual ~LBMultiplier ();
 
         
         // Returns a random neighbor of this multiplier
@@ -63,7 +63,7 @@ class HCMultiplier : public Multiplier
         
         // Defines the comparator, which is given by the fitness of the multiplier
         //
-        bool operator < (const HCMultiplier&) const;  
+        bool operator < (const LBMultiplier&) const;  
 };
 
 #endif

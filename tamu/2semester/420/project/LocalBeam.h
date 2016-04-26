@@ -3,8 +3,8 @@
 //
 //
 
-#ifndef HILL_CLIMBING_H_
-#define HILL_CLIMBING_H_
+#ifndef LOCAL_BEAM_H_
+#define LOCAL_BEAM_H_
 
 #include <stdlib.h>
 
@@ -13,16 +13,16 @@
 #include <time.h>
 #include <algorithm>
 #include "ToffoliGate.h"
-#include "HCMultiplier.h"
+#include "LBMultiplier.h"
 #include "PrimeList.h"
 
-class HillClimbing
+class LocalBeam
 {
     private:
         
         // Stores the population
         // 
-        HCMultiplier * current_best;
+        LBMultiplier * current_best;
 
         
         // Starts the current_best with a circuit that works for at least
@@ -44,18 +44,18 @@ class HillClimbing
         //
         struct multiplierCompare
         {
-            bool operator () (HCMultiplier *, HCMultiplier *) const;
+            bool operator () (LBMultiplier *, LBMultiplier *) const;
         } mp_compare;
 
 
         // Finds kNumberOfRunsk of random neighbours of the urrent best
         //
-        std::vector<HCMultiplier *> findNeighbours ();
+        std::vector<LBMultiplier *> findNeighbours ();
 
 
         // Deletes all the multipliers inside the vector
         //
-        void deleteNeighbours (std::vector<HCMultiplier *> *);
+        void deleteNeighbours (std::vector<LBMultiplier *> *);
 
 
         // Stores the file stream to the output file
@@ -66,17 +66,17 @@ class HillClimbing
 
         // Default constructor
         //  
-        HillClimbing ();
+        LocalBeam ();
         
 
         // Default destructor
         //
-        virtual ~HillClimbing ();
+        virtual ~LocalBeam ();
 
 
         // Finds the best multiplier
         //        
-        HCMultiplier * bestMultiplier ();
+        LBMultiplier * bestMultiplier ();
 };
 
 #endif

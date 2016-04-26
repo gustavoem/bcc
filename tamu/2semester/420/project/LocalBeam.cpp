@@ -3,10 +3,10 @@
 //
 //
 
-#include "HillClimbing.h"
+#include "LocalBeam.h"
 
-HillClimbing::HillClimbing () : kPrimesToTestk (50), kNeighboursToGenk (100),
-   kNumberOfRunsk (1), kMaxNoImprovementk (1000), kMaxIterationsk (10000)
+LocalBeam::LocalBeam () : kPrimesToTestk (100), kNeighboursToGenk (100),
+   kNumberOfRunsk (1), kMaxNoImprovementk (1000), kMaxIterationsk (5000)
 {
     g_number_of_primes = 40;
     output_file.open ("data.txt");
@@ -14,19 +14,19 @@ HillClimbing::HillClimbing () : kPrimesToTestk (50), kNeighboursToGenk (100),
 }
 
 
-HillClimbing::~HillClimbing ()
+LocalBeam::~LocalBeam ()
 {
     return;
 }
 
 
-bool HillClimbing::multiplierCompare::operator () (HCMultiplier * lhs, HCMultiplier * rhs) const 
+bool LocalBeam::multiplierCompare::operator () (LBMultiplier * lhs, LBMultiplier * rhs) const 
 {
     return *rhs < *lhs;
 }
 
 
-void HillClimbing::startIndividual ()
+void LocalBeam::startIndividual ()
 {
     unsigned int p1i = rand () % (g_number_of_primes / 2);
     unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
@@ -60,17 +60,17 @@ void HillClimbing::startIndividual ()
             if (rand () % 2)
                 gates[i]->setControl (control_points[j].first, control_points[j].second);
         
-    current_best = new HCMultiplier (kPrimesToTestk, gates);
+    current_best = new LBMultiplier (kPrimesToTestk, gates);
 }
 
 
-std::vector<HCMultiplier *> HillClimbing::findNeighbours ()
+std::vector<LBMultiplier *> LocalBeam::findNeighbours ()
 {
-    std::vector<HCMultiplier *> neighbours;
+    std::vector<LBMultiplier *> neighbours;
     for (unsigned int i = 0; i < kNeighboursToGenk; i++)
     {
-        HCMultiplier * new_multiplier = 
-            new HCMultiplier (kPrimesToTestk, current_best->getRandomNeighbour ());
+        LBMultiplier * new_multiplier = 
+            new LBMultiplier (kPrimesToTestk, current_best->getRandomNeighbour ());
         neighbours.push_back (new_multiplier);
     }
 
@@ -78,7 +78,7 @@ std::vector<HCMultiplier *> HillClimbing::findNeighbours ()
 }
 
 
-void HillClimbing::deleteNeighbours (std::vector<HCMultiplier *> * neighbours)
+void LocalBeam::deleteNeighbours (std::vector<LBMultiplier *> * neighbours)
 {
     unsigned int i = 0;
     while (neighbours->size () > 0)
@@ -90,7 +90,7 @@ void HillClimbing::deleteNeighbours (std::vector<HCMultiplier *> * neighbours)
 }
 
 
-HCMultiplier * HillClimbing::bestMultiplier ()
+LBMultiplier * LocalBeam::bestMultiplier ()
 {
     for (unsigned int i = 0; i < kNumberOfRunsk; i++)
     {
@@ -100,7 +100,7 @@ HCMultiplier * HillClimbing::bestMultiplier ()
         std::cout << current_best->toString () << std::endl;
         while (tries_left && iterations < kMaxIterationsk)
         {
-            std::vector<HCMultiplier *> neighbours;
+            std::vector<LBMultiplier *> neighbours;
             neighbours = findNeighbours ();
             std::sort (neighbours.begin (), neighbours.end (), mp_compare);
              

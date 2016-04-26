@@ -3,28 +3,28 @@
 //
 //
 
-#include "HCMultiplier.h"
+#include "LBMultiplier.h"
 
-HCMultiplier::HCMultiplier (unsigned int eval_reps) : Multiplier (eval_reps) 
+LBMultiplier::LBMultiplier (unsigned int eval_reps) : Multiplier (eval_reps) 
 {
     return;
 }
 
 
-HCMultiplier::HCMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> gates) :
+LBMultiplier::LBMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> gates) :
     Multiplier (eval_reps, gates)
 {
     return;
 }
 
 
-HCMultiplier::~HCMultiplier ()
+LBMultiplier::~LBMultiplier ()
 {
     return;
 }
 
 
-void HCMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
+void LBMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
 {
     if (new_gates->size () > MAX_GATES)
     {
@@ -44,7 +44,7 @@ void HCMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
 }
 
 
-void HCMultiplier::removeRandomGate (std::vector<ToffoliGate *> * new_gates)
+void LBMultiplier::removeRandomGate (std::vector<ToffoliGate *> * new_gates)
 {
     if (new_gates->size () == 0)
         addRandomGate (new_gates);
@@ -54,7 +54,7 @@ void HCMultiplier::removeRandomGate (std::vector<ToffoliGate *> * new_gates)
 }
 
 
-void HCMultiplier::addRandomControlPoint (std::vector<ToffoliGate *> * new_gates)
+void LBMultiplier::addRandomControlPoint (std::vector<ToffoliGate *> * new_gates)
 {   
     if (new_gates->size () == 0)
         addRandomGate (new_gates);
@@ -64,7 +64,7 @@ void HCMultiplier::addRandomControlPoint (std::vector<ToffoliGate *> * new_gates
 }
 
 
-std::vector<ToffoliGate *> HCMultiplier::getRandomNeighbour ()
+std::vector<ToffoliGate *> LBMultiplier::getRandomNeighbour ()
 {
     std::vector<ToffoliGate *> new_gates;
     for (unsigned int i = 0; i < 30; i++)
@@ -86,7 +86,7 @@ std::vector<ToffoliGate *> HCMultiplier::getRandomNeighbour ()
 }
 
 
-bool HCMultiplier::operator < (const HCMultiplier& other) const
+bool LBMultiplier::operator < (const LBMultiplier& other) const
 {
     // std::cout << "Comparing " << this << " to " << &other << std::endl;
     // if (this->correct_answers.size () < other.correct_answers.size ())

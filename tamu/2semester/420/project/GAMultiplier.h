@@ -47,6 +47,12 @@ class GAMultiplier : public Multiplier
         GAMultiplier (unsigned int, std::vector<ToffoliGate *>);
 
 
+        // Creates a multilpiers that can multiply the first and second argument
+        // as input and return the right answer
+        //
+        GAMultiplier (unsigned int, unsigned int, unsigned int);
+
+
         // Default destructor
         //
         virtual ~GAMultiplier ();

@@ -40,6 +40,41 @@ Multiplier::Multiplier (unsigned int eval_reps, std::vector<ToffoliGate *> new_g
 }
 
 
+Multiplier::Multiplier (unsigned int eval_reps, unsigned int prime1, unsigned int prime2)
+{
+    unsigned int input = (prime1 << 15) + prime2;
+    unsigned int output = prime1 * prime2;
+    std::vector< std::pair<bool, unsigned int> > control_points;
+    initGates ();
+
+    unsigned int bit_index = 0;
+    while (input > 0 || output > 0)
+    {
+        unsigned int input_bit = input % 2;
+        unsigned int output_bit = output % 2;
+        if (input_bit != output_bit)
+        {
+            ToffoliGate * gate = new ToffoliGate (bit_index);
+            gates[bit_index]->push_back (gate);
+            control_points.push_back (std::make_pair (input_bit, bit_index));
+        }
+        input >>= 1;
+        output >>= 1;
+        bit_index++;
+    }
+
+    // this is not n^3, don't worry (its #gates^2)
+    // but remember that #gates here is less than 30
+    for (unsigned int i = 0; i < 30; i++)
+        for (unsigned int j = 0; j < gates[i]->size (); j++)
+            for (unsigned int k = 0; k < control_points.size (); k++)
+                if (rand () % 2)
+                    (*gates[i])[j]->setControl (control_points[k].first, control_points[k].second);
+
+    eval ();
+}
+
+
 void Multiplier::initGates ()
 {
     for (unsigned int i = 0; i < 30; i++)
@@ -68,7 +103,6 @@ void Multiplier::eval ()
         unsigned int p2i = p1i + rand () % (g_number_of_primes - p1i);
         unsigned int prime1 = primes[p1i];
         unsigned int prime2 = primes[p2i];
-        // std::cout << "p1, p2: " << prime1 << ", " << prime2 << std::endl;
         unsigned int input = (prime1 << 15) + prime2;
         unsigned int output = multiply (input);
         unsigned int expected_output = prime1 * prime2;

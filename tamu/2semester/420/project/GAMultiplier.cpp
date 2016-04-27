@@ -14,6 +14,13 @@ GAMultiplier::GAMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> g
 }
 
 
+GAMultiplier::GAMultiplier (unsigned int eval_reps, unsigned int prime1,
+    unsigned int prime2) : Multiplier (eval_reps, prime1, prime2)
+{
+    return;
+}
+
+
 GAMultiplier::~GAMultiplier ()
 {
     return;

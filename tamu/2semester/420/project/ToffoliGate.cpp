@@ -72,19 +72,16 @@ unsigned int ToffoliGate::applyGate (unsigned int test_number, unsigned int appl
         {
             unsigned int gate_bit = gate_copy & 3;
             unsigned int number_bit = test_number & 1;
-
             if (gate_bit)
                 if (number_bit != (2 - gate_bit))
                 {
                     should_change = false;
                     break;
                 }
-        
             gate_copy >>= 2;
             test_number >>= 1;
         }
-    }
-    
+    }   
     if (should_change)
         result ^= (1 << controlled_bit);
     

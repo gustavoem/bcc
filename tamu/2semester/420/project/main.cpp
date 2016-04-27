@@ -15,6 +15,7 @@ void showUsage ();
 
 int main (int argc, char * argv[])
 {
+    Multiplier * solution;
     if (argc < 2)
     {
         showUsage ();
@@ -34,21 +35,24 @@ int main (int argc, char * argv[])
             nof_beams = atoi (argv[2]);
         }
         LocalBeam hc (nof_beams);
-        LBMultiplier * multiplier = hc.bestMultiplier (); 
+        LBMultiplier * multiplier = hc.bestMultiplier ();
+        solution = multiplier;
     }
     else if (string (argv[1]) == "-g")
     {
         GeneticAlgorithm ga (300);
         GAMultiplier * multiplier = ga.bestMultiplier ();
-        cout << "Solution: " << endl;
-        cout << multiplier->toString () << endl;
-        set<pair<unsigned int, unsigned int> > correct_cases = 
-            multiplier->getCorrectAnswers ();
-
-        for (set<pair<unsigned int, unsigned int> >::iterator it = correct_cases.begin ();
-                it != correct_cases.end (); ++it)
-            cout << it->first << " x " << it->second << endl;
+        solution = multiplier;
     }
+
+    cout << "Solution: " << endl;
+    cout << solution->toString () << endl;
+    set<pair<unsigned int, unsigned int> > correct_cases = 
+            solution->getCorrectAnswers ();
+
+    for (set<pair<unsigned int, unsigned int> >::iterator it = correct_cases.begin ();
+            it != correct_cases.end (); ++it)
+        cout << it->first << " x " << it->second << endl;
     return 0;
 }
 

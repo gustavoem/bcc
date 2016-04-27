@@ -71,12 +71,18 @@ class LocalBeam
 
         // Deletes all the multipliers inside the vector
         //
-        void deleteNeighbours (std::vector<LBMultiplier *> *);
+        void deleteMultipliers (std::vector<LBMultiplier *> *);
 
 
         // Stores the file stream to the output file
         //
         std::ofstream output_file;
+
+
+        // Updates the list of current multilpiers
+        //
+        void updateMultipliers (std::vector<LBMultiplier *> *);
+
 
     public:
 

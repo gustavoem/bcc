@@ -6,11 +6,12 @@
 #include "LocalBeam.h"
 
 LocalBeam::LocalBeam (unsigned int nof_beams) : kPrimesToTestk (100), kNeighboursToGenk (100),
-   kNumberOfRunsk (1), kMaxNoImprovementk (1000), kMaxIterationsk (5000)
+   kNumberOfRunsk (1), kMaxNoImprovementk (1000), kMaxIterationsk (100)
 {
     std::cout << nof_beams << std::endl;
     number_of_beams = nof_beams;
     g_number_of_primes = 40;
+    current_best = NULL;
     output_file.open ("data.txt");
     srand (time (NULL));
 }
@@ -54,13 +55,13 @@ std::vector<LBMultiplier *> LocalBeam::findNeighbours (LBMultiplier * multiplier
 }
 
 
-void LocalBeam::deleteNeighbours (std::vector<LBMultiplier *> * neighbours)
+void LocalBeam::deleteMultipliers (std::vector<LBMultiplier *> * multipliers)
 {
     unsigned int i = 0;
-    while (neighbours->size () > 0)
+    while (multipliers->size () > 0)
     {
-        delete (*neighbours)[0];
-        neighbours->erase (neighbours->begin ());
+        delete (*multipliers)[0];
+        multipliers->erase (multipliers->begin ());
         i++;
     }
 }
@@ -71,38 +72,45 @@ LBMultiplier * LocalBeam::bestMultiplier ()
     unsigned int iterations = 0;
     startBeams ();
 
-    for (unsigned int i = 0; i < current_multipliers.size (); i++)
+    while (iterations < kMaxIterationsk)
     {
-        std::cout << "Hi" << current_multipliers[i]->toString () << std::endl;
+        std::vector<LBMultiplier *> successors;
+        for (unsigned int i = 0; i < current_multipliers.size (); i++)
+        {
+            std::vector<LBMultiplier *> neighbours = 
+                findNeighbours (current_multipliers[i]);
+            successors.insert 
+                (successors.end (), neighbours.begin (), neighbours.end ());
+        }
+
+        updateMultipliers (&successors);
+        if (iterations % 10 == 0)
+            std::cout << "Iteration " << iterations << " done." << std::endl;
+
+        output_file << current_multipliers[0]->getFitness () << " " << 
+        current_multipliers[0]->getBitFitness () << std::endl;
+
+        iterations++;
     }
-    // while (tries_left && iterations < kMaxIterationsk)
-    // {
-    //     std::vector<LBMultiplier *> neighbours;
-    //     neighbours = findNeighbours ();
-    //     std::sort (neighbours.begin (), neighbours.end (), mp_compare);
-
-    //         // if (*current_best < *(neighbours[0]))
-    //         // {
-    //     delete current_best;
-    //     current_best = neighbours[0];
-    //     neighbours.erase (neighbours.begin ());
-    //     tries_left = kMaxNoImprovementk;
-    //     std::cout << "New best found: " << current_best->getFitness () << ", " 
-    //     << current_best->getBitFitness () << std::endl;
-    //     std::cout << current_best->toString () << std::endl;
-    //         // }
-    //         // else
-    //             // tries_left--;
-
-    //     if (iterations % 10 == 0)
-    //         std::cout << "Iteration " << iterations << " done." << std::endl;
-
-    //     output_file << current_best->getFitness () << " " << 
-    //     current_best->getBitFitness () << std::endl;
-
-    //     deleteNeighbours (&neighbours);
-    //     iterations++;
-    // }
-    // output_file.close ();
+    output_file.close ();
     return current_best;
+}
+
+
+void LocalBeam::updateMultipliers (std::vector<LBMultiplier *> * successors)
+{
+    std::sort (successors->begin (), successors->end (), mp_compare);        
+    if (current_best == NULL || *current_best < *((*successors)[0]))
+    {
+        delete current_best;
+        current_best = new LBMultiplier (*((*successors)[0]));
+        std::cout << "New best found with score: " << current_best->getFitness () << ", "
+            << current_best->getBitFitness () << std::endl;
+    }
+    
+    deleteMultipliers (&current_multipliers);
+    current_multipliers.insert (current_multipliers.end (), successors->begin (),
+                                         successors->begin () + number_of_beams);
+    successors->erase (successors->begin (), successors->begin () + number_of_beams);
+    deleteMultipliers (successors);
 }

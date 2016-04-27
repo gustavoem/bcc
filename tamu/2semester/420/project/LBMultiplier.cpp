@@ -71,7 +71,7 @@ std::vector<ToffoliGate *> LBMultiplier::getRandomNeighbour ()
     {
         std::vector<ToffoliGate *> * column = gates[i];
         for (unsigned int j = 0; j < column->size (); j++)
-            new_gates.push_back (new ToffoliGate (*(*column)[j]));
+            new_gates.push_back (new ToffoliGate (*((*column)[j])));
     }
     
     unsigned int branch = rand () % 5;
@@ -88,11 +88,8 @@ std::vector<ToffoliGate *> LBMultiplier::getRandomNeighbour ()
 
 bool LBMultiplier::operator < (const LBMultiplier& other) const
 {
-    // std::cout << "Comparing " << this << " to " << &other << std::endl;
-    // if (this->correct_answers.size () < other.correct_answers.size ())
-        // return true;
-    if (
-        this->bit_score + 60 * this->correct_answers.size () < other.bit_score + 60 * other.correct_answers.size ())
+    if (this->bit_score + 60 * this->correct_answers.size () <
+        other.bit_score + 60 * other.correct_answers.size ())
         return true;
     else
         return false;

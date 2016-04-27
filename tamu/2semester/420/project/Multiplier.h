@@ -57,6 +57,11 @@ class Multiplier
         // Default constructor
         //
         Multiplier (unsigned int);
+        
+
+        // Copy constructor
+        //
+        Multiplier (Multiplier&);
 
 
         // Constructor with a vector of gates

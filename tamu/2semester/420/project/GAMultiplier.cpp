@@ -34,7 +34,7 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
     // calculate relative fitness
     if (this->getFitness () == 0 && partner->getFitness () == 0)
         rel_fit1 = .5;
-    else
+    else // pera, isso não vai dar zero??????????????????????????????
         rel_fit1 = this->getFitness () / (this->getFitness () + partner->getFitness ());
     
     
@@ -60,14 +60,6 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
         for (unsigned int j = 0; j < selected_column.size (); j++)
             if (rand () % 2)
                 child_gates.push_back (new ToffoliGate (*(selected_column[j])));
-        
-        // for (unsigned int i = 0; i < column1->size (); i++)
-            // if ((rand () / (float) RAND_MAX) < rel_fit1)
-                // child_gates.push_back (new ToffoliGate (*(*column1)[i]));
-        // for (unsigned int i = 0; i < column2->size (); i++)
-            // if ((rand () / (float) RAND_MAX) > rel_fit1)
-                // child_gates.push_back (new ToffoliGate (*(*column2)[i]));
-
     }
 
     mutate (&child_gates);

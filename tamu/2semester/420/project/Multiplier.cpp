@@ -13,6 +13,20 @@ Multiplier::Multiplier (unsigned int eval_reps)
 }
 
 
+Multiplier::Multiplier (Multiplier& other)
+{
+    initGates ();
+    
+    for (unsigned int i = 0; i < 30; i++)
+        for (unsigned int j = 0; j < other.gates[i]->size (); j++)
+            this->gates[i]->push_back (new ToffoliGate (*((*(other.gates[i]))[j])));
+
+    correct_answers = other.correct_answers;
+    bit_score = other.bit_score;
+    eval_reps = other.eval_reps;
+}
+
+
 Multiplier::Multiplier (unsigned int eval_reps, std::vector<ToffoliGate *> new_gates)
 {
     initGates ();
@@ -23,7 +37,6 @@ Multiplier::Multiplier (unsigned int eval_reps, std::vector<ToffoliGate *> new_g
     if (eval_reps == 0)
         eval_reps = g_number_of_primes;
     eval ();
-
 }
 
 

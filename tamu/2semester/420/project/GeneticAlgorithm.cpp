@@ -70,36 +70,27 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
         delete dead_individual;
         population.pop_back ();
         
-        // std::cout << "Parent 1:\n" << population[0]->toString () << std::endl;
-        // std::cout << "Parent 1 address:\n" << population[0]->toString () << std::endl;
-        // crossover 
+        // crossover + mutation
         unsigned int p1_i = 20 - weightedRandom () * 20;
         unsigned int p2_i = 60 - weightedRandom () * 60;
-        
-        // std::cout << "p1, p2: " << p1_i << ", " << p2_i << std::endl;
-        // std::cout << "Parent 1 score:" << population[p1_i]->getFitness () << ", " <<  population[p1_i]->getBitFitness () << std::endl;
-        // std::cout << "Parent 2 score:" << population[p2_i]->getFitness () << ", " << population[p2_i]->getBitFitness ()  << std::endl;
-       
         std::vector<ToffoliGate *> child_gates = 
             population[p1_i]->getCrossoverWith (population[p2_i]);
         GAMultiplier * new_individual = new GAMultiplier (kPrimesToTestk, child_gates);
+
+        // update population
         if (new_individual->getFitness () > population[0]->getFitness ())
             std::cout << "Better child for p1i and p2i:" << p1_i << ", " << p2_i << std::endl;
         insertIndividual (new_individual);
-
-        // std::cout << "Child:\n" << new_individual->toString () << std::endl;
-        // std::cout << "New score: " << new_individual->getFitness () << ", " << population[p1_i]->getBitFitness ()  << std::endl;
-        
+        unsigned int best_score = population[0]->getFitness ();
+        output_file << best_score << " " << population[0]->getBitFitness () << "\n";
         iterations++;
+        
+
         if (iterations % 1000 == 0)
         {
             std::cout << "Iteration " << iterations << " done.\n" ;
             std::cout << "Best score: " << population[0]->getFitness () << std::endl;
         }
-         
-        unsigned int best_score = population[0]->getFitness ();
-        output_file << best_score << " " << population[0]->getBitFitness () << "\n";
-        
         // this is impirical
         if (best_score > 2 && g_number_of_primes < 25)
         {

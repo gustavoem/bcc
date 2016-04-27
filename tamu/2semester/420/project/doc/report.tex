@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}                         % math
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+\usepackage{amsfonts}                        % math symbols (ex: R^n)
+\usepackage{amssymb}
+
+\usepackage{graphicx}                        % imagens
+\usepackage{hyperref}                        % hyperlink
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\lstdefinestyle{term}
+{
+    backgroundcolor=\color{black},
+    basicstyle=\footnotesize\color{white}\ttfamily
+}
+
+\algrenewcommand\Return{\State \algorithmicreturn{} } % removes returns in the same line for code 
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\setlist[description]{leftmargin=\parindent,labelindent=\parindent}
+
+% colors
+\definecolor{title_color}{RGB}{60, 100, 200}
+\definecolor{text_color}{RGB}{0, 0, 0}
+\definecolor{section_color}{RGB}{25, 100, 75}
+\definecolor{basic_dir}{RGB}{0, 255, 170}
+\definecolor{svb}{RGB}{0, 50, 150}
+
+% titles
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{420 Project}
+\author{Gustavo Estrela de Matos}
+\bigskip
+\date{\today}
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+    \begin{flushleft}
+        \textcolor{title_color} {
+            \fontsize{1cm}{1em}\selectfont {Breaking the RSA with Reversible Multiplier Circuits\\}
+        }
+    \end{flushleft}
+  
+    \begin{flushleft}{
+        \textcolor{text_color} {
+        \href{mailto:estrela.gustavo.matos@gmail.com}{Gustavo Estrela de Matos} 8536051\\}
+    }
+    \end{flushleft}
+    \today
+\end{center}
+\end{titlepage}
+
+\newpage
+\section{The Problem}
+\subsection{How to Break RSA Security}
+\subsection{Reversible Multiplier Circuits}
+\subsection{Goal of this Project}
+\subsection{Restrictions and Limitations}
+
+
+\section{Solving the Problem}
+\subsection{Solution Evaluation}
+\subsubsection{Bit Entropy}
+\subsection{Genetic Algorithm}
+\subsubsection{Population Start}
+\subsubsection{Crossover}
+\subsubsection{Mutation}
+\subsection{Fitness Function}
+\subsection{Local Beam Search}
+\subsubsection{Choosing Next Step}
+
+
+\section{Results}
+\subsection{Sample Run}
+\subsection{Analysis}
+
+
+\section{Conclusion}
+\subsection{Lessons Learnt}
+\subsection{Future Research}
+\end{document}

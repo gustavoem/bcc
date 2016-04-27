@@ -20,6 +20,21 @@
 
 class GAMultiplier : public Multiplier
 {
+    private:
+
+        // Calculates the relative fitness of this multipliers compared to a partner
+        //
+        float relativeFitness (GAMultiplier *);
+
+
+        // Receives as a parameter the relative fitness of this multiplier, a index, a 
+        // pointer to the partner and returns a vector with the chosen column to be in
+        // the child, which can be:
+        //     - the i-th column of gates from this multiplier and/or
+        //     - the i-th column of gates from thie partner
+        //
+        std::vector<ToffoliGate *> * crossColumn (unsigned int, GAMultiplier *, float);
+
     public:
 
         // Default constructor

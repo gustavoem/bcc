@@ -50,14 +50,14 @@ class Multiplier
         // Determines the fitness of this multiplier
         // 
         void eval ();
-
+        
         
     public:
 
         // Default constructor
         //
         Multiplier (unsigned int);
-        
+
 
         // Copy constructor
         //

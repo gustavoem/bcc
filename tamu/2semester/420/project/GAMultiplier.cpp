@@ -50,7 +50,7 @@ std::vector<ToffoliGate *> GAMultiplier::getCrossoverWith (GAMultiplier * partne
         delete selected_column;
     }
 
-    mutate (&child_gates);
+    // mutate (&child_gates);
     return child_gates;
 }
 
@@ -79,15 +79,14 @@ std::vector<ToffoliGate *> * GAMultiplier::crossColumn (unsigned int i,
 
 float GAMultiplier::relativeFitness (GAMultiplier * partner)
 {
-    unsigned int fit1 = this->getFitness () * 60 + this->getBitFitness (); 
-    unsigned int fit2 = partner->getFitness () * 60 + partner->getBitFitness (); 
+    unsigned int fit1 = this->getFitness (); 
+    unsigned int fit2 = partner->getFitness (); 
     // calculate relative fitness
     if (fit1 + fit2 == 0)
         return .5;
     else
         return fit1 / ((float) fit1 + fit2);
 }
-
 
 
 void GAMultiplier::mutate (std::vector<ToffoliGate *> * gates)

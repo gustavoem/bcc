@@ -53,6 +53,8 @@ int main (int argc, char * argv[])
     for (set<pair<unsigned int, unsigned int> >::iterator it = correct_cases.begin ();
             it != correct_cases.end (); ++it)
         cout << it->first << " x " << it->second << endl;
+
+    delete solution;
     return 0;
 }
 

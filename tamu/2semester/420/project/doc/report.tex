@@ -92,6 +92,7 @@ The first problem we faced in this project was to find a fast way to compute the
 To solve this problem we decided to add to our search method a parameter that stores the number of prime pairs (randomly chosen) that should be multiplied to calculate the fitness of a multiplier. This does not solve entirely the evaluation problem because now, since there are a lot of different pair of primes, it would be hard to distinguish a multiplier that works for one input from one that does not work for any input; that happens because the probability of choosing that one input is too small. Finally, we added a limit on the number of primes we consider for this problem, as we mentioned in the section \ref{restrictions}.
 
 \subsubsection{Bit Entropy}
+\label{bit-entropy}
 Before explaining how we implemented both solutions present on this project we should understand the concept of entropy and how we can use it to guide our algorithms on the search for the best solution. In the context of this project we can define that the entropy of a bit is the inverse of the amount of information that this bit has, and by information we mean how certain are we that this bit needs to be toggled - or, complimentary, not toggled - from input to output. 
 
 For instance, let's consider that the $i$-th bit has been correct for $90\%$ of the evaluations, then we can say that probably this bit will be correct for other pair of primes, and similarly, we can say that this bit will not be correct if it wasn't correct in the past evaluations. Knowing that, we can use this high informative bits to place our toffoli gates on bits that are normally incorrect and place the control points on bits that are normally correct.
@@ -106,10 +107,15 @@ We tried two different approaches for crossing over two individuals $I_1$ and $I
 \begin{itemize}
     \item{Random crossing: for every gate in $I_i$, add this gate with probability $RelativeFitness (I_i)$}
     \item{Column random crossing: for every gate controlling the $j-$th bit of $I_i$, add all these gates to the child with probability $RelativeFitness (I_i)$. If the sum of gates in the $j$-th column of both individuals is less than $5$, add all these gates to the child with probability $.5$.}
+    After some tests we concluded that the second approach was more effective than the first one.
 \end{itemize}
 
 \subsubsection{Mutation}
+The mutation happens right after the crossover with probability of $0.5$, and it exploits the Bit Entropy as we defined in section \ref{bit-entropy}. The mutation only adds new gates to the child multiplier, placing the gate on a bit that is frequently incorrect with up to $6$ (random) control points placed in frequently correct bits. We also tried totally random gates, but that haven't shown to be effective.
+
 \subsubsection{Fitness Function}
+The fitness function used in the genetic algorithm is simlpy the number of correct multiplications seen when evaluated the individual.
+
 \subsection{Local Beam Search}
 \subsubsection{Fitness Function}
 \subsubsection{Choosing Next Step}

@@ -45,7 +45,7 @@
 \begin{center}
     \begin{flushleft}
         \textcolor{title_color} {
-            \fontsize{1cm}{1em}\selectfont {Breaking the RSA with Reversible Multiplier Circuits\\}
+            \fontsize{2cm}{1em}\selectfont {Breaking the RSA with Reversible Multiplier Circuits\\}
         }
     \end{flushleft}
   
@@ -89,7 +89,7 @@ As mentioned before we implemented used two different approaches to solve this p
 \subsection{Solution Evaluation}
 The first problem we faced in this project was to find a fast way to compute the fitness or the score of a solution. The first approach we used was to run the multiplier being tested to all possible combinations of 30-bits prime numbers. This approach showed to be too slow, which is not good because for both genetic algorithm and local beam search, the fitness function is called constantly.
 
-To solve this problem we decided to add to our search method a parameter that stores the number of prime pairs (randomly chosen) that sould be multiplied to calculate the fitness of a multiplier. This does not solve entirely the evaluation problem because now, since there are a lot of different pair of primes, it would be hard to distinguish a multiplier that works for one input from one that does not work for any input; that happens because the probability of choosing that one input is too small. Finally, we added a limit on the number of primes we consider for this problem, as we mentioned in the section \ref{restrictions}.
+To solve this problem we decided to add to our search method a parameter that stores the number of prime pairs (randomly chosen) that should be multiplied to calculate the fitness of a multiplier. This does not solve entirely the evaluation problem because now, since there are a lot of different pair of primes, it would be hard to distinguish a multiplier that works for one input from one that does not work for any input; that happens because the probability of choosing that one input is too small. Finally, we added a limit on the number of primes we consider for this problem, as we mentioned in the section \ref{restrictions}.
 
 \subsubsection{Bit Entropy}
 Before explaining how we implemented both solutions present on this project we should understand the concept of entropy and how we can use it to guide our algorithms on the search for the best solution. In the context of this project we can define that the entropy of a bit is the inverse of the amount of information that this bit has, and by information we mean how certain are we that this bit needs to be toggled - or, complimentary, not toggled - from input to output. 

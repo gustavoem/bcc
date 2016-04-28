@@ -24,9 +24,9 @@ void GeneticAlgorithm::startPopulation ()
         unsigned int prime2 = primes[p2i];
         
         GAMultiplier * mp;
-        if (i > 5)
-            mp = createRandomIndividual ();
-        else
+        // if (i > 5)
+        //     mp = createRandomIndividual ();
+        // else
             mp = new GAMultiplier (kPrimesToTestk, prime1, prime2);
         
         population.push_back (mp);

@@ -24,9 +24,9 @@ void GeneticAlgorithm::startPopulation ()
         unsigned int prime2 = primes[p2i];
         
         GAMultiplier * mp;
-        // if (i > 5)
-        //     mp = createRandomIndividual ();
-        // else
+        if (i > 5)
+            mp = createRandomIndividual ();
+        else
             mp = new GAMultiplier (kPrimesToTestk, prime1, prime2);
         
         population.push_back (mp);
@@ -63,7 +63,7 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
-    while (iterations < 1000000) 
+    while (iterations < 50) 
     {
         // delete individual with least fitness
         GAMultiplier * dead_individual = population.back ();
@@ -104,7 +104,10 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
         }
     }
     output_file.close ();
-    return population[0];
+
+    GAMultiplier * answer = population[0];
+    population[0] = NULL;
+    return answer;
 }
 
 

@@ -51,7 +51,7 @@
   
     \begin{flushleft}{
         \textcolor{text_color} {
-        \href{mailto:estrela.gustavo.matos@gmail.com}{Gustavo Estrela de Matos} 8536051\\}
+        \href{mailto:estrela.gustavo.matos@gmail.com}{Gustavo Estrela de Matos} 925003559\\}
     }
     \end{flushleft}
     \today
@@ -94,11 +94,20 @@ To solve this problem we decided to add to our search method a parameter that st
 \subsubsection{Bit Entropy}
 Before explaining how we implemented both solutions present on this project we should understand the concept of entropy and how we can use it to guide our algorithms on the search for the best solution. In the context of this project we can define that the entropy of a bit is the inverse of the amount of information that this bit has, and by information we mean how certain are we that this bit needs to be toggled - or, complimentary, not toggled - from input to output. 
 
-For instance, let's consider that the $i$-th bit has been correct for $90\%$ of the evaluations, then we can say that probably this bit will be correct for other pair of primes, and similarly, we can say that this bit will not be correct if it wasn't correct in the past evaluations.
+For instance, let's consider that the $i$-th bit has been correct for $90\%$ of the evaluations, then we can say that probably this bit will be correct for other pair of primes, and similarly, we can say that this bit will not be correct if it wasn't correct in the past evaluations. Knowing that, we can use this high informative bits to place our toffoli gates on bits that are normally incorrect and place the control points on bits that are normally correct.
 
 \subsection{Genetic Algorithm}
+The genetic algorithm approach consists of creating an initial set of multipliers, in this context called individuals, each one evaluated for some fitness function, and a sequence of iterations with crossovers and mutations. Each iteration generates a new generation of individuals that, in theory, should converge to a better fitting individual, which in this case is the individual that correctly multiplies the greates number of pairs of primes.
+
 \subsubsection{Population Start}
+Our first attempt to start the population 
 \subsubsection{Crossover}
+We tried two different approaches for crossing over two individuals $I_1$ and $I_2$, both of them considering the relative fitness:
+\begin{itemize}
+    \item{Random crossing: for every gate in $I_i$, add this gate with probability $RelativeFitness (I_i)$}
+    \item{Column random crossing: for every gate controlling the $j-$th bit of $I_i$, add all these gates to the child with probability $RelativeFitness (I_i)$. If the sum of gates in the $j$-th column of both individuals is less than $5$, add all these gates to the child with probability $.5$.}
+\end{itemize}
+
 \subsubsection{Mutation}
 \subsubsection{Fitness Function}
 \subsection{Local Beam Search}

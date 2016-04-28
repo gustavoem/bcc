@@ -29,7 +29,7 @@ void BitEntropy::addBitOccurrence (unsigned int bit_index, bool correct)
 }
 
 
-unsigned int BitEntropy::getHighEntropyBit ()
+unsigned int BitEntropy::getIncorrecttBit ()
 {
     std::set<std::pair<unsigned int, unsigned int>, EntropyComparator> entropies;
     for (unsigned int i = 0; i < 30; i++) 
@@ -42,7 +42,7 @@ unsigned int BitEntropy::getHighEntropyBit ()
 }
 
 
-unsigned int BitEntropy::getLowEntropyBit ()
+unsigned int BitEntropy::getCorrectBit ()
 {
     std::set<std::pair<unsigned int, unsigned int>, EntropyComparator> entropies;
     for (unsigned int i = 0; i < 30; i++) 

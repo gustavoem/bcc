@@ -44,12 +44,12 @@ class BitEntropy
 
         // Returns the index of a bit with high entropy
         //
-        static unsigned int getHighEntropyBit ();
+        static unsigned int getIncorrecttBit ();
 
 
         // Returns the index of a bit with low entropy
         //
-        static unsigned int getLowEntropyBit ();
+        static unsigned int getCorrectBit ();
 
 
         // Returns a string representation of bit entropy

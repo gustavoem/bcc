@@ -96,11 +96,11 @@ void GAMultiplier::mutate (std::vector<ToffoliGate *> * gates)
         return;
     else if (rand() % 2) // adds a gate based on entropy
     {
-        unsigned int control_bit = BitEntropy::getHighEntropyBit ();
+        unsigned int control_bit = BitEntropy::getIncorrecttBit ();
         ToffoliGate * new_gate = new ToffoliGate (control_bit);
-        new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
+        new_gate->setControl (rand () % 2, BitEntropy::getCorrectBit ());
         for (unsigned int i = rand () % 5; i > 0; i--)
-            new_gate->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
+            new_gate->setControl (rand () % 2, BitEntropy::getCorrectBit ());
         gates->push_back (new_gate);
     }
 }

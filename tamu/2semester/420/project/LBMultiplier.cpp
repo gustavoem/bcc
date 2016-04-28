@@ -37,7 +37,7 @@ void LBMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
 
     unsigned int i = rand () % 90;
     if (i > 30)
-        i = BitEntropy::getHighEntropyBit ();
+        i = BitEntropy::getIncorrecttBit ();
 
     ToffoliGate * new_gate = new ToffoliGate (i);
     new_gates->push_back (new_gate);
@@ -60,7 +60,7 @@ void LBMultiplier::addRandomControlPoint (std::vector<ToffoliGate *> * new_gates
         addRandomGate (new_gates);
 
     unsigned int i = rand () % new_gates->size ();
-    (*new_gates)[i]->setControl (rand () % 2, BitEntropy::getLowEntropyBit ());
+    (*new_gates)[i]->setControl (rand () % 2, BitEntropy::getCorrectBit ());
 }
 
 

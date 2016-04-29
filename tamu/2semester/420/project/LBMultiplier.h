@@ -48,6 +48,12 @@ class LBMultiplier : public Multiplier
         LBMultiplier (unsigned int, std::vector<ToffoliGate *>);
 
 
+
+        // Copy constructor
+        //
+        LBMultiplier (LBMultiplier&);
+
+
         // Default destructor
         //
         virtual ~LBMultiplier ();

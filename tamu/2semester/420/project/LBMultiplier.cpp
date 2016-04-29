@@ -18,11 +18,16 @@ LBMultiplier::LBMultiplier (unsigned int eval_reps, std::vector<ToffoliGate *> g
 }
 
 
-LBMultiplier::~LBMultiplier ()
+LBMultiplier::LBMultiplier (LBMultiplier& other) : Multiplier (other)
 {
     return;
 }
 
+
+LBMultiplier::~LBMultiplier ()
+{
+    return;
+}
 
 void LBMultiplier::addRandomGate (std::vector<ToffoliGate *> * new_gates)
 {

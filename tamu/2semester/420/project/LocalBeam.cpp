@@ -8,7 +8,6 @@
 LocalBeam::LocalBeam (unsigned int nof_beams) : kPrimesToTestk (100), kNeighboursToGenk (100),
    kNumberOfRunsk (1), kMaxNoImprovementk (1000), kMaxIterationsk (100)
 {
-    std::cout << nof_beams << std::endl;
     number_of_beams = nof_beams;
     g_number_of_primes = 40;
     current_best = NULL;
@@ -18,8 +17,8 @@ LocalBeam::LocalBeam (unsigned int nof_beams) : kPrimesToTestk (100), kNeighbour
 
 
 LocalBeam::~LocalBeam ()
-{
-    return;
+{   
+    delete current_best;
 }
 
 
@@ -57,12 +56,10 @@ std::vector<LBMultiplier *> LocalBeam::findNeighbours (LBMultiplier * multiplier
 
 void LocalBeam::deleteMultipliers (std::vector<LBMultiplier *> * multipliers)
 {
-    unsigned int i = 0;
     while (multipliers->size () > 0)
     {
         delete (*multipliers)[0];
         multipliers->erase (multipliers->begin ());
-        i++;
     }
 }
 
@@ -72,7 +69,7 @@ LBMultiplier * LocalBeam::bestMultiplier ()
     unsigned int iterations = 0;
     startBeams ();
 
-    while (iterations < 2)
+    while (iterations < 3)
     {
         std::vector<LBMultiplier *> successors;
         for (unsigned int i = 0; i < current_multipliers.size (); i++)
@@ -112,7 +109,7 @@ void LocalBeam::updateMultipliers (std::vector<LBMultiplier *> * successors)
     deleteMultipliers (&current_multipliers);
     current_multipliers.insert (current_multipliers.end (), successors->begin (),
                                          successors->begin () + number_of_beams);
-    
+
     successors->erase (successors->begin (), successors->begin () + number_of_beams);
     deleteMultipliers (successors);
 }

@@ -1,4 +1,4 @@
-CXXFLAGS = -O0 -g -Wall -std=c++14 
+CXXFLAGS = -O2 -g -Wall -std=c++14 
 
 OBJS = ToffoliGate.o Multiplier.o GAMultiplier.o LBMultiplier.o GeneticAlgorithm.o LocalBeam.o PrimeList.o BitEntropy.o
 

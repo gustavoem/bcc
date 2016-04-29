@@ -102,11 +102,12 @@ The genetic algorithm approach consists of creating an initial set of multiplier
 
 \subsubsection{Population Start}
 Our first attempt to start the population 
+
 \subsubsection{Crossover}
 We tried two different approaches for crossing over two individuals $I_1$ and $I_2$, both of them considering the relative fitness:
 \begin{itemize}
-    \item{Random crossing: for every gate in $I_i$, add this gate with probability $RelativeFitness (I_i)$}
-    \item{Column random crossing: for every gate controlling the $j-$th bit of $I_i$, add all these gates to the child with probability $RelativeFitness (I_i)$. If the sum of gates in the $j$-th column of both individuals is less than $5$, add all these gates to the child with probability $.5$.}
+    \item{Random crossing: for every gate in $I_i$, add this gate with probability $RelativeFitness_1 (I_i)$}
+    \item{Column random crossing: for every gate controlling the $j-$th bit of $I_i$, add all these gates to the child with probability $RelativeFitness_1 (I_i)$. If the sum of gates in the $j$-th column of both individuals is less than $5$, add all these gates to the child with probability $0.5$.}
     After some tests we concluded that the second approach was more effective than the first one.
 \end{itemize}
 
@@ -116,10 +117,34 @@ The mutation happens right after the crossover with probability of $0.5$, and it
 \subsubsection{Fitness Function}
 The fitness function used in the genetic algorithm is simlpy the number of correct multiplications seen when evaluated the individual.
 
-\subsection{Local Beam Search}
-\subsubsection{Fitness Function}
-\subsubsection{Choosing Next Step}
+\subsubsection{Parameter Settings}
+The genetic algorithm has several parameters including: population size, number of primes used to evaluate and probability of mutation. The most important parameter to set up between those is the number of primes to evaluate, because this number has big impact in the time needed to create a new child in a crossover, and, since we want the algorithm to have as many iterations as possible (so we can get evolved individuals) it is important to choose this parameter in a way that the evaluation of a new child happens fast.
 
+
+\subsection{Local Beam Search}
+The Local Beam Search algorithm is similar to a random walk with $k$ different nodes and a function that we are going to call fitness function as we did for the genetic algorithm. The algorithm starts with a population of $k$ empty multipliers, i.e there are no gates in the multipliers and for each step we do the following:
+\begin{itemize}
+\item{Generate a number of successors for every $k$ node;}
+\item{Choose the best $k$ nodes between successors and current nodes all and repeat.}
+\end{itemize}
+\subsubsection{Fitness Function}
+With a few tests we realized that when we look into a node successors, many of them have the same score when considering the number of correct multiplications. Also, if we consider the number of correct bits we end up guiding the algorithm to solutions that, on average, has a good number of correct bits but not necessarily multiplies two primes correctly. Therefore, we decided to use a fitness function that has both information:
+\begin{center}
+    $FitnessFunction_2 (N_i) = 60 * FitnessFunction_1 (N_i) + BitScore (N_i)$
+\end{center}
+
+\subsubsection{Choosing Next Step}
+Every iteration we open a certain number (set as a parameter) of successors and to do that we copy all gates from the current node and we generate the new multiplier by either:
+\begin{itemize}
+    \item{Adding a new gate with probability $3/5$;}
+    \item{Adding a new control point with probability $1/5$;}
+    \item{Removing a gate with probability $1/5$}
+\end{itemize}
+
+To accomplish these actions we use again the Bit Entropy concept we presented in section \ref{bit-entropy} in a similar way as we did for the genetic algorithm. When we add a gate we should choose as the control to be on a bit that is frequently wrong and when adding a control point we should choose a bit that is frequently correct.
+
+\subsection{Parameter Setting}
+The Local Beam Search algorithm we implemented have some parameters we can set up, including the same parameter of number of primes to evaluate as we had for the genetic algorithm. We should note that the local beam search generates way more multipliers in an iteration, therefore, there are more calls to the evaluation function and we should set these evaluation to test less prime numbers than we did for the genetic algorithm.
 
 \section{Results}
 \subsection{Sample Run}

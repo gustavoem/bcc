@@ -112,6 +112,7 @@ void LocalBeam::updateMultipliers (std::vector<LBMultiplier *> * successors)
     deleteMultipliers (&current_multipliers);
     current_multipliers.insert (current_multipliers.end (), successors->begin (),
                                          successors->begin () + number_of_beams);
+    
     successors->erase (successors->begin (), successors->begin () + number_of_beams);
     deleteMultipliers (successors);
 }

@@ -10,12 +10,14 @@
 \BOOKMARK [3][-]{subsubsection.2.2.2}{Crossover}{subsection.2.2}% 10
 \BOOKMARK [3][-]{subsubsection.2.2.3}{Mutation}{subsection.2.2}% 11
 \BOOKMARK [3][-]{subsubsection.2.2.4}{Fitness Function}{subsection.2.2}% 12
-\BOOKMARK [2][-]{subsection.2.3}{Local Beam Search}{section.2}% 13
-\BOOKMARK [3][-]{subsubsection.2.3.1}{Fitness Function}{subsection.2.3}% 14
-\BOOKMARK [3][-]{subsubsection.2.3.2}{Choosing Next Step}{subsection.2.3}% 15
-\BOOKMARK [1][-]{section.3}{Results}{}% 16
-\BOOKMARK [2][-]{subsection.3.1}{Sample Run}{section.3}% 17
-\BOOKMARK [2][-]{subsection.3.2}{Analysis}{section.3}% 18
-\BOOKMARK [1][-]{section.4}{Conclusion}{}% 19
-\BOOKMARK [2][-]{subsection.4.1}{Lessons Learnt}{section.4}% 20
-\BOOKMARK [2][-]{subsection.4.2}{Future Research}{section.4}% 21
+\BOOKMARK [3][-]{subsubsection.2.2.5}{Parameter Settings}{subsection.2.2}% 13
+\BOOKMARK [2][-]{subsection.2.3}{Local Beam Search}{section.2}% 14
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Fitness Function}{subsection.2.3}% 15
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Choosing Next Step}{subsection.2.3}% 16
+\BOOKMARK [2][-]{subsection.2.4}{Parameter Setting}{section.2}% 17
+\BOOKMARK [1][-]{section.3}{Results}{}% 18
+\BOOKMARK [2][-]{subsection.3.1}{Sample Run}{section.3}% 19
+\BOOKMARK [2][-]{subsection.3.2}{Analysis}{section.3}% 20
+\BOOKMARK [1][-]{section.4}{Conclusion}{}% 21
+\BOOKMARK [2][-]{subsection.4.1}{Lessons Learnt}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.2}{Future Research}{section.4}% 23

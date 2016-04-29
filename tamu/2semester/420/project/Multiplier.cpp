@@ -45,6 +45,7 @@ Multiplier::Multiplier (unsigned int eval_reps, unsigned int prime1, unsigned in
     unsigned int input = (prime1 << 15) + prime2;
     unsigned int output = prime1 * prime2;
     std::vector< std::pair<bool, unsigned int> > control_points;
+    this->eval_reps = eval_reps;
     initGates ();
 
     unsigned int bit_index = 0;

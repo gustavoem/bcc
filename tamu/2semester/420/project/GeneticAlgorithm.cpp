@@ -63,7 +63,7 @@ GAMultiplier * GeneticAlgorithm::bestMultiplier ()
 {
     unsigned int iterations = 0;
 
-    while (iterations < 10000) 
+    while (iterations < 50000) 
     {
         // delete individual with least fitness
         GAMultiplier * dead_individual = population.back ();

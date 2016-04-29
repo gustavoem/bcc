@@ -45,7 +45,7 @@
 \begin{center}
     \begin{flushleft}
         \textcolor{title_color} {
-            \fontsize{2cm}{1em}\selectfont {Breaking the RSA with Reversible Multiplier Circuits\\}
+            \fontsize{2cm}{1em}\selectfont {Trying to break the RSA with Reversible Multiplier Circuits\\}
         }
     \end{flushleft}
   
@@ -101,7 +101,7 @@ For instance, let's consider that the $i$-th bit has been correct for $90\%$ of 
 The genetic algorithm approach consists of creating an initial set of multipliers, in this context called individuals, each one evaluated for some fitness function, and a sequence of iterations with crossovers and mutations. Each iteration generates a new generation of individuals that, in theory, should converge to a better fitting individual, which in this case is the individual that correctly multiplies the greates number of pairs of primes.
 
 \subsubsection{Population Start}
-Our first attempt to start the population 
+Our first attempt to start the population with random multipliers, but this approach made necessary a lot of generations before finding a multiplier that scores. Trying to fix this, we implemented a multiplier constructor that receives two primes as a parameter and builds a multiplier that correctly multiplies the two arguments. That way we could start the population with multilpiers that we can guarantee that works well for at least one pair of primes.
 
 \subsubsection{Crossover}
 We tried two different approaches for crossing over two individuals $I_1$ and $I_2$, both of them considering the relative fitness:
@@ -147,12 +147,58 @@ To accomplish these actions we use again the Bit Entropy concept we presented in
 The Local Beam Search algorithm we implemented have some parameters we can set up, including the same parameter of number of primes to evaluate as we had for the genetic algorithm. We should note that the local beam search generates way more multipliers in an iteration, therefore, there are more calls to the evaluation function and we should set these evaluation to test less prime numbers than we did for the genetic algorithm.
 
 \section{Results}
-
 \subsection{Sample Run}
+\begin{figure}[h]
+    \centerline{\includegraphics[scale=.5]{GASampleRun}}
+\caption{Sample run of the genetic algorithm}
+\end{figure}
+\begin{figure}[h]
+    \centerline{\includegraphics[scale=.5]{LBSampleRun}}
+\caption{Sample run of the local beam search algorithm}
+\end{figure}
+
 \subsection{Analysis}
+What we could observe from both algorithms was that they had a reasonable learning curve, but at some point they got stuck and they wouldn't find other multipliers with better scores. We believe that this learning limit happened because of the limit we imposed to the evaluate function for both, genetic algorithm and local beam search, when we restricted the set of primes to only the first 40 primes.
+
+To compare both algorithms and also to help parameter tunning we print in a file, for both algorithms, the maximum score (number of correct multiplications) and maximum bitscore (number of correct bits) of that iteration. To visualize this data we created a \emph{gnuplot} script that creates a graph of this data and saves it in a \emph{.png} file. 
+
+\begin{figure}[h]
+    \centerline{\includegraphics[scale=.5]{LBAnalysis}}
+\caption{Score per iteration of the local beam search algorithm with 20 different beams.}
+\end{figure}
+
+\begin{figure}[h]
+    \centerline{\includegraphics[scale=.5]{GAAnalysis}}
+\caption{Score per iteration of the genetic algorithm. We can see that after finding a better solution, the algorithm has a very constant bit score, and that happens because this algorithm only considers Score when evaluating its solutions, therefore when the solution does not change the bit score tend to be the same.}
+\end{figure}
+
+We can see in the graphics is that the local beam search algorithm was more successful than the genetic algorithm because, even starting with the advantage of having working multipliers, the genetic algorithm, in general, couldn't find as many solutions as the local beam algorithm could. 
+
+We could say that the strategy of genetic algorithm was not better than the local beam because it's not really easy to create a crossover and mutation that, at the same time has a random factor enough for walking on the search space and does not destroy the solution (does not make it worse). The local beam search, differently, we don't take big random steps, therefore we don't risk our current solutions of giving big steps to worse solutions every iteration.
 
 
 \section{Conclusion}
+We conclude that, even though our algorithms showed some progress in their learning curve, we did not achieve the what the title of this project suggests. To see that, first we should remember that RSA cryptography uses numbers way bigger than 30-bit numbers, and also, we restricted our program to consider only the 40 first primes, therefore, our results are not even close to break a real RSA code.
+
 \subsection{Lessons Learnt}
+Even though we did not get close to break the RSA code, the process of creating the algorithms implemented in this projects gave us more knowledge in computer science that can be used to solve different problems, or even try another approach to get closer to break the RSA code.
+
+In this project we learnt how the RSA cryptography is based on the simple, but very hard, problem of factorizing big numbers. We also learned how it is possible to create a reversible circuit and therefore solve the factorization problem with a "simpler" problem of multiplying two numbers.
+
+The implementation of both algorithms made us face more than the usual issues we face when implementing something in computer science, which is normally just technical issues such as segmentation faults. Since we had the freedom of choosing how we were going to solve the problem, we had to elaborate, experiment and analyse approaches. 
+
 \subsection{Future Research}
+Since we did not have a lot of time to work on this project, there are some parts of it that could be explored with a little more rresearch. The first thing we could work on this project to make it better is to run more tests varying all the parameters we used in both genetic algorithm and local beam search. 
+
+For instance, we could research and improve in this project changing the evaluation of the fitness function. It was clear for us that considering only \emph{Score} and \emph{Bit Score} was not a very good fitness function, but we did not try a lot of different combinations of fitness functions that consider both \emph{Score}, \emph{Bit Score} and other parameters.
+
+We could also research on how to increase the set of primes being considered with the growth of the fitness function. There is a trade-off on the number of primes we are considering which is the following: if we consider a large set of primes, it is harder for the algorithm to be guided to a solution; but if the set is too small the algorithm can get stuck or too restricted to that small set.
+
+\section{Running Instructions}
+All algorithms were coded in c++14 and to run the program you should:
+\begin{itemize}
+    \item{Run \emph{make} to compile}
+    \item{Run \emph{./main -l k or -g} to run the code. Use \emph{-l k} to run local beam search with k beams and \emph{-g} for genetic algorithm.}
+    \item{Run \emph{gnuplot ./plot\_script.gp} to generate score plot; the output is a \emph{.png} file.}
+\end{itemize}
 \end{document}

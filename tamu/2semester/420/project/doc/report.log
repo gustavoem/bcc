@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.21)  28 APR 2016 20:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.21)  29 APR 2016 11:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -667,7 +667,7 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <56.9055> not available
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<MultiplierExample.png, id=104, 433.62pt x 158.994pt>
+<MultiplierExample.png, id=108, 433.62pt x 158.994pt>
 File: MultiplierExample.png Graphic file (type png)
 
 <use MultiplierExample.png>
@@ -702,15 +702,50 @@ LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbullet' on input line 109.
 
-[3] [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 157.
- [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 157.
+[3] [4] <GASampleRun.png, id=138, 722.7pt x 722.7pt>
+File: GASampleRun.png Graphic file (type png)
+ <use GASampleRun.png>
+Package pdftex.def Info: GASampleRun.png used on input line 152.
+(pdftex.def)             Requested size: 361.3491pt x 361.3491pt.
+
+<LBSampleRun.png, id=139, 251.94125pt x 704.6325pt>
+File: LBSampleRun.png Graphic file (type png)
+ <use LBSampleRun.png>
+Package pdftex.def Info: LBSampleRun.png used on input line 156.
+(pdftex.def)             Requested size: 125.9703pt x 352.3154pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5 <./GASampleRun.png (PNG copy)>]
+<LBAnalysis.png, id=145, 770.88pt x 578.16pt>
+File: LBAnalysis.png Graphic file (type png)
+ <use LBAnalysis.png>
+Package pdftex.def Info: LBAnalysis.png used on input line 166.
+(pdftex.def)             Requested size: 385.43906pt x 289.07928pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<GAAnalysis.png, id=146, 770.88pt x 578.16pt>
+File: GAAnalysis.png Graphic file (type png)
+ <use GAAnalysis.png>
+Package pdftex.def Info: GAAnalysis.png used on input line 171.
+(pdftex.def)             Requested size: 385.43906pt x 289.07928pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6 <./LBSampleRun.png (PNG copy)>] [7 <./LBAnalysis.png>] [8 <./GAAnalysis.png>
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 204.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 204.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 157.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 157.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 204.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 204.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 18E9629D4756809526D5EBF0B43CD017;1514.
+(rerunfilecheck)             Checksum: BF8400651F761FBEC63D5CE52B125C5F;1570.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -719,13 +754,13 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 157.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 204.
  ) 
 Here is how much of TeX's memory you used:
- 9272 strings out of 493085
- 132863 string characters out of 6136917
- 231765 words of memory out of 5000000
- 12608 multiletter control sequences out of 15000+600000
+ 9303 strings out of 493085
+ 133323 string characters out of 6136917
+ 232765 words of memory out of 5000000
+ 12626 multiletter control sequences out of 15000+600000
  10752 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,7n,32p,682b,337s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -739,10 +774,10 @@ ype1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy8.pfb>
-Output written on report.pdf (6 pages, 120469 bytes).
+Output written on report.pdf (10 pages, 281253 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 157 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
- 190 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 215 PDF objects out of 1000 (max. 8388607)
+ 183 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 218 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -69,7 +69,7 @@ LBMultiplier * LocalBeam::bestMultiplier ()
     unsigned int iterations = 0;
     startBeams ();
 
-    while (iterations < 3)
+    while (iterations < kMaxIterationsk)
     {
         std::vector<LBMultiplier *> successors;
         for (unsigned int i = 0; i < current_multipliers.size (); i++)

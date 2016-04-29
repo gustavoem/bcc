@@ -55,9 +55,8 @@ void LBMultiplier::removeRandomGate (std::vector<ToffoliGate *> * new_gates)
         addRandomGate (new_gates);
 
     unsigned i = rand () % new_gates->size ();
-    std::vector<ToffoliGate *>::iterator removed_gate = new_gates->begin () + i;
-    new_gates->erase (removed_gate);
-    delete *removed_gate;
+    delete (*new_gates)[i];
+    new_gates->erase (new_gates->begin () + i);
 }
 
 

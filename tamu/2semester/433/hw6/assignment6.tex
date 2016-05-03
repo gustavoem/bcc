@@ -45,7 +45,50 @@ CSCE 433: Formal Languages and Automata} %If necessary, replace with your course
 
 \maketitle
 
-\question{1}{}
+\question{1}{}  
+\begin{itemize}
+\item{Eliminate the starting symbol from the right hand side}
+\item{Eliminate $\epsilon$ rules}
+\begin{equation*}
+\begin{aligned}
+    S & \rightarrow AB \mid aB \mid B \\
+    A & \rightarrow aab \\
+    B & \rightarrow bbA \mid bb
+\end{aligned}
+\end{equation*}
+\item{Eliminate unity rules}
+\begin{equation*}
+\begin{aligned}
+    S & \rightarrow AB \mid aB \mid bbA \mid bb \\
+    A & \rightarrow aab \\
+    B & \rightarrow bbA \mid bb 
+\end{aligned}
+\end{equation*}
+\item{Eliminate rules with more than 2 symbols in the right hand side}
+\begin{equation*}
+\begin{aligned}
+    S & \rightarrow AB \mid aB \mid bY \mid bb \\  
+    A & \rightarrow aZ \\
+    B & \rightarrow bY \mid bb \\
+    Y & \rightarrow bA \\
+    Z & \rightarrow ab 
+\end{aligned}
+\end{equation*}
+\item{Create unity rules for terminals}
+\begin{equation*}
+\begin{aligned}
+    S & \rightarrow AB \mid XB \mid VY \mid VV \\  
+    A & \rightarrow XZ \\
+    B & \rightarrow VY \mid VV \\
+    Y & \rightarrow VA \\
+    Z & \rightarrow VX \\
+    V & \rightarrow b \\
+    X & \rightarrow a
+\end{aligned}
+\end{equation*}
+
+\end{itemize}
+
 \question{2}{}
 \question{3}{}
 \question{4}{}

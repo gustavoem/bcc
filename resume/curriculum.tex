@@ -1,0 +1,185 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+% Awesome CV LaTeX Template for CV/Resume
+%
+% This template has been downloaded from:
+% https://github.com/posquit0/Awesome-CV
+%
+% Author:
+% Claud D. Park <posquit0.bj@gmail.com>
+% http://www.posquit0.com
+%
+% Template license:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+%
+
+
+%-------------------------------------------------------------------------------
+% CONFIGURATIONS
+%-------------------------------------------------------------------------------
+% A4 paper size by default, use 'letterpaper' for US letter
+\documentclass[11pt, a4paper]{awesome-cv-res}
+
+% Configure page margins with geometry
+\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+
+% Specify the location of the included fonts
+\fontdir[./fonts/]
+
+% Color for highlights
+% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
+%                 awesome-nephritis, awesome-concrete, awesome-darknight
+\colorlet{awesome}{awesome-red}
+% Uncomment if you would like to specify your own color
+% \definecolor{awesome}{HTML}{CA63A8}
+
+% Colors for text
+% Uncomment if you would like to specify your own color
+% \definecolor{darktext}{HTML}{414141}
+% \definecolor{text}{HTML}{333333}
+% \definecolor{graytext}{HTML}{5D5D5D}
+% \definecolor{lighttext}{HTML}{999999}
+
+% Set false if you don't want to highlight section with awesome color
+\setbool{acvSectionColorHighlight}{false}
+
+% If you would like to change the social information separator from a pipe (|) to something else
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+
+%-------------------------------------------------------------------------------
+%	PERSONAL INFORMATION
+%	Comment any of the lines below if they are not required
+%-------------------------------------------------------------------------------
+\name{Gustavo Estrela de Matos}{}
+%\address{1100 Hensel Drive, Apt. N302, College Station - Texas}
+%\position{Computer Science Student}
+\mobile{(+55) 975-934-129}
+\email{estrela.gustavo.matos@gmail.com}
+\github{gustavoem}
+
+
+%-------------------------------------------------------------------------------
+\begin{document}
+
+% Print the header with above personal informations
+\makecvheader
+% Print the footer with 3 arguments(<left>, <center>, <right>)
+% Leave any of these blank if they are not needed
+\makecvfooter
+  {}
+  {}
+  {\thepage}
+
+
+%-------------------------------------------------------------------------------
+%	CV/RESUME CONTENT
+%	Each section is imported separately, open each file in turn to modify content
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     EDUCATION
+%-------------------------------------------------------------------------------
+\cvsection{Educação}
+\begin{cventries}
+%---------------------------------------------------------
+\cventry
+{Bacharelado em Ciência da Computação}
+{Texas A\&M University}
+{College Station, Texas}
+{Setembro 2015 - Maio 2016}
+{Participante do programa Ciência Sem Fronteiras. \newline Média: 3.6/4}
+\newline 
+\newline
+
+\cventry
+{Bacharelado em Ciência da Computação} % Degree
+{Instituto de Matematica e Estatística (Universidade de São Paulo)} % Institution
+{São Paulo, Brasil} % Location
+{February 2013 - Presente} % Date(s)
+{Previsão de conclusão: dezembro de 2017 \newline Média: 8.9/10}
+\end{cventries}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     EXPERIENCES
+%-------------------------------------------------------------------------------
+\cvsection{Experiências}
+\begin{cventries}
+%---------------------------------------------------------
+\cventry
+{Aluno de Iniciação Científica}
+{Fundação de Amparo a Pesquisa do Estado de São Paulo e Instituto Butantan}
+{São Paulo, Brasil}
+{Janeiro 2015 - Julho 2015}
+{Nessa oportunidade trabalhamos com a elaboração de um algoritmo para solucionar o problema U-Curve, um problema de otimização definido sobre um reticulado booleano em que a função objetivo descreve curvas em formato de "u" para todas as cadeias do reticulado.}
+\newline 
+\newline
+
+\cventry
+{Monitor de Graduação} 
+{Instituto de Matematica e Estatistica (Universidade de São Paulo)} 
+{São Paulo, Brasil}
+{Agosto 2014 - Dezembro 2014}
+{Assistente de professor no curso de Introdução a Computação. As atividades consistiam em avaliar trabalhos, sanar dúvidas de alunos e substituir o professor nas aulas iniciais do curso.}
+\end{cventries}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     SKILLS
+%-------------------------------------------------------------------------------
+\cvsection{Habilidades}
+\begin{cvskills}
+\cvskill
+{Computação} % Category
+{C/C++, JAVA, Python, Octave (Matlab), Ruby, Rails, LaTeX, MySQL, Linux, Arduino, Shell, Git, OpenGL, Android Studio, Unity, Vim.} % Skills
+
+%---------------------------------------------------------
+\cvskill
+{Idiomas} % Category
+{Português, Inglês.} % Skills
+
+%---------------------------------------------------------
+\end{cvskills}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     EXTRA-CURRICULAR ACTIVITIES
+%-------------------------------------------------------------------------------
+\cvsection{Atividades Extra-curriculares}
+\begin{cventries}
+
+\cventry
+{Membro}
+{Texas A\&M Table Tennis Club}
+{College Station, Texas}
+{Janeiro 2016 - Maio 2016}
+{}
+
+\cventry
+{Co-fundador}
+{Grupo Hardware Livre da Universidade de São Paulo}
+{São Paulo, Brasil}
+{Novembro 2013 - Agosto 2015}
+{O grupo foi fundado por alunos de ciência da computação como uma tentativa de fomentar o estudo de hardware livre, principalmente da placa Arduino, entre os alunos e comunidade local.}
+\newline
+\newline
+
+\cventry
+{Membro}
+{Representantes de Classe de Ciência da Computação}
+{São Paulo, Brasil}
+{Fevereiro 2013 - Agosto 2015}
+{}
+
+\cventry
+{Membro}
+{Clube de Baseball e Softball do IME-USP}
+{São Paulo, Brasil}
+{Fevereiro 2013 - Agosto 2015}
+{}
+
+%---------------------------------------------------------
+\end{cventries}
+%---------------------------------------------------------
+\end{document}

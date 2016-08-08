@@ -1,3 +1,15 @@
+/*
+Nome: Gustavo Estrela de Matos
+NUSP: 8536051
+Sigla: GUSTAVOE
+Data: 08/08/2016
+Disciplina: MAC0328
+
+Este arquivo faz parte da tarefa B e tem como objetivo imlpementar uma
+biblioteca para manipulação de grafos. Essa biblioteca usa matrizes
+de adjacência na sua implementação.
+*/
+
 #include "DIGRAPHmatrix.h"
 
 /* Protótipos de funções do tipo static */
@@ -13,7 +25,6 @@ struct digraph {
     int **adj;
 };
 
-
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinit()
 constrói um digrafo com vértices 0 1 .. V-1 e nenhum arco. */
 Digraph DIGRAPHinit (int V) { 
@@ -23,7 +34,6 @@ Digraph DIGRAPHinit (int V) {
    G->adj = MATRIXint (V, V, 0);
    return G;
 }
-
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função MATRIXint() aloca
 uma matriz com linhas 0..r-1 e colunas 0..c-1. Cada elemento da matriz

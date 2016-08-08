@@ -1,5 +1,8 @@
 #include "DIGRAPHmatrix.h"
 
+/* Protótipos de funções do tipo static */
+static int **MATRIXint (int r, int c, int val);
+
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
 representa um digrafo. O campo adj é um ponteiro para a matriz de 
 adjacências do digrafo. O campo V contém o número de vértices e o campo

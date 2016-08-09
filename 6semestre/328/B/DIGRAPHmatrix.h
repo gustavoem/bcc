@@ -34,6 +34,11 @@ typedef struct digraph *Digraph;
 constrói um digrafo com vértices 0 1 .. V-1 e nenhum arco. */
 Digraph DIGRAPHinit (int V);
 
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHdestroy()
+destrói um digrafo G liberando na memória o espaço que foi alocado em
+sua criação */
+void DIGRAPHdestroy (Digraph G);
+
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinsertA()
 insere um arco v-w no digrafo G. A função supõe que v e w são 
 distintos, positivos e menores que G->V. Se o digrafo já tem um arco 

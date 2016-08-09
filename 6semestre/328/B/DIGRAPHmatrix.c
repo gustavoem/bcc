@@ -14,6 +14,7 @@ de adjacência na sua implementação.
 
 /* Protótipos de funções do tipo static */
 static int **MATRIXint (int r, int c, int val);
+static void MATRIXdelete (int **m, int r);
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
 representa um digrafo. O campo adj é um ponteiro para a matriz de 
@@ -33,6 +34,23 @@ Digraph DIGRAPHinit (int V) {
    G->A = 0;
    G->adj = MATRIXint (V, V, 0);
    return G;
+}
+
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHdestroy()
+destrói um digrafo G liberando na memória o espaço que foi alocado em
+sua criação */
+void DIGRAPHdestroy (Digraph G) {
+   MATRIXdelete (G->adj, G->V);
+   free (G);
+}
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função MATRIXdelete()
+deleta uma matriz com linhas 0..r-1 e colunas 0..c-1. */
+static void MATRIXdelete (int **m, int r) {
+   int i;
+   for (i = 0; i < r; i++)
+      free (m[i]);
+   free (m);
 }
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função MATRIXint() aloca

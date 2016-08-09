@@ -51,6 +51,16 @@ positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow() 
+calcula o grau de saída do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHoutdeg (Digraph G, Vertex v);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow() 
+calcula o grau de entrada do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHindeg (Digraph G, Vertex w);
+
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow()  
 imprime, para cada vértice v do digrafo G, em uma linha, todos os
 vértices adjacentes a v. */

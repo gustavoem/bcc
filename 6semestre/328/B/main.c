@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "DIGRAPHlists.h"
+#include "DIGRAPHmatrix.h"
 
 int main () {
     Digraph d;
@@ -7,6 +7,8 @@ int main () {
     DIGRAPHinsertA (d, 1, 2);
     DIGRAPHinsertA (d, 2, 0);
     DIGRAPHinsertA (d, 2, 3);
+    printf ("Grau de saida de 2: %d \n", DIGRAPHoutdeg (d, 2));
+    printf ("Grau de entrada de 2: %d \n", DIGRAPHindeg (d, 2));
     DIGRAPHshow (d);
     DIGRAPHremoveA (d, 2, 0);
     DIGRAPHshow (d);

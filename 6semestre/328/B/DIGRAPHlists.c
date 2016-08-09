@@ -14,6 +14,7 @@ de adjacência na sua implementação.
 
 /* Protótipos de funções do tipo static */
 static link NEWnode (Vertex w, link next);
+static void LISTSdelete (link a);
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
 representa um digrafo. O campo adj é um ponteiro para a matriz de 
@@ -56,6 +57,29 @@ Digraph DIGRAPHinit (int V) {
       G->adj[v] = NULL;
    return G;
 }
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHdestroy()
+destrói um digrafo G liberando na memória o espaço que foi alocado em
+sua criação */
+void DIGRAPHdestroy (Digraph G) {
+   Vertex i;
+   for (i = 0; i < G->V; i++)
+      LISTSdelete (G->adj[i]);
+   free (G->adj);
+   free (G);
+}
+
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função LISTSdelete ()
+destrói uma lista de links */
+static void LISTSdelete (link a) {
+   while (a != NULL) {
+      link aux = a;
+      a = a->next;
+      free (aux);
+   }
+}
+
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHinsertA()
 insere um arco v-w no digrafo G. A função supõe que v e w são 

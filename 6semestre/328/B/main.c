@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "DIGRAPHmatrix.h"
+#include "DIGRAPHlists.h"
 
 int main () {
 	Digraph d;

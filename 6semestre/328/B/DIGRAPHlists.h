@@ -37,4 +37,25 @@ node. */
 typedef struct node *link;
 struct node;
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHinit() 
+constrói um digrafo com vértices 0 1 .. V-1 e nenhum arco. */
+Digraph DIGRAPHinit (int V);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHinsertA()
+insere um arco v-w no digrafo G. A função supõe que v e w são 
+distintos, positivos e menores que G->V. Se o digrafo já tem um arco
+v-w, a função não faz nada. */
+void DIGRAPHinsertA (Digraph G, Vertex v, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHremoveA()
+remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
+positivos e menores que G->V. Se não existe arco v-w, a função não faz
+nada. */
+void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()  
+imprime, para cada vértice v do digrafo G, em uma linha, todos os
+vértices adjacentes a v. */
+void DIGRAPHshow (Digraph G);
+
 #endif

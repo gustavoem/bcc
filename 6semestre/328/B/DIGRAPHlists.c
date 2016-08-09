@@ -12,6 +12,9 @@ de adjacência na sua implementação.
 
 #include "DIGRAPHlists.h"
 
+/* Protótipos de funções do tipo static */
+static link NEWnode (Vertex w, link next);
+
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
 representa um digrafo. O campo adj é um ponteiro para a matriz de 
 adjacências do digrafo. O campo V contém o número de vértices e o campo
@@ -62,6 +65,32 @@ void DIGRAPHinsertA (Digraph G, Vertex v, Vertex w) {
    link a;
    for (a = G->adj[v]; a != NULL; a = a->next) 
       if (a->w == w) return;
-   G->adj[v] = NEWnode( w, G->adj[v]);
+   G->adj[v] = NEWnode (w, G->adj[v]);
    G->A++;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHremoveA()
+remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
+positivos e menores que G->V. Se não existe arco v-w, a função não faz
+nada. */
+void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
+   if (G->adj[v] == NULL)
+      return;
+   if (G->adj[v]->w == w) {
+      link aux = G->adj[v];
+      G->adj[v] = w->next;
+      free (aux);
+   }
+   else {
+      link b = G->adj[v];
+      link a = b->next;
+      while (a != NULL && a->w != w) {
+         b = a;
+         a = a->next;
+      }
+      if (a != NULL) {
+         b->next = a->next;
+         free (a);
+      }
+   }
 }

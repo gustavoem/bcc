@@ -20,5 +20,8 @@ main.o : main.c DIGRAPHmatrix.h
 DIGRAPHmatrix.o : DIGRAPHmatrix.h DIGRAPHmatrix.c
 	gcc $(CFLAGSa) -c DIGRAPHmatrix.c
 
+DIGRAPHlists.o : DIGRAPHlists.h DIGRAPHlists.c
+	gcc $(CFLAGSa) -c DIGRAPHlists.c
+
 clean:
 	rm *.o

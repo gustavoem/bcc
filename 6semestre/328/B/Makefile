@@ -10,10 +10,13 @@ LIBRARIES = -lm
 # para produzir o arquivo executavel xxx, 
 #    basta dizer "make xxx"
 
-main: main.o DIGRAPHmatrix.o
+lists: main.o DIGRAPHlists.o
+	gcc $(CFLAGSa) main.o DIGRAPHlists.o -o main
+
+matrix: main.o DIGRAPHmatrix.o
 	gcc $(CFLAGSa) main.o DIGRAPHmatrix.o -o main
 
-main.o : main.c DIGRAPHmatrix.h
+main.o : main.c DIGRAPHmatrix.h DIGRAPHlists.h
 	gcc $(CFLAGSa) -c main.c
 
 

@@ -78,7 +78,7 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
       return;
    if (G->adj[v]->w == w) {
       link aux = G->adj[v];
-      G->adj[v] = w->next;
+      G->adj[v] = G->adj[v]->next;
       free (aux);
    }
    else {
@@ -92,5 +92,21 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
          b->next = a->next;
          free (a);
       }
+   }
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()  
+imprime, para cada vértice v do digrafo G, em uma linha, todos os
+vértices adjacentes a v. */
+void DIGRAPHshow (Digraph G) {
+   Vertex v;
+   for (v = 0; v < G->V; v++) {
+      link a = G->adj[v];
+      printf ("%d: ", v);
+      while (a != NULL) {
+         printf ("%d ", a->w);
+         a = a->next;
+      }
+      printf ("\n");
    }
 }

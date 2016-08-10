@@ -24,7 +24,17 @@ de adjacência na sua implementação.
 representa um digrafo. O campo adj é um ponteiro para a matriz de 
 adjacências do digrafo. O campo V contém o número de vértices e o campo
 A contém o número de arcos do digrafo. */
-struct digraph;
+/*struct digraph;*/
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
+representa um digrafo. O campo adj é um ponteiro para a matriz de 
+adjacências do digrafo. O campo V contém o número de vértices e o campo
+A contém o número de arcos do digrafo. */
+struct digraph {
+    int V;
+    int A;
+    int **adj;
+};
 
 /* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
 o endereço de um digraph. */
@@ -51,12 +61,12 @@ positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow() 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHoutdeg() 
 calcula o grau de saída do vértice v do grafo G. A função supõe que
 v é menor que G->V */
 int DIGRAPHoutdeg (Digraph G, Vertex v);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow() 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHindeg() 
 calcula o grau de entrada do vértice v do grafo G. A função supõe que
 v é menor que G->V */
 int DIGRAPHindeg (Digraph G, Vertex w);

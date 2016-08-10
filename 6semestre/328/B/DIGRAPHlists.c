@@ -16,25 +16,6 @@ de adjacência na sua implementação.
 static link NEWnode (Vertex w, link next);
 static void LISTSdelete (link a);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
-representa um digrafo. O campo adj é um ponteiro para a matriz de 
-adjacências do digrafo. O campo V contém o número de vértices e o campo
-A contém o número de arcos do digrafo. */
-struct digraph {
-   int V; 
-   int A; 
-   link *adj; 
-};
-
-/* A lista de adjacência de um vértice v é composta por nós do tipo 
-node. Cada nó da lista corresponde a um arco e contém um vizinho w de v
-e o endereço do nó seguinte da lista. Um link é um ponteiro para um
-node. */
-struct node { 
-   Vertex w; 
-   link next; 
-};
-
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
 */
@@ -69,6 +50,34 @@ void DIGRAPHdestroy (Digraph G) {
    free (G);
 }
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg() 
+calcula o grau de saída do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHoutdeg (Digraph G, Vertex v) {
+   int count = 0;
+   link a = G->adj[v];
+   while (a != NULL) {
+      count++;
+      a = a->next;
+   }
+   return count;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHindeg() 
+calcula o grau de entrada do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHindeg (Digraph G, Vertex w) {
+   int count = 0;
+   Vertex v;
+   for (v = 0; v < G->V; v++) {
+      link a = G->adj[v];
+      while (a != NULL && a->w != w)
+         a = a->next;
+      if (a != NULL)
+         count++;
+   }
+   return count;
+}
 
 /* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função LISTSdelete ()
 destrói uma lista de links */
@@ -104,6 +113,7 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
       link aux = G->adj[v];
       G->adj[v] = G->adj[v]->next;
       free (aux);
+      G->A--;
    }
    else {
       link b = G->adj[v];
@@ -115,6 +125,7 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
       if (a != NULL) {
          b->next = a->next;
          free (a);
+         G->A--;
       }
    }
 }

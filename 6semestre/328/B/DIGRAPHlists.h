@@ -20,22 +20,29 @@ de adjacência na sua implementação.
 /* Definições de constantes */
 #define Vertex int
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
-representa um digrafo. O campo adj é um ponteiro para a matriz de 
-adjacências do digrafo. O campo V contém o número de vértices e o campo
-A contém o número de arcos do digrafo. */
-struct digraph;
-
-/* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
-o endereço de um digraph. */
-typedef struct digraph *Digraph;
-
 /* A lista de adjacência de um vértice v é composta por nós do tipo 
 node. Cada nó da lista corresponde a um arco e contém um vizinho w de v
 e o endereço do nó seguinte da lista. Um link é um ponteiro para um
 node. */
 typedef struct node *link;
-struct node;
+struct node { 
+   Vertex w; 
+   link next; 
+};
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A estrutura digraph 
+representa um digrafo. O campo adj é um ponteiro para a matriz de 
+adjacências do digrafo. O campo V contém o número de vértices e o campo
+A contém o número de arcos do digrafo. */
+struct digraph {
+   int V; 
+   int A; 
+   link *adj; 
+};
+
+/* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
+o endereço de um digraph. */
+typedef struct digraph *Digraph;
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHinit() 
 constrói um digrafo com vértices 0 1 .. V-1 e nenhum arco. */
@@ -57,6 +64,15 @@ remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
 positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg() 
+calcula o grau de saída do vértice v do grafo G. */
+int DIGRAPHoutdeg (Digraph G, Vertex v);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHindeg() 
+calcula o grau de entrada do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHindeg (Digraph G, Vertex w);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()  
 imprime, para cada vértice v do digrafo G, em uma linha, todos os

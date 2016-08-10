@@ -29,4 +29,6 @@ DIGRAPHlists.o : DIGRAPHlists.h DIGRAPHlists.c
 	gcc $(CFLAGSa) -c DIGRAPHlists.c
 
 clean:
-	rm *.o
+	rm -f *.o
+	rm -f test_lists
+	rm -f test_matrix

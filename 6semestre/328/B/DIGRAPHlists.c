@@ -15,6 +15,7 @@ de adjacência na sua implementação.
 /* Protótipos de funções do tipo static */
 static link NEWnode (Vertex w, link next);
 static void LISTSdelete (link a);
+static Vertex randV (Digraph G);
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
@@ -144,4 +145,86 @@ void DIGRAPHshow (Digraph G) {
       }
       printf ("\n");
    }
+}
+
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHrand1 ()
+constrói um digrafo aleatório com vértices 0..V-1 e exatamente A
+arcos. (As duas pontas de cada arco devem ser diferentes.) A função
+supõe que A <= V*(V-1). Se A for próximo de V*(V-1), a função pode
+consumir muito tempo. (Código inspirado no Programa 17.7 de 
+Sedgewick.) */
+Digraph DIGRAPHrand1 (int V, int A) { 
+   Vertex v, w;
+   Digraph G = DIGRAPHinit (V);
+   while (G->A < A) {
+      v = randV (G);
+      w = randV (G);
+      if (v != w) 
+         DIGRAPHinsertA (G, v, w);
+   }
+   return G;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função GRAPHrand1 ()
+constrói um grafo aleatório com vértices 0..V-1 e exatamente E arestas 
+(As duas pontas de cada aresta devem ser diferentes.). A função
+supõe que E <= V*(V-1)/2. Se E for próximo de V*(V-1)/2, a função pode
+consumir muito tempo. (Código inspirado no Programa 17.7 de 
+Sedgewick.) */
+Digraph GRAPHrand1 (int V, int E) { 
+   Vertex v, w;
+   Digraph G = DIGRAPHinit (V);
+   while (G->A / 2 < E) {
+      v = randV (G);
+      w = randV (G);
+      if (v != w) 
+      {
+         DIGRAPHinsertA (G, v, w);
+         DIGRAPHinsertA (G, w, v);
+      }
+   }
+   return G;
+}
+
+/* A função randV() devolve um vértice aleatório do digrafo G. */
+static Vertex randV (Digraph G) { 
+   double r;
+   r = rand () / (RAND_MAX + 1.0);
+   return r * G->V;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função DIGRAPHrand2 ()
+constrói um digrafo aleatório com vértices 0..V-1 e número esperado de
+arcos igual a A. (As duas pontas de cada arco devem ser diferentes.) A
+função supõe que V >= 2 e A <= V*(V-1). (Código inspirado no Program
+17.8 de Sedgewick.) */
+Digraph DIGRAPHrand2 (int V, int A) { 
+   Vertex v, w;
+   double p = (double) A / V / (V-1);
+   Digraph G = DIGRAPHinit (V);
+   for (v = 0; v < V; v++)
+      for (w = 0; w < V; w++)
+         if (v != w && rand () < p * (RAND_MAX + 1.0))
+            DIGRAPHinsertA (G, v, w);
+   return G;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função GRAPHrand2 ()
+constrói um grafo aleatório com vértices 0..V-1 e número esperado de 
+arestas igual a E. (As duas pontas de cada aresta devem ser 
+diferentes.) A função supõe que V >= 2 e E <= V*(V-1)/2. (Código
+inspirado no Program 17.8 de Sedgewick.) */
+Digraph GRAPHrand2 (int V, int E) { 
+   Vertex v, w;
+   double p = (double) 2 * E / V / (V-1);
+   Digraph G = DIGRAPHinit (V);
+   for (v = 0; v < V; v++)
+      for (w = 0; w < V; w++)
+         if (v != w && rand () < p * (RAND_MAX + 1.0))
+         {
+            DIGRAPHinsertA (G, v, w);
+            DIGRAPHinsertA (G, w, v);
+         }
+   return G;
 }

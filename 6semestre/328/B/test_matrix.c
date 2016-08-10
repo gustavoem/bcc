@@ -33,8 +33,22 @@ int main () {
     test_feedback (DIGRAPHoutdeg (d, 2) == 2);
     printf ("Teste de grau de entrada de vértice: ");
     test_feedback (DIGRAPHindeg (d, 2) == 1);
-    DIGRAPHremoveA (d, 2, 0);
-    DIGRAPHremoveA (d, 1, 2);
+    DIGRAPHdestroy (d);
+    printf ("Teste de DIGRAPHrand1 (): ");
+    d = DIGRAPHrand1 (10, 5);
+    test_feedback (d->A == 5 && d->V == 10);
+    DIGRAPHdestroy (d);
+    printf ("Teste de DIGRAPHrand2 (): ");
+    d = DIGRAPHrand2 (10, 5);
+    test_feedback (d->A > 0 && d->V == 10);
+    DIGRAPHdestroy (d);
+    printf ("Teste de GRAPHrand1 (): ");
+    d = GRAPHrand1 (10, 7);
+    test_feedback (d->A == 14 && d->V == 10);
+    DIGRAPHdestroy (d);
+    printf ("Teste de GRAPHrand2 (): ");
+    d = GRAPHrand2 (10, 7);
+    test_feedback (d->A > 0 && d->V == 10);
     DIGRAPHdestroy (d);
     return 0;
 }

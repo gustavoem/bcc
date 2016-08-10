@@ -76,4 +76,34 @@ imprime, para cada vértice v do digrafo G, em uma linha, todos os
 vértices adjacentes a v. */
 void DIGRAPHshow (Digraph G);
 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHrand1 ()
+constrói um digrafo aleatório com vértices 0..V-1 e exatamente A
+arcos. (As duas pontas de cada arco devem ser diferentes.) A função
+supõe que A <= V*(V-1). Se A for próximo de V*(V-1), a função pode
+consumir muito tempo. (Código inspirado no Programa 17.7 de 
+Sedgewick.) */
+Digraph DIGRAPHrand1 (int V, int A);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função GRAPHrand1 ()
+constrói um grafo aleatório com vértices 0..V-1 e exatamente E arestas 
+(As duas pontas de cada aresta devem ser diferentes.). A função
+supõe que E <= V*(V-1)/2. Se E for próximo de V*(V-1)/2, a função pode
+consumir muito tempo. (Código inspirado no Programa 17.7 de 
+Sedgewick.) */
+Digraph GRAPHrand1 (int V, int E);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: a função DIGRAPHrand2 ()
+constrói um digrafo aleatório com vértices 0..V-1 e número esperado de
+arcos igual a A. (As duas pontas de cada arco devem ser diferentes.) A
+função supõe que V >= 2 e A <= V*(V-1). (Código inspirado no Program
+17.8 de Sedgewick.) */
+Digraph DIGRAPHrand2 (int V, int A);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: a função GRAPHrand2 ()
+constrói um grafo aleatório com vértices 0..V-1 e número esperado de 
+arestas igual a E. (As duas pontas de cada aresta devem ser 
+diferentes.) A função supõe que V >= 2 e E <= V*(V-1)/2. (Código
+inspirado no Program 17.8 de Sedgewick.) */
+Digraph GRAPHrand2 (int V, int E);
+
 #endif

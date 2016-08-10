@@ -8,11 +8,11 @@ Sigla: GUSTAVOE
 Data: 09/08/2016
 Disciplina: MAC0328
 
-Este arquivo faz parte da tarefa B e tem como objetivo testar as 
+Este arquivo faz parte da tarefa B e tem como objetivo testar as
 bibliotecas criadas para manipulação de grafos
 */
 
-/* Apenas printa na tela uma mensagem de erro */
+/* Apenas printa na tela uma mensagem de erro ou sucesso */
 void test_feedback (int result) {
     if (result)
         printf ("OK!");
@@ -48,7 +48,7 @@ int main () {
     DIGRAPHdestroy (d);
     printf ("Teste de GRAPHrand2 (): ");
     d = GRAPHrand2 (10, 7);
-    test_feedback (d->A > 0 && d->V == 10);
+    test_feedback (d->A > 1 && d->V == 10);
     DIGRAPHdestroy (d);
     return 0;
 }

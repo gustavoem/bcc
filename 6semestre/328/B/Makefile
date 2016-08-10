@@ -4,9 +4,6 @@ CFLAGSb = -Wall -O0
 #    -ansi proibe comentarios com prefixo '//'
 #    -g prepara o terreno para que o gdb possa caçar bugs
 
-LIBRARIES = -lm
-#    necessario no caso de usar math.h
-
 main: main.o DIGRAPHlists.o
 	gcc $(CFLAGSa) main.o DIGRAPHlists.o -lm -o main
 

@@ -1,14 +1,21 @@
-/*
-Nome: Gustavo Estrela de Matos
-NUSP: 8536051
-Sigla: GUSTAVOE
-Data: 08/08/2016
-Disciplina: MAC0328
-
-Este arquivo faz parte da tarefa B e tem como objetivo definir uma 
-biblioteca para manipulação de grafos. Essa biblioteca usa matrizes
-de adjacência na sua implementação.
-*/
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+// 
+// Autor:      Gustavo Estrela
+// Numero USP: 8536051
+// Sigla:      GUSTAVOE
+// Data:       2016-08-17
+// 
+// Este arquivo faz parte da tarefa C
+// da disciplina MAC0328 e tem como objetivo definir uma
+// biblioteca para manipulação de grafos. Essa biblioteca usa matrizes
+// de adjacência na sua implementação.
+//
+////////////////////////////////////////////////////////////// */
 
 #ifndef DIGRAPH_MATRIX_H_
 #define DIGRAPH_MATRIX_H_
@@ -19,12 +26,6 @@ de adjacência na sua implementação.
 
 /* Definições de constantes */
 #define Vertex int
-
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
-representa um digrafo. O campo adj é um ponteiro para a matriz de 
-adjacências do digrafo. O campo V contém o número de vértices e o campo
-A contém o número de arcos do digrafo. */
-/*struct digraph;*/
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph 
 representa um digrafo. O campo adj é um ponteiro para a matriz de 

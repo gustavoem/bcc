@@ -1,14 +1,21 @@
-/*
-Nome: Gustavo Estrela de Matos
-NUSP: 8536051
-Sigla: GUSTAVOE
-Data: 08/08/2016
-Disciplina: MAC0328
-
-Este arquivo faz parte da tarefa B e tem como objetivo definir uma
-biblioteca para manipulação de grafos. Essa biblioteca usa listas
-de adjacência na sua implementação.
-*/
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+// 
+// Autor:      Gustavo Estrela
+// Numero USP: 8536051
+// Sigla:      GUSTAVOE
+// Data:       2016-08-17
+// 
+// Este arquivo faz parte da tarefa C
+// da disciplina MAC0328 e tem como objetivo definir uma
+// biblioteca para manipulação de grafos. Essa biblioteca usa listas
+// de adjacência na sua implementação.
+//
+////////////////////////////////////////////////////////////// */
 
 #ifndef DIGRAPH_LISTS_H_
 #define DIGRAPH_LISTS_H_

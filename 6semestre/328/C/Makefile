@@ -24,11 +24,14 @@ CFLAGSb = -Wall -O0
 #    -ansi proibe comentarios com prefixo '//'
 #    -g flag de debug
 
-DIGRAPHmatrix.o: DIGRAPHmatrix.h DIGRAPHmatrix.c
-	gcc $(CFLAGSa) -c DIGRAPHmatrix.c
+traco: traco.o DIGRAPHlists.o
+	gcc $(CFLAGSa) traco.o DIGRAPHlists.o -o traco
 
 DIGRAPHlists.o: DIGRAPHlists.h DIGRAPHlists.c
 	gcc $(CFLAGSa) -c DIGRAPHlists.c
+
+traco.o: traco.c DIGRAPHlists.h
+	gcc $(CFLAGSa) -c traco.c
 
 clean:
 	rm -f *.o

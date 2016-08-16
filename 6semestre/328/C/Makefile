@@ -35,6 +35,4 @@ traco.o: traco.c DIGRAPHlists.h
 
 clean:
 	rm -f *.o
-	rm -f test_lists
-	rm -f test_matrix
-	rm -f main
+	rm -f traco

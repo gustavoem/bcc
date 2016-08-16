@@ -29,18 +29,25 @@ int count;
 /* Guarda a número de pré-ordem de cada vértice */
 int *pre;
 
+/* Protótipos de funções */
+void DIGRAPHdfs (Digraph G); 
+static void dfsR (Digraph G, Vertex v);
+
 /* A função DIGRAPHdfs() visita todos os vértices e todos os arcos do
 digrafo G. A função atribui um número de ordem pre[x] a cada vértice x:
 o k-ésimo vértice descoberto recebe número de ordem k.  (Código
 inspirado no programa 18.3 de Sedgewick.) */
 void DIGRAPHdfs (Digraph G) { 
-   Vertex v;
-   conta = 0;
-   for (v = 0; v < G->V; v++) 
-      pre[v] = -1;
-   for (v = 0; v < G->V; v++)
-      if (pre[v] == -1) 
-         dfsR( G, v); /* começa nova etapa */
+    Vertex v;
+    pre = malloc (G->V * sizeof (int));
+    count = 0;
+    for (v = 0; v < G->V; v++)
+        pre[v] = -1;
+    for (v = 0; v < G->V; v++)
+        if (pre[v] == -1) {
+            printf ("\n\n");
+            dfsR (G, v);
+        }
 }
 
 /* Seja U o conjunto dos vértices u tais que pre[u] >= 0. Nesse
@@ -49,11 +56,42 @@ que não usa vértices de U, a função dfsR() atribui um número positivo a
 pre[x]:  se x é o k-ésimo vértice descoberto, pre[x] recebe conta+k.
 (Código inspirado no programa 18.1 de Sedgewick.) */
 static void dfsR (Digraph G, Vertex v) {
-   Vertex w;
-   pre[v] = conta++; 
-   for (w = 0; w < G->V; w++)
-      if (G->adj[v][w] != 0 && pre[w] == -1)
-         dfsR (G, w); 
+    Vertex w;
+    link l = G->adj[v];
+    int i;
+    printf ("dfsR (G, %d)", v);
+    pre[v] = count++; 
+    depth++;
+    while (l != NULL) {
+        w = l->w;
+        printf ("\n");
+        for (i = 0; i < depth; i++) 
+            printf ("  ");
+        printf ("%d-%d ", v, w);
+        if (pre[w] == -1)
+            dfsR (G, w); 
+        l = l->next;
+    }
+    depth--;
 }
 
-
+/* Esta função recebe como parametros, em argv, V e A, e gera um 
+digrafo aleatório com V vértices e A arestas. Além disso a função 
+aplica a função DIGRAPGdfs () no grafo gerado. */
+int main (int argc, char **argv) {
+    int V, A;
+    Digraph G;
+    if (argc != 3)
+        return 0;
+    V = atoi (argv[1]);
+    A = atof (argv[2]);
+    G = DIGRAPHrand1 (V, A);
+    if (G->V < 10 && G->A < 21) {
+        DIGRAPHshow (G);
+    }
+    DIGRAPHdfs (G);
+    DIGRAPHdestroy (G);
+    free (pre);
+    printf ("\n");
+    return 0;
+}

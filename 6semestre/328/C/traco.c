@@ -53,7 +53,7 @@ static void dfsR (Digraph G, Vertex v) {
    pre[v] = conta++; 
    for (w = 0; w < G->V; w++)
       if (G->adj[v][w] != 0 && pre[w] == -1)
-         dfsR( G, w); 
+         dfsR (G, w); 
 }
 
 

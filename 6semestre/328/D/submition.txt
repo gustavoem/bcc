@@ -1,0 +1,49 @@
+Autor:      Gustavo Estrela
+Numero USP: 8536051
+Sigla:      GUSTAVOE
+Data:       2016-08-17
+Tarefa D
+
+void DIGRAPHdfs (Digraph G) {
+    Vertex v;
+    pre = malloc (G->V * sizeof (int));
+    pos = malloc (G->V * sizeof (int));
+    pre_count = 0;
+    pos_count = 0;
+    for (v = 0; v < G->V; v++) {
+        pre[v] = -1;
+        pos[v] = -1;
+    }
+    for (v = 0; v < G->V; v++)
+        if (pre[v] == -1)
+            dfsR (G, v);
+}
+
+static void dfsR (Digraph G, Vertex v) {
+    Vertex w;
+    link l = G->adj[v];
+    int i;
+    pre[v] = pre_count++;
+    depth++;
+    while (l != NULL) {
+        printf ("\n");
+        w = l->w;
+        for (i = 0; i < depth; i++)
+            printf ("  ");
+        printf ("%d-%d ", v, w);
+        if (pre[w] == -1) {
+            printf ("floresta");
+            dfsR (G, w);
+        }
+        else if (pos[w] != -1)
+            if (pos[w] < pre[v]) 
+                printf ("cruzado");
+            else
+                printf ("descendente");
+        else
+            printf ("retorno");
+        l = l->next;
+    }
+    pos[v] = pos_count++;
+    depth--;
+}

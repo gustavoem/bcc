@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry} % set margins
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx} % include graphics
+\usepackage{indentfirst}
+
+
+% Macros
+\newcommand{\questao}[1] {\vspace{12pt} \noindent \large \textbf{Questão #1:} \normalsize}
+\renewcommand{\part}[1] {\noindent\textbf (#1)}
+\renewcommand{\familydefault}{\sfdefault} % sans-serif
+
+
+%  ----------------------------------------------------------------
+%                         Start here
+% ----------------------------------------------------------------
+ 
+\begin{document}
+\title{EP1 - MAC0210}
+\begin{flushleft}
+    \textbf{\fontsize{20pt}{2em}\selectfont 
+        MAC0210 - Exercício Programa 1\\}
+    \fontsize{10pt}{1em}\selectfont{Professor: 
+        \href{mailto:egbirgin@gmail.com}{Ernesto G. Birgin}\\
+    Monitor: 
+        \href{mailto:estrela.gustavo.matos@gmail.com}{Gustavo Estrela}\\}
+\end{flushleft}
+
+
+\section {Parte 1: Aritmética de Ponto Flutuante}
+    Essa parte do EP consiste em resolver quatro exercícios sobre 
+aritmética de ponto flutuante. Para solucionar os problemas é
+recomendado a leitura do livro "Numerical Computing with IEEE Floating
+Point Arithmetic", presente na 
+\href{http://ime.usp.br/~egbirgin/mac210/biblio.html}{bibliografia} do 
+curso. Todos os exercícios da parte 1 desse EP foram inspirados em 
+exercícios do livro, indicados entre parênteses.
+
+    Você deve subir um arquivo pdf no paca com as suas soluções.
+Além disso você deve entregar na aula do dia 20 de setembro uma 
+cópia impressa do mesmo pdf que foi entregue no paca.
+
+\questao{1 (3.11)} 
+Suponha que temos um sistema de representação de ponto flutuante com
+base 2 e,
+\begin{center}
+    \begin{tabular}{r l}
+             & $x = \pm S \times 2^E$,\\ 
+        com  & $S = (0.1b_2b_3b_4...b_{24})$, \\
+        i.e, & $\frac{1}{2} < S < 1$
+    \end{tabular}
+\end{center}
+onde o expoente $-128 < E < 127$. \\ 
+\part{a} Qual é o maior número de ponto flutuante desse sistema? \\
+\part{b} Qual é o menor número de ponto flutuante positivo desse 
+sistema? \\
+\part{c} Qual é o menor inteiro positivo que não é exatamente 
+representável nesse sistema? \\
+
+\questao{2 (5.1)}
+Qual é a representação do número $1/10$ no formato IEEE single para
+cada um dos quatro modos de arredondamento? E para os números 
+$1 + 2^{-25}$ e $2^{130}$?\\
+
+\questao{3 (6.4)}
+Qual é o maior número de ponto flutuante $x$ tal que $1 \oplus x$ é
+exatamente 1, assumindo que o formato usado é IEEE single e modo de 
+arredondamento para o mais próximo? E se o formato for IEEE double?
+
+\questao{4 (6.8)} Em aritmética exata, a soma é um operador
+comutativo e associativo. O operador de soma de ponto flutuante é 
+commutativo? E associativo? Explique.
+
+\section {Parte 2: Método de Newton}
+Quando se aplica o Método de Newton a uma função com mais de uma raíz,
+temos que a raíz que será obtida pelo método depende do ponto inicial 
+escolhido. Nesta parte do EP vamos extender o Método de Newton para um
+domínio complexo e estudar suas \textbf{bacias de convergência}, o 
+conjunto de pontos iniciais que convergem para uma mesma raíz da função
+estudada.
+
+Você deve implementar o Método de Newton em Octave e usar o script 
+disponível em 
+\end{document}
+

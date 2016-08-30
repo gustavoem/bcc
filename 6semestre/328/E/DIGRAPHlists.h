@@ -47,6 +47,8 @@ struct digraph {
     link *adj;
     int *pre;
     int *pos;
+    int pre_count;
+    int pos_count;
     Vertex *father;
 };
 
@@ -79,6 +81,21 @@ remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
 positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função 
+DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+topológica em G. No ultimo caso, a numeração da ordenação topológica é
+dada pelo vetor pre. */
+int DIGRAPHcycleOrTopo (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
+ciclo presente no subdigrafo de G tal que todo vértice é descendente do
+vértice v ou devolve -1 se existe uma ordenação topológica em tal 
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+pelo vetor pre de G. */
+int DIGRAPHcycleOrTopoR (Digraph G, Vertex v);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
 calcula o grau de saída do vértice v do grafo G. */

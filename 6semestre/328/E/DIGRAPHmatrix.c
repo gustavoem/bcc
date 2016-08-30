@@ -4,12 +4,12 @@
 // SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
 // TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
 // E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
-// 
+//
 // Autor:      Gustavo Estrela
 // Numero USP: 8536051
 // Sigla:      GUSTAVOE
 // Data:       2016-08-17
-// 
+//
 // Este arquivo faz parte da tarefa C
 // da disciplina MAC0328 e tem como objetivo imlpementar uma
 // biblioteca para manipulação de grafos. Essa biblioteca usa matrizes
@@ -50,7 +50,7 @@ void DIGRAPHdestroy (Digraph G) {
     free (G);
 }
 
-/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
 digrafo pelos vetores pre, pos e father. */
 void DIGRAPHdestroyDFSinfo (Digraph G) {
@@ -63,6 +63,8 @@ void DIGRAPHdestroyDFSinfo (Digraph G) {
     G->pre = NULL;
     G->pos = NULL;
     G->father = NULL;
+    G->pre_count = 0;
+    G->pos_count = 0;
 }
 
 
@@ -89,7 +91,7 @@ static int **MATRIXint (int r, int c, int val) {
     return m;
 }
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare () 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare ()
 prepara as variáveis relacionadas a rotina de DFS. */
 void DFSprepare (Digraph G) {
     int V = G->V;
@@ -127,9 +129,9 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
     }
 }
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
 DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
-ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação
 topológica em G. No ultimo caso, a numeração da ordenação topológica é
 dada pelo vetor pre. */
 int DIGRAPHcycleOrTopo (Digraph G) {
@@ -150,12 +152,12 @@ int DIGRAPHcycleOrTopo (Digraph G) {
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
 DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
 ciclo presente no subdigrafo de G tal que todo vértice é descendente do
-vértice v ou devolve -1 se existe uma ordenação topológica em tal 
-digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+vértice v ou devolve -1 se existe uma ordenação topológica em tal
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada
 pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
     int w;
-    G->pre[v] = G->pre_count++; 
+    G->pre[v] = G->pre_count++;
     for (w = 0; w < G->V; w++) {
         if (G->adj[v][w]) {
             if (G->pre[w] == -1) {

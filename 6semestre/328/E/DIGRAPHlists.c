@@ -58,6 +58,23 @@ void DIGRAPHdestroy (Digraph G) {
     free (G);
 }
 
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função 
+DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelos vetores pre, pos e father. */
+void DIGRAPHdestroyDFSinfo (Digraph G) {
+    if (G->pre != NULL)
+        free (G->pre);
+    if (G->pos != NULL)
+        free (G->pos);
+    if (G->father != NULL)
+        free (G->father);
+    G->pre = NULL;
+    G->pos = NULL;
+    G->father = NULL;
+    G->pre_count = 0;
+    G->pos_count = 0;
+}
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
 calcula o grau de saída do vértice v do grafo G. A função supõe que
 v é menor que G->V */
@@ -94,6 +111,21 @@ static void LISTSdelete (link a) {
         link aux = a;
         a = a->next;
         free (aux);
+    }
+}
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare () 
+prepara as variáveis relacionadas a rotina de DFS. */
+void DFSprepare (Digraph G) {
+    int V = G->V;
+    int v;
+    DIGRAPHdestroyDFSinfo (G);
+    G->pre = malloc (V * sizeof (int));
+    G->pos = malloc (V * sizeof (int));
+    G->father = malloc (V * sizeof (int));
+    for (v = 0; v < V; v++) {
+        G->pre[v] = -1;
+        G->pos[v] = -1;
     }
 }
 
@@ -136,6 +168,55 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
             G->A--;
         }
     }
+}
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função 
+DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+topológica em G. No ultimo caso, a numeração da ordenação topológica é
+dada pelo vetor pre. */
+int DIGRAPHcycleOrTopo (Digraph G) {
+    Vertex v;
+    DFSprepare (G);
+    for (v = 0; v < G->V; v++) {
+        if (G->pre[v] == -1) {
+            int ans;
+            G->father[v] = v;
+            ans = DIGRAPHcycleOrTopoR (G, v);
+            if (ans != -1)
+                return ans;
+        }
+    }
+    return -1;
+}
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
+DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
+ciclo presente no subdigrafo de G tal que todo vértice é descendente do
+vértice v ou devolve -1 se existe uma ordenação topológica em tal 
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+pelo vetor pre de G. */
+int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
+    link l;
+    Vertex w;
+    G->pre[v] = G->pre_count++; 
+    for (l = G->adj[v]; l != NULL; l = l->next) {
+        w = l->w;
+        if (G->pre[w] == -1) {
+            int ans;
+            G->father[w] = v;
+            ans = DIGRAPHcycleOrTopoR (G, w);
+            if (ans != -1)
+                return ans;
+        }
+        if (G->pos[w] == -1) {
+            G->father[w] = v;
+            return w;
+            }
+        }
+    }
+    G->pos[v] = G->pos_count++;
+    return -1;
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()

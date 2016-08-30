@@ -35,3 +35,4 @@ ciclooutopo.o: ciclooutopo.c DIGRAPHmatrix.h
 
 clean:
 	rm -f *.o
+	rm -f ciclooutopo

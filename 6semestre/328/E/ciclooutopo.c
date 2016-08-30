@@ -11,7 +11,7 @@
 // Data:       2016-08-29
 //
 // Este arquivo faz parte da tarefa E
-// da disciplina MAC0328 e tem como objetivo testar a função 
+// da disciplina MAC0328 e tem como objetivo testar a função
 // DIGRAPHcycleOrTopo () da biblioteca DIGRAPHmatrix
 //
 ////////////////////////////////////////////////////////////// */
@@ -52,7 +52,7 @@ void printCycle (Digraph G, Vertex v) {
 
 
 /* Esta função recebe digrafo descrito na entrada padrão e, usando a
-função DIGRAPHcycleOrTopo () imprime um ciclo ou uma listagem 
+função DIGRAPHcycleOrTopo () imprime um ciclo ou uma listagem
 topologica dos vértices. */
 int main () {
     int i;

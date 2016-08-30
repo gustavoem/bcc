@@ -45,6 +45,9 @@ struct digraph {
     int V;
     int A;
     link *adj;
+    int *pre;
+    int *pos;
+    Vertex *father;
 };
 
 /* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
@@ -59,6 +62,11 @@ Digraph DIGRAPHinit (int V);
 destrói um digrafo G liberando na memória o espaço que foi alocado em
 sua criação */
 void DIGRAPHdestroy (Digraph G);
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função 
+DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelos vetores pre, pos e father. */
+void DIGRAPHdestroyDFSinfo (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHinsertA()
 insere um arco v-w no digrafo G. A função supõe que v e w são

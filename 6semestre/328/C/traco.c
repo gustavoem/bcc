@@ -20,15 +20,6 @@
 #include <stdio.h>
 #include "DIGRAPHlists.h"
 
-/* Guarda a profundidade atual do algoritmo de DFS */
-int depth;
-
-/* Guarda contagem de vértices já descobertos pelo DFS */
-int count;
-
-/* Guarda a número de pré-ordem de cada vértice */
-int *pre;
-
 /* Protótipos de funções */
 void DIGRAPHdfs (Digraph G);
 static void dfsR (Digraph G, Vertex v);

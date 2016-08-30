@@ -23,6 +23,7 @@
 estão junto às definições das funções. */
 static int **MATRIXint (int r, int c, int val);
 static void MATRIXdelete (int **m, int r);
+static void DFSprepare (Digraph G);
 static Vertex randV (Digraph G);
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinit()
@@ -32,6 +33,11 @@ Digraph DIGRAPHinit (int V) {
     G->V = V;
     G->A = 0;
     G->adj = MATRIXint (V, V, 0);
+    G->pre = NULL;
+    G->pos = NULL;
+    G->father = NULL;
+    G->pre_count = 0;
+    G->pos_count = 0;
     return G;
 }
 
@@ -40,8 +46,25 @@ destrói um digrafo G liberando na memória o espaço que foi alocado em
 sua criação */
 void DIGRAPHdestroy (Digraph G) {
     MATRIXdelete (G->adj, G->V);
+    DIGRAPHdestroyDFSinfo (G);
     free (G);
 }
+
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função 
+DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelos vetores pre, pos e father. */
+void DIGRAPHdestroyDFSinfo (Digraph G) {
+    if (G->pre != NULL)
+        free (G->pre);
+    if (G->pos != NULL)
+        free (G->pos);
+    if (G->father != NULL)
+        free (G->father);
+    G->pre = NULL;
+    G->pos = NULL;
+    G->father = NULL;
+}
+
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função MATRIXdelete()
 deleta uma matriz com linhas 0..r-1 e colunas 0..c-1. */
@@ -66,6 +89,22 @@ static int **MATRIXint (int r, int c, int val) {
     return m;
 }
 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare () 
+prepara as variáveis relacionadas a rotina de DFS. */
+void DFSprepare (Digraph G) {
+    int V = G->V;
+    int v;
+    DIGRAPHdestroyDFSinfo (G);
+    G->pre = malloc (V * sizeof (int));
+    G->pos = malloc (V * sizeof (int));
+    G->father = malloc (V * sizeof (int));
+    for (v = 0; v < V; v++) {
+        G->pre[v] = -1;
+        G->pos[v] = -1;
+    }
+}
+
+
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinsertA()
 insere um arco v-w no digrafo G. A função supõe que v e w são
 distintos, positivos e menores que G->V. Se o digrafo já tem um arco
@@ -86,6 +125,54 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
         G->adj[v][w] = 0;
         G->A--;
     }
+}
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função 
+DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+topológica em G. No ultimo caso, a numeração da ordenação topológica é
+dada pelo vetor pre. */
+int DIGRAPHcycleOrTopo (Digraph G) {
+    Vertex v;
+    DFSprepare (G);
+    for (v = 0; v < G->V; v++) {
+        if (G->pre[v] == -1) {
+            int ans;
+            G->father[v] = v;
+            ans = DIGRAPHcycleOrTopoR (G, v);
+            if (ans != -1)
+                return ans;
+        }
+    }
+    return -1;
+}
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
+DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
+ciclo presente no subdigrafo de G tal que todo vértice é descendente do
+vértice v ou devolve -1 se existe uma ordenação topológica em tal 
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+pelo vetor pre de G. */
+int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
+    int w;
+    G->pre[v] = G->pre_count++; 
+    for (w = 0; w < G->V; w++) {
+        if (G->adj[v][w]) {
+            if (G->pre[w] == -1) {
+                int ans;
+                G->father[w] = v;
+                ans = DIGRAPHcycleOrTopoR (G, w);
+                if (ans != -1)
+                    return ans;
+            }
+            if (G->pos[w] == -1) {
+                G->father[w] = v;
+                return w;
+            }
+        }
+    }
+    G->pos[v] = G->pos_count++;
+    return -1;
 }
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHoutdeg()

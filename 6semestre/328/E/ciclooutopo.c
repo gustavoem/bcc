@@ -34,7 +34,8 @@ int main () {
         scanf ("%d %d", &v, &w);
         DIGRAPHinsertA (G, v, w);
     }
-
     DIGRAPHshow (G);
+    i = DIGRAPHcycleOrTopo (G);
+    printf ("\nans: %d\n", i);
     return 0;
 }

@@ -35,44 +35,69 @@ struct digraph {
     int V;
     int A;
     int **adj;
+    int *pre;
+    int *pos;
+    int pre_count;
+    int pos_count;
+    Vertex *father;
 };
 
 /* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
 o endereço de um digraph. */
 typedef struct digraph *Digraph;
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinit()
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinit ()
 constrói um digrafo com vértices 0 1 .. V-1 e nenhum arco. */
 Digraph DIGRAPHinit (int V);
 
-/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHdestroy()
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHdestroy ()
 destrói um digrafo G liberando na memória o espaço que foi alocado em
 sua criação */
 void DIGRAPHdestroy (Digraph G);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinsertA()
+/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função 
+DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelos vetores pre, pos e father. */
+void DIGRAPHdestroyDFSinfo (Digraph G);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHinsertA ()
 insere um arco v-w no digrafo G. A função supõe que v e w são 
 distintos, positivos e menores que G->V. Se o digrafo já tem um arco 
 v-w, a função não faz nada. */
 void DIGRAPHinsertA (Digraph G, Vertex v, Vertex w);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHremoveA()
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHremoveA ()
 remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
 positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHoutdeg() 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função 
+DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+topológica em G. No ultimo caso, a numeração da ordenação topológica é
+dada pelo vetor pre. */
+int DIGRAPHcycleOrTopo (Digraph G);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
+DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
+ciclo presente no subdigrafo de G tal que todo vértice é descendente do
+vértice v ou devolve -1 se existe uma ordenação topológica em tal 
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+pelo vetor pre de G. */
+int DIGRAPHcycleOrTopoR (Digraph G, Vertex v);
+
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHoutdeg ()
 calcula o grau de saída do vértice v do grafo G. A função supõe que
 v é menor que G->V */
 int DIGRAPHoutdeg (Digraph G, Vertex v);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHindeg() 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHindeg () 
 calcula o grau de entrada do vértice v do grafo G. A função supõe que
 v é menor que G->V */
 int DIGRAPHindeg (Digraph G, Vertex w);
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow()  
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHshow ()
 imprime, para cada vértice v do digrafo G, em uma linha, todos os
 vértices adjacentes a v. */
 void DIGRAPHshow (Digraph G);

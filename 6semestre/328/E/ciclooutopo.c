@@ -20,6 +20,37 @@
 #include <stdio.h>
 #include "DIGRAPHmatrix.h"
 
+void printTopoList (Digraph G) {
+    Vertex v;
+    Vertex *list = malloc (G->V * sizeof (Vertex));
+    for (v = 0; v < G->V; v++)
+        list[G->pre[v]] = v;
+    printf ("\nListagem topológica: ");
+    for (v = 0; v < G->V; v++)
+        printf ("%d ", list[v]);
+    printf ("\n");
+    free (list);
+}
+
+void printCycle (Digraph G, Vertex v) {
+    int i, j;
+    Vertex aux;
+    Vertex *cycle = malloc (G->V * sizeof (Vertex));
+    i = 0;
+    aux = v;
+    while (G->father[aux] != v) {
+        cycle[i++] = aux;
+        aux = G->father[aux];
+    }
+    cycle[i] = aux;
+    printf ("\nCiclo: ");
+    for (j = i; j >= 0; j--)
+        printf ("%d ", cycle[j]);
+    printf ("%d\n", cycle[i]);
+    free (cycle);
+}
+
+
 /* Esta função recebe digrafo descrito na entrada padrão e, usando a
 função DIGRAPHcycleOrTopo () imprime um ciclo ou uma listagem 
 topologica dos vértices. */
@@ -34,8 +65,11 @@ int main () {
         scanf ("%d %d", &v, &w);
         DIGRAPHinsertA (G, v, w);
     }
-    DIGRAPHshow (G);
     i = DIGRAPHcycleOrTopo (G);
-    printf ("\nans: %d\n", i);
+    if (i == -1)
+        printTopoList (G);
+    else
+        printCycle (G, i);
+    DIGRAPHdestroy (G);
     return 0;
 }

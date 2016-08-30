@@ -8,9 +8,9 @@
 // Autor:      Gustavo Estrela
 // Numero USP: 8536051
 // Sigla:      GUSTAVOE
-// Data:       2016-08-17
+// Data:       2016-08-30
 //
-// Este arquivo faz parte da tarefa C
+// Este arquivo faz parte da tarefa E
 // da disciplina MAC0328 e tem como objetivo imlpementar uma
 // biblioteca para manipulação de grafos. Essa biblioteca usa matrizes
 // de adjacência na sua implementação.

@@ -51,7 +51,7 @@ base 2 e,
     \begin{tabular}{r l}
              & $x = \pm S \times 2^E$,\\ 
         com  & $S = (0.1b_2b_3b_4...b_{24})$, \\
-        i.e, & $\frac{1}{2} < S < 1$
+        i.e, & $\frac{1}{2} \leq S < 1$
     \end{tabular}
 \end{center}
 onde o expoente $-128 < E < 127$. \\ 
@@ -152,6 +152,16 @@ Você deve implementar suas funções em um arquivo chamado
         achar uma raíz da função $f$ (com primeira derivada $f'$), 
         partindo do ponto $x_0$.
 \end{itemize}
+As funções $f$ e $f'$ devem ser polinômios e devem ser representados
+por um vetor com seus respectivos coeficientes, i.e
+\begin{center}
+    \begin{tabular}{r l}
+        se $f$ representa & $p(x) = c_nx^n + c_{n - 1}x^{n - 1} + ... 
+            + c_0$ \\
+        então & $f = [c_n, c_{n - 1}, ..., c_0]$
+
+    \end{tabular}
+\end{center}
 
 \subsection{O que deve ser entregue}
 Você deve entregar ao paca seu programa em Octave que implementa o 
@@ -185,6 +195,13 @@ A $i$-ésima raíz $x_i$ é considerada achada quando:
 \end{tabular}
 \end{center}
 
+\textbf{Observação:} Você deve utilizar 
+\href{https://www.gnu.org/software/octave/doc/v4.0.0/Anonymous-Functions.html}
+{funções anônimas} para representar $f$.
+\vskip 12pt
+Você deve enviar ao paca o código do seu programa Octave e também um 
+relatório, em pdf junto a parte 1 e 2 do EP.
+
 Verifique seu programa achando as raízes das funções:
 \begin{itemize}
     \item{$f(x) = 2\cosh(x / 4) - x$}
@@ -199,10 +216,6 @@ Este problema é baseado no exercício 13 do capítulo 3 do livro
 "A First Course in Numerical Methods" presente na 
 \href{http://ime.usp.br/~egbirgin/courses/mac210/biblio.html}{bibliografia} do
 curso.
-
-Você deve enviar ao paca o código do seu programa Octave e também um 
-relatório, em pdf junto a parte 1 e 2 do EP.
-
 \section{Entrega}
 Segue abaixo as regras de entrega deste EP:
 \begin{itemize}

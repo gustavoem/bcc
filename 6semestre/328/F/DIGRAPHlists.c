@@ -23,6 +23,12 @@
 static link NEWnode (Vertex w, link next);
 static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
+static void dfsR (Digraph G, Vertex v);
+static void DFSprepare (Digraph G); 
+
+/* Variáveis usadas no DFS */
+static int pre_count;
+static int pos_count;
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
@@ -58,6 +64,24 @@ void DIGRAPHdestroy (Digraph G) {
     free (G);
 }
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHreverse()
+constrói o inverso do digrafo G. */
+Digraph DIGRAPHreverse (Digraph G) {
+    link l;
+    Vertex v, w;
+    Digraph GR;
+    GR = DIGRAPHinit (G->V);
+    for (v = 0; v < G->V; v++) {
+        l = G->adj[v];
+        while (l != NULL) {
+            w = l->w;
+            DIGRAPHinsertA (GR, w, v);
+            l = l->next;
+        }
+    }
+    return GR;
+}
+
 /* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função 
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
 digrafo pelos vetores pre, pos e father. */
@@ -71,8 +95,8 @@ void DIGRAPHdestroyDFSinfo (Digraph G) {
     G->pre = NULL;
     G->pos = NULL;
     G->father = NULL;
-    G->pre_count = 0;
-    G->pos_count = 0;
+    pre_count = 0;
+    pos_count = 0;
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
@@ -116,7 +140,7 @@ static void LISTSdelete (link a) {
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare () 
 prepara as variáveis relacionadas a rotina de DFS. */
-void DFSprepare (Digraph G) {
+static void DFSprepare (Digraph G) {
     int V = G->V;
     int v;
     DIGRAPHdestroyDFSinfo (G);
@@ -127,6 +151,8 @@ void DFSprepare (Digraph G) {
         G->pre[v] = -1;
         G->pos[v] = -1;
     }
+    pre_count = 0;
+    pos_count = 0;
 }
 
 
@@ -199,7 +225,7 @@ pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
     link l;
     Vertex w;
-    G->pre[v] = G->pre_count++; 
+    G->pre[v] = pre_count++; 
     for (l = G->adj[v]; l != NULL; l = l->next) {
         w = l->w;
         if (G->pre[w] == -1) {
@@ -212,11 +238,42 @@ int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
         if (G->pos[w] == -1) {
             G->father[w] = v;
             return w;
-            }
         }
     }
-    G->pos[v] = G->pos_count++;
+    G->pos[v] = pos_count++;
     return -1;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHdfs() visita
+todos os vértices e todos os arcos do digrafo G. A função atribui um
+número de ordem pre[x] a cada vértice x: o k-ésimo vértice descoberto
+recebe número de ordem k. (Código inspirado no programa 18.3 de
+Sedgewick.) */
+void DIGRAPHdfs (Digraph G) {
+    Vertex v;
+    DFSprepare (G);
+    for (v = 0; v < G->V; v++)
+        if (G->pre[v] == -1)
+            dfsR (G, v);
+}
+
+/* Seja U o conjunto dos vértices u tais que pre[u] >= 0. Nesse
+ambiente, para cada vértice x acessível a partir de v por um caminho
+que não usa vértices de U, a função dfsR() atribui um número positivo a
+pre[x]:  se x é o k-ésimo vértice descoberto, pre[x] recebe conta+k.
+(Código inspirado no programa 18.1 de Sedgewick.) */
+static void dfsR (Digraph G, Vertex v) {
+    Vertex w;
+    link l;
+    G->pre[v] = pre_count++;
+    l = G->adj[v];
+    while (l != NULL) {
+        w = l->w;
+        l = l->next;
+        if (G->pre[w] == -1)
+            dfsR (G, w);
+    }
+    G->pos[v] = pos_count++; 
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()

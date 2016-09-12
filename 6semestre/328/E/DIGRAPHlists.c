@@ -24,6 +24,10 @@ static link NEWnode (Vertex w, link next);
 static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
 
+/* Variáveis usadas no DFS */
+static int pre_count;
+static int pos_count;
+
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
 */
@@ -71,8 +75,8 @@ void DIGRAPHdestroyDFSinfo (Digraph G) {
     G->pre = NULL;
     G->pos = NULL;
     G->father = NULL;
-    G->pre_count = 0;
-    G->pos_count = 0;
+    pre_count = 0;
+    pos_count = 0;
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
@@ -127,6 +131,8 @@ void DFSprepare (Digraph G) {
         G->pre[v] = -1;
         G->pos[v] = -1;
     }
+    pre_count = 0;
+    pos_count = 0;
 }
 
 
@@ -199,7 +205,7 @@ pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
     link l;
     Vertex w;
-    G->pre[v] = G->pre_count++; 
+    G->pre[v] = pre_count++; 
     for (l = G->adj[v]; l != NULL; l = l->next) {
         w = l->w;
         if (G->pre[w] == -1) {
@@ -212,10 +218,9 @@ int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
         if (G->pos[w] == -1) {
             G->father[w] = v;
             return w;
-            }
         }
     }
-    G->pos[v] = G->pos_count++;
+    G->pos[v] = pos_count++;
     return -1;
 }
 

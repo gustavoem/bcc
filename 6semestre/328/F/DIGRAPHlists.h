@@ -47,8 +47,6 @@ struct digraph {
     link *adj;
     int *pre;
     int *pos;
-    int pre_count;
-    int pos_count;
     Vertex *father;
 };
 
@@ -64,6 +62,10 @@ Digraph DIGRAPHinit (int V);
 destrói um digrafo G liberando na memória o espaço que foi alocado em
 sua criação */
 void DIGRAPHdestroy (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHreverse()
+constrói o inverso do digrafo G. */
+Digraph DIGRAPHreverse (Digraph G);
 
 /* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função 
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
@@ -105,6 +107,13 @@ int DIGRAPHoutdeg (Digraph G, Vertex v);
 calcula o grau de entrada do vértice v do grafo G. A função supõe que
 v é menor que G->V */
 int DIGRAPHindeg (Digraph G, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHdfs() visita
+todos os vértices e todos os arcos do digrafo G. A função atribui um
+número de ordem pre[x] a cada vértice x: o k-ésimo vértice descoberto
+recebe número de ordem k. (Código inspirado no programa 18.3 de
+Sedgewick.) */
+void DIGRAPHdfs (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()
 imprime, para cada vértice v do digrafo G, em uma linha, todos os

@@ -47,8 +47,6 @@ struct digraph {
     link *adj;
     int *pre;
     int *pos;
-    int pre_count;
-    int pos_count;
     Vertex *father;
 };
 

@@ -24,13 +24,13 @@ CFLAGSb = -Wall -O0
 #    -ansi proibe comentarios com prefixo '//'
 #    -g flag de debug
 
-ciclooutopo: ciclooutopo.o DIGRAPHmatrix.o
-	gcc $(CFLAGSa) ciclooutopo.o DIGRAPHmatrix.o -o ciclooutopo
+ciclooutopo: ciclooutopo.o DIGRAPHlists.o
+	gcc $(CFLAGSa) ciclooutopo.o DIGRAPHlists.o -o ciclooutopo
 
-DIGRAPHmatrix.o: DIGRAPHmatrix.h DIGRAPHmatrix.c
-	gcc $(CFLAGSa) -c DIGRAPHmatrix.c
+DIGRAPHlists.o: DIGRAPHlists.h DIGRAPHlists.c
+	gcc $(CFLAGSa) -c DIGRAPHlists.c
 
-ciclooutopo.o: ciclooutopo.c DIGRAPHmatrix.h
+ciclooutopo.o: ciclooutopo.c DIGRAPHlists.h
 	gcc $(CFLAGSa) -c ciclooutopo.c
 
 clean:

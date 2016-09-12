@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "DIGRAPHmatrix.h"
+#include "DIGRAPHlists.h"
 
 void printTopoList (Digraph G) {
     Vertex v;

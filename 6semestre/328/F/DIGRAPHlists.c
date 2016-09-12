@@ -25,6 +25,7 @@ static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
 static void dfsR (Digraph G, Vertex v);
 static void DFSprepare (Digraph G); 
+static void dfsRsc (Digraph G, Vertex v, int id);
 
 /* Variáveis usadas no DFS */
 static int pre_count;
@@ -50,6 +51,10 @@ Digraph DIGRAPHinit (int V) {
     G->adj = malloc (V * sizeof (link));
     for (v = 0; v < V; v++)
         G->adj[v] = NULL;
+    G->pre = NULL;
+    G->pos = NULL;
+    G->sc = NULL;
+    G->father = NULL;
     return G;
 }
 
@@ -61,6 +66,14 @@ void DIGRAPHdestroy (Digraph G) {
     for (i = 0; i < G->V; i++)
         LISTSdelete (G->adj[i]);
     free (G->adj);
+    if (G->pre != NULL)
+        free (G->pre);
+    if (G->pos != NULL)
+        free (G->pos);
+    if (G->sc != NULL)
+        free (G->sc);
+    if (G->father != NULL)
+        free (G->father);
     free (G);
 }
 
@@ -82,7 +95,7 @@ Digraph DIGRAPHreverse (Digraph G) {
     return GR;
 }
 
-/* REPRESENTAÇÂO POR MATRIZ DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função 
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
 digrafo pelos vetores pre, pos e father. */
 void DIGRAPHdestroyDFSinfo (Digraph G) {
@@ -98,6 +111,16 @@ void DIGRAPHdestroyDFSinfo (Digraph G) {
     pre_count = 0;
     pos_count = 0;
 }
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelo vetor sc, que guarda a componente forte a qual cada
+vertice pertence */
+void DIGRAPHdestroySCinfo (Digraph G) {
+    if (G->sc != NULL)
+        free (G->sc);
+}
+
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
 calcula o grau de saída do vértice v do grafo G. A função supõe que
@@ -274,6 +297,46 @@ static void dfsR (Digraph G, Vertex v) {
             dfsR (G, w);
     }
     G->pos[v] = pos_count++; 
+}
+
+/* Esta função implementa o algoritmo de Kosaraju-Sharir de cálculo das
+componentes fortes de um digrafo G. A função atribui um rótulo sc[v]
+(os rótulos são 0,1,2,...) a cada vértice v de G de modo que dois
+vértices tenham o mesmo rótulo se e somente se os dois pertencem à
+mesma componente forte. A função devolve o número (quantidade) de
+componentes fortes de G. (O código é adaptado do Programa 19.10 de
+Sedgewick.) */
+int DIGRAPHscKS (Digraph G) {
+    Vertex v, w;
+    int i, id;
+    Vertex *ord = malloc (G->V * sizeof (Vertex));
+    Vertex *sc = malloc (G->V * sizeof (Vertex));
+    Digraph GR = DIGRAPHreverse (G);
+    DFSprepare (GR);
+    for (v = 0; v < GR->V; v++)
+        if (GR->pre[v] == -1)
+            dfsR (GR, v);
+    for (v = 0; v < GR->V; v++)
+        ord[GR->pos[v]] = v;
+    for (v = 0; v > G->V; v++)
+        sc[v] = -1;
+    id = 0;
+    for (i = 0; i < G->V; i++) {
+        v = ord[i];
+        if (sc[v] == -1)
+            dfsRsc (G, v, id++);
+    }
+    G->sc = sc; 
+    DIGRAPHdestroy (GR);
+    return id;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função dfsRsc() atribui o
+rótulo id a todo vértice w que é acessível a partir de v e ainda não
+foi rotulado. Os rótulos são armazenados no vetor sc[]; um vértice w é
+considerado rotulado se sc[w] >= 0. */
+static void dfsRsc (Digraph G, Vertex v, int id) {
+
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()

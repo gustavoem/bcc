@@ -47,6 +47,7 @@ struct digraph {
     link *adj;
     int *pre;
     int *pos;
+    int *sc;
     Vertex *father;
 };
 
@@ -71,6 +72,12 @@ Digraph DIGRAPHreverse (Digraph G);
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
 digrafo pelos vetores pre, pos e father. */
 void DIGRAPHdestroyDFSinfo (Digraph G);
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelo vetor sc, que guarda a componente forte a qual cada
+vertice pertence */
+void DIGRAPHdestroySCinfo (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHinsertA()
 insere um arco v-w no digrafo G. A função supõe que v e w são
@@ -99,8 +106,20 @@ digrafo. No ultimo caso, a numeração da ordenação topológica é dada
 pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v);
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHdfs() visita
+todos os vértices e todos os arcos do digrafo G. A função atribui um
+número de ordem pre[x] a cada vértice x: o k-ésimo vértice descoberto
+recebe número de ordem k. (Código inspirado no programa 18.3 de
+Sedgewick.) */
+void DIGRAPHdfs (Digraph G);
+
 /* Esta função implementa o algoritmo de Kosaraju-Sharir de cálculo das
-componentes fortes de um digrafo G. A função atribui um rótulo sc[v] (os rótulos são 0,1,2,...) a cada vértice v de G de modo que dois vértices tenham o mesmo rótulo se e somente se os dois pertencem à mesma componente forte. A função devolve o número (quantidade) de componentes fortes de G. (O código é adaptado do Programa 19.10 de Sedgewick.) */
+componentes fortes de um digrafo G. A função atribui um rótulo sc[v]
+(os rótulos são 0,1,2,...) a cada vértice v de G de modo que dois
+vértices tenham o mesmo rótulo se e somente se os dois pertencem à
+mesma componente forte. A função devolve o número (quantidade) de
+componentes fortes de G. (O código é adaptado do Programa 19.10 de
+Sedgewick.) */
 int DIGRAPHscKS (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
@@ -111,13 +130,6 @@ int DIGRAPHoutdeg (Digraph G, Vertex v);
 calcula o grau de entrada do vértice v do grafo G. A função supõe que
 v é menor que G->V */
 int DIGRAPHindeg (Digraph G, Vertex w);
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHdfs() visita
-todos os vértices e todos os arcos do digrafo G. A função atribui um
-número de ordem pre[x] a cada vértice x: o k-ésimo vértice descoberto
-recebe número de ordem k. (Código inspirado no programa 18.3 de
-Sedgewick.) */
-void DIGRAPHdfs (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()
 imprime, para cada vértice v do digrafo G, em uma linha, todos os

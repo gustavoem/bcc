@@ -99,6 +99,10 @@ digrafo. No ultimo caso, a numeração da ordenação topológica é dada
 pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v);
 
+/* Esta função implementa o algoritmo de Kosaraju-Sharir de cálculo das
+componentes fortes de um digrafo G. A função atribui um rótulo sc[v] (os rótulos são 0,1,2,...) a cada vértice v de G de modo que dois vértices tenham o mesmo rótulo se e somente se os dois pertencem à mesma componente forte. A função devolve o número (quantidade) de componentes fortes de G. (O código é adaptado do Programa 19.10 de Sedgewick.) */
+int DIGRAPHscKS (Digraph G);
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
 calcula o grau de saída do vértice v do grafo G. */
 int DIGRAPHoutdeg (Digraph G, Vertex v);

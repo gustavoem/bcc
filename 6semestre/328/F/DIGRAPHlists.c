@@ -292,9 +292,9 @@ static void dfsR (Digraph G, Vertex v) {
     l = G->adj[v];
     while (l != NULL) {
         w = l->w;
-        l = l->next;
         if (G->pre[w] == -1)
             dfsR (G, w);
+        l = l->next;
     }
     G->pos[v] = pos_count++; 
 }
@@ -310,7 +310,7 @@ int DIGRAPHscKS (Digraph G) {
     Vertex v, w;
     int i, id;
     Vertex *ord = malloc (G->V * sizeof (Vertex));
-    Vertex *sc = malloc (G->V * sizeof (Vertex));
+    int *sc = malloc (G->V * sizeof (int));
     Digraph GR = DIGRAPHreverse (G);
     DFSprepare (GR);
     for (v = 0; v < GR->V; v++)
@@ -318,15 +318,17 @@ int DIGRAPHscKS (Digraph G) {
             dfsR (GR, v);
     for (v = 0; v < GR->V; v++)
         ord[GR->pos[v]] = v;
-    for (v = 0; v > G->V; v++)
+    for (v = 0; v < G->V; v++)
         sc[v] = -1;
+    G->sc = sc; 
     id = 0;
-    for (i = 0; i < G->V; i++) {
+    pre_count = 0;
+    pos_count = 0;
+    for (i = G->V - 1; i >= 0; i--) {
         v = ord[i];
         if (sc[v] == -1)
             dfsRsc (G, v, id++);
     }
-    G->sc = sc; 
     DIGRAPHdestroy (GR);
     return id;
 }
@@ -336,7 +338,12 @@ rótulo id a todo vértice w que é acessível a partir de v e ainda não
 foi rotulado. Os rótulos são armazenados no vetor sc[]; um vértice w é
 considerado rotulado se sc[w] >= 0. */
 static void dfsRsc (Digraph G, Vertex v, int id) {
-
+    link l;
+    G->sc[v] = id;
+    for(l = G->adj[v]; l != NULL; l = l->next) {
+        if (G->sc[l->w] == -1)
+            dfsRsc (G, l->w, id);
+    }
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()

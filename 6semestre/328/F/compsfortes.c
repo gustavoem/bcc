@@ -39,26 +39,19 @@ então k grafos aleatórios com V vértices e um numero A de arcos que
 varia. */
 int main (int argc, char **argv) {
     int V, A, k, i;
-    Digraph G, GR;
+    Digraph G;
     if (argc != 3)
         return 0;
     V = atoi (argv[1]);
     k = atof (argv[2]);
 
-    G = DIGRAPHrand1 (V, V);  
-    GR = DIGRAPHreverse (G); 
+    G = DIGRAPHrand1 (V, 2 * V);
     DIGRAPHshow (G);
-    DIGRAPHshow (GR);
-    DIGRAPHdfs (G);
-    
+    DIGRAPHscKS (G);
     printf ("\n");
     for (i = 0; i < G->V; i++)
-        printf ("%d ", G->pre[i]);
+        printf ("%d ", G->sc[i]);
     printf ("\n");
-    for (i = 0; i < G->V; i++)
-        printf ("%d ", G->pos[i]);
-     
-
-    printf ("\n");
+    DIGRAPHdestroy (G);
     return 0;
 }

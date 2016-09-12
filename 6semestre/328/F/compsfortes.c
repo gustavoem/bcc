@@ -21,9 +21,22 @@
 #include <stdio.h>
 #include "DIGRAPHlists.h"
 
-/* Esta função recebe como parametros, em argv, V e k. São gerados 
-então k grafos aleatórios com V vértices e 
-TODO: terminar essa descrição */
+/* Esta função devolve a média do tamanho das três maiores componentes
+fortes do digrafo G. Para essa função funcionar é necessário que o
+digrafo G tenha suas componentes informadas no campo sc de Digraph. */
+double avg_higher_components (Digraph G) {
+    Vertex v;
+    int i, j, c;
+    int highestc[3] = {0, 0, 0};
+    int cpsize;
+    for (v = 0; v < G->V; v++) {
+        c = G->sc[v];
+    }
+}
+
+/* Esta função recebe como parametros, em argv, V e k. São gerados
+então k grafos aleatórios com V vértices e um numero A de arcos que
+varia. */
 int main (int argc, char **argv) {
     int V, A, k, i;
     Digraph G, GR;

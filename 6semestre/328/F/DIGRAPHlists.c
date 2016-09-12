@@ -316,15 +316,8 @@ int DIGRAPHscKS (Digraph G) {
     for (v = 0; v < GR->V; v++)
         if (GR->pre[v] == -1)
             dfsR (GR, v);
-    /* printf ("GR = ");
-    DIGRAPHshow (GR); */
-    printf ("\npos: "); 
     for (v = 0; v < GR->V; v++)
-    {
-        printf ("%d ", GR->pos[v]);
         ord[GR->pos[v]] = v;
-    }
-    printf ("\n");
     for (v = 0; v < G->V; v++)
         sc[v] = -1;
     G->sc = sc; 
@@ -346,7 +339,6 @@ foi rotulado. Os rótulos são armazenados no vetor sc[]; um vértice w é
 considerado rotulado se sc[w] >= 0. */
 static void dfsRsc (Digraph G, Vertex v, int id) {
     link l;
-    printf ("\nv: %d | sc: %d", v, id);
     G->sc[v] = id;
     for(l = G->adj[v]; l != NULL; l = l->next) {
         if (G->sc[l->w] == -1)

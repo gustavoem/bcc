@@ -32,12 +32,13 @@ int main (int argc, char **argv) {
     V = atoi (argv[1]);
     k = atof (argv[2]);
 
-    G = DIGRAPHrand1 (V, V);
+    G = DIGRAPHrand1 (V, 2 * V);
     DIGRAPHshow (G);
     DIGRAPHscKS (G);
     printf ("\n");
     for (i = 0; i < G->V; i++)
         printf ("%d ", G->sc[i]);
     printf ("\n");
+    DIGRAPHdestroy (G);
     return 0;
 }

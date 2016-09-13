@@ -121,36 +121,6 @@ void DIGRAPHdestroySCinfo (Digraph G) {
         free (G->sc);
 }
 
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
-calcula o grau de saída do vértice v do grafo G. A função supõe que
-v é menor que G->V */
-int DIGRAPHoutdeg (Digraph G, Vertex v) {
-    int count = 0;
-    link a = G->adj[v];
-    while (a != NULL) {
-        count++;
-        a = a->next;
-    }
-    return count;
-}
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHindeg()
-calcula o grau de entrada do vértice v do grafo G. A função supõe que
-v é menor que G->V */
-int DIGRAPHindeg (Digraph G, Vertex w) {
-    int count = 0;
-    Vertex v;
-    for (v = 0; v < G->V; v++) {
-        link a = G->adj[v];
-        while (a != NULL && a->w != w)
-            a = a->next;
-        if (a != NULL)
-            count++;
-    }
-    return count;
-}
-
 /* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função LISTSdelete ()
 destrói uma lista de links */
 static void LISTSdelete (link a) {
@@ -307,7 +277,7 @@ mesma componente forte. A função devolve o número (quantidade) de
 componentes fortes de G. (O código é adaptado do Programa 19.10 de
 Sedgewick.) */
 int DIGRAPHscKS (Digraph G) {
-    Vertex v, w;
+    Vertex v;
     int i, id;
     Vertex *ord = malloc (G->V * sizeof (Vertex));
     int *sc = malloc (G->V * sizeof (int));
@@ -346,6 +316,49 @@ static void dfsRsc (Digraph G, Vertex v, int id) {
     }
 }
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o 
+tamanho das componentes fortes de um digrafo G. Essa função só funciona
+se o usuário previamente usou uma das funções que determina as 
+componentes fortes de G */
+int *DIGRAPHscsizes (Digraph G) {
+    int i;
+    int *compsize = malloc (G->V * sizeof (int));
+    for (i = 0; i < G->V; i++)
+        compsize[i] = 0;
+    for (i = 0; i < G->V; i++)
+        compsize[G->sc[i]] += 1;
+    return compsize;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
+calcula o grau de saída do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHoutdeg (Digraph G, Vertex v) {
+    int count = 0;
+    link a = G->adj[v];
+    while (a != NULL) {
+        count++;
+        a = a->next;
+    }
+    return count;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHindeg()
+calcula o grau de entrada do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHindeg (Digraph G, Vertex w) {
+    int count = 0;
+    Vertex v;
+    for (v = 0; v < G->V; v++) {
+        link a = G->adj[v];
+        while (a != NULL && a->w != w)
+            a = a->next;
+        if (a != NULL)
+            count++;
+    }
+    return count;
+}
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()
 imprime, para cada vértice v do digrafo G, em uma linha, todos os
 vértices adjacentes a v. */
@@ -361,7 +374,6 @@ void DIGRAPHshow (Digraph G) {
         printf ("\n");
     }
 }
-
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHrand1 ()
 constrói um digrafo aleatório com vértices 0..V-1 e exatamente A

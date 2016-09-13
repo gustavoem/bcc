@@ -78,22 +78,36 @@ double avg_higher_components (Digraph G) {
 então k grafos aleatórios com V vértices e um numero A de arcos que
 varia. */
 int main (int argc, char **argv) {
-    int V, A, k, i;
+    int V, A, k, i, j;
     Digraph G;
     if (argc != 3)
         return 0;
     V = atoi (argv[1]);
     k = atof (argv[2]);
-
-    G = DIGRAPHrand1 (V, 2 * V);
-    DIGRAPHshow (G);
-    DIGRAPHscKS (G);
+    printf ("V = %d; k = %d\n\n", V, k);
+    printf ("   A   |  1a maior componente  |  2a maior componente  |  3a\
+maior componente\n");
+    printf ("____________________________________________________________\
+_________________\n");
+    for (A = V / 2; A <= 16 * V; A += V / 2) {
+        int bigcpsum[3] = {0, 0, 0};
+        printf ("\n");
+        printf (" %5d ", A);
+        for (i = 0; i < k; i++) {
+            int bigcp[3];
+            int *cpsizes;
+            G = DIGRAPHrand1 (V, A);
+            DIGRAPHscKS (G);
+            cpsizes = DIGRAPHscsizes (G);
+            n_highest (cpsizes, bigcp, G->V, 3);
+            for (j = 0; j < 3; j++)
+                bigcpsum[j] += bigcp[j];
+            free (cpsizes);
+            DIGRAPHdestroy (G);
+        }
+        for (j = 0; j < 3; j++)
+            printf ("|       %8.2f        ", bigcpsum[j] / (float) k);
+    }
     printf ("\n");
-    for (i = 0; i < G->V; i++)
-        printf ("%d ", G->sc[i]);
-    printf ("\n");
-    printf ("Tamanho medio das tres maiores componentes: %3.2f",
-            avg_higher_components (G));
-    DIGRAPHdestroy (G);
     return 0;
 }

@@ -301,6 +301,7 @@ int DIGRAPHscKS (Digraph G) {
             dfsRsc (G, v, id++);
     }
     DIGRAPHdestroy (GR);
+    free (ord);
     return id;
 }
 

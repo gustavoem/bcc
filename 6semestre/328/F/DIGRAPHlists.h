@@ -26,6 +26,7 @@
 
 /* Definições de constantes */
 #define Vertex int
+#define boolean int
 
 /* A lista de adjacência de um vértice v é composta por nós do tipo
 node. Cada nó da lista corresponde a um arco e contém um vizinho w de v
@@ -127,6 +128,10 @@ tamanho das componentes fortes de um digrafo G. Essa função só funciona
 se o usuário previamente usou uma das funções que determina as 
 componentes fortes de G */
 int *DIGRAPHscsizes (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHreach ()
+verifica, num digrafo G, se existe caminho entre os vértices s e t */
+int DIGRAPHreach (Digraph G, Vertex s, Vertex t);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
 calcula o grau de saída do vértice v do grafo G. */

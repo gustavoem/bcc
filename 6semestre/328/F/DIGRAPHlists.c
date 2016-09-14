@@ -26,6 +26,7 @@ static Vertex randV (Digraph G);
 static void dfsR (Digraph G, Vertex v);
 static void DFSprepare (Digraph G); 
 static void dfsRsc (Digraph G, Vertex v, int id);
+static void reachR (Digraph G, Vertex s, int *visited); 
 
 /* Variáveis usadas no DFS */
 static int pre_count;
@@ -316,6 +317,28 @@ static void dfsRsc (Digraph G, Vertex v, int id) {
     }
 }
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHscnaive ()
+é uma implementação simples de um algoritmo que determina as 
+componentes fortes de um digrafo. Esta rotina devolve a quantidade de
+componentes fortes que, ao final da execução, estarão marcados em 
+G->sc */
+int DIGRAPHscnaive (Digraph G) {
+    Vertex v;
+    Vertex w;
+    int id = 0;
+    int *sc = malloc (G->V * sizeof (int));
+    for (v = 0; v < G->V; v++)
+        sc[v] = -1;
+    for (v = 0; v < G->V; v++)
+        if (sc[v] == -1) {
+            sc[v] = id++;
+            for (w = v + 1; w < G->V; w++)
+                if (DIGRAPHreach (G, v, w) && DIGRAPHreach (G, w, v))
+                    sc[w] = id;
+        }
+    return id;
+}
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o 
 tamanho das componentes fortes de um digrafo G. Essa função só funciona
 se o usuário previamente usou uma das funções que determina as 
@@ -329,6 +352,31 @@ int *DIGRAPHscsizes (Digraph G) {
         compsize[G->sc[i]] += 1;
     return compsize;
 }
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHreach ()
+verifica, num digrafo G, se existe caminho entre os vértices s e t */
+int DIGRAPHreach (Digraph G, Vertex s, Vertex t) {
+    int i, ans;
+    int *visited = malloc (G->V * sizeof (int));
+    for (i = 0; i < G->V; i++)
+        visited[i] = 0;
+    reachR (G, s, visited);
+    ans = visited[t] == 1;
+    free (visited);
+    return ans;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função reachR () marca,
+num digrafo G, todos os vértices i alcançáveis por s com o valor 1 no 
+vetor visited */
+static void reachR (Digraph G, Vertex s, int *visited) {
+    link l;
+    visited[s] = 1;
+    for (l = G->adj[s]; l != NULL; l = l->next)
+        if (visited[l->w] == 0)
+            reachR (G, l->w, visited);
+}
+
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
 calcula o grau de saída do vértice v do grafo G. A função supõe que

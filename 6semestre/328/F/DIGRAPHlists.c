@@ -4,12 +4,12 @@
 // SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
 // TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
 // E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
-// 
+//
 // Autor:      Gustavo Estrela
 // Numero USP: 8536051
 // Sigla:      GUSTAVOE
 // Data:       2016-09-14
-// 
+//
 // Este arquivo faz parte da tarefa F
 // da disciplina MAC0328 e tem como objetivo imlpementar uma
 // biblioteca para manipulação de grafos. Essa biblioteca usa listas
@@ -24,9 +24,9 @@ static link NEWnode (Vertex w, link next);
 static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
 static void dfsR (Digraph G, Vertex v);
-static void DFSprepare (Digraph G); 
+static void DFSprepare (Digraph G);
 static void dfsRsc (Digraph G, Vertex v, int id);
-static void reachR (Digraph G, Vertex s, int *visited); 
+static void reachR (Digraph G, Vertex s, int *visited);
 
 /* Variáveis usadas no DFS */
 static int pre_count;
@@ -96,7 +96,7 @@ Digraph DIGRAPHreverse (Digraph G) {
     return GR;
 }
 
-/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
 digrafo pelos vetores pre, pos e father. */
 void DIGRAPHdestroyDFSinfo (Digraph G) {
@@ -132,7 +132,7 @@ static void LISTSdelete (link a) {
     }
 }
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare () 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DFSprepare ()
 prepara as variáveis relacionadas a rotina de DFS. */
 static void DFSprepare (Digraph G) {
     int V = G->V;
@@ -190,9 +190,9 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
     }
 }
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
 DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
-ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação
 topológica em G. No ultimo caso, a numeração da ordenação topológica é
 dada pelo vetor pre. */
 int DIGRAPHcycleOrTopo (Digraph G) {
@@ -213,13 +213,13 @@ int DIGRAPHcycleOrTopo (Digraph G) {
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função
 DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
 ciclo presente no subdigrafo de G tal que todo vértice é descendente do
-vértice v ou devolve -1 se existe uma ordenação topológica em tal 
-digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+vértice v ou devolve -1 se existe uma ordenação topológica em tal
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada
 pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v) {
     link l;
     Vertex w;
-    G->pre[v] = pre_count++; 
+    G->pre[v] = pre_count++;
     for (l = G->adj[v]; l != NULL; l = l->next) {
         w = l->w;
         if (G->pre[w] == -1) {
@@ -267,7 +267,7 @@ static void dfsR (Digraph G, Vertex v) {
             dfsR (G, w);
         l = l->next;
     }
-    G->pos[v] = pos_count++; 
+    G->pos[v] = pos_count++;
 }
 
 /* Esta função implementa o algoritmo de Kosaraju-Sharir de cálculo das
@@ -291,7 +291,7 @@ int DIGRAPHscKS (Digraph G) {
         ord[GR->pos[v]] = v;
     for (v = 0; v < G->V; v++)
         sc[v] = -1;
-    G->sc = sc; 
+    G->sc = sc;
     id = 0;
     pre_count = 0;
     pos_count = 0;
@@ -319,9 +319,9 @@ static void dfsRsc (Digraph G, Vertex v, int id) {
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHscnaive ()
-é uma implementação simples de um algoritmo que determina as 
+é uma implementação simples de um algoritmo que determina as
 componentes fortes de um digrafo. Esta rotina devolve a quantidade de
-componentes fortes que, ao final da execução, estarão marcados em 
+componentes fortes que, ao final da execução, estarão marcados em
 G->sc */
 int DIGRAPHscnaive (Digraph G) {
     Vertex v;
@@ -342,9 +342,9 @@ int DIGRAPHscnaive (Digraph G) {
     return id;
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o
 tamanho das componentes fortes de um digrafo G. Essa função só funciona
-se o usuário previamente usou uma das funções que determina as 
+se o usuário previamente usou uma das funções que determina as
 componentes fortes de G */
 int *DIGRAPHscsizes (Digraph G) {
     int i;
@@ -370,7 +370,7 @@ int DIGRAPHreach (Digraph G, Vertex s, Vertex t) {
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função reachR () marca,
-num digrafo G, todos os vértices i alcançáveis por s com o valor 1 no 
+num digrafo G, todos os vértices i alcançáveis por s com o valor 1 no
 vetor visited */
 static void reachR (Digraph G, Vertex s, int *visited) {
     link l;

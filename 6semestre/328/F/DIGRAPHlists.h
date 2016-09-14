@@ -4,12 +4,12 @@
 // SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
 // TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
 // E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
-// 
+//
 // Autor:      Gustavo Estrela
 // Numero USP: 8536051
 // Sigla:      GUSTAVOE
 // Data:       2016-09-14
-// 
+//
 // Este arquivo faz parte da tarefa F
 // da disciplina MAC0328 e tem como objetivo definir uma
 // biblioteca para manipulação de grafos. Essa biblioteca usa listas
@@ -68,7 +68,7 @@ void DIGRAPHdestroy (Digraph G);
 constrói o inverso do digrafo G. */
 Digraph DIGRAPHreverse (Digraph G);
 
-/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
 DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
 digrafo pelos vetores pre, pos e father. */
 void DIGRAPHdestroyDFSinfo (Digraph G);
@@ -91,9 +91,9 @@ positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função
 DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
-ciclo presente no digrafo G ou devolve -1 se existe uma ordenação 
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação
 topológica em G. No ultimo caso, a numeração da ordenação topológica é
 dada pelo vetor pre. */
 int DIGRAPHcycleOrTopo (Digraph G);
@@ -101,8 +101,8 @@ int DIGRAPHcycleOrTopo (Digraph G);
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função
 DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
 ciclo presente no subdigrafo de G tal que todo vértice é descendente do
-vértice v ou devolve -1 se existe uma ordenação topológica em tal 
-digrafo. No ultimo caso, a numeração da ordenação topológica é dada 
+vértice v ou devolve -1 se existe uma ordenação topológica em tal
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada
 pelo vetor pre de G. */
 int DIGRAPHcycleOrTopoR (Digraph G, Vertex v);
 
@@ -129,9 +129,9 @@ componentes fortes que, ao final da execução, estarão marcados em
 G->sc */
 int DIGRAPHscnaive (Digraph G);
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o
 tamanho das componentes fortes de um digrafo G. Essa função só funciona
-se o usuário previamente usou uma das funções que determina as 
+se o usuário previamente usou uma das funções que determina as
 componentes fortes de G */
 int *DIGRAPHscsizes (Digraph G);
 

@@ -96,7 +96,7 @@ _____________________________________________________________________________
  54000 |       16770.84        |           1.06        |           1.00        
 
 E, o que podemos observar foi que o ponto em que a 2a e 3as maiores 
-componentes atingem seu máximo está perto de 1.1V.
+componentes atingem seu máximo está perto de (1,1) * V.
 
 Usando o programa time, medimos o tempo gasto por ambos algoritmos e
 confirmamos o que já era esperado: o algoritmo Kosaraju-Sharir é mais

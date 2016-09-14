@@ -44,36 +44,6 @@ void n_highest (int *data, int *highest, int n, int k) {
     }
 }
 
-/* Esta função retorna a média dos valores contidos em um vetor de
-tamanho n. */
-double data_mean (int *data, int n) {
-    int i;
-    int accumulated = 0;
-    for (i = 0; i < n; i++)
-        accumulated += data[i];
-    return accumulated / (float) n;
-}
-
-/* Esta função devolve a média do tamanho das três maiores componentes
-fortes do digrafo G. Para essa função funcionar é necessário que o
-digrafo G tenha suas componentes informadas no campo sc de Digraph. */
-double avg_higher_components (Digraph G) {
-    Vertex v;
-    double ans;
-    int highestcp[3];
-    int *cpsize = DIGRAPHscsizes (G);
-    /**/
-    printf ("\nTamanho das componentes: ");
-    for (v = 0; v < G->V; v++)
-        printf ("%d ", cpsize[v]);
-    printf ("\n");
-    /**/
-    n_highest (cpsize, highestcp, G->V, 3);
-    ans = data_mean (highestcp, 3);
-    free (cpsize);
-    return ans;
-}
-
 /* Esta função recebe como parametros, em argv, V e k. São gerados
 então k grafos aleatórios com V vértices e um numero A de arcos que
 varia. */
@@ -92,7 +62,7 @@ int main (int argc, char **argv) {
     printf ("  3a maior componente\n");
     printf ("_______________________________________________________");
     printf ("______________________\n");
-    for (A = V / 2; A <= 16 * V && A <= V * (V - 1); A += 0.1 * V) {
+    for (A = V / 2; A <= 8 * V && A <= V * (V - 1); A += 0.1 * V) {
         int bigcpsum[3] = {0, 0, 0};
         printf ("\n");
         printf (" %5d ", A);

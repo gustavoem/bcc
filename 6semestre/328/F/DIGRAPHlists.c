@@ -8,9 +8,9 @@
 // Autor:      Gustavo Estrela
 // Numero USP: 8536051
 // Sigla:      GUSTAVOE
-// Data:       2016-08-17
+// Data:       2016-09-14
 // 
-// Este arquivo faz parte da tarefa C
+// Este arquivo faz parte da tarefa F
 // da disciplina MAC0328 e tem como objetivo imlpementar uma
 // biblioteca para manipulação de grafos. Essa biblioteca usa listas
 // de adjacência na sua implementação.
@@ -331,11 +331,13 @@ int DIGRAPHscnaive (Digraph G) {
         sc[v] = -1;
     for (v = 0; v < G->V; v++)
         if (sc[v] == -1) {
-            sc[v] = id++;
+            sc[v] = id;
             for (w = v + 1; w < G->V; w++)
                 if (DIGRAPHreach (G, v, w) && DIGRAPHreach (G, w, v))
                     sc[w] = id;
+            id++;
         }
+    G->sc = sc;
     return id;
 }
 

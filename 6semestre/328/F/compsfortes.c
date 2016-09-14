@@ -8,7 +8,7 @@
 // Autor:      Gustavo Estrela
 // Numero USP: 8536051
 // Sigla:      GUSTAVOE
-// Data:       2016-09-11
+// Data:       2016-09-14
 //
 // Este arquivo faz parte da tarefa F
 // da disciplina MAC0328 e tem como objetivo estudar como o tamanho
@@ -78,18 +78,21 @@ double avg_higher_components (Digraph G) {
 então k grafos aleatórios com V vértices e um numero A de arcos que
 varia. */
 int main (int argc, char **argv) {
-    int V, A, k, i, j;
+    int V, A, k, i, j, alg;
     Digraph G;
-    if (argc != 3)
+    if (argc != 4)
         return 0;
     V = atoi (argv[1]);
-    k = atof (argv[2]);
+    k = atoi (argv[2]);
+    alg = atoi (argv[3]);
     printf ("V = %d; k = %d\n\n", V, k);
-    printf ("   A   |  1a maior componente  |  2a maior componente  |  3a\
-maior componente\n");
-    printf ("____________________________________________________________\
-_________________\n");
-    for (A = V / 2; A <= 16 * V; A += V / 2) {
+    printf ("A tabela abaixo mostra o tamanho médio da 1a, 2a e 3a");
+    printf ("maiores componentes de k \ndigrafos aleatórios\n");
+    printf ("\n   A   |  1a maior componente  |  2a maior componente  |");
+    printf ("  3a maior componente\n");
+    printf ("_______________________________________________________");
+    printf ("______________________\n");
+    for (A = V / 2; A <= 16 * V && A <= V * (V - 1); A += 0.1 * V) {
         int bigcpsum[3] = {0, 0, 0};
         printf ("\n");
         printf (" %5d ", A);
@@ -97,7 +100,10 @@ _________________\n");
             int bigcp[3];
             int *cpsizes;
             G = DIGRAPHrand1 (V, A);
-            DIGRAPHscKS (G);
+            if (alg == 1)
+                DIGRAPHscnaive (G);
+            else
+                DIGRAPHscKS (G);
             cpsizes = DIGRAPHscsizes (G);
             n_highest (cpsizes, bigcp, G->V, 3);
             for (j = 0; j < 3; j++)

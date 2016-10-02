@@ -31,11 +31,14 @@ formato "V d k" até que V seja -1. Para cada uma das entradas o
 programa cria um grafo do tipo WS e mostra na saída padrão a distância
 média dos vértices desse grafo criado. */
 int main (int argc, char **argv) {
-    int V;
     Vertex v;
+    double meand;
     Graph G;
-    G = GRAPHclosePoints (100, .1);
-    printf ("Numero de arestas: %d", G->A / 2);
+    G = DIGRAPHinit (5);
+    GRAPHaddRandEdges (G, 1);
+    DIGRAPHshow (G);
+    meand = GRAPHsmallWorld (G);
+    printf ("\nDistancia media: %3.2f", meand);
     DIGRAPHdestroy (G);
     printf ("\n");
     return 0;

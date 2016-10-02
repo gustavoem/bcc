@@ -204,4 +204,18 @@ liga-se com arestas cada par de vértices v e w tal que a distância
 entre os pontos representados por esses vértices é menor ou igual ao
 parametro d. */
 Graph GRAPHclosePoints (int V, float d);
+
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função 
+GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada 
+vértice de G adicionam-se k arestas v-w tal que w é escolhido 
+aleatóriamente */
+void GRAPHaddRandEdges (Graph G, int k);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHsmallWorld () calcula a distância média entre dois vértices v, w
+do grafo e retorna o valor. Quando o grafo é desconexo a distância 
+média é infinita, definida como G->V. */
+double GRAPHsmallWorld (Graph G);
+
 #endif

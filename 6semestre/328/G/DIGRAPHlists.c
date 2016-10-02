@@ -609,3 +609,40 @@ point *createRandPoints (int n) {
     }
     return points;
 }
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função 
+GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada 
+vértice de G adicionam-se k arestas v-w tal que w é escolhido 
+aleatóriamente */
+void GRAPHaddRandEdges (Graph G, int k) {
+    Vertex v;
+    for (v = 0; v < G->V; v++) {
+        int goal = G->A + 2 * k;
+        while (G->A < goal) {
+            Vertex w = randV (G);
+            if (w != v) {
+                DIGRAPHinsertA (G, v, w);
+                DIGRAPHinsertA (G, w, v);
+            }
+        }
+    }
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHsmallWorld () calcula a distância média entre dois vértices v, w
+do grafo e retorna o valor. Quando o grafo é desconexo a distância 
+média é infinita, definida como G->V. */
+double GRAPHsmallWorld (Graph G) {
+    double sum = 0;
+    int quotient = 0;
+    Vertex v, w;
+    for (v = 0; v < G->V; v++) {
+        DIGRAPHdist (G, v);
+        for (w = v; w < G->V; w++) {
+            sum += G->dist[w];
+            quotient++;
+        }
+    }
+    DIGRAPHdestroydistinfo (G);
+    return sum / quotient;
+}

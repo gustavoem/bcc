@@ -203,7 +203,7 @@ GRAPHclosePoints () escolhe V pontos aleatórios no quadrado
 liga-se com arestas cada par de vértices v e w tal que a distância
 entre os pontos representados por esses vértices é menor ou igual ao
 parametro d. */
-Graph GRAPHclosePoints (int V, float d);
+Graph GRAPHclosePoints (int V, double d);
 
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função 
@@ -217,5 +217,14 @@ GRAPHsmallWorld () calcula a distância média entre dois vértices v, w
 do grafo e retorna o valor. Quando o grafo é desconexo a distância 
 média é infinita, definida como G->V. */
 double GRAPHsmallWorld (Graph G);
+
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHws () cria um grafo do tipo WS (em referência a Watts e Strogatz)
+com parâmetros V, d e k. Esse grafo é criado escolhendo-se V pontos em
+um quadrado unitário, cada um representado por um vértice do grafo, e
+ligando cada par de vértices que dista d ou menos um do outro. Depois
+adiciona-se k arestas a cada um dos vértices. */
+Graph GRAPHws (int V, double d, int k);
 
 #endif

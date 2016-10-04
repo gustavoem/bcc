@@ -142,6 +142,8 @@ void DIGRAPHdestroydistinfo (Digraph G) {
         free (G->father);
     if (G->dist != NULL)
         free (G->dist);
+    G->father = NULL;
+    G->dist = NULL;
 }
 
 /* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função LISTSdelete ()
@@ -578,7 +580,7 @@ GRAPHclosePoints () escolhe V pontos aleatórios no quadrado
 liga-se com arestas cada par de vértices v e w tal que a distância
 entre os pontos representados por esses vértices é menor ou igual ao
 parametro d. */
-Graph GRAPHclosePoints (int V, float d) {
+Graph GRAPHclosePoints (int V, double d) {
     int i, j;
     point *points = createRandPoints (V);
     Graph G;
@@ -635,10 +637,15 @@ média é infinita, definida como G->V. */
 double GRAPHsmallWorld (Graph G) {
     double sum = 0;
     int quotient = 0;
+    const int INFINITE = G->V;
     Vertex v, w;
     for (v = 0; v < G->V; v++) {
         DIGRAPHdist (G, v);
         for (w = v; w < G->V; w++) {
+            if (G->dist[w] == INFINITE) {
+                DIGRAPHdestroydistinfo (G);
+                return (double) INFINITE;
+            }
             sum += G->dist[w];
             quotient++;
         }
@@ -646,3 +653,17 @@ double GRAPHsmallWorld (Graph G) {
     DIGRAPHdestroydistinfo (G);
     return sum / quotient;
 }
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHws () cria um grafo do tipo WS (em referência a Watts e Strogatz)
+com parâmetros V, d e k. Esse grafo é criado escolhendo-se V pontos em
+um quadrado unitário, cada um representado por um vértice do grafo, e
+ligando cada par de vértices que dista d ou menos um do outro. Depois
+adiciona-se k arestas a cada um dos vértices. */
+Graph GRAPHws (int V, double d, int k) {
+    Graph G;
+    G = GRAPHclosePoints (V, d);
+    GRAPHaddRandEdges (G, k);
+    return G;
+}
+

@@ -1,8 +1,8 @@
 Autor:      Gustavo Estrela
 Numero USP: 8536051
 Sigla:      GUSTAVOE
-Data:       2016-10-04
-Este arquivo faz parte da tarefa G
+Data:       2016-08-17
+Este arquivo faz parte da tarefa F
 
 Primeiro analizamos o que acontece com a distância média quando k = 0.
 É esperado que conforme aumentamos o número V, o número d precise ser

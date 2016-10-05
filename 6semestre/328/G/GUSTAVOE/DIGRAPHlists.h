@@ -1,0 +1,230 @@
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+//
+// Autor:      Gustavo Estrela
+// Numero USP: 8536051
+// Sigla:      GUSTAVOE
+// Data:       2016-10-01
+//
+// Este arquivo faz parte da tarefa G
+// da disciplina MAC0328 e tem como objetivo definir uma
+// biblioteca para manipulação de grafos. Essa biblioteca usa listas
+// de adjacência na sua implementação.
+//
+////////////////////////////////////////////////////////////// */
+
+#ifndef DIGRAPH_LISTS_H_
+#define DIGRAPH_LISTS_H_
+
+/* Inclusão de outras interfaces necessárias para esta interface */
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
+/* Definições de constantes */
+#define Vertex int
+#define Graph Digraph
+
+/* A lista de adjacência de um vértice v é composta por nós do tipo
+node. Cada nó da lista corresponde a um arco e contém um vizinho w de v
+e o endereço do nó seguinte da lista. Um link é um ponteiro para um
+node. */
+typedef struct node *link;
+struct node {
+    Vertex w;
+    link next;
+};
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A estrutura digraph
+representa um digrafo. O campo adj é um ponteiro para a matriz de
+adjacências do digrafo. O campo V contém o número de vértices e o campo
+A contém o número de arcos do digrafo. */
+struct digraph {
+    int V;
+    int A;
+    link *adj;
+    int *pre;
+    int *pos;
+    int *sc;
+    int *dist;
+    Vertex *father;
+};
+
+/* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
+o endereço de um digraph. */
+typedef struct digraph *Digraph;
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHinit()
+constrói um digrafo com vértices 0 1 .. V-1 e nenhum arco. */
+Digraph DIGRAPHinit (int V);
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHdestroy()
+destrói um digrafo G liberando na memória o espaço que foi alocado em
+sua criação */
+void DIGRAPHdestroy (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHreverse()
+constrói o inverso do digrafo G. */
+Digraph DIGRAPHreverse (Digraph G);
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHdestroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelos vetores pre, pos e father. */
+void DIGRAPHdestroyDFSinfo (Digraph G);
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHdestroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo pelo vetor sc, que guarda a componente forte a qual cada
+vertice pertence */
+void DIGRAPHdestroySCinfo (Digraph G);
+
+/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHdestroyDFSinfo () libera o espaço alocado para estrutura do
+digrafo nos vetores father e dist, criados em DIGRAPHdist () */
+void DIGRAPHdestroydistinfo (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHinsertA()
+insere um arco v-w no digrafo G. A função supõe que v e w são
+distintos, positivos e menores que G->V. Se o digrafo já tem um arco
+v-w, a função não faz nada. */
+void DIGRAPHinsertA (Digraph G, Vertex v, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHremoveA()
+remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
+positivos e menores que G->V. Se não existe arco v-w, a função não faz
+nada. */
+void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHcycleOrTopo () devolve um inteiro que representa o começo de um
+ciclo presente no digrafo G ou devolve -1 se existe uma ordenação
+topológica em G. No ultimo caso, a numeração da ordenação topológica é
+dada pelo vetor pre. */
+int DIGRAPHcycleOrTopo (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função
+DIGRAPHcycleOrTopoR () devolve um inteiro que representa o começo de um
+ciclo presente no subdigrafo de G tal que todo vértice é descendente do
+vértice v ou devolve -1 se existe uma ordenação topológica em tal
+digrafo. No ultimo caso, a numeração da ordenação topológica é dada
+pelo vetor pre de G. */
+int DIGRAPHcycleOrTopoR (Digraph G, Vertex v);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHdfs() visita
+todos os vértices e todos os arcos do digrafo G. A função atribui um
+número de ordem pre[x] a cada vértice x: o k-ésimo vértice descoberto
+recebe número de ordem k. (Código inspirado no programa 18.3 de
+Sedgewick.) */
+void DIGRAPHdfs (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função implementa
+o algoritmo de Kosaraju-Sharir de cálculo das componentes fortes de um
+digrafo G. A função atribui um rótulo sc[v] (os rótulos são 0,1,2,...)
+a cada vértice v de G de modo que dois vértices tenham o mesmo rótulo
+se e somente se os dois pertencem à mesma componente forte. A função
+devolve o número (quantidade) de componentes fortes de G. (O código é
+adaptado do Programa 19.10 de Sedgewick.) */
+int DIGRAPHscKS (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHscnaive ()
+é uma implementação simples de um algoritmo que determina as
+componentes fortes de um digrafo. Esta rotina devolve a quantidade de
+componentes fortes que, ao final da execução, estarão marcados em
+G->sc */
+int DIGRAPHscnaive (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função retorna o
+tamanho das componentes fortes de um digrafo G. Essa função só funciona
+se o usuário previamente usou uma das funções que determina as
+componentes fortes de G */
+int *DIGRAPHscsizes (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a
+distância de um vértice s a cada vértice de G. O percorrimento dos
+vértices feito nessa função gera uma árvore, armazenada no vetor father
+da estrutura de G. */
+void DIGRAPHdist (Digraph G, Vertex s);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHreach ()
+verifica, num digrafo G, se existe caminho entre os vértices s e t */
+int DIGRAPHreach (Digraph G, Vertex s, Vertex t);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHoutdeg()
+calcula o grau de saída do vértice v do grafo G. */
+int DIGRAPHoutdeg (Digraph G, Vertex v);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHindeg()
+calcula o grau de entrada do vértice v do grafo G. A função supõe que
+v é menor que G->V */
+int DIGRAPHindeg (Digraph G, Vertex w);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHshow()
+imprime, para cada vértice v do digrafo G, em uma linha, todos os
+vértices adjacentes a v. */
+void DIGRAPHshow (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHrand1 ()
+constrói um digrafo aleatório com vértices 0..V-1 e exatamente A
+arcos. (As duas pontas de cada arco devem ser diferentes.) A função
+supõe que A <= V*(V-1). Se A for próximo de V*(V-1), a função pode
+consumir muito tempo. (Código inspirado no Programa 17.7 de
+Sedgewick.) */
+Digraph DIGRAPHrand1 (int V, int A);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função GRAPHrand1 ()
+constrói um grafo aleatório com vértices 0..V-1 e exatamente E arestas
+(As duas pontas de cada aresta devem ser diferentes.). A função
+supõe que E <= V*(V-1)/2. Se E for próximo de V*(V-1)/2, a função pode
+consumir muito tempo. (Código inspirado no Programa 17.7 de
+Sedgewick.) */
+Digraph GRAPHrand1 (int V, int E);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função DIGRAPHrand2 ()
+constrói um digrafo aleatório com vértices 0..V-1 e número esperado de
+arcos igual a A. (As duas pontas de cada arco devem ser diferentes.) A
+função supõe que V >= 2 e A <= V*(V-1). (Código inspirado no Program
+17.8 de Sedgewick.) */
+Digraph DIGRAPHrand2 (int V, int A);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função GRAPHrand2 ()
+constrói um grafo aleatório com vértices 0..V-1 e número esperado de
+arestas igual a E. (As duas pontas de cada aresta devem ser
+diferentes.) A função supõe que V >= 2 e E <= V*(V-1)/2. (Código
+inspirado no Program 17.8 de Sedgewick.) */
+Digraph GRAPHrand2 (int V, int E);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHclosePoints () escolhe V pontos aleatórios no quadrado
+[0, 1)x[0,1) e cria um vértice para cada um desses pontos. Depois,
+liga-se com arestas cada par de vértices v e w tal que a distância
+entre os pontos representados por esses vértices é menor ou igual ao
+parametro d. */
+Graph GRAPHclosePoints (int V, double d);
+
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada
+vértice de G adicionam-se k arestas v-w tal que w é escolhido
+aleatóriamente */
+void GRAPHaddRandEdges (Graph G, int k);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHsmallWorld () calcula a distância média entre dois vértices v, w
+do grafo e retorna o valor. Quando o grafo é desconexo a distância
+média é infinita, definida como G->V. */
+double GRAPHsmallWorld (Graph G);
+
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHws () cria um grafo do tipo WS (em referência a Watts e Strogatz)
+com parâmetros V, d e k. Esse grafo é criado escolhendo-se V pontos em
+um quadrado unitário, cada um representado por um vértice do grafo, e
+ligando cada par de vértices que dista d ou menos um do outro. Depois
+adiciona-se k arestas a cada um dos vértices. */
+Graph GRAPHws (int V, double d, int k);
+
+#endif

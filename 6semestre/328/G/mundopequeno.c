@@ -36,14 +36,15 @@ int main (int argc, char **argv) {
     float meand;
     Graph G;
     printf ("> ");
-    scanf ("%d %lf %d", &V, &d, &k);
+    scanf ("%d", &V);
     while (V != -1) {
+        scanf ("%lf %d", &d, &k);
         G = GRAPHws (V, d, k);
         meand = (float) GRAPHsmallWorld (G);
         printf ("  distancia media: %3.2f", meand);
         DIGRAPHdestroy (G);
         printf ("\n\n> ");
-        scanf ("%d %lf %d", &V, &d, &k);
+        scanf ("%d", &V);
     }
     printf ("\n");
     return 0;

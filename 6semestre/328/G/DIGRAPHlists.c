@@ -636,7 +636,7 @@ do grafo e retorna o valor. Quando o grafo é desconexo a distância
 média é infinita, definida como G->V. */
 double GRAPHsmallWorld (Graph G) {
     double sum = 0;
-    int quotient = 0;
+    int quotient;
     const int INFINITE = G->V;
     Vertex v, w;
     for (v = 0; v < G->V; v++) {
@@ -647,10 +647,10 @@ double GRAPHsmallWorld (Graph G) {
                 return (double) INFINITE;
             }
             sum += G->dist[w];
-            quotient++;
         }
     }
     DIGRAPHdestroydistinfo (G);
+    quotient = (G->V + 1) * G->V / 2;
     return sum / quotient;
 }
 

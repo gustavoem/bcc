@@ -27,7 +27,7 @@
 /* Protótipo das funções */
 
 /* Esta função recebe pela entrada padrão uma sequencia de entradas no
-formato "V d k" até que V seja -1. Para cada uma das entradas o 
+formato "V d k" até que V seja -1. Para cada uma das entradas o
 programa cria um grafo do tipo WS e mostra na saída padrão a distância
 média dos vértices desse grafo criado. */
 int main (int argc, char **argv) {

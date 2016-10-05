@@ -143,7 +143,7 @@ se o usuário previamente usou uma das funções que determina as
 componentes fortes de G */
 int *DIGRAPHscsizes (Digraph G);
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a
 distância de um vértice s a cada vértice de G. O percorrimento dos
 vértices feito nessa função gera uma árvore, armazenada no vetor father
 da estrutura de G. */
@@ -199,22 +199,22 @@ Digraph GRAPHrand2 (int V, int E);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
 GRAPHclosePoints () escolhe V pontos aleatórios no quadrado
-[0, 1)x[0,1) e cria um vértice para cada um desses pontos. Depois, 
+[0, 1)x[0,1) e cria um vértice para cada um desses pontos. Depois,
 liga-se com arestas cada par de vértices v e w tal que a distância
 entre os pontos representados por esses vértices é menor ou igual ao
 parametro d. */
 Graph GRAPHclosePoints (int V, double d);
 
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função 
-GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada 
-vértice de G adicionam-se k arestas v-w tal que w é escolhido 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada
+vértice de G adicionam-se k arestas v-w tal que w é escolhido
 aleatóriamente */
 void GRAPHaddRandEdges (Graph G, int k);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
 GRAPHsmallWorld () calcula a distância média entre dois vértices v, w
-do grafo e retorna o valor. Quando o grafo é desconexo a distância 
+do grafo e retorna o valor. Quando o grafo é desconexo a distância
 média é infinita, definida como G->V. */
 double GRAPHsmallWorld (Graph G);
 

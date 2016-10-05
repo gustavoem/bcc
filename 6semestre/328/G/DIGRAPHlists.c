@@ -394,7 +394,7 @@ int *DIGRAPHscsizes (Digraph G) {
     return compsize;
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a
 distância de um vértice s a cada vértice de G. O percorrimento dos
 vértices feito nessa função gera uma árvore, armazenada no vetor father
 da estrutura de G. */
@@ -612,9 +612,9 @@ point *createRandPoints (int n) {
     return points;
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função 
-GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada 
-vértice de G adicionam-se k arestas v-w tal que w é escolhido 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+GRAPHaddRandEdges () recebe um grafo G e um inteiro k. Para cada
+vértice de G adicionam-se k arestas v-w tal que w é escolhido
 aleatóriamente */
 void GRAPHaddRandEdges (Graph G, int k) {
     Vertex v;
@@ -632,7 +632,7 @@ void GRAPHaddRandEdges (Graph G, int k) {
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
 GRAPHsmallWorld () calcula a distância média entre dois vértices v, w
-do grafo e retorna o valor. Quando o grafo é desconexo a distância 
+do grafo e retorna o valor. Quando o grafo é desconexo a distância
 média é infinita, definida como G->V. */
 double GRAPHsmallWorld (Graph G) {
     double sum = 0;

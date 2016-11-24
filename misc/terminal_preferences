@@ -1,5 +1,6 @@
 export PS1='\[\e[1;34m\]\h\[\e[m\]:\[\e[0;97m\]\W\\\[\e[m\]$ '
 export PS1='\[\e[1;36m\]\h\[\e[m\]:\[\e[0;97m\]\W\\\[\e[m\]$ '
+export PS1="\[\033[38;5;58m\]\H\[$(tput sgr0)\]\[\033[38;5;64m\]:\W\[$(tput sgr0)\]\[\033[38;5;34m\]\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
 
 profile colors:
 text color: #F57900 or #ff9900

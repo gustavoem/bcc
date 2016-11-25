@@ -29,6 +29,7 @@ typedef struct {
 static link NEWnode (Vertex w, double cst, link next);
 static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
+static double randC (double cmin, double cmax);
 static void distprepare (Digraph G);
 static point *createRandPoints (int n);
 
@@ -223,16 +224,18 @@ arcos. (As duas pontas de cada arco devem ser diferentes.) A função
 supõe que A <= V*(V-1). Se A for próximo de V*(V-1), a função pode
 consumir muito tempo. (Código inspirado no Programa 17.7 de
 Sedgewick.) */
-Digraph DIGRAPHrand1 (int V, int A) {
-    /* TODO: colocar custos */
-    /*Vertex v, w;*/
+Digraph DIGRAPHrand1 (int V, int A, double cmin, double cmax) {
+    Vertex v, w;
     Digraph G = DIGRAPHinit (V);
-    /*while (G->A < A) {
+    while (G->A < A) {
         v = randV (G);
         w = randV (G);
         if (v != w)
-            DIGRAPHinsertA (G, v, w);
-    }*/
+        {
+            double cst = randC (cmin, cmax);
+            DIGRAPHinsertA (G, v, w, cst);
+        }
+    }
     return G;
 }
 
@@ -242,19 +245,19 @@ constrói um grafo aleatório com vértices 0..V-1 e exatamente E arestas
 supõe que E <= V*(V-1)/2. Se E for próximo de V*(V-1)/2, a função pode
 consumir muito tempo. (Código inspirado no Programa 17.7 de
 Sedgewick.) */
-Digraph GRAPHrand1 (int V, int E) {
-    /* TODO: adicionar custos */
-    /*Vertex v, w;*/
-    Digraph G = DIGRAPHinit (V);
-    /*while (G->A / 2 < E) {
+Graph GRAPHrand1 (int V, int E, double cmin, double cmax) {
+    Vertex v, w;
+    Graph G = DIGRAPHinit (V);
+    while (G->A / 2 < E) {
         v = randV (G);
         w = randV (G);
         if (v != w)
         {
-            DIGRAPHinsertA (G, v, w);
-            DIGRAPHinsertA (G, w, v);
+            double cst = randC (cmin, cmax);
+            DIGRAPHinsertA (G, v, w, cst);
+            DIGRAPHinsertA (G, w, v, cst);
         }
-    }*/
+    }
     return G;
 }
 
@@ -265,20 +268,30 @@ static Vertex randV (Digraph G) {
     return r * G->V;
 }
 
+/* A função randCst() devolve um número pseudo-aleatório entre 
+cmin e cmax */
+static double randC (double cmin, double cmax) {
+    double r;
+    r = rand () / (RAND_MAX + 1.0);
+    return r * (cmax - cmin) + cmin;
+}
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função DIGRAPHrand2 ()
 constrói um digrafo aleatório com vértices 0..V-1 e número esperado de
 arcos igual a A. (As duas pontas de cada arco devem ser diferentes.) A
 função supõe que V >= 2 e A <= V*(V-1). (Código inspirado no Program
 17.8 de Sedgewick.) */
-Digraph DIGRAPHrand2 (int V, int A) {
-    /* TODO: adicionar custos */
-    /*Vertex v, w;
-    double p = (double) A / V / (V-1);*/
+Digraph DIGRAPHrand2 (int V, int A, double cmin, double cmax) {
+    Vertex v, w;
+    double p = (double) A / V / (V-1);
     Digraph G = DIGRAPHinit (V);
-    /*for (v = 0; v < V; v++)
+    for (v = 0; v < V; v++)
         for (w = 0; w < V; w++)
             if (v != w && rand () < p * (RAND_MAX + 1.0))
-                DIGRAPHinsertA (G, v, w);*/
+            {
+                double cst = randC (cmin, cmax);
+                DIGRAPHinsertA (G, v, w, cst);
+            }
     return G;
 }
 
@@ -287,18 +300,18 @@ constrói um grafo aleatório com vértices 0..V-1 e número esperado de
 arestas igual a E. (As duas pontas de cada aresta devem ser
 diferentes.) A função supõe que V >= 2 e E <= V*(V-1)/2. (Código
 inspirado no Program 17.8 de Sedgewick.) */
-Digraph GRAPHrand2 (int V, int E) {
-    /* TODO: adicionar custos */
-    /*Vertex v, w;
-    double p = (double) 2 * E / V / (V-1);*/
+Digraph GRAPHrand2 (int V, int E, double cmin, double cmax) {
+    Vertex v, w;
+    double p = (double) 2 * E / V / (V-1);
     Digraph G = DIGRAPHinit (V);
-    /*for (v = 0; v < V; v++)
+    for (v = 0; v < V; v++)
         for (w = 0; w < V; w++)
             if (v != w && rand () < p * (RAND_MAX + 1.0))
             {
-                DIGRAPHinsertA (G, v, w);
-                DIGRAPHinsertA (G, w, v);
-            }*/
+                double cst = randC (cmin, cmax);
+                DIGRAPHinsertA (G, v, w, cst);
+                DIGRAPHinsertA (G, w, v, cst);
+            }
     return G;
 }
 

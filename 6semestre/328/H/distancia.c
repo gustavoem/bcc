@@ -26,12 +26,10 @@
 
 /* TODO: escrever sobre essa função */
 int main (int argc, char **argv) {
-	Graph G;
-	G = DIGRAPHinit (5);
-	GRAPHinsertE (G, 0, 1, .2);
-	GRAPHinsertE (G, 2, 1, .23);
-	GRAPHinsertE (G, 3, 2, .5);
-	GRAPHinsertE (G, 1, 4, 52.5);
-	DIGRAPHshow (G);
+    Graph G;
+    if (argc > 1)
+        srand (atoi (argv[1]));
+    G = GRAPHrand2 (5, 1, -1, 1);
+    DIGRAPHshow (G);
     return 0;
 }

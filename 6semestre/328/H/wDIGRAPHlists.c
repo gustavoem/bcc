@@ -204,14 +204,14 @@ void DIGRAPHshow (Digraph G) {
         link a = G->adj[v];
         printf ("%d: ", v);
         while (a != NULL) {
-            printf ("%5d ", a->w);
+            printf ("%6d ", a->w);
             a = a->next;
         }
         printf ("\n");
         printf ("   ");
         a = G->adj[v];
         while (a != NULL) {
-            printf ("%5.2f ", a->cst);
+            printf ("%6.2f ", a->cst);
             a = a->next;
         }
         printf ("\n");

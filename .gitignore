@@ -1,0 +1,17 @@
+## object files
+*.o
+
+## pre-compiled headers
+*.gch
+*.pch
+
+## latex auxiliar files
+*.aux
+*.log
+*.lof
+*.out
+*.toc
+
+## vim files
+*.swp
+*.swo

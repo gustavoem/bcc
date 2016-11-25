@@ -83,6 +83,12 @@ distintos, positivos e menores que G->V. Se o digrafo já tem um arco
 v-w, a função não faz nada. */
 void DIGRAPHinsertA (Digraph G, Vertex v, Vertex w, double cst);
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHinsertE()
+insere uma aresta v-w no digrafo G. A função supõe que v e w são
+distintos, positivos e menores que G->V. Se o digrafo já tem uma aresta
+v-w, a função não faz nada. */
+void GRAPHinsertE (Graph G, Vertex v, Vertex w, double cst);
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHremoveA()
 remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
 positivos e menores que G->V. Se não existe arco v-w, a função não faz

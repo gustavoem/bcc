@@ -123,6 +123,19 @@ void DIGRAPHinsertA (Digraph G, Vertex v, Vertex w, double cst) {
     G->A++;
 }
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHinsertE()
+insere uma aresta v-w no digrafo G. A função supõe que v e w são
+distintos, positivos e menores que G->V. Se o digrafo já tem uma aresta
+v-w, a função não faz nada. */
+void GRAPHinsertE (Graph G, Vertex v, Vertex w, double cst) {
+    link a;
+    for (a = G->adj[v]; a != NULL; a = a->next)
+        if (a->w == w) return;
+    G->adj[v] = NEWnode (w, cst, G->adj[v]);
+    G->adj[w] = NEWnode (v, cst, G->adj[w]);
+    G->A++;
+}
+
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHremoveA()
 remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
 positivos e menores que G->V. Se não existe arco v-w, a função não faz
@@ -185,13 +198,19 @@ void DIGRAPHdist (Digraph G, Vertex s) {
 imprime, para cada vértice v do digrafo G, em uma linha, todos os
 vértices adjacentes a v. */
 void DIGRAPHshow (Digraph G) {
-    /* TODO: modificar essa função*/
     Vertex v;
     for (v = 0; v < G->V; v++) {
         link a = G->adj[v];
         printf ("%d: ", v);
         while (a != NULL) {
-            printf ("%d ", a->w);
+            printf ("%5d ", a->w);
+            a = a->next;
+        }
+        printf ("\n");
+        printf ("   ");
+        a = G->adj[v];
+        while (a != NULL) {
+            printf ("%5.2f ", a->cst);
             a = a->next;
         }
         printf ("\n");
@@ -205,8 +224,8 @@ supõe que A <= V*(V-1). Se A for próximo de V*(V-1), a função pode
 consumir muito tempo. (Código inspirado no Programa 17.7 de
 Sedgewick.) */
 Digraph DIGRAPHrand1 (int V, int A) {
-    /* TODO: adicionar custos */
-    Vertex v, w;
+    /* TODO: colocar custos */
+    /*Vertex v, w;*/
     Digraph G = DIGRAPHinit (V);
     /*while (G->A < A) {
         v = randV (G);

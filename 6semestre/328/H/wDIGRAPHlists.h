@@ -57,7 +57,6 @@ struct digraph {
     link *adj;
     double *dist;
     Vertex *father;
-    Vertex *frg;
 };
 
 /* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
@@ -144,12 +143,6 @@ void DIGRAPHdestroyDist (Digraph G);
 // de pais, utilizado para representação de árvores
 // (radicadas em geral). */
 void DIGRAPHdestroyFather (Digraph G);
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
-// DIGRAHdestroFather() libera da memória o espaço alocado para o vetor
-// de franja, utilizado para representação da franja no algoritmo de
-// Dijkstra. */
-void DIGRAPHdestroyFrg (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
 // DIGRAPHsptD0 é uma implementação simples e não muito eficiente

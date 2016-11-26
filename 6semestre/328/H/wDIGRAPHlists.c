@@ -21,6 +21,8 @@
 
 #define TRUE 1
 
+static Vertex *frj;
+
 /* Tipo auxiliar privado para esta biblioteca. */
 typedef struct {
     double x;
@@ -35,7 +37,6 @@ static double randC (double cmin, double cmax);
 static point *createRandPoints (int n);
 static void NEWdist (Digraph G);
 static void NEWfather (Digraph G);
-static void NEWfrg (Digraph G);
 static double findINFINITE (Digraph G);
 static int checkDist (Digraph G);
 
@@ -62,7 +63,6 @@ Digraph DIGRAPHinit (int V) {
         G->adj[v] = NULL;
     G->father = NULL;
     G->dist = NULL;
-    G->frg = NULL;
     return G;
 }
 
@@ -76,7 +76,6 @@ void DIGRAPHdestroy (Digraph G) {
     free (G->adj);
     DIGRAPHdestroyFather (G);
     DIGRAPHdestroyDist (G);
-    DIGRAPHdestroyFrg (G);
     free (G);
 }
 
@@ -321,16 +320,6 @@ void DIGRAPHdestroyFather (Digraph G) {
     G->father = NULL;
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
-// DIGRAHdestroFather() libera da memória o espaço alocado para o vetor
-// de pais, utilizado para representação de árvores
-// (radicadas em geral). */
-void DIGRAPHdestroyFrg (Digraph G) {
-    if (G->frg != NULL)
-        free (G->frg);
-    G->frg = NULL;
-}
-
 /* Destroi qualquer vetor de pai antigo que estiver alocado e aloca um
 // novo. */
 static void NEWfather (Digraph G) {
@@ -343,13 +332,6 @@ static void NEWfather (Digraph G) {
 static void NEWdist (Digraph G) {
     DIGRAPHdestroyDist (G);
     G->dist = malloc (G->V * sizeof (double));
-}
-
-/* Destroi qualquer vetor de franja antigo que estiver alocado e
-// aloca um novo. */
-static void NEWfrg (Digraph G) {
-    DIGRAPHdestroyFrg (G);
-    G->frg = malloc (G->V * sizeof (Vertex));
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
@@ -409,10 +391,9 @@ void DIGRAPHsptD1 (Digraph G, Vertex s) {
     int INFINITE = findINFINITE (G);
     NEWdist (G);
     NEWfather (G);
-    NEWfrg (G);
+    frj = malloc (G->V * sizeof (Vertex));
     father = G->father;
     dist = G->dist;
-    frg = G->frg;
     dist[s] = .0;
     father[s] = s;
 

@@ -21,6 +21,8 @@
 //
 ////////////////////////////////////////////////////////////// */
 
+#include <stdlib.h>
+
 #define Vertex int
 
 /* Este módulo implementa uma fila priorizada em um heap.
@@ -45,14 +47,18 @@ void PQinit (int maxN);
 // sim. */
 int PQempty (void);
 
-/* Insere um vértice v na fila de prioridade. O vetor prty[] determina
-a prioridade dos vértices. */
+/* A função PQinsert() insere um vértice v na fila de prioridade. O 
+// vetor prty[] determina a prioridade dos vértices. */
 void PQinsert (Vertex v, double prty[]);
 
-/* Remove o elemento mínimo da fila de prioridade. Além de remover, 
-// essa função retorna o elemento mínimo da fila. */
+/* A função PQdelmin() remove o elemento mínimo da fila de prioridade.
+// Além de remover, essa função retorna o elemento mínimo da fila. */
 Vertex PQdelmin (double prty[]);
 
+/* A função PQdec() decrementa a prioridade de um vértice w e atualiza
+// a fila de prioridade. */
 void PQdec (Vertex w, double prty[]);
 
+/* A função PQfree() libera da memória o espaço alocado para contrução
+// da fila. */
 void PQfree (void);

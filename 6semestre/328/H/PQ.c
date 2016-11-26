@@ -21,6 +21,8 @@
 //
 ////////////////////////////////////////////////////////////// */
 
+#include "PQ.h"
+
 #define Vertex int
 
 /* Este módulo implementa uma fila priorizada em um heap.
@@ -30,38 +32,48 @@
 static Vertex *pq; 
 static int N;
 
+/* Funções do tipo static */
+static void exch (int i, int j);
+static void fixUp (int k, double prty[]);
+static void fixDown (int k, double prty[]);
+
 /* As prioridades são dadas em um vetor prty indexado por vértices: 
 // o vértice na posição k de pq tem prty[pq[k]]. O heap é
 // caracterizado pela propriedade  prty[pq[k/2]] ≤ prty[pq[k]] 
 // para k = 2, ..., N. Portanto, o vértice pq[1] tem prioridade 
 // mínima. */
-
-#define greater (i, j) (prty[pq[i]] > prty[pq[j]] ? 1 : 0)
+#define greater_(i, j) (prty[pq[i]] > prty[pq[j]] ? 1 : 0)
 
 /* O vetor qp[0..N-1] é o "inverso" de pq: para cada vértice v, 
 // qp[v] é o único índice tal que pq[qp[v]] == v.
 // É claro que qp[pq[i]] == i para todo i. */
-
 static int *qp; 
 
+/* Supõe-se que teremos sempre N ≤ maxN. */
+/* Inicializa uma fila de prioridade. O valor maxN determina o tamanho
+// máximo dessa fila.*/
 void PQinit (int maxN) {
    pq = malloc ((maxN+1) * sizeof (Vertex));
    qp = malloc (maxN * sizeof (int));
    N = 0;
 }
 
-/* Supõe-se que teremos sempre N ≤ maxN. */
-
+/* Verifica se a fila de prioridade está vazia. Retorna 0 se não e 1 se
+// sim. */
 int PQempty (void) {
    return N == 0;
 }
 
+/* A função PQinsert() insere um vértice v na fila de prioridade. O 
+// vetor prty[] determina a prioridade dos vértices. */
 void PQinsert (Vertex v, double prty[]) {
    qp[v] = ++N;
    pq[N] = v;
    fixUp (N, prty);
 }
 
+/* A função PQdelmin() remove o elemento mínimo da fila de prioridade.
+// Além de remover, essa função retorna o elemento mínimo da fila. */
 Vertex PQdelmin (double prty[]) { 
    exch (1, N);
    --N;
@@ -69,10 +81,14 @@ Vertex PQdelmin (double prty[]) {
    return pq[N+1];
 }
 
+/* A função PQdec() decrementa a prioridade de um vértice w e atualiza
+// a fila de prioridade. */
 void PQdec (Vertex w, double prty[]) { 
    fixUp (qp[w], prty); 
 }
 
+/* A função exch() Troca os elementos i e j de posição em pq e atualiza
+// qp */
 static void exch (int i, int j) {
    Vertex t;
    t = pq[i]; pq[i] = pq[j]; pq[j] = t;
@@ -80,8 +96,10 @@ static void exch (int i, int j) {
    qp[pq[j]] = j;
 }
 
+/* A função fixUp() atualiza pq e qp para todo indice menor que k de pq
+// para fazer valer as condições iniciais definidas para pq. */
 static void fixUp (int k, double prty[]) {
-   while (k > 1 && greater (k/2, k)) {
+   while (k > 1 && greater_(k/2, k)) {
       exch (k/2, k);
       k = k/2;
    }
@@ -91,13 +109,15 @@ static void fixDown (int k, double prty[]) {
    int j;
    while (2*k <= N) { 
       j = 2*k;
-      if (j < N && greater (j, j+1)) j++;
-      if (!greater (k, j)) break;
+      if (j < N && greater_(j, j+1)) j++;
+      if (!greater_(k, j)) break;
       exch (k, j); 
       k = j;
    }
 }
 
+/* A função PQfree() libera da memória o espaço alocado para contrução
+// da fila. */
 void PQfree (void) { 
    free (pq);
    free (qp);

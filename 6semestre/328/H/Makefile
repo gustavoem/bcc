@@ -24,11 +24,14 @@ CFLAGSb = -Wall -O2
 #    -ansi proibe comentarios com prefixo '//'
 #    -g flag de debug
 
-distancia: distancia.o wDIGRAPHlists.o
+distancia: distancia.o wDIGRAPHlists.o PQ.o
 	gcc $(CFLAGSa) distancia.o wDIGRAPHlists.o -o distancia
 
 wDIGRAPHlists.o: wDIGRAPHlists.h wDIGRAPHlists.c
 	gcc $(CFLAGSa) -c wDIGRAPHlists.c -lm
+
+PQ.o: PQ.h PQ.c
+	gcc $(CFLAGSa) -c PQ.c
 
 distancia.o: distancia.c wDIGRAPHlists.h
 	gcc $(CFLAGSa) -c distancia.c

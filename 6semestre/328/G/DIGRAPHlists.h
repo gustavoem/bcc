@@ -218,7 +218,6 @@ do grafo e retorna o valor. Quando o grafo é desconexo a distância
 média é infinita, definida como G->V. */
 double GRAPHsmallWorld (Graph G);
 
-
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
 GRAPHws () cria um grafo do tipo WS (em referência a Watts e Strogatz)
 com parâmetros V, d e k. Esse grafo é criado escolhendo-se V pontos em

@@ -19,6 +19,8 @@
 
 #include "wDIGRAPHlists.h"
 
+#define TRUE 1
+
 /* Tipo auxiliar privado para esta biblioteca. */
 typedef struct {
     double x;
@@ -334,14 +336,39 @@ static void NEWdist (Digraph G) {
 // de caminhos mínimos partindo do vértice s. A árvore resultante fica
 // armazenada no vetor father, e a distância no vetor dist. */
 void DIGRAPHsptD0 (Digraph G, Vertex s) {
-    Vertex v;
+    Vertex v, *father;
     double *dist;
     int INFINITE = findINFINITE (G);
-    dist = malloc (G->V * sizeof (double));
-    printf ("INFINITE: %d\n", INFINITE);
-    for (v = 0; v < G->V; v++)
-    {
+    NEWdist (G);
+    NEWfather (G);
+    father = G->father;
+    dist = G->dist;
+    /*printf ("INFINITE: %d\n", INFINITE);*/
+    for (v = 0; v < G->V; v++) {
         dist[v] = INFINITE;
+        father[v] = -1;
+    }
+    dist[s] = .0;
+    father[s] = s;
+
+    while (TRUE) {
+        link a;
+        /* Apenas para silenciar o compilador */
+        Vertex x = -1, y = -1; 
+        double minpr = INFINITE;
+        for (v = 0; v < G->V; v++) {
+            if (father[v] == -1) continue;
+            for (a = G->adj[v]; a != NULL; a = a->next) {
+                if (dist[v] + a->cst < dist[a->w])
+                {
+                    minpr = dist[v] + a->cst;
+                    x = v, y = a->w;
+                }
+            }
+        }
+        if (minpr == INFINITE)
+            break;
+        father[y] = x, dist[y] = minpr;
     }
 }
 

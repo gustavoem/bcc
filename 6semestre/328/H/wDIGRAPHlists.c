@@ -261,31 +261,6 @@ Digraph GRAPHrand2 (int V, int E, double cmin, double cmax) {
     return G;
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
-GRAPHclosePoints () escolhe V pontos aleatórios no quadrado
-[0, 1)x[0,1) e cria um vértice para cada um desses pontos. Depois,
-liga-se com arestas cada par de vértices v e w tal que a distância
-entre os pontos representados por esses vértices é menor ou igual ao
-parametro d. */
-Graph GRAPHclosePoints (int V, double d) {
-    /*int i, j;
-    point *points = createRandPoints (V);*/
-    Graph G;
-    G = DIGRAPHinit (V);
-    /*for (i = 0; i < V; i++) {
-        for (j = i + 1; j < V; j++) {
-            double dx = points[i].x - points[j].x;
-            double dy = points[i].y - points[j].y;
-            if (dx * dx + dy * dy <= d * d) {
-                DIGRAPHinsertA (G, i, j);
-                DIGRAPHinsertA (G, j, i);
-            }
-        }
-    }
-    free (points);*/
-    return G;
-}
-
 /* Cria um vetor de n pontos aleatórios no quadrado [0, 1) x [0, 1) */
 point *createRandPoints (int n) {
     int i;
@@ -547,7 +522,6 @@ Vertex *path (Vertex *father, Vertex t) {
     }
     p = malloc (p_size * sizeof (Vertex));
     v = t;
-    i = p_size - 1;
     for (i = p_size - 1; i >= 0; i--) {
         p[i] = v;
         v = father[v];

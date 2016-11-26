@@ -126,14 +126,6 @@ inspirado no Program 17.8 de Sedgewick.) */
 Digraph GRAPHrand2 (int V, int E, double cmin, double cmax);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
-GRAPHclosePoints () escolhe V pontos aleatórios no quadrado
-[0, 1)x[0,1) e cria um vértice para cada um desses pontos. Depois,
-liga-se com arestas cada par de vértices v e w tal que a distância
-entre os pontos representados por esses vértices é menor ou igual ao
-parametro d. */
-Graph GRAPHclosePoints (int V, double d);
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
 // DIGRAHdestroyDist() libera da memória o espaço alocado para o vetor
 // de distâncias. */
 void DIGRAPHdestroyDist (Digraph G);

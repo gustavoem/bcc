@@ -27,11 +27,20 @@
 /* TODO: escrever sobre essa função */
 int main (int argc, char **argv) {
     Graph G;
+    Vertex *p;
+    int i;
     if (argc > 1)
         srand (atoi (argv[1]));
-    G = GRAPHrand2 (150, 330, 0, 1);
+    G = GRAPHrand2 (10, 4, 0, 1);
     DIGRAPHshow (G);
     DIGRAPHsptD2 (G, 0);
+    p = path (G->father, 3);
+    if (p != NULL) {
+        for (i = 0; p[i] != 3; i++)
+            printf ("%d ", p[i]);
+        printf ("%d\n", p[i]);
+        free (p);
+    } 
     DIGRAPHdestroy (G);
     return 0;
 }

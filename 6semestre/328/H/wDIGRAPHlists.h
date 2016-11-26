@@ -165,4 +165,16 @@ void DIGRAPHsptD1 (Digraph G, Vertex s);
 // armazenada no vetor father, e a distância no vetor dist. */
 void DIGRAPHsptD2 (Digraph G, Vertex s);
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// checkDist() verifica se o vetor dist de G é um potencial e devolve 1
+// se sim e 0 se não. */
+int checkDist (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função path() recebe
+// um vértice t e um vetor father que representa uma árvore T. Essa
+// função devolve um vetor que contém a sequência de vértices do único
+// caminho em T que vai da raíz até t. */
+Vertex *path (Vertex *father, Vertex t);
+
+
 #endif

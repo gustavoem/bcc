@@ -37,7 +37,6 @@ static point *createRandPoints (int n);
 static void NEWdist (Digraph G);
 static void NEWfather (Digraph G);
 static double findINFINITE (Digraph G);
-static int checkDist (Digraph G);
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
@@ -451,6 +450,8 @@ void DIGRAPHsptD2 (Digraph G, Vertex s) {
         father[v] = -1;
         frg[v] = -1;   
     }
+    father[s] = s;
+    dist[s] = .0;
     for (a = G->adj[s]; a != NULL; a = a->next) {
         dist[a->w] = a->cst;
         PQinsert (a->w, dist);
@@ -516,8 +517,10 @@ static double findINFINITE (Digraph G) {
     return infinite;
 }
 
-/* Verifica se o vetor dist de G é um potencial */
-static int checkDist (Digraph G) {
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// checkDist() verifica se o vetor dist de G é um potencial e devolve 1
+// se sim e 0 se não. */
+int checkDist (Digraph G) {
     Vertex v;
     link a;
     double *dist = G->dist;
@@ -526,4 +529,28 @@ static int checkDist (Digraph G) {
             if (dist[v] + a->cst < dist[a->w])
                 return 0;
     return 1;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função path() recebe
+// um vértice t e um vetor father que representa uma árvore T. Essa
+// função devolve um vetor que contém a sequência de vértices do único
+// caminho em T que vai da raíz até t. */
+Vertex *path (Vertex *father, Vertex t) {
+    Vertex v;
+    Vertex *p;
+    int p_size = 1, i;
+    v = t;
+    if (father[v] == -1) return NULL;
+    while (father[v] != v) {
+        p_size++;
+        v = father[v];
+    }
+    p = malloc (p_size * sizeof (Vertex));
+    v = t;
+    i = p_size - 1;
+    for (i = p_size - 1; i >= 0; i--) {
+        p[i] = v;
+        v = father[v];
+    }
+    return p;
 }

@@ -158,4 +158,11 @@ void DIGRAPHsptD0 (Digraph G, Vertex s);
 // armazenada no vetor father, e a distância no vetor dist. */
 void DIGRAPHsptD1 (Digraph G, Vertex s);
 
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAPHsptD0 é uma implementação do algoritmo de Dijkstra eficiente
+// para grafos densos. Esse algoritmo acha no digrafo uma árvore de
+// caminhos mínimos partindo do vértice s. A árvore resultante fica
+// armazenada no vetor father, e a distância no vetor dist. */
+void DIGRAPHsptD2 (Digraph G, Vertex s);
+
 #endif

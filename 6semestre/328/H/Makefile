@@ -25,7 +25,7 @@ CFLAGSb = -Wall -O2
 #    -g flag de debug
 
 distancia: distancia.o wDIGRAPHlists.o PQ.o
-	gcc $(CFLAGSa) distancia.o wDIGRAPHlists.o -o distancia
+	gcc $(CFLAGSa) distancia.o wDIGRAPHlists.o PQ.o -o distancia
 
 wDIGRAPHlists.o: wDIGRAPHlists.h wDIGRAPHlists.c
 	gcc $(CFLAGSa) -c wDIGRAPHlists.c -lm
@@ -33,7 +33,7 @@ wDIGRAPHlists.o: wDIGRAPHlists.h wDIGRAPHlists.c
 PQ.o: PQ.h PQ.c
 	gcc $(CFLAGSa) -c PQ.c
 
-distancia.o: distancia.c wDIGRAPHlists.h
+distancia.o: distancia.c wDIGRAPHlists.h PQ.h
 	gcc $(CFLAGSa) -c distancia.c
 
 clean:

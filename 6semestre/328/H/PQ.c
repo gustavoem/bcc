@@ -53,7 +53,7 @@ static int *qp;
 /* Inicializa uma fila de prioridade. O valor maxN determina o tamanho
 // máximo dessa fila.*/
 void PQinit (int maxN) {
-   pq = malloc ((maxN+1) * sizeof (Vertex));
+   pq = malloc ((maxN + 1) * sizeof (Vertex));
    qp = malloc (maxN * sizeof (int));
    N = 0;
 }
@@ -78,7 +78,7 @@ Vertex PQdelmin (double prty[]) {
    exch (1, N);
    --N;
    fixDown (1, prty);
-   return pq[N+1];
+   return pq[N + 1];
 }
 
 /* A função PQdec() decrementa a prioridade de um vértice w e atualiza
@@ -99,17 +99,17 @@ static void exch (int i, int j) {
 /* A função fixUp() atualiza pq e qp para todo indice menor que k de pq
 // para fazer valer as condições iniciais definidas para pq. */
 static void fixUp (int k, double prty[]) {
-   while (k > 1 && greater_(k/2, k)) {
-      exch (k/2, k);
-      k = k/2;
+   while (k > 1 && greater_(k / 2, k)) {
+      exch (k / 2, k);
+      k = k / 2;
    }
 }
 
 static void fixDown (int k, double prty[]) { 
    int j;
-   while (2*k <= N) { 
-      j = 2*k;
-      if (j < N && greater_(j, j+1)) j++;
+   while (2 * k <= N) { 
+      j = 2 * k;
+      if (j < N && greater_(j, j + 1)) j++;
       if (!greater_(k, j)) break;
       exch (k, j); 
       k = j;

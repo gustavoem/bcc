@@ -18,6 +18,7 @@
 ////////////////////////////////////////////////////////////// */
 
 #include "wDIGRAPHlists.h"
+#include "PQ.h"
 
 #define TRUE 1
 
@@ -424,6 +425,59 @@ void DIGRAPHsptD1 (Digraph G, Vertex s) {
             }
         }
     }
+    free (frg);
+    if (!checkDist (G))
+        printf ("A implementação de sptD0 não está correta.\n");
+    else
+        printf ("ok\n");
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAPHsptD0 é uma implementação do algoritmo de Dijkstra eficiente
+// para grafos densos. Esse algoritmo acha no digrafo uma árvore de
+// caminhos mínimos partindo do vértice s. A árvore resultante fica
+// armazenada no vetor father, e a distância no vetor dist. */
+void DIGRAPHsptD2 (Digraph G, Vertex s) {
+    Vertex v, *father, *frg;
+    link a;
+    double *dist;
+    NEWdist (G);
+    NEWfather (G);
+    frg = malloc (G->V * sizeof (Vertex));
+    father = G->father;
+    dist = G->dist;
+    PQinit (G->V);
+    for (v = 0; v < G->V; v++) {
+        father[v] = -1;
+        frg[v] = -1;   
+    }
+    for (a = G->adj[s]; a != NULL; a = a->next) {
+        dist[a->w] = a->cst;
+        PQinsert (a->w, dist);
+        frg[a->w] = s;
+    }
+    
+    while (!PQempty ()) {
+        Vertex y;
+        y = PQdelmin (dist);
+        father[y] = frg[y];
+        for (a = G->adj[y]; a != NULL; a = a->next) {
+            Vertex w = a->w; 
+            double c = a->cst;
+            if (father[w] != -1) continue;
+            if (frg[w] == -1) {
+                frg[w] = y;
+                dist[w] = dist[y] + c;
+                PQinsert (w, dist);
+            }
+            else if (dist[y] + a->cst < dist[w]) {
+                frg[w] = y;
+                dist[w] = dist[y] + c;
+                PQdec (w, dist);
+            }
+        }
+    }
+    PQfree ();
     free (frg);
     if (!checkDist (G))
         printf ("A implementação de sptD0 não está correta.\n");

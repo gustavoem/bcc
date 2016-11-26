@@ -29,7 +29,7 @@ int main (int argc, char **argv) {
     Graph G;
     if (argc > 1)
         srand (atoi (argv[1]));
-    G = GRAPHrand2 (5, 1, 0, 1);
+    G = GRAPHrand2 (150, 330, 0, 1);
     DIGRAPHshow (G);
     DIGRAPHsptD0 (G, 0);
     return 0;

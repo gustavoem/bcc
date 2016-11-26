@@ -36,6 +36,7 @@ static point *createRandPoints (int n);
 static void NEWdist (Digraph G);
 static void NEWfather (Digraph G);
 static double findINFINITE (Digraph G);
+static int checkDist (Digraph G);
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
@@ -305,6 +306,7 @@ point *createRandPoints (int n) {
 void DIGRAPHdestroyDist (Digraph G) {
     if (G->dist != NULL)
         free (G->dist);
+    G->dist = NULL;
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
@@ -314,6 +316,7 @@ void DIGRAPHdestroyDist (Digraph G) {
 void DIGRAPHdestroyFather (Digraph G) {
     if (G->father != NULL)
         free (G->father);
+    G->father = NULL;
 }
 
 /* Destroi qualquer vetor de pai antigo que estiver alocado e aloca um
@@ -370,6 +373,10 @@ void DIGRAPHsptD0 (Digraph G, Vertex s) {
             break;
         father[y] = x, dist[y] = minpr;
     }
+    if (!checkDist (G))
+        printf ("A implementação de sptD0 não está correta.\n");
+    else
+        printf ("ok\n");
 }
 
 /* Essa função calcula o maior preço possível de um caminho simples 
@@ -382,7 +389,7 @@ static double findINFINITE (Digraph G) {
     V = G->V;
     infinite = 1;
     highest = malloc ((V - 1) * sizeof (double));
-    for (i = 0; i < V; i++)
+    for (i = 0; i < V - 1; i++)
         highest[i] = 0;
     for (v = 0; v < V; v++) {
         link a;
@@ -401,4 +408,16 @@ static double findINFINITE (Digraph G) {
         infinite += highest[i];
     free (highest);
     return infinite;
+}
+
+/* Verifica se o vetor dist de G é um potencial */
+static int checkDist (Digraph G) {
+    Vertex v;
+    link a;
+    double *dist = G->dist;
+    for (v = 0; v < G->V; v++)
+        for (a = G->adj[v]; a != NULL; a = a->next)
+            if (dist[v] + a->cst < dist[a->w])
+                return 0;
+    return 1;
 }

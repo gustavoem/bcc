@@ -30,8 +30,10 @@ static link NEWnode (Vertex w, double cst, link next);
 static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
 static double randC (double cmin, double cmax);
-static void distprepare (Digraph G);
 static point *createRandPoints (int n);
+static void NEWdist (Digraph G);
+static void NEWfather (Digraph G);
+static double findINFINITE (Digraph G);
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
@@ -74,18 +76,6 @@ void DIGRAPHdestroy (Digraph G) {
     free (G);
 }
 
-/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
-DIGRAPHdistroyDFSinfo () libera o espaço alocado para estrutura do
-digrafo nos vetores father e dist, criados em DIGRAPHdist () */
-void DIGRAPHdestroydistinfo (Digraph G) {
-    if (G->father != NULL)
-        free (G->father);
-    if (G->dist != NULL)
-        free (G->dist);
-    G->father = NULL;
-    G->dist = NULL;
-}
-
 /* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função LISTSdelete ()
 destrói uma lista de links */
 static void LISTSdelete (link a) {
@@ -93,22 +83,6 @@ static void LISTSdelete (link a) {
         link aux = a;
         a = a->next;
         free (aux);
-    }
-}
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função distprepare ()
-prepara as variáveis relacionadas a rotina de DIGRAPHdist. */
-static void distprepare (Digraph G) {
-    int V = G->V;
-    /* TODO: acho que essa definição de infinito não é boa*/
-    const int INFINITE = G->V;
-    int v;
-    DIGRAPHdestroydistinfo (G);
-    G->father = malloc (V * sizeof (Vertex));
-    G->dist = malloc (V * sizeof (int));
-    for (v = 0; v < V; v++) {
-        G->father[v] = -1;
-        G->dist[v] = INFINITE;
     }
 }
 
@@ -163,36 +137,6 @@ void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w) {
             G->A--;
         }
     }
-}
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a
-distância de um vértice s a cada vértice de G. O percorrimento dos
-vértices feito nessa função gera uma árvore, armazenada no vetor father
-da estrutura de G. */
-void DIGRAPHdist (Digraph G, Vertex s) {
-    /* TODO: mudar tudo aqui*/
-    const int INFINITE = G->V;
-    int qtop = 0;
-    Vertex v;
-    int *father, *dist;
-    int *queue = malloc (G->V * sizeof (Vertex));
-    distprepare (G);
-    father = G->father;
-    dist = G->dist;
-    father[s] = s;
-    dist[s] = 0;
-    queue[qtop++] = s;
-    while (qtop != 0) {
-        link a;
-        v = queue[--qtop];
-        for (a = G->adj[v]; a != NULL; a = a->next)
-            if (dist[a->w] == INFINITE) {
-                father[a->w] = v;
-                dist[a->w] = dist[v] + 1;
-                queue[qtop++] = a->w;
-            }
-    }
-    free (queue);
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHshow()
@@ -351,4 +295,83 @@ point *createRandPoints (int n) {
         points[i] = p;
     }
     return points;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAHdestroyDist() libera da memória o espaço alocado para o vetor
+// de distâncias. */
+void DIGRAPHdestroyDist (Digraph G) {
+    if (G->dist != NULL)
+        free (G->dist);
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAHdestroFather() libera da memória o espaço alocado para o vetor
+// de pais, utilizado para representação de árvores
+// (radicadas em geral). */
+void DIGRAPHdestroyFather (Digraph G) {
+    if (G->father != NULL)
+        free (G->father);
+}
+
+/* Destroi qualquer vetor de pai antigo que estiver alocado e aloca um
+// novo. */
+static void NEWfather (Digraph G) {
+    DIGRAPHdestroyFather (G);
+    G->father = malloc (G->V * sizeof (Vertex));
+}
+
+/* Destroi qualquer vetor de distâncias antigo que estiver alocado e
+// aloca um novo. */
+static void NEWdist (Digraph G) {
+    DIGRAPHdestroyDist (G);
+    G->dist = malloc (G->V * sizeof (double));
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAPHsptD0 é uma implementação simples e não muito eficiente
+// do algoritmo de Dijkstra. Esse algoritmo acha no digrafo uma árvore
+// de caminhos mínimos partindo do vértice s. A árvore resultante fica
+// armazenada no vetor father, e a distância no vetor dist. */
+void DIGRAPHsptD0 (Digraph G, Vertex s) {
+    Vertex v;
+    double *dist;
+    int INFINITE = findINFINITE (G);
+    dist = malloc (G->V * sizeof (double));
+    printf ("INFINITE: %d\n", INFINITE);
+    for (v = 0; v < G->V; v++)
+    {
+        dist[v] = INFINITE;
+    }
+}
+
+/* Essa função calcula o maior preço possível de um caminho simples 
+// no grafo G mais uma unidade. Esse valor é calculado como um mais a
+// soma dos V-1 arcos mais caros de G*/
+static double findINFINITE (Digraph G) {
+    int i, V;
+    Vertex v;
+    double *highest, infinite;
+    V = G->V;
+    infinite = 1;
+    highest = malloc ((V - 1) * sizeof (double));
+    for (i = 0; i < V; i++)
+        highest[i] = 0;
+    for (v = 0; v < V; v++) {
+        link a;
+        for (a = G->adj[v]; a != NULL; a = a->next) {
+            int k;
+            double unsorted = a->cst;
+            for (k = 0; k < G->V - 1; k++)
+                if (unsorted > highest[k]) {
+                    double temp = highest[k];
+                    highest[k] = unsorted;
+                    unsorted = temp;
+                }
+        }
+    }
+    for (i = 0; i < V - 1; i++)
+        infinite += highest[i];
+    free (highest);
+    return infinite;
 }

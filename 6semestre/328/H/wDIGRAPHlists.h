@@ -55,7 +55,7 @@ struct digraph {
     int V;
     int A;
     link *adj;
-    int *dist;
+    double *dist;
     Vertex *father;
 };
 
@@ -71,11 +71,6 @@ Digraph DIGRAPHinit (int V);
 destrói um digrafo G liberando na memória o espaço que foi alocado em
 sua criação */
 void DIGRAPHdestroy (Digraph G);
-
-/* REPRESENTAÇÂO POR LISTAS DE ADJACÊNCIAS: A função
-DIGRAPHdestroyDFSinfo () libera o espaço alocado para estrutura do
-digrafo nos vetores father e dist, criados em DIGRAPHdist () */
-void DIGRAPHdestroydistinfo (Digraph G);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHinsertA()
 insere um arco v-w no digrafo G. A função supõe que v e w são
@@ -94,12 +89,6 @@ remove do digrafo G o arco v-w. A função supõe que v e w são distintos,
 positivos e menores que G->V. Se não existe arco v-w, a função não faz
 nada. */
 void DIGRAPHremoveA (Digraph G, Vertex v, Vertex w);
-
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: Esta função calcula a
-distância de um vértice s a cada vértice de G. O percorrimento dos
-vértices feito nessa função gera uma árvore, armazenada no vetor father
-da estrutura de G. */
-void DIGRAPHdist (Digraph G, Vertex s);
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: A função DIGRAPHshow()
 imprime, para cada vértice v do digrafo G, em uma linha, todos os
@@ -143,5 +132,25 @@ liga-se com arestas cada par de vértices v e w tal que a distância
 entre os pontos representados por esses vértices é menor ou igual ao
 parametro d. */
 Graph GRAPHclosePoints (int V, double d);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAHdestroyDist() libera da memória o espaço alocado para o vetor
+// de distâncias. */
+void DIGRAPHdestroyDist (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAHdestroFather() libera da memória o espaço alocado para o vetor
+// de pais, utilizado para representação de árvores
+// (radicadas em geral). */
+void DIGRAPHdestroyFather (Digraph G);
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
+// DIGRAPHsptD0 é uma implementação simples e não muito eficiente
+// do algoritmo de Dijkstra. Esse algoritmo acha no digrafo uma árvore
+// de caminhos mínimos partindo do vértice s. A árvore resultante fica
+// armazenada no vetor father, e a distância no vetor dist. */
+void DIGRAPHsptD0 (Digraph G, Vertex s);
+
+
 
 #endif

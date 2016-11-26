@@ -32,5 +32,6 @@ int main (int argc, char **argv) {
     G = GRAPHrand2 (150, 330, 0, 1);
     DIGRAPHshow (G);
     DIGRAPHsptD0 (G, 0);
+    DIGRAPHdestroy (G);
     return 0;
 }

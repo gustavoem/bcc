@@ -72,10 +72,8 @@ void DIGRAPHdestroy (Digraph G) {
     for (i = 0; i < G->V; i++)
         LISTSdelete (G->adj[i]);
     free (G->adj);
-    if (G->father != NULL)
-        free (G->father);
-    if (G->dist != NULL)
-        free (G->dist);
+    DIGRAPHdestroyFather (G);
+    DIGRAPHdestroyDist (G);
     free (G);
 }
 
@@ -147,6 +145,7 @@ imprime, para cada vértice v do digrafo G, em uma linha, todos os
 vértices adjacentes a v. */
 void DIGRAPHshow (Digraph G) {
     Vertex v;
+    if (G->V > 30) return;
     for (v = 0; v < G->V; v++) {
         link a = G->adj[v];
         printf ("%d: ", v);

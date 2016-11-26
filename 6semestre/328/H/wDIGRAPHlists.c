@@ -21,8 +21,6 @@
 
 #define TRUE 1
 
-static Vertex *frj;
-
 /* Tipo auxiliar privado para esta biblioteca. */
 typedef struct {
     double x;
@@ -387,17 +385,50 @@ void DIGRAPHsptD0 (Digraph G, Vertex s) {
 // armazenada no vetor father, e a distância no vetor dist. */
 void DIGRAPHsptD1 (Digraph G, Vertex s) {
     Vertex v, *father, *frg;
+    link a;
     double *dist;
     int INFINITE = findINFINITE (G);
     NEWdist (G);
     NEWfather (G);
-    frj = malloc (G->V * sizeof (Vertex));
+    frg = malloc (G->V * sizeof (Vertex));
     father = G->father;
     dist = G->dist;
+    for (v = 0; v < G->V; v++) {
+        dist[v] = INFINITE;
+        father[v] = -1;
+        frg[v] = -1;
+    }
     dist[s] = .0;
     father[s] = s;
-
-
+    for (a = G->adj[s]; a != NULL; a = a->next) {
+        frg[a->w] = s;
+        dist[a->w] = a->cst;
+    }
+        
+    while (TRUE) {
+        Vertex z, y = -1;
+        double minpr = INFINITE;
+        for (z = 0; z < G->V; z++) {
+            if (father[z] == -1 && dist[z] < minpr)
+                minpr = dist[y = z];
+        }
+        if (minpr == INFINITE) break;
+        father[y] = frg[y];
+        for (a = G->adj[y]; a != NULL; a = a->next) {
+            Vertex w = a->w;
+            double cst = a->cst;
+            if (father[w] != -1) continue;
+            if (dist[y] + cst < dist[w]) {
+                frg[w] = y;
+                dist[w] = dist[y] + cst;
+            }
+        }
+    }
+    free (frg);
+    if (!checkDist (G))
+        printf ("A implementação de sptD0 não está correta.\n");
+    else
+        printf ("ok\n");
 }
 
 /* Essa função calcula o maior preço possível de um caminho simples 

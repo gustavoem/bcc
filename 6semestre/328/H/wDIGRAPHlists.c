@@ -167,7 +167,7 @@ void DIGRAPHshow (Digraph G) {
         printf ("   ");
         a = G->adj[v];
         while (a != NULL) {
-            printf ("%6.2f ", a->cst);
+            printf ("%5.4f ", a->cst);
             a = a->next;
         }
         printf ("\n");
@@ -330,7 +330,6 @@ void DIGRAPHsptD0 (Digraph G, Vertex s) {
     NEWfather (G);
     father = G->father;
     dist = G->dist;
-    /*printf ("INFINITE: %d\n", INFINITE);*/
     for (v = 0; v < G->V; v++) {
         dist[v] = INFINITE;
         father[v] = -1;
@@ -508,7 +507,7 @@ void checkDist (Digraph G) {
             if (dist[v] + a->cst < dist[a->w])
             {
                 printf ("Erro na implementação de Dijkstra\n");
-                printf ("%3.2f + %3.2f < %3.2f\n", dist[v], a->cst, dist[a->w]);
+                printf ("%4.3f + %3.2f < %4.3f\n", dist[v], a->cst, dist[a->w]);
                 return;
             }
     printf ("ok.\n");
@@ -574,7 +573,7 @@ void printDiameter (Vertex *path, double diameter, Vertex t) {
     }
     else {
         int i;
-        printf ("%5.2f\n", diameter);
+        printf ("%4.3f\n", diameter);
         printf ("Caminho: ");
         i = 0;
         while (path[i] != t) {

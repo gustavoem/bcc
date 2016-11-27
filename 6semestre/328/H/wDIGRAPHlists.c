@@ -37,6 +37,16 @@ static point *createRandPoints (int n);
 static void NEWdist (Digraph G);
 static void NEWfather (Digraph G);
 static double findINFINITE (Digraph G);
+static void checkDist (Digraph G);
+static Vertex *path (Vertex *father, Vertex t);
+static void printDiameter (Vertex *path, double diameter, Vertex t);
+
+/* Variável booleana que decide de checamos ou não a validade do vetor
+// dist por padrão sempre que usamos o algoritmo de Dijkstra. 
+// OBS: a função que acha o diâmetro do digrafo modifica essa variável 
+// para o valor 0 obrigatóriamente e depois retorna ao seu valor 
+// original. */
+static int checking_dist = 1;
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.
@@ -347,10 +357,7 @@ void DIGRAPHsptD0 (Digraph G, Vertex s) {
             break;
         father[y] = x, dist[y] = minpr;
     }
-    if (!checkDist (G))
-        printf ("A implementação de sptD0 não está correta.\n");
-    else
-        printf ("ok\n");
+    checkDist (G);
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
@@ -400,10 +407,7 @@ void DIGRAPHsptD1 (Digraph G, Vertex s) {
         }
     }
     free (frg);
-    if (!checkDist (G))
-        printf ("A implementação de sptD0 não está correta.\n");
-    else
-        printf ("ok\n");
+    checkDist (G);
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
@@ -415,6 +419,7 @@ void DIGRAPHsptD2 (Digraph G, Vertex s) {
     Vertex v, *father, *frg;
     link a;
     double *dist;
+    int INFINITE = findINFINITE (G);
     NEWdist (G);
     NEWfather (G);
     frg = malloc (G->V * sizeof (Vertex));
@@ -423,7 +428,8 @@ void DIGRAPHsptD2 (Digraph G, Vertex s) {
     PQinit (G->V);
     for (v = 0; v < G->V; v++) {
         father[v] = -1;
-        frg[v] = -1;   
+        frg[v] = -1;
+        dist[v] = INFINITE;
     }
     father[s] = s;
     dist[s] = .0;
@@ -455,10 +461,7 @@ void DIGRAPHsptD2 (Digraph G, Vertex s) {
     }
     PQfree ();
     free (frg);
-    if (!checkDist (G))
-        printf ("A implementação de sptD0 não está correta.\n");
-    else
-        printf ("ok\n");
+    checkDist (G);
 }
 
 /* Essa função calcula o maior preço possível de um caminho simples 
@@ -492,24 +495,29 @@ static double findINFINITE (Digraph G) {
     return infinite;
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
-// checkDist() verifica se o vetor dist de G é um potencial e devolve 1
-// se sim e 0 se não. */
-int checkDist (Digraph G) {
+/* A função checkDist() verifica se o vetor dist de G é um potencial e
+// devolve 1 se sim e 0 se não. */
+void checkDist (Digraph G) {
     Vertex v;
     link a;
     double *dist = G->dist;
+    if (!checking_dist)
+        return;
     for (v = 0; v < G->V; v++)
         for (a = G->adj[v]; a != NULL; a = a->next)
             if (dist[v] + a->cst < dist[a->w])
-                return 0;
-    return 1;
+            {
+                printf ("Erro na implementação de Dijkstra\n");
+                printf ("%3.2f + %3.2f < %3.2f\n", dist[v], a->cst, dist[a->w]);
+                return;
+            }
+    printf ("ok.\n");
 }
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função path() recebe
-// um vértice t e um vetor father que representa uma árvore T. Essa
-// função devolve um vetor que contém a sequência de vértices do único
-// caminho em T que vai da raíz até t. */
+/* A função path() recebe um vértice t e um vetor father que representa
+// uma árvore T. Essa função devolve um vetor que contém a sequência de
+// vértices do único caminho em T que vai da raíz até t. O fim do 
+// caminho é marcado com um -1 na última posição do vetor. */
 Vertex *path (Vertex *father, Vertex t) {
     Vertex v;
     Vertex *p;
@@ -520,11 +528,59 @@ Vertex *path (Vertex *father, Vertex t) {
         p_size++;
         v = father[v];
     }
-    p = malloc (p_size * sizeof (Vertex));
+    p = malloc ((p_size + 1) * sizeof (Vertex));
     v = t;
     for (i = p_size - 1; i >= 0; i--) {
         p[i] = v;
         v = father[v];
     }
+    p[p_size] = -1;
     return p;
+}
+
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função DIGRAPHdiameter ()
+// devolve um vetor com o maior caminho do digrafo recebido como 
+// parâmetro. Se o diâmetro do grafo é infinito (grafo desconexo) então
+// a função retorna NULL. O fim do caminho é marcado com um -1 na útima
+// posição do vetor. */
+Vertex *DIGRAPHdiameter (Digraph G) {
+    Vertex v, w, t, *d_path = NULL;
+    double diameter = 0;
+    int sto_checking_dist = checking_dist;
+    checking_dist = 0;
+    for (v = 0; v < G->V; v++) {
+        DIGRAPHsptD2 (G, v);
+        for (w = 0; w < G->V; w++) {
+            if (G->dist[w] > diameter) {
+                if (d_path != NULL)
+                    free (d_path);
+                d_path = path (G->father, w);
+                diameter = G->dist[w];
+                t = w;
+            }
+            if (d_path == NULL) break;
+        }
+    }
+    printDiameter (d_path, diameter, t);
+    checking_dist = sto_checking_dist;
+    return d_path;
+}
+
+/* A função printDiameter() mostra na tela o diametro de um digrafo. */
+void printDiameter (Vertex *path, double diameter, Vertex t) {
+    printf ("Diâmetro do digrafo: ");
+    if (path == NULL) {
+        printf ("infinito.\n");
+    }
+    else {
+        int i;
+        printf ("%5.2f\n", diameter);
+        printf ("Caminho: ");
+        i = 0;
+        while (path[i] != t) {
+            printf ("%d-", path[i]);
+            i++;
+        }
+        printf ("%d.\n", path[i]);
+    }
 }

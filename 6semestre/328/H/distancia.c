@@ -25,7 +25,6 @@
 /* Protótipo das funções */
 void runDijkstra (Digraph G, Vertex s, int impl);
 
-
 void runDijkstra (Digraph G, Vertex s, int impl) {
     switch (impl) {
         case 0:
@@ -59,14 +58,9 @@ int main (int argc, char **argv) {
     G = DIGRAPHrand1 (V, A, 0, 1);
     if (V < 30)
         DIGRAPHshow (G); 
-    runDijkstra (G, impl, s);
-    p = path (G->father, 3);
-    if (p != NULL) {
-        for (i = 0; p[i] != 3; i++)
-            printf ("%d ", p[i]);
-        printf ("%d\n", p[i]);
-        free (p);
-    }
+    /*runDijkstra (G, impl, s);*/
+    p = DIGRAPHdiameter (G);
+    free (p);
     DIGRAPHdestroy (G);
     return 0;
 }

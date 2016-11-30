@@ -33,7 +33,6 @@ static link NEWnode (Vertex w, double cst, link next);
 static void LISTSdelete (link a);
 static Vertex randV (Digraph G);
 static double randC (double cmin, double cmax);
-static point *createRandPoints (int n);
 static void NEWdist (Digraph G);
 static void NEWfather (Digraph G);
 static double findINFINITE (Digraph G);
@@ -269,19 +268,6 @@ Digraph GRAPHrand2 (int V, int E, double cmin, double cmax) {
                 DIGRAPHinsertA (G, w, v, cst);
             }
     return G;
-}
-
-/* Cria um vetor de n pontos aleatórios no quadrado [0, 1) x [0, 1) */
-point *createRandPoints (int n) {
-    int i;
-    point *points = malloc (n * sizeof (point));
-    for (i = 0; i < n; i++) {
-        point p;
-        p.x = rand () / (RAND_MAX + 1.0);
-        p.y = rand () / (RAND_MAX + 1.0);
-        points[i] = p;
-    }
-    return points;
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIAS: a função
@@ -572,14 +558,14 @@ void printDiameter (Vertex *path, double diameter, Vertex t) {
         printf ("infinito.\n");
     }
     else {
-        int i;
+        int i, size = 0;
+        while (path[size] != t) size++;
+        size++;
+        if (size > 30) return;
         printf ("%4.3f\n", diameter);
         printf ("Caminho: ");
-        i = 0;
-        while (path[i] != t) {
+        for (i = 0; i < size - 1; i++)
             printf ("%d-", path[i]);
-            i++;
-        }
-        printf ("%d.\n", path[i]);
+        printf ("%d.\n", path[size - 1]);
     }
 }

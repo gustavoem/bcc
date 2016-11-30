@@ -48,7 +48,9 @@ void calcDeltaxy (Digraph G) {
         {
             double deltavw = a->cst - (G->dist[a->w] - G->dist[v]);
             if (deltavw > maxdeltavw) {
-                /*printf ("\ndelta[%d-%d] = %5.4f. d[%d] = %5.4f; d[%d] = %5.4f; c[v-w] = %5.4f", v, a->w, deltavw, v, G->dist[v], a->w, G->dist[a->w], a->cst);*/
+                /*printf ("\ndelta[%d-%d] = %5.4f. d[%d] = %5.4f; 
+ *                      d[%d] = %5.4f; c[v-w] = %5.4f", v, a->w, deltavw,
+ *                       v, G->dist[v], a->w, G->dist[a->w], a->cst);*/
                 vd = v;
                 wd = a->w;
                 maxdeltavw = deltavw;

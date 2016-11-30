@@ -39,6 +39,7 @@ static double findINFINITE (Digraph G);
 static void checkDist (Digraph G);
 static Vertex *path (Vertex *father, Vertex t);
 static void printDiameter (Vertex *path, double diameter, Vertex t);
+static void runDijkstra (Digraph G, Vertex s, int impl);
 
 /* Variável booleana que decide de checamos ou não a validade do vetor
 // dist por padrão sempre que usamos o algoritmo de Dijkstra. 
@@ -528,13 +529,13 @@ Vertex *path (Vertex *father, Vertex t) {
 // parâmetro. Se o diâmetro do grafo é infinito (grafo desconexo) então
 // a função retorna NULL. O fim do caminho é marcado com um -1 na útima
 // posição do vetor. */
-Vertex *DIGRAPHdiameter (Digraph G) {
+Vertex *DIGRAPHdiameter (Digraph G, int impl) {
     Vertex v, w, t, *d_path = NULL;
-    double diameter = 0;
+    double diameter = -1;
     int sto_checking_dist = checking_dist;
     checking_dist = 0;
     for (v = 0; v < G->V; v++) {
-        DIGRAPHsptD2 (G, v);
+        runDijkstra (G, v, impl);
         for (w = 0; w < G->V; w++) {
             if (G->dist[w] > diameter) {
                 if (d_path != NULL)
@@ -551,6 +552,21 @@ Vertex *DIGRAPHdiameter (Digraph G) {
     return d_path;
 }
 
+/* Essa função chama o algoritmo de Dijkstra partindo do vértice s
+// usando a implementação determinada por impl. */
+static void runDijkstra (Digraph G, Vertex s, int impl) {
+    switch (impl) {
+        case 0:
+            DIGRAPHsptD0 (G, s);
+            break;
+        case 1:
+            DIGRAPHsptD1 (G, s);
+            break;
+        case 2:
+            DIGRAPHsptD2 (G, s);
+    }
+}
+
 /* A função printDiameter() mostra na tela o diametro de um digrafo. */
 void printDiameter (Vertex *path, double diameter, Vertex t) {
     printf ("Diâmetro do digrafo: ");
@@ -563,7 +579,7 @@ void printDiameter (Vertex *path, double diameter, Vertex t) {
         size++;
         if (size > 30) return;
         printf ("%4.3f\n", diameter);
-        printf ("Caminho: ");
+        printf ("Caminho com tamanho igual ao diâmetro: ");
         for (i = 0; i < size - 1; i++)
             printf ("%d-", path[i]);
         printf ("%d.\n", path[size - 1]);

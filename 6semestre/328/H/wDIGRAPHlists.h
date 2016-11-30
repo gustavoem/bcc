@@ -161,6 +161,6 @@ void DIGRAPHsptD2 (Digraph G, Vertex s);
 // devolve um vetor com o maior caminho do digrafo recebido como 
 // parâmetro. Se o diâmetro do grafo é infinito (grafo desconexo) então
 // a função retorna NULL. */
-Vertex *DIGRAPHdiameter (Digraph G);
+Vertex *DIGRAPHdiameter (Digraph G, int impl);
 
 #endif

@@ -26,6 +26,8 @@
 void runDijkstra (Digraph G, Vertex s, int impl);
 void calcDeltaxy (Digraph G);
 
+/* Chama o algoritmo de Dijkstra, partindo do vértice s, usando a
+// implementação impl. */
 void runDijkstra (Digraph G, Vertex s, int impl) {
     switch (impl) {
         case 0:
@@ -39,6 +41,11 @@ void runDijkstra (Digraph G, Vertex s, int impl) {
     }
 }
 
+/* Dado um digrafo G que passou por um dos algoritmos de Dijkstra que
+// calcula uma SPT, essa função devolve o maior delta[x-y] para x-y
+// fora da árvore. O valor delta[x-y] é o maior número que podemos
+// subtrair do custo do arco x-y sem fazer que a SPT desse grafo,
+// partindo do mesmo elemento, mude.*/
 void calcDeltaxy (Digraph G) {
     Vertex vd = -1, wd = -1, v;
     double maxdeltavw = 0;
@@ -48,9 +55,6 @@ void calcDeltaxy (Digraph G) {
         {
             double deltavw = a->cst - (G->dist[a->w] - G->dist[v]);
             if (deltavw > maxdeltavw) {
-                /*printf ("\ndelta[%d-%d] = %5.4f. d[%d] = %5.4f; 
- *                      d[%d] = %5.4f; c[v-w] = %5.4f", v, a->w, deltavw,
- *                       v, G->dist[v], a->w, G->dist[a->w], a->cst);*/
                 vd = v;
                 wd = a->w;
                 maxdeltavw = deltavw;
@@ -63,7 +67,12 @@ void calcDeltaxy (Digraph G) {
     printf ("\n");
 }
 
-/* TODO: escrever sobre essa função */
+/* Esse programa recebe por argumentos os valores V A s impl e seed.
+// Esses argumentos determinam um grafo pseudo-aleatório de V vértices
+// e A arestas que será usado para rodar uma implementação impl do
+// algoritmo de Dijkstra. Primeiro, calculamos o diametro desse 
+// digrafo. Depois, calculamos o maior valor de delta[x-y]. Quando 
+// conveniente, essas informações são mostradas na tela.  */
 int main (int argc, char **argv) {
     Digraph G;
     Vertex *p;
@@ -85,7 +94,7 @@ int main (int argc, char **argv) {
         DIGRAPHshow (G); 
     runDijkstra (G, impl, s);
     calcDeltaxy (G);
-    p = DIGRAPHdiameter (G);
+    p = DIGRAPHdiameter (G, impl);
     free (p);
     DIGRAPHdestroy (G);
     return 0;

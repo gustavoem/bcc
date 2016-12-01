@@ -10,7 +10,7 @@
 // Sigla:      GUSTAVOE
 // Data:       2016-11-25
 //
-// Este arquivo faz parte da tarefa G
+// Este arquivo faz parte da tarefa H
 // Essa tarefa consiste em estudar o problema dos caminhos dos 
 // custos mínimos. Este arquivo testa as diferentes 
 // implementações do algoritmo de Dijkstra, implementadas na

@@ -11,7 +11,10 @@
 // Data:       2016-11-25
 //
 // Este arquivo faz parte da tarefa G
-// TODO: escrever sobre o que essa tarefa é
+// Essa tarefa consiste em estudar o problema dos caminhos dos 
+// custos mínimos. Este arquivo testa as diferentes 
+// implementações do algoritmo de Dijkstra, implementadas na
+// biblioteca wDIGRAPHlists.
 //
 ////////////////////////////////////////////////////////////// */
 
@@ -89,7 +92,7 @@ int main (int argc, char **argv) {
         seed = atoi (argv[5]);
     }
     srand (seed);
-    G = DIGRAPHrand1 (V, A, 0, 1);
+    G = DIGRAPHrand2 (V, A, 0, 1);
     if (V < 30)
         DIGRAPHshow (G); 
     runDijkstra (G, impl, s);

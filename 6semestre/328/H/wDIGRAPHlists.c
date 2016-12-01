@@ -46,7 +46,7 @@ static void runDijkstra (Digraph G, Vertex s, int impl);
 // OBS: a função que acha o diâmetro do digrafo modifica essa variável 
 // para o valor 0 obrigatóriamente e depois retorna ao seu valor 
 // original. */
-static int checking_dist = 1;
+static int checking_dist = 0;
 
 /* A função NEWnode() recebe um vértice w e o endereço next de um nó e
 devolve o endereço a de um novo nó tal que a->w == w e a->next == next.

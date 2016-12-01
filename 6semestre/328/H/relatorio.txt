@@ -1,0 +1,101 @@
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+// 
+// Autor:      Gustavo Estrela
+// Numero USP: 8536051
+// Sigla:      GUSTAVOE
+// Data:       2016-11-25
+//
+////////////////////////////////////////////////////////////// */
+
+Primeiro, comparamos o desempenho das três implementações do 
+algoritmo de Dijkstra para um mesmo grafo. Usamos como teste
+um grafo com 600 vértices e 6000 arestas. Os desempenhos da segunda
+e terceira implementação do algoritmo de Dijkstra foram melhores do
+que o da implementação naive.
+
+time ./distancia 600 6000 0 0 123
+Maior delta[v-w]: 1.907. v: 376, w: 398
+Diâmetro do digrafo: 2.164
+Caminho com tamanho igual ao diâmetro: 535-468-338-537-532-252-329-456-152.
+real    2m11.203s
+
+time ./distancia 600 6000 0 1 123
+Maior delta[v-w]: 1.849. v: 376, w: 576
+Diâmetro do digrafo: 2.164
+Caminho com tamanho igual ao diâmetro: 535-468-338-537-532-252-329-456-152.
+real    0m2.764s
+
+time ./distancia 600 6000 0 2 123
+Maior delta[v-w]: 1.873. v: 152, w: 325
+Diâmetro do digrafo: 2.164
+Caminho com tamanho igual ao diâmetro: 535-468-338-537-532-252-329-456-152.
+real    0m2.191s
+
+Esse teste também mostrou que podem existir vários arcos que possuem o
+maior delta[v-w]. Isso pode ter acontecido porque o número de arcos
+gerados era alto, e portanto podem haver vários arcos com preços 
+parecidos. Além disso, é possível que erros de arredondamento estejam
+ocorrendo, já que o cálculo de delta, como foi implementado, faz a soma
+de distâncias e de custos, e o valor das distâncias pode ficar maior do
+que o custo dos arcos. Tentamos evitar esse problema escrevendo o 
+calculo do delta da seguinte maneira:
+            delta_{xy} = c_{xy} - (d_y - d_x) 
+mas os resultados continuaram os mesmos.
+
+Depois, estudamos como o tempo varia com o valor de V fixo e aumento 
+de A. Para a implementação mais simples de Dijkstra observamos um
+comportamento quadrático no tempo gasto. Veja que nos exemplos abaixo,
+quando dobramos o valor de A, o tempo gasto fica aproximadamente 4 
+vezes maior:
+
+time ./distancia 200 1000 0 0 123
+Diâmetro do digrafo: infinito.
+real    0m1.864s
+
+time ./distancia 200 2000 0 0 123
+Diâmetro do digrafo: 2.066
+real    0m6.263s
+
+time ./distancia 200 4000 0 0 123
+Diâmetro do digrafo: 0.862
+real    0m26.686s
+
+Para a segunda implementação, ao dobrar A, o tempo gasto fica 
+geralmente entre o dobro e quatro vezes o que era antes:
+time ./distancia 200 1000 0 1 123
+real    0m0.189s
+
+time ./distancia 200 2000 0 1 123
+Diâmetro do digrafo: 2.066
+real    0m0.332s
+
+time ./distancia 200 4000 0 1 123
+Diâmetro do digrafo: 0.862
+real    0m0.823s
+
+time ./distancia 200 8000 0 1 123
+Diâmetro do digrafo: 0.448
+real    0m2.926s
+
+Para a terceira implementação, ao dobrar A, o tempo gasto fica
+parecido com a segunda implementação:
+time ./distancia 200 1000 0 2 123
+Diâmetro do digrafo: infinito.
+real    0m0.150s
+
+time ./distancia 200 2000 0 2 123
+Diâmetro do digrafo: 2.066
+real    0m0.317s
+
+time ./distancia 200 4000 0 2 123
+Diâmetro do digrafo: 0.862
+real    0m0.784s
+
+time ./distancia 200 8000 0 2 123
+Diâmetro do digrafo: 0.448
+real    0m2.672s

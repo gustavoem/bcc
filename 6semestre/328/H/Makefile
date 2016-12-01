@@ -19,7 +19,7 @@
 # http://www.ime.usp.br/~pf/algoritmos/apend/Makefile
 
 # variaveis que serao usadas como opcoes do gcc
-CFLAGSa = -Wall -Wno-unused-result -ansi -O2 -pedantic -g
+CFLAGSa = -Wall -Wno-unused-result -ansi -O0 -pedantic -g
 CFLAGSb = -Wall -O2
 #    -ansi proibe comentarios com prefixo '//'
 #    -g flag de debug

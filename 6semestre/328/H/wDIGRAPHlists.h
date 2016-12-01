@@ -30,9 +30,9 @@
 #define Graph Digraph
 
 /* A lista de adjacência de um vértice v é composta por nós do tipo
-node. Cada nó da lista corresponde a um arco e contém um vizinho w de v;
-o endereço do nó seguinte da lista; e o custo desse arco. Um link é um
-ponteiro para um node. */
+node. Cada nó da lista corresponde a um arco e contém um vizinho w de 
+v; o endereço do nó seguinte da lista; e o custo desse arco. Um link é
+um ponteiro para um node. */
 typedef struct node *link;
 struct node {
     Vertex w;

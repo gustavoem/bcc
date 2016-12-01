@@ -494,7 +494,8 @@ void checkDist (Digraph G) {
             if (dist[v] + a->cst < dist[a->w])
             {
                 printf ("Erro na implementação de Dijkstra\n");
-                printf ("%4.3f + %3.2f < %4.3f\n", dist[v], a->cst, dist[a->w]);
+                printf ("%4.3f + %3.2f < %4.3f\n", dist[v], a->cst,
+                        dist[a->w]);
                 return;
             }
     printf ("ok.\n");

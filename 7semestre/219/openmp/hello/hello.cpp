@@ -9,7 +9,10 @@ using namespace std;
 
 int main (int argc, char **argv) {
     int nthreads, tid;
-    
+    if (argc == 2) {
+        nthreads = atoi (argv[1]);
+        omp_set_num_threads (nthreads);
+    }
     #pragma omp parallel private (tid)
     {
         tid = omp_get_thread_num ();

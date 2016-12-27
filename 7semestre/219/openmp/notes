@@ -1,0 +1,73 @@
+OpenMP API Overview
+
+Three Components
+- Compiler Directives
+- Runtime Library Routines
+- Environment Variables
+
+Compiler Directives
+- Spawn parallel region
+- Divide blocks among threads
+- Serialize sections of code
+- Sync threads
+- etc.
+
+Runtime Library Routines
+- Setting/querying number of threads
+- Querying thread id
+- Setting/querying nested parallelism
+- etc.
+
+Environment Variables
+- Setting the number of threads
+- Specifying how loops iterations are divided
+- Binding threads to processors
+
+Example of OpenMP Code Structure
+Serial code
+Beggining of parallel region. Fork a team of threads.
+Specify variable scoping
+#pragma omp parallel private (var1, var2) shared (var3)
+{
+    parallel region
+    other OpenMP directives
+    Run-time Library calls
+    All threads join master thread and disbound
+}
+Resume serial code
+---------
+
+---------
+OpenMP Directives
+
+- Format
+    #pragma omp directive-name [clause, ...]
+- Example
+    #pragma omp parallel default (shared) private (beta, pi)
+
+Directive Scoping 
+- Static Extent
+    - Code that is enclosed between the begginning and the end of a 
+    structured blockfollowing a directive.
+- Orphaned Directive
+    - A directive that appears independently from another enclosing
+    directive. It exists outside of another directive's static extent.
+- Dynamic Extent
+    - Included both static extent and the extents of its orphaned 
+    directives.
+
+PARALLEL Region Construct
+- Determines a block of code that will be executed by multiple threads
+- Format
+    #pragma omp parallel [clause ...]
+- If any thread terminates within a parallel region, all threads will 
+terminate, and the work done up until that point is undefined.
+- Restrictions
+    - A parallel region must be a structured block that does not span
+    multiple routines or code files;
+    - It's illegal to branch (goto) into or out of a parallel region;
+    - Only a single IF clause is permitted;
+    - Only a single NUM_THREADS clause is permitted;
+    - A program must not depend upon the ordering of the clauses;
+- Example
+    hello.cpp

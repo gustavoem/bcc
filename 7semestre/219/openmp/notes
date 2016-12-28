@@ -71,3 +71,105 @@ terminate, and the work done up until that point is undefined.
     - A program must not depend upon the ordering of the clauses;
 - Example
     hello.cpp
+
+Do/for Directive
+- Iterations of a loop are executed by the team of threads
+- Example
+    for.cpp
+
+Sections Directive
+- It's a non-iterative work-sharing construct. It specifies that the
+enclosed section(s) of code are to be divided among the threads in the
+team.
+
+Single Directive
+- Piece of code that is executed by only one thread. Useful for 
+sections that are not thread safe, such as I/O operations.
+
+Task Construct
+- Purpose:
+    - Defines an explicit task
+    - The data environment of the task is determined by the data 
+    sharing attribute clauses.
+    - Task execution is subject to task scheduling
+
+Syncronization Constructs
+- MASTER Directive
+    - Specifies a region that is supposed to be ran only by the master 
+    thread.
+- CRITICAL Directive
+    - Specifies a region that is supposed to be ran by only one thread
+    at a time.
+- BARRIER Directive
+- TASKWAIT Directive
+    - Specifies a wait on the completion of child tasks generated since
+    since the beginning of the current task.
+- ATOMIC Directive
+    - Specifies that a specific memory location must be updated 
+    atomically.
+    - An atomic statement must follow a specific syntax.
+- FLUSH Directive
+    - This directive creates a point in which memory should be 
+    consistent to all threads. This directive is important to make sure
+    that data in memory is coherent to all threads.
+    - You can choose which variables will be flushed.
+    - This directive is implied for other directives, such as:
+        - barrier
+        - parallel
+        - critical
+        - ordered
+        - etc.
+- ORDERED Directive
+    - Specifies that iterations of a loop will be executed in the same
+    order as if they were ran serially.
+
+THREADPRIVATE Directive
+- Used to make global file scope variables local and persistant to a 
+thread through the execution of multiple parallel regions.
+
+Data Scope Attribute Clauses
+- a.k.a. Data-sharing Attribute Clauses.
+- On OpenMP most variables are shared by default.
+- Types of scope:
+    - PRIVATE
+    - FIRSTPRIVATE
+    - LASTPRIVATE
+    - SHARED
+    - DEFAULT
+    - REDUCTION
+    - COPYIN
+
+PRIVATE Clause
+- Variables are private to each thread.
+- A new object of the same type is declared once for every thread on 
+the team.
+- Variables should be assumed unitialized.
+
+SHARED Clause
+- Variables are shared between all threads.
+- Make sure these variables are thread safe (usage of critical)
+
+DEFAULT Clause
+- Specifies a default scope
+
+FIRSTPRIVATE Clause
+- Private but initialized. The starting value is the same as it was 
+before entering the parallel region.
+
+LASTPRIVATE Clause
+- The variable will keep the value from the last section or iteration.
+
+
+COPYIN Clause
+- Assigns the same value to THREADPRIVATE variables for all threads.
+
+COPYPRIVATE Clause
+- Assigns the same value of a private variable to all its copies on 
+other threads.
+
+REDUCTION Clause
+- A private variable is created to all threads. At the end, an operator
+is applied to all of the copies and the result is stored at the original
+variable.
+- Operators: +, -, *, /, &, ^, |, &&, ||
+

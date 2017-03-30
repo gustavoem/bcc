@@ -1,0 +1,111 @@
+30/03 - MAC0219 Programação Paralela e Concorrente
+
+Concorrência
+- Definição: um programa concorrente consiste em um número finito de
+processos. Cada processo é um conjunto finito de operações atômicas.
+- Definição: o estado de um programa é o conteúdo das suas variáveis
+em um dado momento.
+    - variáveis | explícitas
+                | implícitas | registradores
+                             | ponteiros
+- Um processo executa uma sequência de instruções.
+- Definição: uma instrução é a sequência de uma ou mais ações 
+atômicas.
+    - ações atômicas | indivisíveis
+                     | estado intermediário invisível
+- História: sequência de execuções atômicas. 
+    Exemplo: quais são as histórias prováveis de 
+    P: p1, p2; e
+    Q: q1, q2
+    1) p1, p2, q1, q2
+    2) p1, q1, p2, q2
+    3) ...
+
+Sincronização
+- O papel da sincronização é delimitar apenas um conjunto das possíveis
+histórias como uma linha válida de processamento. Para fazer isso, 
+podemosos determinar que alguns processos parem em algum estado 
+específico.
+- Tipos:
+    - exclusão mútua: criar seções críticas que parecem atômicas.
+    - condições de sincronização: atrasar uma ação até que seja válida 
+    uma condição.
+- Como bloquear um processo? Suponha que temos n threads e queremos
+sincronizar todas em alguma parte do código.
+    Solução 1:
+    - Criar um contador, quando uma thread chega na barreira, fazemos
+    atomicamente <cont++>.
+        while (cont < n) wait;
+        while (cont < n) sleep (eps);
+    problema: e quando tiver outra barreira?
+    Solução 2:
+    - Criar um vetor. (também não funciona)
+    Solução 3:
+    - Criar um vetor por barreira. (funciona)
+- Condição de sincronização
+
+    
+Atomicidade
+- Uma operação atômica é indivisível.
+- Notação <bla>
+- Curiosidade: no java antigo, as operações de ++ e atribuição em long
+não eram atômicas.
+
+
+Frog Problem
+- Machos só podem pular para direita
+- Fêmeas só podem pular para esquerda
+- Pulos podem ser feitos:
+  1) para um espaço vazio ao lado;
+  2) pular por cima de um sapo para um espaço vazio
+- Estado inicial
+    MM FF
+- Objetivo
+    FF MM
+
+Árvore de estados
+MM FF --------- M MFF
+
+    | --------- MMF F
+
+    | ---------  MMFF
+
+    | --------- MMFF 
+ 
+Exemplos
+- Programa Sequencial
+    int m = 0;
+    for i = 0 to n - 1 
+    {
+        if (a[i] > m) 
+            m = a[i];
+    }
+
+- Solução 1:
+    int m = 0;
+    co i = 0 to n - 1 
+    {
+        if (a[i] > m) 
+            m = a[i];
+    }
+Não funciona, vai dar uma resposta qualquer
+
+- Solução 2:
+    int m = 0;
+    co i = 0 to n - 1 
+    {
+        <if (a[i] > m) 
+            m = a[i];>
+    }
+Resolve, mas é meio lento...
+
+- Solução 3:
+    int m = 0;
+    co i = 0 to n - 1 
+    {
+        if (a[i] > m)
+            if (a[i] > m)
+                <if (a[i] > m) 
+                    m = a[i];>
+    }
+

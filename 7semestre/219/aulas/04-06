@@ -1,0 +1,8 @@
+Pthreads - Inspirado no manual computing.llnl.gov/tutorials/pthreads
+
+
+Hello World
+- Código anexado
+
+Thread Join
+- PTHREAD_CREATE_JOINABLE

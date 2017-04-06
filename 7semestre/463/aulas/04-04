@@ -1,0 +1,72 @@
+Aula Android #2
+
+
+Componentes de aplicações
+- Intents
+    - Nativos
+        - Alarm clock;
+        - Email;
+        - File Storage;
+        - etc.
+    - Content provider 
+        - Oferece dados complexos ou arquivos para outras aplicações.
+        - Permite que usuários copiem dados entre aplicações diferentes.
+        - Serve para prover dados, oras.
+        - getContentResolver ().query (). Cuidado com SQL injection.
+        - Exemplos: calendar provider, contacts provider.
+    - Loaders
+        - Úteis para carregar dados a serem exibidos na tela.
+        - Alternativa ao Async Task.
+        - Executa thread separada da UI.
+        - Apresentar um Cursor para acessar resultados.
+    - Services
+        - Executa operações longas em background.
+        - Não provê interface ao usuário.
+        - Pode ser acessado por outras aplicações.
+        - Interage com Content Provider.
+        - Exemplo: fica de background perguntando a um servidor se 
+        existe conteudo novo para ser baixado.
+        - CondiçÕes de execução
+            - Started
+            - Bound
+        - É executado na thread principal <C U I D A D O>
+        - Ciclo de vida
+            - Start ou bind
+            - onCreate ()
+            - onStart () ou onBind ()   
+    - Broadcast Receiver
+        - Componentes que permitem registrar-se a eventos de sistema e
+        aplicações.
+        - Requisições que duram até 10 segundos.
+        - Exemplos: 
+            - Boot
+            - Power connected
+            - Battery low
+            - Battery ok
+
+
+Aula Android #4
+Armazenamento de dados
+- Preferências compartilhadas
+    - Os dados com SharedPreferences irão persistir através de sessões
+    de usuário mesmo se sua aplicação "morra".
+- Memória interna
+- Antes da salvar você deve verificar se há memória, se ela está 
+montada, etc.
+- A partir do API 23, quando você quiser acessar a memória externa você
+sempre precisa avisar o usuário.
+- SQLite Databases
+- Network Connection
+    - É possível armazenar e recuperar dados através da rede
+    - Pacotes utilizados: 
+        - java.net.*
+        - android.net.*
+
+
+Aula Android #5
+Testes de aplicação
+- Testes automatizados com JUnit
+- Monkey
+- Robotium
+    - blackbox
+- Roboletric

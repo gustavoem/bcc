@@ -1,0 +1,106 @@
+Notes about pthreads based on the tutorial available at: 
+https://computing.llnl.gov/tutorials/pthreads/#PthreadsAPI
+
+
+3. The Pthreads API
+- The subroutines of Phreads API can be grouped in:
+    1 - Thread management: creating, detaching, joining threads, etc;
+    2 - Mutexes: mutual exclusion;
+    3 - Condition variables: routines that address comunications between
+    threads that share a mutex;
+    4 - Syncronization: routines that manage read/write locks and 
+    barriers.
+- All identifiers start with "pthread_".
+- For portability, the "pthread.h" header file should be included in 
+each source file.
+
+
+4. Compiling
+- icc -pthread
+
+
+5. Thread Management
+5.1 Creating and Terminating Threads
+- Routines
+    pthread_create (thread, attr, start_routine, arg)
+    pthread_exit (status)
+    pthread_cancel (thread)
+    pthread_attr_init (attr)
+    pthread_attr_destroy (attr)
+- Creating threads
+    - main () comprises a single thread.
+    - pthread_create creates a thread and makes it executable. Arguments:
+        - thread: an opaque unique identifier for the new thread;
+        - attr: an opaque attribute object that may be used to set 
+        thread attributes;
+        - start_routine: the C routine that the thread will execute once
+        it is created;
+        - arg: a single argument that may be passed to start_routine.
+    - The maximum number of threads is implementation dependent. What 
+    happens after the limits also is.
+- Thread Attributes
+    - By default, a thread is created with some attributes. We can 
+    change some of these parameters with the thread attribute object.
+    - pthread_attr_init and pthread_attr_destroy are used no initialize
+    and destroy the attribute object.
+    - There are other routines to set specific attributes of this 
+    object, such as:
+        - Detached or joined state
+        - Scheduling inheritance
+        - Scheduling policy
+        - Stack size
+        - Stack address
+- Thread Binding and Scheduling
+    - Question. After a thread has been created, how do you know:
+    a) when it will b e scheduled to run by the operating system
+    b) which processor/core will run it?
+    - Pthreads API provides several scheduling routines, such as FIFO,
+    RR. 
+    - There are no routines for explicit binding threads to cpu/cores. 
+    The operating system may provide a way to do this.
+- Terminating threads & pthread_exit ()
+    - A thread can be terminated in several ways
+        - Normally returning
+        - A call to pthread_exit
+        - pthread_cancel
+        - The entire process is finished by exec () or exit ()
+    - pthread_exit () allows the programmer to specify a termination
+    status parameters. This is often used by threads joining the 
+    terminated thread.
+    - We need to explicity use pthread_exit () at the end of the main.
+    Otherwise it can happen that main will finish before the threads it
+    created and therefore these threads will become zombies or will 
+    simply end sooner.
+5.2 Passing Arguments to Threads
+    - You can pass ONE (void *) argument to the pthread_create routine.
+    - We can easily 'overcome' this problem by using structs containing
+    all desired arguments.
+5.3 Joining and Detaching Threads
+- Routines
+    - pthread_join (threadid, status)
+    - pthread_detach (threadid)
+    - pthread_attr_setdetachstate (attr, detachstate)
+    - pthread_attr_getdetachstate (attr, detachstate)
+- Join
+    - Joining is one way to accomplish syncronization between threads.
+    - The pthread_join subroutine blocks the calling thread until the
+    specified thread calls pthread_exit ().
+    - A joining thread can only match one phtread_join.
+- Joinable or Not?
+    - We can set if a thread is joinable or not using the attr argument
+    in pthread_create (). We can do this in 4 steps:
+        1. declare a pthread attribute with pthread_attr_t
+        2. initialize the attribute variable with pthread_attr_init ()
+        3. set the attribute detached status with 
+        pthread_attr_setdetachstate ()
+        4. when done, free the resources with pthread_attr_destroy ()
+- Detaching
+    - pthread_detach () explicity detach a thread even though it was 
+    declared as joinable.
+- Recommendations
+    - If a thread requires joining, explicitly create it joinable. This
+    avoids changing the thread when joining when the implementation used
+    does not make threads joinable by default.
+    - If you know you won't use join with a thread, you can declare it
+    in detached state, so you may free some system resources.
+

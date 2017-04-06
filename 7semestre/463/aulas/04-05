@@ -1,0 +1,25 @@
+Ionic - Diogo Pina
+
+O que é Ionic
+- SDK mobile
+- Desenvolvimento nativo
+- Aplicativos Web Progressivos
+    - Rodar o aplicativo no browser
+- Open Source
+
+Instalando o Ionic
+- Instalar o Node.js
+- npm install -g cordova ionic
+
+Rodando um Aplicativo
+- ionic serve
+- ionic --lab
+
+Estrutura do Projeto
+- ./src/index.html: arquivo principal do app
+    - <ion-app>
+- Carrega os scripts
+    - <script src="cordova.js">
+    - <script src="build">
+
+

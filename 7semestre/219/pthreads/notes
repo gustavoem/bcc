@@ -103,4 +103,70 @@ each source file.
     does not make threads joinable by default.
     - If you know you won't use join with a thread, you can declare it
     in detached state, so you may free some system resources.
+5.4 Stack Management
+- Routines
+    - pthread_attr_getstacksize (attr, stacksize)
+    - pthread_attr_setstacksize (attr, stacksize)
+    - pthread_attr_getstackaddr (attr, stackaddr)
+    - pthread_attr_setstackaddr (attr, stackaddr)
+- Preventing Stack Problems
+    - POSIX does not dictate the size of a thread's stack
+    - Safe and protable programs should explicitly allocate enough stack
+    for each thread by using pthread_attr_setstacksize.
+5.5 Miscellaneous Routines
+- pthread_self () returns the unique, system assigned, thread ID
+- pthread_equal () compares two thread IDs.
+- pthread_once () executes a init_routine exactly once in a process.
 
+
+7 Mutex Variables
+7.1 Mutex Variables Overview
+- Mutex stands for mutual exclusion
+- A mutex variable acts like a lock, protecting access to a shared data
+resource. Only one thread can lock (or own) a mutex variable at any 
+given time.
+- A typical sequence in the use of a mutex is as follows:
+    - Create and initialize a mutex variable
+    - Several threads attempt to lock the mutex
+    - Only one successfuly owns the mutex
+    - The owner performs its critical section
+    - The owner unlocks the mutex
+    - Another thread acquiers the mutex and repeats the process
+    - The mutex is destroyed
+- A loser thread block at a call. To make it an unblocking call we can 
+change lock to trylock.
+7.2 Creating and Destroying Mutexes
+- Routines
+    - pthread_mutex_init (mutex, attr)
+    - pthread_mutex_destroy (mutex)
+    - pthread_mutexattr_init (attr)
+    - pthread_mutexattr_destroy (attr)
+- Usage
+    - Mutex variables should be declared with type pthread_mutex_t and
+    must be initialized before they can be used. There are two ways to 
+    initialize a mutex variable:
+    1. Statically.
+         pthread_mutex_t mymutex = PTHREAD_MUTEX_INITIALIZER;
+    2. Dinamically. This method permits setting mutex object attributes.
+        pthread_mutex_init ()
+    - The mutex is initially locked.
+    - The attr object is used to establish properties for the mutex
+    object, and must be of type pthread_mutexattr_t. The pthread 
+    standard defines three optional mutex attributes:
+    - pthread_mutexattr_init () and pthread_mutexattr_destroy () are 
+    used to initialize and destroy mutex attribute objects respectively.
+    - pthread_mutex_destroy () frees a mutex variable.
+7.3 Locking and Unlocking Mutexes
+- Routines
+    - pthread_mutex_lock (mutex)
+    - pthread_mutex_trylock (mutex)
+    - pthread_mutex_unlock (mutex)
+- Usage
+    - pthread_mutex_lock performs a lock on a specific mutex variable. 
+    If the mutex is already locked by another thread, the calling thread
+    will wait until the mutex is unlocked.
+    - pthread_mutex_trylock performs a lock, however, if the mutex is
+    already locked, this routine will return immediatly with a busy 
+    error code. 
+    - pthread_mutex_unlock will unlock a mutex if called by the owning
+    thread.

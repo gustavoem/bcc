@@ -170,3 +170,31 @@ change lock to trylock.
     error code. 
     - pthread_mutex_unlock will unlock a mutex if called by the owning
     thread.
+
+8. Condition Variables
+8.1 Overview
+- Condition variables provide another way for threads to synchronize. 
+While mutexes implement sychronization by controlling threads access to
+data, condition variables allow threads to syncronize based upon
+actual value of data.
+- Without condition variables, the programmer would need to have threads
+continually checking if the lock condition is met. This would make a 
+thread to "spin" waiting for a condition (set from another thread) to be
+true.
+- A condition variable is always used in conjunction with a mutex lock.
+8.2 Creating and Destroying Condition Variables
+- Routines
+    - pthread_cond_init (cond, attr)
+    - pthread_cond_destroy (cond)
+    - pthread_condattr_init (attr)
+    - pthread_contattr_destroy (attr)
+- Usage
+    - Condition variables must be declared with type pthread_cond_t
+    - The optional attr object is used to set attributes. The only 
+    attribute that can be defined correspond to enabling other processes
+    to see the condition variable.
+8.3 Waiting and Signaling on Condition Variables
+- Routines
+    - pthread_cond_wait (condition, mutex)
+    - pthread_cond_signal (condition)
+    - pthread_cond_broadcast (condition)

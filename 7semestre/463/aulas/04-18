@@ -1,0 +1,42 @@
+Problema da cartinha
+- O João mandava cartas e recebia cartas para pessoas de todas as partes
+do mundo.
+- João foi para Alemanha. Ele ainda consegue mandar cartas, mas e 
+receber?
+
+Soluções
+1) Caixa Postal
+    - Assim que chegar uma carta no endereço dele, mande para o endereço
+    da Alemanha
+    ... mas e se o João gosta de ficar se mudando de lugares? Agora ele 
+    foi para África.
+    - Cria outra caixa postal na Alemanha que manda para África.
+    - Posso manter algum lugar com o endereço atual dele.
+2) Aviso direto
+    - João pode mandar uma carta avisando seus amigos que ele vai se
+    mudar.
+    - E se alguém mandar um pacote para o João enquanto ele está se 
+    mudando? A carta ainda não chegou no amigo dele, que manda pro lugar
+    errado... perdemos uma carta
+    ... mas e se o João realmente muda muito de casa? 
+    - Pode ser que as cartas fiquem perseguindo o João, mas nunca 
+    alcancem ele.
+Como resolver isso?? IP Móvel
+
+Slides 
+Motivação
+- Já falamos
+
+Roteamento IP
+- Batata quente?
+- Protocolo hoap by hoap (???)
+
+Tabela de Roteamento
+ 
+HA - home agent
+FA - foreign agent
+MH - mobile host
+coa - care of address
+
+Tunelamento
+

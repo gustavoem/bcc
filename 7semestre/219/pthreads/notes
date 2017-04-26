@@ -181,6 +181,7 @@ actual value of data.
 continually checking if the lock condition is met. This would make a 
 thread to "spin" waiting for a condition (set from another thread) to be
 true.
+- This solution is different from mutex because it 
 - A condition variable is always used in conjunction with a mutex lock.
 8.2 Creating and Destroying Condition Variables
 - Routines

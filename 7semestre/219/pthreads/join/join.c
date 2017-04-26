@@ -22,19 +22,20 @@ void * BusyWork (void * t)
 int main (int argc, char *argv[])
 {
     pthread_t thread[NUM_THREADS];
-    pthread_attr_t attr;
+    /*pthread_attr_t attr;*/
     int rc;
     long t;
     void *status;
 
     /* Initialize and set thread detached attribute */
-    pthread_attr_init (&attr);
-    pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
+    /*pthread_attr_init (&attr);*/
+    /*pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);*/
 
     for (t = 0; t < NUM_THREADS; t++) 
     {
         printf ("Main: creating thread %ld\n", t);
-        rc = pthread_create (&thread[t], &attr, BusyWork, (void *) t);  
+        /*rc = pthread_create (&thread[t], &attr, BusyWork, (void *) t);  */
+        rc = pthread_create (&thread[t], NULL, BusyWork, (void *) t);  
         if (rc) {
             printf("ERROR; return code from pthread_create() is \
                 %d\n", rc);
@@ -43,7 +44,7 @@ int main (int argc, char *argv[])
     }
 
     /* Free attribute and wait for the other threads */
-    pthread_attr_destroy (&attr);
+    /*pthread_attr_destroy (&attr);*/
     for(t = 0; t < NUM_THREADS; t++) 
     {
         rc = pthread_join(thread[t], &status);

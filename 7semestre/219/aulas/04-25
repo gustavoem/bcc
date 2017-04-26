@@ -1,0 +1,108 @@
+boolean in1 = in2 = false;
+process CS1 {
+    while (true) {
+        <await (!in2) in1 = true;>
+        C.S.
+        in1 = false
+        Non C.S.
+    }
+}
+
+process CS2 {
+    <await (!in1) in2 = true;>
+    in2 = false;
+}
+
+Exclusão mútua = sim
+Ausência de deadlock = sim
+Ausência de atraso = sim
+Entrada garantida = só com justiça forte
+
+E se tivermos n processos?
+boolean lock = false;
+process CSi {
+    while (true) {
+        <await (!lock) lock = true;>
+        C.S.
+        lock = false
+        Non C.S.
+    }
+}
+
+
+Como fazer com os awaits?
+1) usar primitivas de HW
+2) algoritmos  mais sofisticados
+1) - instruções do tipo Test&Set
+boolean PS (boolean lock) {
+    <
+        boolean inicial = lock;
+        lock = true;
+        return inicial;
+    >
+}
+
+no lugar de <await ...> usamos while (TS (lock)) sleep;
+para evitar invalidar o cache sempre
+    while (lock) skip;
+    while (TS (lock)) {
+        while (lock) skip;
+    }
+
+Como implementar <S;>
+    CSenter
+    S;
+    CSexit
+
+Implementação de <await (B) S;>:
+CSenter
+    whilel (!B) {algoritmo}
+    S
+CSexit
+o que é o algoritmo? 
+1) {CSexit; CSenter}
+2) {CSexit: delay; CSenter}
+no máximo uma vez: pode usar o while (verificar o B é atômico)
+
+
+Tie-breaker (Peterson)
+Motivação: os processos devem se revezar quando dois querem entrar na
+seção crítica.
+    Vamos começar com dois...
+    - variável adicional para marcar o último que entrou
+
+
+CS 1
+in1 = true
+while (in2
+...)
+
+CS 2
+in2 = true
+while (in1)
+...
+
+Mas pode dar deadlock... como resolver?
+
+boolean in1 = in2 = false;
+int last = 1;
+process CS1 {
+    while (true) {
+        in1 = true;
+        last = 1;
+        <await (!in2 or last == 2);>
+        C.S.
+        in1 = false
+        Non C.S.
+    }
+}
+process CS2 {
+    while (true) {
+        in2 = true;
+        last = 2;
+        <await (!in2 or last == 1);>  -- while (in2 and last == 2) skip;
+        C.S.
+        in2 = false
+        Non C.S.
+    }
+}

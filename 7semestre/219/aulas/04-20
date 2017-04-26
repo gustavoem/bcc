@@ -1,0 +1,148 @@
+Seção Crítica
+- await
+- Justiça
+- Algoritmos
+
+Primitiva de sincronização: await
+conceito abstrai => | atomicidade
+                    | sincronização
+
+<await (B) S;>
+B = condição de atraso
+S - comandos (podem ser vários)
+
+Concentualmente...
+<await (B)> <=> while (not B);
+
+
+Safety & livenes
+safety - não acontece nada de errado durante a execução
+livenes - o programa chega ao estado final
+
+
+Programa concorrente
+safety => | exclusão mútua 
+          | ausência de deadlock
+
+livenes => | todo processo entrará em algum momento na seção crítica
+           (em algum momento o processo entra em execução)
+           | todo mensagem, em algum momento, chegará ao seu destino
+
+
+Justiça (Fairness)
+Todos os processos tem chance de proseguir.
+Não queremos que a corretude dependa do escalonamento
+
+Tipos de justiça
+- Justiça incondicional: toda ação atômica, passivel de execução, é 
+executada em algum momento (ninugém espera para sempre).
+- Justiça fraca: é incondicional e cada ação condicional atômica é 
+executada em algum momento se a condição fica e ~permanece~ verdadeira
+até que seja vista.
+- Justiça forte: é incondicional e toda ação condicional atômica é 
+executada em algum momento, assumindo que a condição é frequentemente 
+verdadeira.
+
+boolean continue = true, try = false;
+    co {
+        while (continue) {
+            try = true;
+            try = false;
+        }
+    }
+    (em outra linha de processo...)
+    <await (try) continue = false>
+
+Como dizer se uma variável condicional é frequentemente verdadeira?
+Não é possível. Só seria possível se o escalonador tivesse acesso aos 
+nuances do código ou se tivesse uma distribuição de probabilidade do
+condicional.
+
+int x = 10, c = 1;
+co {
+    <await x == 0>; c = 0;
+}
+(em outra linha de processo...)
+while (c == 1) x--;
+Isso não acaba com justiça fraca. Mas acaba com justiça forte (em C)
+E se um novo processo..
+while (c == 1) if (x < 0) <x = 10;>
+
+Desafio: propor alguns códigos que desafiem a justiça do escalador do
+linux
+
+
+Problema da seção crítica
+Nesse problema, n processos executam repetidamente uma seção crítica e
+após uma seção não crítica.
+protocolo de entrada
+    cs
+protocolo de saída
+
+process CS [i = 1 to n] {
+    while (true) {
+        protocolo de entrada
+        seção crítica
+        protocolo de saída
+        seção normal
+    } 
+}
+
+Suposição: um processo que entra em uma seção crítica sai dela.
+
+Propriedades
+Safety => | exclusão mútua
+          | ausência de deadlock
+          | ausência de atraso desnecessário: se um processo quer entrar
+           em uma zona crítica e os outros estão fora, então ele não é
+           impedido de entrar.
+Liveness => | entrada garantida
+               - um processo que está esperando irá entrar em algum 
+               momento
+
+
+2-processos
+1a tentativa
+int turn = 1
+process CS1 {
+    while (true) {
+        <await (turn == 1;)>
+        CS
+        turn = 2 
+        NCS
+    }
+}
+process CS2 {
+    while (true) {
+        <await (turn == 2);>
+        CS
+        turn = 1
+        seção não crítica
+    }
+}
+Exclusão mútua - OK
+Ausência de deadlock - OK
+Ausência de atraso - Não
+
+2a tentativa
+boolean in1 = in2 = false
+process CS1 {
+    while (true) {
+        <await (!in2) int1 = true;>
+        CS
+        in1 = false;
+        non-critical zone
+    }
+}
+process CS2 {
+    while (true) {
+        <await (!in1) int2 = true;>
+        CS
+        in2 = false;
+        non-critical zone
+    }
+}
+Exclusão mútua - OK
+Ausência de deadlock - OK
+Ausência de atraso - OK
+Entrada garantida - Sim, com justiça forte...

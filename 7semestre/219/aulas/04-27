@@ -1,0 +1,104 @@
+Algoritmo de Dekker
+
+Protocolo de entrada
+Protocolo de saída
+variável compartilhada turn
+
+
+want1 = want2 = false
+CS1
+want1 = true      <-- pé na porta
+while (want2) skip
+want1 = false
+
+CS2
+want2 = true
+while (want1) skip
+want2 = false
+
+atraso desnecessário: ok
+exclusão mútua: não tem
+
+CS1
+want1 = true
+while (want2) {
+    want1 = false
+    skip
+    want1 = true
+}
+
+CS2
+want2 = true
+while (want1) {
+    want2 = false
+    skip
+    want2 = true
+}
+pode ter deadlock
+
+int turn = 1;
+CS1
+want1 = true
+while (want2) {
+    if (turn == 2) {
+        want1 = false
+        while (turn != 1) sleep;
+        want1 = true
+    }
+}
+turn = 2
+want1 = false
+
+CS2
+want2 = true
+while (want1) {
+    if (turn == 1) {
+        want2 = false
+        while (turn != 2) sleep;
+        want2 = true
+    }
+}
+turn = 1
+want1 = false
+
+
+Algoritmo de Mama-Prueli
+int want1 = want2 = 0
+<if (want2 == -1)
+    want1 = -1
+ else
+    want1 = 1>
+while (want1 == want2) skip
+want1 = 0
+
+<if (want1 == -1)
+    want2 = 1
+ else
+    want2 = -1>
+while (want1 == -want2) skip
+want2 = 0
+
+
+Ticket Algorithm
+ideia: senhas por ordem de chegada
+variaveis compartilhadas: 
+number & next = 1
+turn[n] - começa com zero
+
+protocolo de entrada = | turn[i] = number
+                       | number++
+
+int number = 1, next = 1, turn[1:n] = ([n] 0)
+process CS[i = 1 to n] {
+    while (true) {
+        <turn[i] = number; number++>
+        await (turn[i] == next)        => while (turn[i] != next) skip
+        C.S.
+        next = next + 1
+        seção não critica
+    }
+}
+
+Instrução fetch-and-add
+FA (var, incr):
+    <int tmp = var; var = var + incr; return (tmp)>

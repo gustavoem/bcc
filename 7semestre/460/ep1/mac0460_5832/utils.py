@@ -67,40 +67,6 @@ def invert_img (img):
     ret[img == 1] = 0
     return ret
 
-def zero_border_img (img):
-    h = img.shape[0]
-    w = img.shape[1]
-    zeros = np.zeros ((h + 2, w + 2))
-    bordered_img = zeros
-    bordered_img[1:-1, 1:-1] += img
-    return np.copy (bordered_img)
-
-def window_to_int (window, base):
-    total = 0
-    power = 1
-    w = window.tolist ()
-    for row in w:
-        for element in row:
-            total += element * power
-            power *= base
-    return int (total)
-
-
-def int_to_window (number, base, shape):
-    power = 1
-    window_size = shape[0] * shape[1]
-    w_arr = []
-    while (number > 0):
-        d = number % base
-        number = number // base
-        w_arr.append (d)
-    while (len (w_arr) < window_size):
-        w_arr.append (0)
-    w = np.array ([w_arr])
-    w.reshape (shape)
-    print (w.shape)
-    return w
-
 
 # A criação dos structuring elements e interface para as funções de morfologia
 # do scipy foram copiadas de https://github.com/dennisjosesilva/vpi/

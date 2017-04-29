@@ -22,8 +22,7 @@ def config_ax (ax, W, H):
     ax.set_yticklabels ([])
 
 def draw_img (img):
-    W, H = img.shape
-    
+    H, W = img.shape 
     if W <= 20:
         ax = plt.gca ()
         config_ax (ax, W, H)
@@ -85,6 +84,22 @@ def window_to_int (window, base):
             total += element * power
             power *= base
     return int (total)
+
+
+def int_to_window (number, base, shape):
+    power = 1
+    window_size = shape[0] * shape[1]
+    w_arr = []
+    while (number > 0):
+        d = number % base
+        number = number // base
+        w_arr.append (d)
+    while (len (w_arr) < window_size):
+        w_arr.append (0)
+    w = np.array ([w_arr])
+    w.reshape (shape)
+    print (w.shape)
+    return w
 
 
 # A criação dos structuring elements e interface para as funções de morfologia

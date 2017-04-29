@@ -76,6 +76,17 @@ def zero_border_img (img):
     bordered_img[1:-1, 1:-1] += img
     return np.copy (bordered_img)
 
+def window_to_int (window, base):
+    total = 0
+    power = 1
+    w = window.tolist ()
+    for row in w:
+        for element in row:
+            total += element * power
+            power *= base
+    return int (total)
+
+
 # A criação dos structuring elements e interface para as funções de morfologia
 # do scipy foram copiadas de https://github.com/dennisjosesilva/vpi/
 ############# Structure elements creation  ##################

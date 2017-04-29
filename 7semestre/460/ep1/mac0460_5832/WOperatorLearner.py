@@ -9,11 +9,12 @@ class WOperatorLearner:
         """ Class constructor """
         self.window_shape = (n, m)
         self.samples = {}
+        self._update_hypothesis ()
 
 
     def sample_image (self, src, dest):
         bsrc = self._zero_border_img (src)
-        draw_img (bsrc)
+        #draw_img (bsrc)
         x_offset = int ((self.window_shape[1] - 1) / 2)
         y_offset = int ((self.window_shape[0] - 1) / 2)
         window_configuration = []
@@ -21,7 +22,8 @@ class WOperatorLearner:
         for i in range (y_offset, y_offset + src.shape[0]):
             sx, ex = 0, 2 * x_offset + 1
             for j in range (x_offset, x_offset + src.shape[1]):
-                window = np.array_str (bsrc[sy:ey, sx:ex])
+                w = bsrc[sy:ey, sx:ex]
+                window = window_to_int (w, 2)
                 label = dest[i - y_offset][j - x_offset]
                 if (window not in self.samples):
                     self.samples[window] = [0, 0]
@@ -31,6 +33,9 @@ class WOperatorLearner:
             sy += 1
             ey += 1
         print (self.samples)
+        self._update_hypothesis ()
+        print (self.hypothesis)
+
                 
     def _zero_border_img (self, img):
         h = img.shape[0]
@@ -48,4 +53,19 @@ class WOperatorLearner:
         bordered_img[y_start:y_end, x_start:x_end] += img
         return bordered_img
 
+
+    def get_hypothesis (self):
+        return self.hypothesis
+
+
+    def _update_hypothesis (self):
+        self.hypothesis = []
+        h = self.hypothesis
+        n = self.window_shape[0]
+        m = self.window_shape[1]
+        for x in range (2 ** (n * m)):
+            h.append (False)
+        for w in self.samples:
+            l = self.samples[w][0] < self.samples[w][1]
+            h[w] = l
 

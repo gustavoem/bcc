@@ -1,0 +1,101 @@
+Bakery Algorithm
+Algoritmo que não precisa de instruções especiais.
+Ideia: os clientes verificam entre si quem é o próximo.
+
+int turn[1:n] = ([n] 0)
+process CS[i = 1 to n] {
+    while (true) {
+        <turn[i] = max (turn[1:n]) + 1> 
+        for [j = 1 to n, j != i]
+            <await (turn[j] == 0 or turn[i] < turn[j])>
+            C.S.
+        turn[i] =  0
+        non critical session
+    }
+}
+
+Onde podemos tirar a atomicidade? 
+Discussão:
+1) <turn[i] = max (turn[1:n] + 1)> não é atômico
+2) <await (turn[j]) == 0 or turn[i] < turn[j]>
+    while (turn[j] != 0 and turn[i] >= turn[j])
+
+Vamos pensar em 1) quando temos apenas um processo
+
+CS1
+turn1 = 1
+turn1 = turn2 + 1
+while (turn2 != 0 and turn1 >= turn2) skip
+
+
+CS2
+turn2 = 1
+turn2 = turn1 + 1
+while (turn2 != 0 and turn2 > turn1) skip
+
+Generalizando...
+(a,b) > (c, d) == true se a > c ou se a == c e b > d
+turn1 >  turn2 em CS1 fica (turn1, 1) > (turn2, 2)
+turn2 >= turn1 em CS2 fica (turn2, 2) >= (turn1, 1)
+
+int turn[1:n] = ([n] 0)
+process CS[i = 1 to n] {
+    while (true) {
+        turn[i] = 1
+        turn[i] = max (turn [1:n]) + 1
+        for [j = 1 to n, j != i]
+        while (turn[j] != and (turn[i], i) > (turn[j], j)) skip
+        C.S.
+        turn[i] = 0
+        non critical session
+    }
+}
+
+
+Protocolo dos portões
+Leslie Lamport
+Quando tem contensão esse algoritmo é bem ruim
+int gate1 = gate2 = 0
+CS1 {
+    while (true) {
+        seção não-crítica
+    p1: gate1 = p
+        if (gate2 != 0) goto p1:
+        gate2 = p
+        if (gate1 != p)
+            if (gate2 != p)
+                goto p1:
+        else
+            seção crítica
+            gate2 = 0
+        
+    }
+}
+
+tem problema ainda... exclusão mútua não é garantida
+
+int gate1 = gate2 = 0
+bolean want1 = want2 = false
+CS1
+laço {
+    seção não crítica
+p1: gate1 = 1
+    want1 = true
+    if (gate2 != 0) {
+        want1 = false
+        goto p1:
+    }
+    gate2 = 1
+    if (gate1 != 1) {
+        want1 = false
+        <await want2 == false>
+        if (gate2 != 1) goto p1:
+        else want1 = true
+    }
+    C.S.
+    gate2 = 0
+    want1 = false
+}
+
+Como generalizar?
+trocar o wait por um for all other process j await (!want[j])

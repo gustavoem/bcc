@@ -1,0 +1,82 @@
+Barreiras de Sincronização
+process Worker [i = 1 to n] {
+    while (true) {
+        codigo da tarefa i
+        espere todas as n tarefas
+    }
+}
+
+Solução 1: Contador compartilhado
+int count = 0
+process Worker [i = 1 to n] {
+    while (true) {
+        codigo da tarefa i
+        <count = count + 1>
+        <await (count == n)>
+        como indicar que pdemos passar?
+    }
+}
+
+1) Como gerar o count? Usando fetch and add
+    - Setar count = 0 em todas as threads dá errado...
+    - if (i = 1)
+          count = 0
+      <await count == 0>
+      Não funciona...
+    - A solução é usar 3 barreiras
+
+Flags e coordenadores
+dois vetores - | cheguei
+               | continue
+
+Worker
+    cheguei[i] = 1
+    <await (continue [i] == 1)>
+    contiue[i] = 0
+
+Coordinator
+    for [i = 1 to n]
+        <await (cheguei[i] == 1)>
+    for [i = 1 to n]
+        cheguei[i] = 0
+        continue[i] = 1
+
+Cheguei e continue são exemplos de variaveis flag são atribuidas para 
+avisar condição de sincronização
+
+Principios
+- o processo que aguarda um flag deve abaixá-lo
+- um flag não deve ser levantado até que seja abaixado
+
+
+Árvore com processos
+
+            o
+           / \ 
+          o   o --------------------> <await (cheguei[esq] == 1)>
+         / \ / \                      cheguei[esq] = 0
+        o  oo   o                     <await (cheghei[dir] == 1)>
+        |                             cheguei[dir] = 0, cheguei[I] = 1
+        cheguei[l] = 1                <await (continue[I] == 1)>
+        <await continue[L] == 1>      continue[I] = 0
+        continue[L] = 0               continue[esq] = 1
+                                      continue[dir] = 1
+na raíz:
+ <await (cheguei[esq] == 1)>
+ cheguei[esq] = 0
+ <await (cheguei[dir] == 1)>
+ cheghei[dir] = 0
+ continue[esq] = 1
+ continue[dir] = 1
+
+
+Barreiras Simétricas
+Funcionam entre pares de processadores.
+Simetria entre i e j
+    arrive[i] = 1
+    <await (arrive[j] == 1)>
+    arrive[j]= 0
+
+1  2  3  4: 
+    1-2, 3-4, 1-3, 2-4
+ 

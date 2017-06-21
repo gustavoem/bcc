@@ -1,0 +1,71 @@
+SC16 Introduction and Keynote Katherine Frase
+
+- She works on the Watson
+- How do we work with systems that helps us make the write questions and
+  not just give the right answers.
+- We are drowning in data: most of them, unstructured, with noise
+
+- How de we get estatiscally significant data?
+
+- Human computer interation
+    - tabulated systems
+    - programmable systems
+- We are still teaching humans to speak a computer language
+
+- What's different in a cogniteve system?
+    1. it understand language the way humans do
+    2. the system learns, rather than being programmed
+    3. it can give different answers depending on the context
+
+- 4 Points
+    1. Understands
+    2. Reason
+    3. Learns
+    4. Interact
+
+- Think fast and slow
+    - Slow thinking 
+    - Fast thinking
+    - example: saw someone. What's his name?
+        - fast: it's bla.
+        - slow: wait, is it? ... (1 hour later) it's blu!
+    - We have a bias on our thoughts
+        - we prefer information that reinforces what we already know.
+    - We tend to overestimate probability of smth that already happen
+      and underestimate probability of smth that did not happen.
+    - We could "fix" these bias on cognitive computing
+
+- Can we really build a cognitive system?
+- There are trends that make it possible
+    - Better machine Learning
+        - Image recognition and speech recognition error decreased a lot on     
+        2012 ~ present date
+        - Why? We could raise size of the models.
+
+    - Massive Datasets
+        - Are all of these really data? What is signal and what is 
+          noise?
+        - Can you have a system that can pass the radiology test?
+        - difficult even for humans
+    - Improvements on performance and cost of computers
+    - Investiments
+- Why does it matter?
+    
+- Cognitive Computing in Oncology
+    - How do we use a cognitive system to help physicians give find best
+      treatment according to the patient.
+    - We have to consider the workflow of not oonly the system, but also
+       the human using the system.
+    - Use case: 
+        - persistent cough
+
+- Another disease: heart failure
+- Can you predict which patients will come back frequently once they had
+  heart failure?
+
+- Education Challenge
+    - No data...
+    - How can the teachers act accordingly to a child's need? It's easy
+      when the child is brilliant or troubled, but how about the ones
+      that are in the middle?
+- Sesame + Watson

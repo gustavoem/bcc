@@ -13,7 +13,6 @@
 % CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
 %
 
-
 %-------------------------------------------------------------------------------
 % CONFIGURATIONS
 %-------------------------------------------------------------------------------
@@ -31,14 +30,14 @@
 %                 awesome-nephritis, awesome-concrete, awesome-darknight
 \colorlet{awesome}{awesome-red}
 % Uncomment if you would like to specify your own color
-% \definecolor{awesome}{HTML}{CA63A8}
+ \definecolor{awesome}{HTML}{14255F}
 
 % Colors for text
 % Uncomment if you would like to specify your own color
-% \definecolor{darktext}{HTML}{414141}
+\definecolor{darktext}{HTML}{414141}
 % \definecolor{text}{HTML}{333333}
-% \definecolor{graytext}{HTML}{5D5D5D}
-% \definecolor{lighttext}{HTML}{999999}
+\definecolor{graytext}{HTML}{5D5D5D}
+\definecolor{lighttext}{HTML}{999999}
 
 % Set false if you don't want to highlight section with awesome color
 \setbool{acvSectionColorHighlight}{false}
@@ -48,13 +47,13 @@
 
 
 %-------------------------------------------------------------------------------
-%	PERSONAL INFORMATION
-%	Comment any of the lines below if they are not required
+%   PERSONAL INFORMATION
+%   Comment any of the lines below if they are not required
 %-------------------------------------------------------------------------------
 \name{Gustavo Estrela de Matos}{}
-%\address{1100 Hensel Drive, Apt. N302, College Station - Texas}
+%\address{235 Agostinho dos Santos Street, São Paulo - São Paulo}
 %\position{Computer Science Student}
-\mobile{(+55) 11 975-934-129}
+\mobile{(+55) 011 975-934-129}
 \email{estrela.gustavo.matos@gmail.com}
 \github{gustavoem}
 
@@ -67,14 +66,14 @@
 % Print the footer with 3 arguments(<left>, <center>, <right>)
 % Leave any of these blank if they are not needed
 \makecvfooter
-  {}
-  {}
-  {\thepage}
+{}
+{}
+{\thepage}
 
 
 %-------------------------------------------------------------------------------
-%	CV/RESUME CONTENT
-%	Each section is imported separately, open each file in turn to modify content
+%   CV/RESUME CONTENT
+%   Each section is imported separately, open each file in turn to modify content
 %-------------------------------------------------------------------------------
 
 %-------------------------------------------------------------------------------
@@ -84,80 +83,114 @@
 \begin{cventries}
 %---------------------------------------------------------
 \cventry
-{Bacharelado em Ciência da Computação}
-{Texas A\&M University}
-{College Station, Texas}
-{Setembro 2015 - Maio 2016}
-{Participante do programa Ciência Sem Fronteiras. \newline Média: 3.6/4}
-\newline 
+{Mestrado em Ciência da Computação}
+{Instituto de Matemática e Estatística - Universidade de São Paulo} % Institution
+{São Paulo, Brasil} % Location
+{Janeiro 2018 - Março 2020}
+{Dissertação com título ``Identificação de vias de sinalização celular baseada em repositórios de cinética de reações bioquímicas". Projeto realizado com bolsa FAPESP.}
 \newline
 
 \cventry
 {Bacharelado em Ciência da Computação} % Degree
-{Instituto de Matematica e Estatística (Universidade de São Paulo)} % Institution
-{São Paulo, Brasil} % Location
+{} % Institution
+{} % Location
 {Fevereiro 2013 - Dezembro 2017} % Date(s)
-{Com mérito por desempenho acadêmico \newline Média: 9.0/10}
-\newline 
+{Mérito por Desempenho Acadêmico. Ranqueado \#3 de 50 alunos.\newline
+média: 9/10.}
 \newline
 
 \cventry
-{Mestrado em Ciência da Computação} % Degree
-{Instituto de Matematica e Estatística (Universidade de São Paulo)} % Institution
-{São Paulo, Brasil} % Location
-{Janeiro 2018 - Dezembro 2019} % Date(s)
-{}
+{Estudos no Exterior em Ciência da Computação}
+{Texas A\&M University}
+{College Station, Texas}
+{Setembro 2015 - Maio 2016}
+{Período de estudos no exterior como bolsista do programa Ciências Sem Fronteiras. \newline média: 3.75/4}
 \end{cventries}
 %---------------------------------------------------------
 
 %-------------------------------------------------------------------------------
 %     EXPERIENCES
 %-------------------------------------------------------------------------------
-\cvsection{Experiências}
+\cvsection{Experiência}
 \begin{cventries}
 %---------------------------------------------------------
 \cventry
-{Aluno de Iniciação Científica}
-{Fundação de Amparo a Pesquisa do Estado de São Paulo e Instituto Butantan}
+{Pesquisador de mestrado (com bolsa FAPESP)}
+{Instituto Butantan}
 {São Paulo, Brasil}
+{Janeiro 2018 - Dezembro 2019}
+{\href{https://bv.fapesp.br/en/bolsas/175684/identification-of-cell-signaling-pathways-based-on-biochemical-reaction-kinetics-repositories/}
+{\color{awesome}\underline {Projeto de mestrado}} em um time de 2 
+    (aluno e orientador) sediado no Centro de Toxinas, Resposta-imune
+    e sinalização celular do Instituto Butantan. Este projeto tem como
+    objetivo identificar modelos baseados em sistemas de equações 
+    diferenciais para redes de sinalização celular. Propomos neste
+    projeto agrupar dados de bancos de dados de biologia, como KEGG,
+    para sistematicamente encontrar modelos que reproduzam experimentos
+    biológicos. Para medir a qualidade dos modelos, utilizamos um 
+    método Bayesiano de estimação de verossimilhança.}
+
+\cventry
+{Pesquisador de graduação (com bolsa FAPESP)}
+{}
+{}
 {Maio 2017 - Dezembro 2017}
-{Estudos de algoritmos baseados em florestas para o problema U-Curve.}
-\newline 
-\newline
+{\href{https://bv.fapesp.br/en/bolsas/170553/design-of-poset-forest-based-algorithms-for-the-u-curve-optimization-problem/}
+{\color{awesome} \underline{Iniciação científica}} em um time de 2
+    (aluno e professor). Neste projeto, criamos novos algoritmos 
+    paralelos para resolver o problema U-Curve em uma abordagem baseada
+    em buscas em florestas e divisão e conquista; alguns algoritmos
+    criados são competitivos com o estado da arte na área. Os resultados
+    foram apresentados como 
+    \href{http://linux.ime.usp.br/~gustavoem/mac0499}
+    {\color{awesome} \underline{trabalho de conclusão}} para o título
+    de bacharel em ciência da computação.}
 
 \cventry
-{Monitor de Graduação}
-{Instituto de Matematica e Estatistica (Universidade de São Paulo)} 
-{São Paulo, Brasil}
-{Agosto 2016 - Dezembro 2016}
-{Assistente de professor no curso de Laboratório de Métodos Numéricos. As atividades consistiam em avaliar trabalhos, e sanar dúvidas de alunos.}
-\newline 
-\newline
+{Pesquisador de graduação (com bolsa FAPESP)}
+{}
+{}
+{Janeiro 2015 - July 2015}
+{\href{https://bv.fapesp.br/en/bolsas/156441/studies-of-efficient-data-structures-to-tackle-the-u-curve-optimization-problem/}
+{\color{awesome} \underline{Iniciação científica}} em um time de 2 
+    (aluno e orientador). Durante este projeto, estudamos o uso de uma
+    nova estrutura de dados para algoritmos do problema U-Curve. Como
+    resultado, obtemos o algoritmo UCSR, descrito em um \href{https://www.sciencedirect.com/science/article/pii/S0020025518306789?via\%3Dihub}
+    {artigo publicado}.
+}
+
 
 \cventry
-{Aluno de Iniciação Científica}
+{Pesquisador de graduação}
 {Texas A\&M University}
-{College Station, Texas}
-{Maio 2016 - Julho 2016}
-{Estudos de abordagens estocásticas para o problema U-Curve.}
-\newline 
-\newline
+{}
+{June 2016 - July 2016}
+{em um time de 2 (aluno e orientador), estudamos o problema U-Curve
+    em um contexto estocástico.}
+\end{cventries}
+%---------------------------------------------------------
 
+%-------------------------------------------------------------------------------
+%     PUBLICATIONS
+%-------------------------------------------------------------------------------
+\cvsection{Publicações}
+\begin{cventries}
 \cventry
-{Aluno de Iniciação Científica}
-{Fundação de Amparo a Pesquisa do Estado de São Paulo e Instituto Butantan}
-{São Paulo, Brasil}
-{Janeiro 2015 - Julho 2015}
-{Nessa oportunidade trabalhamos com a elaboração de um algoritmo para solucionar o problema U-Curve, um problema de otimização definido sobre um reticulado booleano em que a função objetivo descreve curvas em formato de "u" para todas as cadeias do reticulado.}
-\newline 
-\newline
-
+    {REIS, MARCELO S.; ESTRELA, GUSTAVO; FERREIRA, CARLOS EDUARDO; BARRERA, JUNIOR.}
+    {featsel: A framework for benchmarking of feature selection algorithms and cost functions.}
+    {SoftwareX, v. 6, p. 193-197, 2017.}
+    {}
+    {Este artigo descreve o arcabouço featsel, implementado em C++
+    para permitir a construção e teste de algoritmos de seleção de 
+    características.}
 \cventry
-{Monitor de Graduação} 
-{Instituto de Matematica e Estatistica (Universidade de São Paulo)} 
-{São Paulo, Brasil}
-{Agosto 2014 - Dezembro 2014}
-{Assistente de professor no curso de Introdução a Computação. As atividades consistiam em avaliar trabalhos, sanar dúvidas de alunos e substituir o professor nas aulas iniciais do curso.}
+    {REIS, MARCELO S.; ESTRELA, GUSTAVO; FERREIRA, CARLOS EDUARDO; BARRERA, JUNIOR.}
+    {Optimal Boolean lattice-based algorithms for the U-curve optimization problem.}
+    {Information Sciences, \newline2018.}
+    {}
+    {Este artigo apresenta dois novos algoritmos para o problema U-Curve
+    e os compara com algoritmos estado da arte, usando o arcabouço
+    featsel.}
 \end{cventries}
 %---------------------------------------------------------
 
@@ -167,53 +200,56 @@
 \cvsection{Habilidades}
 \begin{cvskills}
 \cvskill
-{Computação} % Category
-{C/C++, JAVA, Python, Perl, Octave (Matlab), LaTeX, MySQL, Linux, 
-Arduino, Shell, Git, Vim, Android.} % Skills
-%---------------------------------------------------------
+{Programação} % Category
+{C/C++, Python, Git, Octave (Matlab), Java, Bash, Perl,
+Android, React, Arduino, Ruby, JavaScript}
+
 \cvskill
 {Idiomas} % Category
-{Português, Inglês.} % Skills
-
-%---------------------------------------------------------
+{Português (nativo), Inglês (avançado; nota TOEFL IBT: 93)} % Skills
 \end{cvskills}
 %---------------------------------------------------------
 
 %-------------------------------------------------------------------------------
 %     EXTRA-CURRICULAR ACTIVITIES
 %-------------------------------------------------------------------------------
-\cvsection{Atividades Extra-curriculares}
+\cvsection{Outros\vspace{-1em}}
 \begin{cventries}
-
 \cventry
-{Membro}
-{Texas A\&M Table Tennis Club}
-{College Station, Texas}
+    {Membro\vspace{-3em}}
+    {\vspace{-3em}Texas A\&M Table Tennis Club}
+{}
 {Janeiro 2016 - Maio 2016}
 {}
 
 \cventry
 {Co-fundador}
-{Grupo Hardware Livre da Universidade de São Paulo}
-{São Paulo, Brasil}
+{Hardware Livre USP}
+{}
 {Novembro 2013 - Agosto 2015}
-{O grupo foi fundado por alunos de ciência da computação como uma tentativa de fomentar o estudo de hardware livre, principalmente da placa Arduino, entre os alunos e comunidade local.}
-\newline
-\newline
+{O grupo Hardware Livre USP foi criado por alunos de ciência da 
+    computação com objetivo de fomentar o estudo de hardware livre,
+    como, por exemplo, o Arduino.
+}
 
 \cventry
 {Membro}
-{Representantes de Classe de Ciência da Computação}
-{São Paulo, Brasil}
-{Fevereiro 2013 - Agosto 2015}
+{Representação de Classes}
 {}
+{Fevereiro 2013 - Agosto 2015}
+{Representação da turma de ingresso 2013 no curso de ciência da 
+    computação. Os representantes eram responsáveis por ajudar a 
+    comunicação entre docentes e alunos, e também por ajudar no
+    processo de avaliação das disciplinas.}
 
 \cventry
-{Membro}
-{Clube de Baseball e Softball do IME-USP}
-{São Paulo, Brasil}
-{Fevereiro 2013 - Agosto 2015}
+{Membro e organizador}
+{IME-USP Beisebol e Softbol Clube}
 {}
+{Fevereiro 2013 - Present}
+{Iniciei a prática do beisebol e softbol na graduação e continuo
+praticando ambos esportes, nas equipes do IME-USP. No ano de 2014
+fui tesoureiro do clube.}
 
 %---------------------------------------------------------
 \end{cventries}

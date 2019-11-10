@@ -1,0 +1,263 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+% Awesome CV LaTeX Template for CV/Resume
+%
+% This template has been downloaded from:
+% https://github.com/posquit0/Awesome-CV
+%
+% Author:
+% Claud D. Park <posquit0.bj@gmail.com>
+% http://www.posquit0.com
+%
+% Template license:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+%
+
+%-------------------------------------------------------------------------------
+% CONFIGURATIONS
+%-------------------------------------------------------------------------------
+% A4 paper size by default, use 'letterpaper' for US letter
+\documentclass[11pt, a4paper]{awesome-cv-res}
+
+% Configure page margins with geometry
+\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+
+% Specify the location of the included fonts
+\fontdir[./fonts/]
+
+% Color for highlights
+% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
+%                 awesome-nephritis, awesome-concrete, awesome-darknight
+\colorlet{awesome}{awesome-red}
+% Uncomment if you would like to specify your own color
+ \definecolor{awesome}{HTML}{14255F}
+
+% Colors for text
+% Uncomment if you would like to specify your own color
+\definecolor{darktext}{HTML}{414141}
+% \definecolor{text}{HTML}{333333}
+\definecolor{graytext}{HTML}{5D5D5D}
+\definecolor{lighttext}{HTML}{999999}
+
+% Set false if you don't want to highlight section with awesome color
+\setbool{acvSectionColorHighlight}{false}
+
+% If you would like to change the social information separator from a pipe (|) to something else
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+
+%-------------------------------------------------------------------------------
+%	PERSONAL INFORMATION
+%	Comment any of the lines below if they are not required
+%-------------------------------------------------------------------------------
+\name{Gustavo Estrela de Matos}{}
+%\address{235 Agostinho dos Santos Street, São Paulo - São Paulo}
+%\position{Computer Science Student}
+\mobile{(+55) 011 975-934-129}
+\email{estrela.gustavo.matos@gmail.com}
+\github{gustavoem}
+
+
+%-------------------------------------------------------------------------------
+\begin{document}
+
+% Print the header with above personal informations
+\makecvheader
+% Print the footer with 3 arguments(<left>, <center>, <right>)
+% Leave any of these blank if they are not needed
+\makecvfooter
+{}
+{}
+{\thepage}
+
+
+%-------------------------------------------------------------------------------
+%	CV/RESUME CONTENT
+%	Each section is imported separately, open each file in turn to modify content
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     EDUCATION
+%-------------------------------------------------------------------------------
+\cvsection{Education}
+\begin{cventries}
+%---------------------------------------------------------
+\cventry
+{Master of Science in Computer Science}
+{Institute of Mathematics and Statistics (University of São Paulo)} % Institution
+{São Paulo, Brazil} % Location
+{January 2018 - March 2020}
+{Dissertation of title "Identification of cell signaling pathways 
+based on biochemical reaction kinetics repositories". Research project 
+awarded with a São Paulo Research Foundation (FAPESP) scholarship.}
+\newline
+
+\cventry
+{Bachelor of Science in Computer Science} % Degree
+{} % Institution
+{} % Location
+{February 2013 - December 2017} % Date(s)
+{High Academic Merit Award Ranked \#3 out of 50 students.\newline
+GPA: 9/10.}
+\newline
+
+\cventry
+{Study abroad program in Computer Science}
+{Texas A\&M University}
+{College Station, Texas}
+{September 2015 - May 2016}
+{Non-degree seeking exchange student participant of the Government of Brazil program Science Without Borders. \newline GPA: 3.75/4}
+\end{cventries}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     EXPERIENCES
+%-------------------------------------------------------------------------------
+\cvsection{Experiences}
+\begin{cventries}
+%---------------------------------------------------------
+\cventry
+{Graduate Researcher (with FAPESP Scholarship)}
+{Butantan Institute}
+{São Paulo, Brazil}
+{January 2018 - December 2019}
+{\href{https://bv.fapesp.br/en/bolsas/175684/identification-of-cell-signaling-pathways-based-on-biochemical-reaction-kinetics-repositories/}
+{\color{awesome}\underline {Masters project}} in a team of 2 (student 
+    and advisor) placed in the Center of Toxins, Immune-Response and 
+    Cell Signaling (CeTICS) of Butantan Institute. This project has the 
+    goal of finding models based on systems of ordinary differential 
+    equations for cell signaling networks. We proposed on this project 
+    to group data from biological databases such as KEGG and BioModels 
+    to systematically find models that can reproduce biological 
+    experiments. To measure model quality we used Bayesian methods of 
+    likelihood estimation.}
+
+\cventry
+{Undergraduate Researcher (with FAPESP Scholarship)}
+{}
+{}
+{May 2017 - December 2017}
+{\href{https://bv.fapesp.br/en/bolsas/170553/design-of-poset-forest-based-algorithms-for-the-u-curve-optimization-problem/}
+{\color{awesome} \underline{Scientific initiation}} in a team of 2 
+    (student and advisor). In this project we created new parallel 
+    algorithms to solve the U-Curve problem based on forest search and 
+    divide and conquer; some of these algorithms are competitive with 
+    state of the art in feature selection. The results were presented 
+    as a \href{http://linux.ime.usp.br/~gustavoem/mac0499}
+    {\color{awesome} \underline{conclusion project}} for the bachelor 
+    title in computer science.}
+
+\cventry
+{Undergraduate Researcher (with FAPESP Scholarship)}
+{}
+{}
+{January 2015 - July 2015}
+{\href{https://bv.fapesp.br/en/bolsas/156441/studies-of-efficient-data-structures-to-tackle-the-u-curve-optimization-problem/}
+{\color{awesome} \underline{Scientific initiation}} in a team of 2 
+    (student and advisor). In this opportunity we studied the use of new 
+    data structures for the U-Curve problem. As a result we created a 
+    new algorithm, UCSR, described on a \href{https://www.sciencedirect.com/science/article/pii/S0020025518306789?via\%3Dihub}
+    {published paper}.}
+
+
+\cventry
+{Undergraduate Researcher}
+{Texas A\&M University}
+{}
+{June 2016 - July 2016}
+{In a team of 2 (student and advisor), studied forest based algorithms
+for the U-Curve problem. Also experimented stochastic versions of state
+    of the art algorithms.}
+\end{cventries}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     PUBLICATIONS
+%-------------------------------------------------------------------------------
+\cvsection{Publications}
+\begin{cventries}
+\cventry
+    {REIS, MARCELO S.; ESTRELA, GUSTAVO; FERREIRA, CARLOS EDUARDO; BARRERA, JUNIOR.}
+    {featsel: A framework for benchmarking of feature selection algorithms and cost functions.}
+    {SoftwareX, v. 6, p. 193-197, 2017.}
+    {}
+    {In the context of machine learning, feature selection is an 
+    interesting tool to reduce data complexity. Since the feature 
+    selection problem is NP-hard, many algorithms exist to solve the 
+    problem and a standard benchmark is desirable. On this paper we 
+    describe featsel, a framework implemented in C++ to construct and 
+    benchmark different feature selection algorithms and cost 
+    functions.}
+\cventry
+    {REIS, MARCELO S.; ESTRELA, GUSTAVO; FERREIRA, CARLOS EDUARDO; BARRERA, JUNIOR.}
+    {Optimal Boolean lattice-based algorithms for the U-curve optimization problem.}
+    {Information Sciences, \newline2018.}
+    {}
+    {The U-curve problem is a particular case of the feature selection
+    problem when the cost function describes U-shaped curves in every
+    chain of search space. In this paper we present two new algorithms
+    and compare them to other state of the art algorithms using the 
+    featsel framework.}
+\end{cventries}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     SKILLS
+%-------------------------------------------------------------------------------
+\cvsection{Skills}
+\begin{cvskills}
+\cvskill
+{Programming} % Category
+{C/C++, Python, Git, Octave (Matlab), Java, Bash, Perl,
+Android, React, Arduino, Ruby, JavaScript}
+
+\cvskill
+{Languages} % Category
+{Portuguese (native), English (advanced; TOEFL IBT score: 93)} % Skills
+\end{cvskills}
+%---------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%     EXTRA-CURRICULAR ACTIVITIES
+%-------------------------------------------------------------------------------
+\cvsection{Other\vspace{-1em}}
+\begin{cventries}
+\cventry
+    {Member\vspace{-3em}}
+    {\vspace{-3em}Texas A\&M Table Tennis Club}
+{}
+{January 2016 - May 2016}
+{}
+
+\cventry
+{Co-founder}
+{University of São Paulo Open Source Hardware Student Group}
+{}
+{November 2013 - August 2015}
+{The group was founded by computer science students in an attempt to 
+foment the studies of open source hardware such as Arduino between 
+students and local community. }
+
+\cventry
+{Member}
+{Computer Science Class' Representative}
+{}
+{February 2013 - August 2015}
+{Class representatives in our department are channels of communication
+    between students and professors. I also participated on the 
+    department project of gathering lecture quality feedback from 
+    students.}
+
+\cventry
+{Member and organizer}
+{Institute of Mathematics and Statistics Baseball and Softball Club}
+{}
+{February 2013 - Present}
+{I participate in many practice sessions and championships of the club 
+    every year. During the period of 2014 I worked as the club 
+    treasurer.}
+
+%---------------------------------------------------------
+\end{cventries}
+%---------------------------------------------------------
+\end{document}

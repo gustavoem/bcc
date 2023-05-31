@@ -278,6 +278,10 @@
 % Usage: \address{<address>}
 \newcommand*{\address}[1]{\def\@address{#1}}
 
+% Define writer's idioms
+% Usage: \idioms{<idioms>}
+\newcommand*{\idioms}[1]{\def\@idioms{#1}}
+
 % Define writer's position
 % Usage: \name{<position>}
 \newcommand*{\position}[1]{\def\@position{#1}}
@@ -411,6 +415,7 @@
     \\[\acvHeaderAfterNameSkip]%
     \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
     \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
+    \ifthenelse{\isundefined{\@idioms}}{}{\@idioms\\[\acvHeaderAfterAddressSkip]}
     \headersocialstyle{%
       \newbool{isstart}%
       \setbool{isstart}{true}%
